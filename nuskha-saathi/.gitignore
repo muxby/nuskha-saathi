@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+.env
+backend/data/_fda_label_cache.json
+backend/static/strips/*
+backend/static/audio/*
+!backend/static/strips/.gitkeep
+!backend/static/audio/.gitkeep
