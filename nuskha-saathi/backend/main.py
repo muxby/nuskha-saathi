@@ -48,8 +48,9 @@ def create_app(
     app.state.fda = fda or OpenFdaClient.from_resolver(app.state.resolver)
     app.state.extractor = extractor or GeminiVisionExtractor()
     app.state.strip_dir = strip_dir or (STATIC_ROOT / "strips")
+    app.state.audio_dir = STATIC_ROOT / "audio"
     app.state.strip_dir.mkdir(parents=True, exist_ok=True)
-    (STATIC_ROOT / "audio").mkdir(parents=True, exist_ok=True)
+    app.state.audio_dir.mkdir(parents=True, exist_ok=True)
     app.include_router(scan_router)
     app.mount("/static", StaticFiles(directory=STATIC_ROOT), name="static")
 

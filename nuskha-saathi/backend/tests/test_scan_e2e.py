@@ -114,7 +114,11 @@ def test_blurry_line_returns_amber_crop_and_warfarin_conflict_from_cabinet():
     assert "warfarin" in interaction["drug_a"] or "warfarin" in interaction["drug_b"]
     assert "Cardiologist 14 Nov" in interaction["drug_a"] or "Cardiologist 14 Nov" in interaction["drug_b"]
     assert len(interaction["fda_verbatim_excerpt"]) > 40
-    assert body["telemetry"]["tts_ms"] == 0
+    assert body["telemetry"]["tts_ms"] >= 0
+    assert body["audio_qr_payload"].endswith(f"/audio/{body['scan_id']}")
+    replay = client.get(f"/api/v1/audio/{body['scan_id']}")
+    assert replay.status_code == 200
+    assert replay.json()["urdu_script"] == body["urdu_script"]
     assert body["whatsapp_scheduled"] is False
     assert "Brufen" in body["urdu_script"]
 
@@ -186,6 +190,24 @@ def test_vision_failure_and_empty_file_fail_closed():
     )
     assert empty.status_code == 200
     assert empty.json()["medications"][0]["status"] == "REFUSED_BLURRY"
+
+
+def test_scan_audio_is_saved_and_replayed(monkeypatch, tmp_path):
+    async def fake_speech(text):
+        assert text
+        return b"fake-mp3"
+
+    monkeypatch.setattr("routers.scan.synthesize_urdu", fake_speech)
+    app = app_for(ScriptedExtractor(error=VisionExtractError("blur")))
+    app.state.audio_dir = tmp_path
+    client = TestClient(app)
+    body = client.post(
+        "/api/v1/scan-parchi",
+        files={"file": ("parchi.jpg", jpeg_bytes(), "image/jpeg")},
+    ).json()
+    assert body["audio_urdu_url"].endswith(f"/{body['scan_id']}.mp3")
+    assert (tmp_path / f"{body['scan_id']}.mp3").read_bytes() == b"fake-mp3"
+    assert client.get(f"/api/v1/audio/{body['scan_id']}").json()["urdu_script"] == body["urdu_script"]
 
 
 def test_cabinet_brand_without_salts_still_catches_warfarin():
@@ -344,5 +366,6 @@ def test_live_excerpt_overrides_cached_text_without_calling_a_brand():
     assert hit is not None
     assert hit.source == "openFDA Drug Label API"
     assert "serious bleeding" in hit.fda_verbatim_excerpt
+    assert hit.raw_fda_json["drug_interactions"][0].startswith("Concomitant use")
     assert all("leflox" not in url.casefold() for url in seen)
     assert any("ibuprofen" in url for url in seen)

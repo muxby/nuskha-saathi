@@ -3,10 +3,15 @@
 from __future__ import annotations
 
 import json
+import os
+import re
+from pathlib import Path
+from time import perf_counter
 
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 
 from services.scan_service import scan_parchi, verify_strip
+from services.tts_stt_service import synthesize_urdu
 from services.urdu_formatter import dose_phrase
 
 router = APIRouter()
@@ -71,7 +76,31 @@ async def scan_parchi_route(
         resolver=request.app.state.resolver,
         fda=request.app.state.fda,
     )
+    speech_started = perf_counter()
+    audio = await synthesize_urdu(result.urdu_script)
+    result.telemetry.tts_ms = int(round((perf_counter() - speech_started) * 1000))
+    result.telemetry.total_ms += result.telemetry.tts_ms
+    audio_dir = Path(request.app.state.audio_dir)
+    if audio:
+        (audio_dir / f"{result.scan_id}.mp3").write_bytes(audio)
+        result.audio_urdu_url = f"/static/audio/{result.scan_id}.mp3"
+    (audio_dir / f"{result.scan_id}.json").write_text(
+        json.dumps({"scan_id": result.scan_id, "urdu_script": result.urdu_script, "audio_urdu_url": result.audio_urdu_url}),
+        encoding="utf-8",
+    )
+    base_url = os.getenv("FRONTEND_BASE_URL", "").rstrip("/")
+    result.audio_qr_payload = f"{base_url}/audio/{result.scan_id}" if base_url else f"/audio/{result.scan_id}"
     return result
+
+
+@router.get("/api/v1/audio/{scan_id}")
+async def audio_metadata(request: Request, scan_id: str):
+    if not re.fullmatch(r"scan_[0-9a-f]{24}", scan_id):
+        raise HTTPException(status_code=404, detail="Audio not found.")
+    metadata = Path(request.app.state.audio_dir) / f"{scan_id}.json"
+    if not metadata.is_file():
+        raise HTTPException(status_code=404, detail="Audio not found.")
+    return json.loads(metadata.read_text(encoding="utf-8"))
 
 
 @router.post("/api/v1/verify-strip")

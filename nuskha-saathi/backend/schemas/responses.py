@@ -57,6 +57,7 @@ class InteractionOut(BaseModel):
     source: str
     fda_verbatim_excerpt: str
     urdu_warning: str
+    raw_fda_json: dict | None = None
 
 
 class TelemetryOut(BaseModel):

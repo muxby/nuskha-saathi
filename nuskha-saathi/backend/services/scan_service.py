@@ -29,7 +29,7 @@ GEMINI_USD_PER_SCAN = 0.0035
 
 
 def new_scan_id() -> str:
-    return "scan_" + uuid.uuid4().hex[:8]
+    return "scan_" + uuid.uuid4().hex[:24]
 
 
 def _qty(value: float | None) -> float:
@@ -172,6 +172,7 @@ async def scan_parchi(
                 source=hit.source,
                 fda_verbatim_excerpt=hit.fda_verbatim_excerpt,
                 urdu_warning=hit.urdu_warning,
+                raw_fda_json=hit.raw_fda_json,
             )
         )
         script_parts.append(hit.urdu_warning)

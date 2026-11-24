@@ -1,7 +1,7 @@
-# Nuskha Saathi — Dawa-Guard (Phase 1 and Phase 2)
+# Nuskha Saathi — Dawa-Guard
 
 Patient comprehension and clinical safety flags for a Pakistani prescription photo.
-This repository slice is the deterministic engine. The vision model only reads the photo.
+The vision model only reads the photo. The safety engine makes the clinical decisions.
 
 The model does not decide whether a line is safe. `safety_gate.py` does.
 
@@ -13,6 +13,8 @@ The model does not decide whether a line is safe. `safety_gate.py` does.
 - openFDA client that accepts generic salts only, with the local file as fallback.
 - Gemini Vision extractor (`temperature=0`, JSON schema, one retry, then `REFUSED_BLURRY`).
 - `POST /api/v1/scan-parchi` and `POST /api/v1/verify-strip`.
+- Responsive Urdu RTL PWA with camera upload, safety and dose cards, strip verification, QR audio replay, and Dev Proof.
+- Urdu speech via Uplift Orator, Azure, Google, then browser speech when server audio is unavailable.
 
 Dose ceilings block impossible OCR numbers such as 5000 mg levofloxacin. They are not a personal dose.
 
@@ -27,19 +29,30 @@ Dose ceilings block impossible OCR numbers such as 5000 mg levofloxacin. They ar
 | FastAPI, Pydantic v2, Pillow, RapidFuzz, httpx | Service, schemas, crops, fuzzy match, HTTP |
 | Uvicorn | Local server |
 
-Uplift, Azure, WhatsApp, and Supabase are not in this slice.
+WhatsApp and Supabase are planned for a later phase. Regional audio is queued pending native clinical validation.
 
 ## Run
 
-```powershell
+```bash
 cd backend
 python -m venv .venv
-.\.venv\Scripts\python -m pip install -r requirements.txt
-.\.venv\Scripts\python -m pytest
-.\.venv\Scripts\uvicorn main:app --reload
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python -m pytest
+.venv/bin/uvicorn main:app --reload
 ```
 
-Copy `.env.example` to `.env` for `OPENFDA_API_KEY` and `GEMINI_API_KEY`. The safety tests pass with no keys. A missing Gemini key fails closed to `REFUSED_BLURRY`.
+On Windows, use `.venv\Scripts\` instead of `.venv/bin/`. Copy `.env.example` to `.env` and set `GEMINI_API_KEY`. Add `UPLIFT_API_KEY` and `UPLIFT_VOICE_ID` for Pakistani Urdu MP3; Azure and Google keys are optional fallbacks. The safety tests pass without keys. A missing Gemini key fails closed to `REFUSED_BLURRY`.
+
+In a second terminal:
+
+```bash
+cd frontend
+cp .env.example .env.local
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`. The backend runs at `http://localhost:8000`. For deployment, set `NEXT_PUBLIC_API_BASE_URL` in the frontend to the public backend HTTPS origin and `FRONTEND_BASE_URL` in the backend to the public PWA origin. Deploy `frontend/` as the Vercel project root and run the backend container on a persistent host. The QR replay endpoint currently stores audio and script on local disk, so production hosting needs persistent storage or a single persistent backend instance for replay to survive restarts.
 
 `GET /health` returns the loaded brand and interaction counts.
 

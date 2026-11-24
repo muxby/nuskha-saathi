@@ -8,3 +8,9 @@ __pycache__/
 **/.env
 nuskha-saathi/backend/data/_fda_label_cache.json
 *.pyc
+**/node_modules/
+**/.next/
+**/tsconfig.tsbuildinfo
+nuskha-saathi/backend/static/audio/*.mp3
+nuskha-saathi/backend/static/audio/*.json
+nuskha-saathi/backend/static/strips/*.jpg

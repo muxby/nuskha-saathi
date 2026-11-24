@@ -29,6 +29,7 @@ class InteractionHit:
     source: str
     fda_verbatim_excerpt: str
     urdu_warning: str
+    raw_fda_json: dict | None = None
 
 
 def build_label_url(salt: str, api_key: str | None = None, search: str | None = None) -> str:
@@ -157,38 +158,40 @@ class OpenFdaClient:
         if key_a == key_b:
             return None
         cached = self.fallback.get(_pair_key(key_a, key_b))
-        live_excerpt = await self._live_excerpt(key_a, key_b) if self.live else None
-        if live_excerpt and cached is not None:
+        live_evidence = await self._live_excerpt(key_a, key_b) if self.live else None
+        if live_evidence and cached is not None:
             return InteractionHit(
                 salt_a=cached.salt_a,
                 salt_b=cached.salt_b,
                 severity=cached.severity,
                 source="openFDA Drug Label API",
-                fda_verbatim_excerpt=live_excerpt,
+                fda_verbatim_excerpt=live_evidence[0],
                 urdu_warning=cached.urdu_warning,
+                raw_fda_json=live_evidence[1],
             )
-        if live_excerpt and cached is None:
+        if live_evidence and cached is None:
             return InteractionHit(
                 salt_a=key_a,
                 salt_b=key_b,
                 severity="HIGH",
                 source="openFDA Drug Label API",
-                fda_verbatim_excerpt=live_excerpt,
+                fda_verbatim_excerpt=live_evidence[0],
                 urdu_warning=(
                     f"Khabardar! {key_a} aur {key_b} ka sang milakar istemal nuqsan deh ho sakta hai. "
                     "Lene se pehle apne doctor se foran rabta karein."
                 ),
+                raw_fda_json=live_evidence[1],
             )
         return cached
 
-    async def _live_excerpt(self, salt_a: str, salt_b: str) -> str | None:
+    async def _live_excerpt(self, salt_a: str, salt_b: str) -> tuple[str, dict] | None:
         for source, needle in ((salt_a, salt_b), (salt_b, salt_a)):
             label = await self.fetch_label(source)
             if not label:
                 continue
             excerpt = _excerpt_mentioning(_label_blob(label), needle)
             if excerpt:
-                return excerpt
+                return excerpt, label
         return None
 
     async def check_medications(self, current: list[dict], cabinet: list[dict]) -> list[InteractionHit]:
