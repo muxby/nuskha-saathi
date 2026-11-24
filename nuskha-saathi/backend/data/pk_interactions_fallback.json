@@ -1,0 +1,586 @@
+[
+  {
+    "salt_a": "allopurinol",
+    "salt_b": "azathioprine",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "2 ) Mercaptopurine or Azathioprine: Reduce mercaptopurine or azathioprine dose as recommended in the respective prescribing information.",
+    "urdu_warning": "Khabardar! allopurinol aur azathioprine ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "allopurinol",
+    "salt_b": "captopril",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "In foreign marketing experience in patients with renal failure, use of allopurinol concomitantly with captopril has been associated with neutropenia but this association has not appeared in U.",
+    "urdu_warning": "Khabardar! allopurinol aur captopril ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "alprazolam",
+    "salt_b": "codeine",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Examples Morphine, buprenorphine, hydromorphone, oxymorphone, oxycodone, fentanyl, methadone, alfentanil, butorpenol, codeine, dihydrocodeine, meperidine, pentazocine, remifentanil, sufentanil, tapentadol, tramadol.",
+    "urdu_warning": "Khabardar! alprazolam aur codeine ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "alprazolam",
+    "salt_b": "morphine",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Examples Morphine, buprenorphine, hydromorphone, oxymorphone, oxycodone, fentanyl, methadone, alfentanil, butorpenol, codeine, dihydrocodeine, meperidine, pentazocine, remifentanil, sufentanil, tapentadol, tramadol.",
+    "urdu_warning": "Khabardar! alprazolam aur morphine ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "amiodarone",
+    "salt_b": "digoxin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Negative Chronotropes digoxin, beta blockers, verapamil, diltiazem, clonidine, ivabradine Potentiates the electrophysiologic and hemodynamic effects of amiodarone, resulting in bradycardia, sinus arrest, and AV block.",
+    "urdu_warning": "Khabardar! amiodarone aur digoxin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "amiodarone",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Warfarin Potentiates anticoagulant response and can result in serious or fatal bleeding.",
+    "urdu_warning": "Khabardar! amiodarone aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "amlodipine",
+    "salt_b": "simvastatin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "7 DRUG INTERACTIONS Do not exceed doses greater than 20 mg daily of simvastatin.",
+    "urdu_warning": "Khabardar! amlodipine aur simvastatin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "aspirin",
+    "salt_b": "methotrexate",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ", dapsone, pemetrexed, pyrimethamine and sulfonamides) Oral or intravenous penicillin or sulfonamide antibiotics Aspirin and other nonsteroidal anti- inflammatory drugs Hepatotoxic products Highly protein-bound drugs (e.",
+    "urdu_warning": "Khabardar! aspirin aur methotrexate ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "aspirin",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Table 3: Drugs that Can Increase the Risk of Bleeding Drug Class Specific Drugs Anticoagulants argatroban, dabigatran, bivalirudin, desirudin, heparin, lepirudin Antiplatelet Agents aspirin, cilostazol, clopidogrel, dipyridamole, prasugrel, ticlopidine Non-steroidal Anti-Inflammatory Agents celecoxib, diclofenac, diflunisal, fenoprofen, ibuprofen, indomethacin, ketoprofen, ketorolac, mefenamic acid, naproxen, oxaprozin, piroxicam, sulindac Serotonin Reuptake Inhibitors citalopram, desvenlafaxine, duloxetine, escitalopram, fluoxetine, fluvoxamine, milnacipran, paroxetine, sertraline, venlafaxine, vilazodone 7.",
+    "urdu_warning": "Khabardar! aspirin aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "atenolol",
+    "salt_b": "diltiazem",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ") Concomitant Use of Calcium Channel Blockers Bradycardia and heart block can occur and the left ventricular end diastolic pressure can rise when beta-blockers are administered with verapamil or diltiazem.",
+    "urdu_warning": "Khabardar! atenolol aur diltiazem ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "atorvastatin",
+    "salt_b": "clarithromycin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Intervention: In patients taking clarithromycin or itraconazole, do not exceed atorvastatin 20 mg [see Dosage and Administration (2.",
+    "urdu_warning": "Khabardar! atorvastatin aur clarithromycin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "atorvastatin",
+    "salt_b": "itraconazole",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Intervention: In patients taking clarithromycin or itraconazole, do not exceed atorvastatin 20 mg [see Dosage and Administration (2.",
+    "urdu_warning": "Khabardar! atorvastatin aur itraconazole ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "atorvastatin",
+    "salt_b": "ketoconazole",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Examples: Erythromycin, clarithromycin, itraconazole, ketoconazole, posaconazole, and voriconazole.",
+    "urdu_warning": "Khabardar! atorvastatin aur ketoconazole ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "captopril",
+    "salt_b": "spironolactone",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Potassium-sparing diuretics such as spironolactone, triamterene, or amiloride, or potassium supplements, should be given only for documented hypokalemia, and then with caution, since they may lead to a significant increase of serum potassium.",
+    "urdu_warning": "Khabardar! captopril aur spironolactone ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "carbamazepine",
+    "salt_b": "clarithromycin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ", erythromycin, clarithromycin), fluoxetine, fluvoxamine, trazodone, omeprazole, oxybutynin, isoniazid, niacinamide (nicotinamide), azoles (e.",
+    "urdu_warning": "Khabardar! carbamazepine aur clarithromycin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "celecoxib",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Table 3: Clinically Significant Drug Interactions with Celecoxib Drugs That Interfere with Hemostasis Clinical Impact: Celecoxib and anticoagulants such as warfarin have a synergistic effect on bleeding.",
+    "urdu_warning": "Khabardar! celecoxib aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "cimetidine",
+    "salt_b": "theophylline",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Drug Interactions Cimetidine tablets, apparently through an effect on certain microsomal enzyme systems, has been reported to reduce the hepatic metabolism of warfarin-type anticoagulants, phenytoin, propranolol, nifedipine, chlordiazepoxide, diazepam, certain tricyclic antidepressants, lidocaine, theophylline, and metronidazole, thereby delaying elimination and increasing blood levels of these drugs.",
+    "urdu_warning": "Khabardar! cimetidine aur theophylline ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "cimetidine",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Drug Interactions Cimetidine tablets, apparently through an effect on certain microsomal enzyme systems, has been reported to reduce the hepatic metabolism of warfarin-type anticoagulants, phenytoin, propranolol, nifedipine, chlordiazepoxide, diazepam, certain tricyclic antidepressants, lidocaine, theophylline, and metronidazole, thereby delaying elimination and increasing blood levels of these drugs.",
+    "urdu_warning": "Khabardar! cimetidine aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "ciprofloxacin",
+    "salt_b": "theophylline",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "However, the systemic administration of some quinolones has been shown to elevate plasma concentrations of theophylline, interfere with the metabolism of caffeine, enhance the effects of the oral anticoagulant, warfarin, and its derivatives, and has been associated with transient elevations in serum creatinine in patients receiving cyclosporine concomitantly.",
+    "urdu_warning": "Khabardar! ciprofloxacin aur theophylline ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "ciprofloxacin",
+    "salt_b": "tizanidine",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Table 11: Drugs That are Affected by and Affecting Ciprofloxacin Drugs That are Affected by Ciprofloxacin Drug(s) Recommendation Comments Tizanidine Contraindicated Concomitant administration of tizanidine and ciprofloxacin is contraindicated due to the potentiation of hypotensive and sedative effects of tizanidine [ see Contraindications (4.",
+    "urdu_warning": "Khabardar! Ciprofloxacin aur Sirdalud (tizanidine) ek sath nahi lene. Yeh milawat khatarnak ho sakti hai. Doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "ciprofloxacin",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "However, the systemic administration of some quinolones has been shown to elevate plasma concentrations of theophylline, interfere with the metabolism of caffeine, enhance the effects of the oral anticoagulant, warfarin, and its derivatives, and has been associated with transient elevations in serum creatinine in patients receiving cyclosporine concomitantly.",
+    "urdu_warning": "Khabardar! ciprofloxacin aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "clarithromycin",
+    "salt_b": "colchicine",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "3 )] Anti-Gout Agents: Colchicine (in patients with renal or hepatic impairment) Contraindicated Colchicine: Colchicine is a substrate for both CYP3A and the efflux transporter, P-glycoprotein (Pgp).",
+    "urdu_warning": "Khabardar! clarithromycin aur colchicine ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "clarithromycin",
+    "salt_b": "digoxin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Digoxin Use With Caution Digoxin: Digoxin is a substrate for P-glycoprotein (Pgp) and clarithromycin is known to inhibit Pgp.",
+    "urdu_warning": "Khabardar! clarithromycin aur digoxin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "clarithromycin",
+    "salt_b": "ergotamine",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Ergot Alkaloids: Ergotamine Dihydroergotamine Contraindicated Ergotamine, Dihydroergotamine: Postmarketing reports indicate that coadministration of clarithromycin with ergotamine or dihydroergotamine has been associated with acute ergot toxicity characterized by vasospasm and ischemia of the extremities and other tissues including the central nervous system [see Contraindications ( 4.",
+    "urdu_warning": "Khabardar! clarithromycin aur ergotamine ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "clarithromycin",
+    "salt_b": "simvastatin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "2 )] Lipid-lowering agents: Lomitapide Lovastatin Simvastatin Contraindicated Lomitapide, Lovastatin, Simvastatin: Clarithromycin may increase the exposure of these drugs by inhibition of CYP3A metabolism, thereby increasing the risk of toxicities from these drugs [see Contraindications ( 4.",
+    "urdu_warning": "Khabardar! Klaricid (clarithromycin) aur Zocor (simvastatin) ek sath maans peshiyon ko nuqsan de sakte hain. Doctor se rabta karein, khud dawai na badlein."
+  },
+  {
+    "salt_a": "clarithromycin",
+    "salt_b": "theophylline",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Xanthine Derivatives: Theophylline Use With Caution Theophylline: Clarithromycin use in patients who are receiving theophylline may be associated with an increase of serum theophylline concentrations [see Pharmacokinetics ( 12.",
+    "urdu_warning": "Khabardar! clarithromycin aur theophylline ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "clarithromycin",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Oral Anticoagulants: Warfarin Use With Caution Oral anticoagulants: Spontaneous reports in the postmarketing period suggest that concomitant administration of clarithromycin and oral anticoagulants may potentiate the effects of the oral anticoagulants.",
+    "urdu_warning": "Khabardar! clarithromycin aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "clopidogrel",
+    "salt_b": "esomeprazole",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Omeprazole or Esomeprazole Avoid concomitant use of clopidogrel with omeprazole or esomeprazole.",
+    "urdu_warning": "Khabardar! clopidogrel aur esomeprazole ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "clopidogrel",
+    "salt_b": "omeprazole",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Omeprazole or Esomeprazole Avoid concomitant use of clopidogrel with omeprazole or esomeprazole.",
+    "urdu_warning": "Khabardar! clopidogrel aur omeprazole ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "diclofenac",
+    "salt_b": "lithium carbonate",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Lithium Clinical Impact: NSAIDs have produced elevations in plasma lithium levels and reductions in renal lithium clearance.",
+    "urdu_warning": "Khabardar! diclofenac aur lithium carbonate ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "diclofenac",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Table 3: Clinically Significant Drug Interactions with Diclofenac Drugs That Interfere with Hemostasis Clinical Impact: Diclofenac and anticoagulants such as warfarin have a synergistic effect on bleeding.",
+    "urdu_warning": "Khabardar! diclofenac aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "digoxin",
+    "salt_b": "erythromycin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Captopril 58% 39% Clarithromycin NA 70% Dronedarone NA 150% Gentamicin 129-212% NA Erythromycin 100% NA Itraconazole 80% NA Lapatinib NA 180% Propafenone NA 60-270% Quinidine 100% NA Ranolazine 50% NA Ritonavir NA 86% Telaprevir 50% 85% Tetracycline 100% NA Verapamil 50-75% NA Digoxin concentrations increased less than 50% Atorvastatin 22% 15% Carvedilol 16% 14% Measure serum digoxin concentrations before initiating concomitant drugs.",
+    "urdu_warning": "Khabardar! digoxin aur erythromycin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "digoxin",
+    "salt_b": "verapamil",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Digitalis: Clinical use of verapamil in digitalized patients has shown the combination to be well tolerated if digoxin doses are properly adjusted.",
+    "urdu_warning": "Khabardar! digoxin aur verapamil ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "diltiazem",
+    "salt_b": "simvastatin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Intervention: For patients taking verapamil, diltiazem, or dronedarone, do not exceed simvastatin 10 mg daily.",
+    "urdu_warning": "Khabardar! diltiazem aur simvastatin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "enalapril",
+    "salt_b": "spironolactone",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ", spironolactone, triamterene, or amiloride), potassium supplements, or potassium-containing salt substitutes may lead to significant increases in serum potassium.",
+    "urdu_warning": "Khabardar! enalapril aur spironolactone ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "ergotamine",
+    "salt_b": "erythromycin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "(See also CONTRAINDICATIONS and WARNINGS section) CONTRAINDICATIONS Coadministration of ergotamine with potent CYP 3A4 inhibitors (ritonavir, nelfinavir, indinavir, erythromycin, clarithromycin, and troleandomycin) has been associated with acute ergot toxicity (ergotism) characterized by vasospasm and ischemia of the extremities (see PRECAUTIONS : Drug Interactions), with some cases resulting in amputation.",
+    "urdu_warning": "Khabardar! ergotamine aur erythromycin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "erythromycin",
+    "salt_b": "simvastatin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "These include colchicine toxicity with colchicine; rhabdomyolysis with simvastatin, lovastatin and atorvastatin; and hypotension with calcium channel blockers metabolized by CYP3A4 (e.",
+    "urdu_warning": "Khabardar! erythromycin aur simvastatin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "erythromycin",
+    "salt_b": "theophylline",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Drug Interactions Theophylline Erythromycin use in patients who are receiving high doses of theophylline may be associated with an increase in serum theophylline levels and potential theophylline toxicity.",
+    "urdu_warning": "Khabardar! erythromycin aur theophylline ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "fluconazole",
+    "salt_b": "phenytoin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Phenytoin: Phenytoin AUC was determined after 4 days of phenytoin dosing (200 mg daily, orally for 3 days followed by 250 mg intravenously for one dose) both with and without the administration of fluconazole (oral fluconazole 200 mg daily for 16 days) in 10 normal male volunteers.",
+    "urdu_warning": "Khabardar! fluconazole aur phenytoin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "fluconazole",
+    "salt_b": "simvastatin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "HMG-CoA reductase inhibitors : The risk of myopathy and rhabdomyolysis increases when fluconazole is coadministered with HMG-CoA reductase inhibitors metabolized through CYP3A4, such as atorvastatin and simvastatin, or through CYP2C9, such as fluvastatin.",
+    "urdu_warning": "Khabardar! fluconazole aur simvastatin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "fluconazole",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ") Warfarin: There was a significant increase in prothrombin time response (area under the prothrombin time-time curve) following a single dose of warfarin (15 mg) administered to 13 normal male volunteers following oral fluconazole 200 mg administered daily for 14 days as compared to the administration of warfarin alone.",
+    "urdu_warning": "Khabardar! fluconazole aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "fluoxetine",
+    "salt_b": "linezolid",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "In addition, do not start fluoxetine in a patient who is being treated with linezolid or intravenous methylene blue ( 4.",
+    "urdu_warning": "Khabardar! fluoxetine aur linezolid ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "fluoxetine",
+    "salt_b": "tramadol",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Examples Quinidine, fluoxetine, paroxetine and bupropion Inhibitors of CYP3A4 Clinical Impact: The concomitant use of tramadol hydrochloride extended-release tablets and CYP3A4 inhibitors can increase the plasma concentration of tramadol and may result in a greater amount of metabolism via CYP2D6 and greater levels of M1.",
+    "urdu_warning": "Khabardar! fluoxetine aur tramadol ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "gemfibrozil",
+    "salt_b": "rosuvastatin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ", atrasentan, atorvastatin, bosentan, ezetimibe, fluvastatin, glyburide, SN-38 [active metabolite of irinotecan], rosuvastatin, pitavastatin, pravastatin, rifampin, valsartan, olmesartan).",
+    "urdu_warning": "Khabardar! gemfibrozil aur rosuvastatin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "gemfibrozil",
+    "salt_b": "simvastatin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Combination therapy of gemfibrozil with simvastatin (see WARNINGS and PRECAUTIONS ).",
+    "urdu_warning": "Khabardar! gemfibrozil aur simvastatin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "glyburide",
+    "salt_b": "sulfamethoxazole",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ", glipizide and glyburide) or eliminated renally via OCT2 (e.",
+    "urdu_warning": "Khabardar! glyburide aur sulfamethoxazole ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "ibuprofen",
+    "salt_b": "prednisolone",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Other factors that increase the risk of GI bleeding in patients treated with NSAIDs include concomitant use of oral corticosteroids or anticoagulants, longer duration of NSAID therapy, smoking, use of alcohol, older age, and poor general health status.",
+    "urdu_warning": "Khabardar! ibuprofen aur prednisolone ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "ibuprofen",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Table 3: Drugs that Can Increase the Risk of Bleeding Drug Class Specific Drugs Anticoagulants argatroban, dabigatran, bivalirudin, desirudin, heparin, lepirudin Antiplatelet Agents aspirin, cilostazol, clopidogrel, dipyridamole, prasugrel, ticlopidine Non-steroidal Anti-Inflammatory Agents celecoxib, diclofenac, diflunisal, fenoprofen, ibuprofen, indomethacin, ketoprofen, ketorolac, mefenamic acid, naproxen, oxaprozin, piroxicam, sulindac Serotonin Reuptake Inhibitors citalopram, desvenlafaxine, duloxetine, escitalopram, fluoxetine, fluvoxamine, milnacipran, paroxetine, sertraline, venlafaxine, vilazodone 7.",
+    "urdu_warning": "Khabardar! Aap pehle se khoon patla karne ki dawai Warfarin le rahi hain. Brufen (ibuprofen) is ke sath lene se bleeding ka khatra barh sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "isosorbide dinitrate",
+    "salt_b": "sildenafil",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Do not use isosorbide dinitrate in patients who are taking certain drugs for erectile dysfunction (phosphodiesterase inhibitors), such as sildenafil, tadalafil, or vardenafil.",
+    "urdu_warning": "Khabardar! Sildenafil aur nitrate dawai (seene ke dard ki goli) ek sath nahi le sakte. Blood pressure khatarnak had tak gir sakta hai. Foran doctor se rabta karein."
+  },
+  {
+    "salt_a": "isosorbide mononitrate",
+    "salt_b": "sildenafil",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Do not use isosorbide mononitrate in patients who are taking certain drugs for erectile dysfunction (phosphodiesterase inhibitors), such as sildenafil, tadalafil, or vardenafil.",
+    "urdu_warning": "Khabardar! Sildenafil aur nitrate dawai (seene ke dard ki goli) ek sath nahi le sakte. Blood pressure khatarnak had tak gir sakta hai. Foran doctor se rabta karein."
+  },
+  {
+    "salt_a": "isosorbide mononitrate",
+    "salt_b": "tadalafil",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Do not use isosorbide mononitrate in patients who are taking certain drugs for erectile dysfunction (phosphodiesterase inhibitors), such as sildenafil, tadalafil, or vardenafil.",
+    "urdu_warning": "Khabardar! Tadalafil aur nitrate dawai ek sath nahi le sakte. Foran doctor se rabta karein."
+  },
+  {
+    "salt_a": "itraconazole",
+    "salt_b": "simvastatin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Lipid-Lowering Drugs Lomitapide Lovastatin a Simvastatin a Contraindicated during and 2 weeks after itraconazole treatment.",
+    "urdu_warning": "Khabardar! itraconazole aur simvastatin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "ketoconazole",
+    "salt_b": "simvastatin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ", itraconazole, ketoconazole, posaconazole, and voriconazole), select macrolide antibiotics (e.",
+    "urdu_warning": "Khabardar! ketoconazole aur simvastatin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "ketorolac",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "The concurrent use of ketorolac tromethamine and therapy that affects hemostasis, including prophylactic low-dose heparin (2500-5000 units q12h), warfarin and dextrans have not been studied extensively, but may also be associated with an increased risk of bleeding.",
+    "urdu_warning": "Khabardar! ketorolac aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "linezolid",
+    "salt_b": "sertraline",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Starting Sertraline hydrochloride in a patient who is being treated with MAOIs such as linezolid or intravenous methyelene blue is also contraindicated because of an increased risk of serotonin syndrome (see WARNINGS and DOSAGE AND ADMINISTRATION).",
+    "urdu_warning": "Khabardar! linezolid aur sertraline ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "linezolid",
+    "salt_b": "tramadol",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ", cyclobenzaprine, metaxalone), monoamine oxidase (MAO) inhibitors (those intended to treat psychiatric disorders and also others, such as linezolid and intravenous methylene blue).",
+    "urdu_warning": "Khabardar! linezolid aur tramadol ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "lisinopril",
+    "salt_b": "spironolactone",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ", spironolactone, eplerenone, triamterene, or amiloride), potassium supplements, or potassium-containing salt substitutes may lead to significant increases in serum potassium.",
+    "urdu_warning": "Khabardar! lisinopril aur spironolactone ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "mefenamic acid",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "$ Table 2: Clinically Significant Drug Interactions with Mefenamic Acid Drugs That Interfere with Hemostasis Clinical Impact: Mefenamic acid and anticoagulants such as warfarin have a synergistic effect on bleeding.",
+    "urdu_warning": "Khabardar! mefenamic acid aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "meloxicam",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Drugs that Interfere with Hemostasis Clinical Impact: Meloxicam and anticoagulants such as warfarin have a synergistic effect on bleeding.",
+    "urdu_warning": "Khabardar! meloxicam aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "methotrexate",
+    "salt_b": "trimethoprim",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Sulfonamides can also displace methotrexate from plasma protein binding sites and can compete with the renal transport of methotrexate, thus increasing free methotrexate concentrations.",
+    "urdu_warning": "Khabardar! methotrexate aur trimethoprim ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "metronidazole",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Warfarin and other Oral Anticoagulants Metronidazole has been reported to potentiate the anticoagulant effect of warfarin and other oral coumarin anticoagulants, resulting in a prolongation of prothrombin time.",
+    "urdu_warning": "Khabardar! Flagyl (metronidazole) Warfarin ke sath bleeding ka khatra barha sakti hai. Lene se pehle doctor se rabta karein."
+  },
+  {
+    "salt_a": "naproxen",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Table 1: Clinically Significant Drug Interactions with naproxen Drugs That Interfere with Hemostasis Clinical Impact: • Naproxen and anticoagulants such as warfarin have a synergistic effect on bleeding.",
+    "urdu_warning": "Khabardar! naproxen aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "nitroglycerin",
+    "salt_b": "sildenafil",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "PDE-5-Inhibitors such as avanafil, sildenafil, vardenafil, and tadalafil have been shown to potentiate the hypotensive effects of organic nitrates.",
+    "urdu_warning": "Khabardar! Sildenafil aur nitrate dawai (seene ke dard ki goli) ek sath nahi le sakte. Blood pressure khatarnak had tak gir sakta hai. Foran doctor se rabta karein."
+  },
+  {
+    "salt_a": "nitroglycerin",
+    "salt_b": "tadalafil",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "PDE-5-Inhibitors such as avanafil, sildenafil, vardenafil, and tadalafil have been shown to potentiate the hypotensive effects of organic nitrates.",
+    "urdu_warning": "Khabardar! Tadalafil aur nitrate dawai ek sath nahi le sakte. Foran doctor se rabta karein."
+  },
+  {
+    "salt_a": "piroxicam",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Table 1: Clinically Significant Drug Interactions with Piroxicam Drugs That Interfere with Hemostasis Clinical Impact: •Piroxicam and anticoagulants such as warfarin have a synergistic effect on bleeding.",
+    "urdu_warning": "Khabardar! piroxicam aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "potassium chloride",
+    "salt_b": "spironolactone",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "2 Renin-angiotensin-aldosterone Inhibitors Drugs that inhibit the renin-angiotensin-aldosterone system (RAAS) including angiotensin converting enzyme (ACE) inhibitors, angiotensin receptor blockers (ARBs), spironolactone, eplerenone, or aliskiren produce potassium retention by inhibiting aldosterone production.",
+    "urdu_warning": "Khabardar! potassium chloride aur spironolactone ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "propranolol",
+    "salt_b": "verapamil",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "There have been reports of significant bradycardia, heart failure, and cardiovascular collapse with concurrent use of verapamil and beta-blockers.",
+    "urdu_warning": "Khabardar! propranolol aur verapamil ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "rifampin",
+    "salt_b": "simvastatin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Decrease AUC by 56% Narcotic Analgesics Oxycodone Decrease AUC by 86% Morphine Decrease exposure Selective 5-HT3 Receptor Antagonists Ondansetron Decrease exposure Statins Metabolized by CYP3A4 Simvastatin Decrease exposure Thiazolidinediones Rosiglitazone Decrease AUC by 66% Tricyclic Antidepressants Nortriptyline à Decrease exposure Other Drugs Enalapril Decrease active metabolite exposure Chloramphenicol è Decrease exposure Clarithromycin Decrease exposure Dapsone Rifampin has been shown to increase the clearance of dapsone and, accordingly, decrease dapsone exposure.",
+    "urdu_warning": "Khabardar! rifampin aur simvastatin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "rifampin",
+    "salt_b": "warfarin",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "indicated (See CONTRAINDICATIONS ) Decrease exposure Oral Anticoagulants Prevention or Management Perform prothrombin time daily or as frequently as necessary to establish and maintain the required dose of anticoagulant Warfarin Decrease exposure Antifungals Fluconazole Decrease AUC by 23% Itraconazole Prevention or Management Not recommended 2 weeks before and during itraconazole treatment Decrease exposure Ketoconazole Decrease exposure Beta-blockers Metoprolol Decrease exposure Propranolol Decrease e",
+    "urdu_warning": "Khabardar! rifampin aur warfarin ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "sertraline",
+    "salt_b": "sumatriptan",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Sumatriptan –There have been rare postmarketing reports describing patients with weakness, hyperreflexia, and incoordination following the use of a selective serotonin reuptake inhibitor (SSRI) and sumatriptan.",
+    "urdu_warning": "Khabardar! sertraline aur sumatriptan ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "sertraline",
+    "salt_b": "tramadol",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Serotonin Syndrome: The development of a potentially life-threatening serotonin syndrome has been reported with SNRIs and SSRIs, including Sertraline hydrochloride, alone but particularly with concomitant use of other serotonergic drugs (including triptans, tricyclic antidepressants, fentanyl, lithium, tramadol, tryptophan, buspirone, and St.",
+    "urdu_warning": "Khabardar! sertraline aur tramadol ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "simvastatin",
+    "salt_b": "verapamil",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": "Intervention: For patients taking verapamil, diltiazem, or dronedarone, do not exceed simvastatin 10 mg daily.",
+    "urdu_warning": "Khabardar! simvastatin aur verapamil ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  },
+  {
+    "salt_a": "spironolactone",
+    "salt_b": "valsartan",
+    "severity": "HIGH",
+    "source": "openFDA Drug Label (Cached Verified Excerpt)",
+    "fda_verbatim_excerpt": ", spironolactone, triamterene, amiloride), potassium supplements, or salt substitutes containing potassium may lead to increases in serum potassium [see Warnings and Precautions (5.",
+    "urdu_warning": "Khabardar! spironolactone aur valsartan ka sang milakar istemal nuqsan deh ho sakta hai. Lene se pehle apne doctor se foran rabta karein."
+  }
+]
