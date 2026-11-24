@@ -1,0 +1,7426 @@
+[
+  {
+    "brand_name": "Aciphex",
+    "aliases": [
+      "Aciphex",
+      "rabeprazole"
+    ],
+    "generic_salts": [
+      "rabeprazole"
+    ],
+    "common_strengths_mg": [
+      20
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Rabecid"
+    ],
+    "urdu_category_note": "Yeh Aciphex hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Acivir",
+    "aliases": [
+      "Acivir"
+    ],
+    "generic_salts": [
+      "acyclovir"
+    ],
+    "common_strengths_mg": [
+      200,
+      400,
+      800
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zovirax"
+    ],
+    "urdu_category_note": "Yeh Acivir hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Actrapid",
+    "aliases": [
+      "Actrapid",
+      "insulin human"
+    ],
+    "generic_salts": [
+      "insulin human"
+    ],
+    "common_strengths_mg": [],
+    "max_single_dose_mg": 1,
+    "max_daily_dose_mg": 1,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Humulin",
+      "Mixtard"
+    ],
+    "urdu_category_note": "Insulin ki dose is app se tay nahi hoti. Meharbani kar ke doctor ya pharmacist se tasdeeq karein."
+  },
+  {
+    "brand_name": "Adalat",
+    "aliases": [
+      "Adalat",
+      "nifedipine"
+    ],
+    "generic_salts": [
+      "nifedipine"
+    ],
+    "common_strengths_mg": [
+      10,
+      20,
+      30,
+      60
+    ],
+    "max_single_dose_mg": 60,
+    "max_daily_dose_mg": 120,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Adalat hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Aldactone",
+    "aliases": [
+      "Aldactone",
+      "spironolactone"
+    ],
+    "generic_salts": [
+      "spironolactone"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Aldactone hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Aldomet",
+    "aliases": [
+      "Aldomet",
+      "methyldopa"
+    ],
+    "generic_salts": [
+      "methyldopa"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Aldomet hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Amaryl",
+    "aliases": [
+      "Amaryl",
+      "glimepiride"
+    ],
+    "generic_salts": [
+      "glimepiride"
+    ],
+    "common_strengths_mg": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "max_single_dose_mg": 8,
+    "max_daily_dose_mg": 8,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Diapride"
+    ],
+    "urdu_category_note": "Yeh Amaryl hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Amaryl M",
+    "aliases": [
+      "Amaryl M"
+    ],
+    "generic_salts": [
+      "metformin",
+      "glimepiride"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Amaryl M hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Amika",
+    "aliases": [
+      "Amika"
+    ],
+    "generic_salts": [
+      "amikacin"
+    ],
+    "common_strengths_mg": [
+      100,
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1500,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Amikin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Amikin",
+    "aliases": [
+      "Amikin",
+      "amikacin"
+    ],
+    "generic_salts": [
+      "amikacin"
+    ],
+    "common_strengths_mg": [
+      100,
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1500,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Amika"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Amlocard",
+    "aliases": [
+      "Amlocard"
+    ],
+    "generic_salts": [
+      "amlodipine"
+    ],
+    "common_strengths_mg": [
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Norvasc",
+      "Amlopin"
+    ],
+    "urdu_category_note": "Yeh Amlocard hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Amlopin",
+    "aliases": [
+      "Amlopin"
+    ],
+    "generic_salts": [
+      "amlodipine"
+    ],
+    "common_strengths_mg": [
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Norvasc",
+      "Amlocard"
+    ],
+    "urdu_category_note": "Yeh Amlopin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Amoxil",
+    "aliases": [
+      "Amoxil",
+      "amoxicillin"
+    ],
+    "generic_salts": [
+      "amoxicillin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Wymox",
+      "Ospamox",
+      "Polymox"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Ampiclox",
+    "aliases": [
+      "Ampiclox"
+    ],
+    "generic_salts": [
+      "ampicillin",
+      "cloxacillin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Ampoxin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Ampoxin",
+    "aliases": [
+      "Ampoxin"
+    ],
+    "generic_salts": [
+      "ampicillin",
+      "cloxacillin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Ampiclox"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Angised",
+    "aliases": [
+      "Angised",
+      "gtn",
+      "glyceryl trinitrate",
+      "nitroglycerin"
+    ],
+    "generic_salts": [
+      "nitroglycerin"
+    ],
+    "common_strengths_mg": [
+      0.4,
+      0.5
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Nitromint"
+    ],
+    "urdu_category_note": "Yeh Angised hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Arinac",
+    "aliases": [
+      "Arinac"
+    ],
+    "generic_salts": [
+      "ibuprofen",
+      "pseudoephedrine"
+    ],
+    "common_strengths_mg": [
+      200
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 3200,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Arinac hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Ascard",
+    "aliases": [
+      "Ascard"
+    ],
+    "generic_salts": [
+      "aspirin"
+    ],
+    "common_strengths_mg": [
+      75,
+      100,
+      300
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Disprin",
+      "Disprin CV",
+      "Loprin"
+    ],
+    "urdu_category_note": "Yeh Ascard hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Asthalin",
+    "aliases": [
+      "Asthalin"
+    ],
+    "generic_salts": [
+      "albuterol"
+    ],
+    "common_strengths_mg": [
+      2,
+      4
+    ],
+    "max_single_dose_mg": 8,
+    "max_daily_dose_mg": 32,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Ventolin"
+    ],
+    "urdu_category_note": "Yeh Asthalin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Atorva",
+    "aliases": [
+      "Atorva"
+    ],
+    "generic_salts": [
+      "atorvastatin"
+    ],
+    "common_strengths_mg": [
+      10,
+      20,
+      40,
+      80
+    ],
+    "max_single_dose_mg": 80,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Lipitor",
+      "Lipiget"
+    ],
+    "urdu_category_note": "Yeh Atorva hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Atrovent",
+    "aliases": [
+      "Atrovent",
+      "ipratropium"
+    ],
+    "generic_salts": [
+      "ipratropium"
+    ],
+    "common_strengths_mg": [
+      0.02,
+      0.25
+    ],
+    "max_single_dose_mg": 0.5,
+    "max_daily_dose_mg": 2,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Atrovent hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Augmentin",
+    "aliases": [
+      "Augmentin",
+      "augmntin",
+      "augmentn",
+      "augmantin",
+      "co-amoxiclav",
+      "coamoxiclav"
+    ],
+    "generic_salts": [
+      "amoxicillin",
+      "clavulanate"
+    ],
+    "common_strengths_mg": [
+      375,
+      625,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Augmentin BD",
+      "Calamox",
+      "Clavulin",
+      "Augpen"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Augmentin BD",
+    "aliases": [
+      "Augmentin BD"
+    ],
+    "generic_salts": [
+      "amoxicillin",
+      "clavulanate"
+    ],
+    "common_strengths_mg": [
+      375,
+      625,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Augmentin",
+      "Calamox",
+      "Clavulin",
+      "Augpen"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Augpen",
+    "aliases": [
+      "Augpen"
+    ],
+    "generic_salts": [
+      "amoxicillin",
+      "clavulanate"
+    ],
+    "common_strengths_mg": [
+      375,
+      625,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Augmentin",
+      "Augmentin BD",
+      "Calamox",
+      "Clavulin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Avelox",
+    "aliases": [
+      "Avelox",
+      "moxifloxacin"
+    ],
+    "generic_salts": [
+      "moxifloxacin"
+    ],
+    "common_strengths_mg": [
+      400
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Moxiget"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Avil",
+    "aliases": [
+      "Avil",
+      "pheniramine"
+    ],
+    "generic_salts": [
+      "pheniramine"
+    ],
+    "common_strengths_mg": [
+      25,
+      50
+    ],
+    "max_single_dose_mg": 50,
+    "max_daily_dose_mg": 150,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Avil hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Avodart",
+    "aliases": [
+      "Avodart",
+      "dutasteride"
+    ],
+    "generic_salts": [
+      "dutasteride"
+    ],
+    "common_strengths_mg": [
+      0.5
+    ],
+    "max_single_dose_mg": 0.5,
+    "max_daily_dose_mg": 0.5,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Avodart hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Azomax",
+    "aliases": [
+      "Azomax",
+      "azithromycin"
+    ],
+    "generic_salts": [
+      "azithromycin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zithromax",
+      "Zithrox"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Bactoflox",
+    "aliases": [
+      "Bactoflox"
+    ],
+    "generic_salts": [
+      "levofloxacin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      750
+    ],
+    "max_single_dose_mg": 750,
+    "max_daily_dose_mg": 750,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Leflox",
+      "Cravit",
+      "Tavanic",
+      "Levoxin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Bactrim",
+    "aliases": [
+      "Bactrim"
+    ],
+    "generic_salts": [
+      "sulfamethoxazole",
+      "trimethoprim"
+    ],
+    "common_strengths_mg": [
+      480,
+      960
+    ],
+    "max_single_dose_mg": 960,
+    "max_daily_dose_mg": 1920,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Septran",
+      "Septran DS"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Betaloc",
+    "aliases": [
+      "Betaloc"
+    ],
+    "generic_salts": [
+      "metoprolol"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 200,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Lopressor"
+    ],
+    "urdu_category_note": "Yeh Betaloc hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Biclar",
+    "aliases": [
+      "Biclar"
+    ],
+    "generic_salts": [
+      "clarithromycin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Klaricid",
+      "Klacid",
+      "Claritek"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Blokium",
+    "aliases": [
+      "Blokium"
+    ],
+    "generic_salts": [
+      "atenolol"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 100,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Tenormin"
+    ],
+    "urdu_category_note": "Yeh Blokium hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Brexin",
+    "aliases": [
+      "Brexin",
+      "piroxicam"
+    ],
+    "generic_salts": [
+      "piroxicam"
+    ],
+    "common_strengths_mg": [
+      20
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Feldene"
+    ],
+    "urdu_category_note": "Yeh Brexin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Brufen",
+    "aliases": [
+      "Brufen",
+      "brofen",
+      "ibuprofen"
+    ],
+    "generic_salts": [
+      "ibuprofen"
+    ],
+    "common_strengths_mg": [
+      200,
+      400,
+      600,
+      800
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 3200,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Brufen Retard",
+      "Fenbid"
+    ],
+    "urdu_category_note": "Yeh Brufen hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Brufen Retard",
+    "aliases": [
+      "Brufen Retard"
+    ],
+    "generic_salts": [
+      "ibuprofen"
+    ],
+    "common_strengths_mg": [
+      200,
+      400,
+      600,
+      800
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 3200,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Brufen",
+      "Fenbid"
+    ],
+    "urdu_category_note": "Yeh Brufen Retard hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Buscopan",
+    "aliases": [
+      "Buscopan",
+      "hyoscine butylbromide"
+    ],
+    "generic_salts": [
+      "hyoscine butylbromide"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 100,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Buscopan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cafergot",
+    "aliases": [
+      "Cafergot"
+    ],
+    "generic_salts": [
+      "ergotamine",
+      "caffeine"
+    ],
+    "common_strengths_mg": [
+      1
+    ],
+    "max_single_dose_mg": 2,
+    "max_daily_dose_mg": 6,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Cafergot hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Caflam",
+    "aliases": [
+      "Caflam",
+      "diclofenac"
+    ],
+    "generic_salts": [
+      "diclofenac"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      75,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 150,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Voltral",
+      "Voltaren",
+      "Dicloran"
+    ],
+    "urdu_category_note": "Yeh Caflam hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Calamox",
+    "aliases": [
+      "Calamox"
+    ],
+    "generic_salts": [
+      "amoxicillin",
+      "clavulanate"
+    ],
+    "common_strengths_mg": [
+      375,
+      625,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Augmentin",
+      "Augmentin BD",
+      "Clavulin",
+      "Augpen"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Calan",
+    "aliases": [
+      "Calan"
+    ],
+    "generic_salts": [
+      "verapamil"
+    ],
+    "common_strengths_mg": [
+      40,
+      80,
+      120,
+      240
+    ],
+    "max_single_dose_mg": 240,
+    "max_daily_dose_mg": 480,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Isoptin"
+    ],
+    "urdu_category_note": "Yeh Calan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Calpol",
+    "aliases": [
+      "Calpol"
+    ],
+    "generic_salts": [
+      "acetaminophen"
+    ],
+    "common_strengths_mg": [
+      500,
+      665,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Panadol",
+      "Panadol Extend",
+      "Febrol",
+      "Disprol"
+    ],
+    "urdu_category_note": "Yeh Calpol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Camcolit",
+    "aliases": [
+      "Camcolit",
+      "lithium",
+      "lithium carbonate"
+    ],
+    "generic_salts": [
+      "lithium carbonate"
+    ],
+    "common_strengths_mg": [
+      250,
+      400
+    ],
+    "max_single_dose_mg": 450,
+    "max_daily_dose_mg": 1800,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Camcolit hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Capoten",
+    "aliases": [
+      "Capoten",
+      "captopril"
+    ],
+    "generic_salts": [
+      "captopril"
+    ],
+    "common_strengths_mg": [
+      12.5,
+      25,
+      50
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 450,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Capoten hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cardizem",
+    "aliases": [
+      "Cardizem"
+    ],
+    "generic_salts": [
+      "diltiazem"
+    ],
+    "common_strengths_mg": [
+      30,
+      60,
+      90,
+      120,
+      180
+    ],
+    "max_single_dose_mg": 360,
+    "max_daily_dose_mg": 480,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Herbesser"
+    ],
+    "urdu_category_note": "Yeh Cardizem hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cardura",
+    "aliases": [
+      "Cardura",
+      "doxazosin"
+    ],
+    "generic_salts": [
+      "doxazosin"
+    ],
+    "common_strengths_mg": [
+      1,
+      2,
+      4
+    ],
+    "max_single_dose_mg": 8,
+    "max_daily_dose_mg": 16,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Cardura hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Carveda",
+    "aliases": [
+      "Carveda"
+    ],
+    "generic_salts": [
+      "carvedilol"
+    ],
+    "common_strengths_mg": [
+      3.125,
+      6.25,
+      12.5,
+      25
+    ],
+    "max_single_dose_mg": 25,
+    "max_daily_dose_mg": 50,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Dilatrend"
+    ],
+    "urdu_category_note": "Yeh Carveda hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Catapres",
+    "aliases": [
+      "Catapres",
+      "clonidine"
+    ],
+    "generic_salts": [
+      "clonidine"
+    ],
+    "common_strengths_mg": [
+      0.1,
+      0.2
+    ],
+    "max_single_dose_mg": 0.3,
+    "max_daily_dose_mg": 2.4,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Catapres hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cefaxon",
+    "aliases": [
+      "Cefaxon"
+    ],
+    "generic_salts": [
+      "ceftriaxone"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Rocephin",
+      "Oxidil"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Cefiget",
+    "aliases": [
+      "Cefiget"
+    ],
+    "generic_salts": [
+      "cefixime"
+    ],
+    "common_strengths_mg": [
+      200,
+      400
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Cefspan",
+      "Cefim"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Cefim",
+    "aliases": [
+      "Cefim"
+    ],
+    "generic_salts": [
+      "cefixime"
+    ],
+    "common_strengths_mg": [
+      200,
+      400
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Cefspan",
+      "Cefiget"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Cefspan",
+    "aliases": [
+      "Cefspan",
+      "cefixime"
+    ],
+    "generic_salts": [
+      "cefixime"
+    ],
+    "common_strengths_mg": [
+      200,
+      400
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Cefiget",
+      "Cefim"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Ceftaz",
+    "aliases": [
+      "Ceftaz"
+    ],
+    "generic_salts": [
+      "ceftazidime"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 6000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Fortum"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Ceftin",
+    "aliases": [
+      "Ceftin"
+    ],
+    "generic_salts": [
+      "cefuroxime"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zinacef",
+      "Zinnat"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Celebrex",
+    "aliases": [
+      "Celebrex",
+      "celecoxib"
+    ],
+    "generic_salts": [
+      "celecoxib"
+    ],
+    "common_strengths_mg": [
+      100,
+      200
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Celebrex hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Ceporex",
+    "aliases": [
+      "Ceporex"
+    ],
+    "generic_salts": [
+      "cephalexin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Keflex"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Cetzine",
+    "aliases": [
+      "Cetzine"
+    ],
+    "generic_salts": [
+      "cetirizine"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zyrtec",
+      "Rigix"
+    ],
+    "urdu_category_note": "Yeh Cetzine hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cialis",
+    "aliases": [
+      "Cialis",
+      "tadalafil"
+    ],
+    "generic_salts": [
+      "tadalafil"
+    ],
+    "common_strengths_mg": [
+      5,
+      10,
+      20
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Cialis hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cipralex",
+    "aliases": [
+      "Cipralex",
+      "escitalopram"
+    ],
+    "generic_salts": [
+      "escitalopram"
+    ],
+    "common_strengths_mg": [
+      5,
+      10,
+      20
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Cipralex hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Ciprobid",
+    "aliases": [
+      "Ciprobid"
+    ],
+    "generic_salts": [
+      "ciprofloxacin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      750
+    ],
+    "max_single_dose_mg": 750,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Novidat",
+      "Ciproxin",
+      "Tyflox"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Ciproxin",
+    "aliases": [
+      "Ciproxin"
+    ],
+    "generic_salts": [
+      "ciprofloxacin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      750
+    ],
+    "max_single_dose_mg": 750,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Novidat",
+      "Ciprobid",
+      "Tyflox"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Claforan",
+    "aliases": [
+      "Claforan",
+      "cefotaxime"
+    ],
+    "generic_salts": [
+      "cefotaxime"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 12000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Taxime"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Claritek",
+    "aliases": [
+      "Claritek"
+    ],
+    "generic_salts": [
+      "clarithromycin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Klaricid",
+      "Klacid",
+      "Biclar"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Clarityne",
+    "aliases": [
+      "Clarityne",
+      "loratadine"
+    ],
+    "generic_salts": [
+      "loratadine"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Clarityne hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Clavulin",
+    "aliases": [
+      "Clavulin"
+    ],
+    "generic_salts": [
+      "amoxicillin",
+      "clavulanate"
+    ],
+    "common_strengths_mg": [
+      375,
+      625,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Augmentin",
+      "Augmentin BD",
+      "Calamox",
+      "Augpen"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Clexane",
+    "aliases": [
+      "Clexane",
+      "enoxaparin"
+    ],
+    "generic_salts": [
+      "enoxaparin"
+    ],
+    "common_strengths_mg": [
+      20,
+      40,
+      60,
+      80
+    ],
+    "max_single_dose_mg": 150,
+    "max_daily_dose_mg": 300,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Clexane hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Clindacin",
+    "aliases": [
+      "Clindacin"
+    ],
+    "generic_salts": [
+      "clindamycin"
+    ],
+    "common_strengths_mg": [
+      150,
+      300
+    ],
+    "max_single_dose_mg": 600,
+    "max_daily_dose_mg": 1800,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Dalacin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Clopivas",
+    "aliases": [
+      "Clopivas"
+    ],
+    "generic_salts": [
+      "clopidogrel"
+    ],
+    "common_strengths_mg": [
+      75,
+      300
+    ],
+    "max_single_dose_mg": 600,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Plavix",
+      "Lowplat"
+    ],
+    "urdu_category_note": "Yeh Clopivas hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cloxin",
+    "aliases": [
+      "Cloxin"
+    ],
+    "generic_salts": [
+      "cloxacillin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Orbenin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Co-Diovan",
+    "aliases": [
+      "Co-Diovan"
+    ],
+    "generic_salts": [
+      "valsartan",
+      "hydrochlorothiazide"
+    ],
+    "common_strengths_mg": [
+      80,
+      160,
+      320
+    ],
+    "max_single_dose_mg": 320,
+    "max_daily_dose_mg": 320,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Co-Diovan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Codogesic",
+    "aliases": [
+      "Codogesic"
+    ],
+    "generic_salts": [
+      "codeine",
+      "acetaminophen"
+    ],
+    "common_strengths_mg": [
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Codogesic hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Colcrys",
+    "aliases": [
+      "Colcrys",
+      "colchicine"
+    ],
+    "generic_salts": [
+      "colchicine"
+    ],
+    "common_strengths_mg": [
+      0.5,
+      0.6
+    ],
+    "max_single_dose_mg": 1.2,
+    "max_daily_dose_mg": 2.4,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zycolchin"
+    ],
+    "urdu_category_note": "Yeh Colcrys hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Colistop",
+    "aliases": [
+      "Colistop"
+    ],
+    "generic_salts": [
+      "colistimethate"
+    ],
+    "common_strengths_mg": [
+      150
+    ],
+    "max_single_dose_mg": 300,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": true,
+    "who_aware_tier": "RESERVE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Colomycin"
+    ],
+    "urdu_category_note": "Yeh Reserve-group antibiotic hai. Poora course doctor ke bataye mutabiq mukammal karein aur beech mein na chorein."
+  },
+  {
+    "brand_name": "Colomycin",
+    "aliases": [
+      "Colomycin",
+      "colistimethate"
+    ],
+    "generic_salts": [
+      "colistimethate"
+    ],
+    "common_strengths_mg": [
+      150
+    ],
+    "max_single_dose_mg": 300,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": true,
+    "who_aware_tier": "RESERVE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Colistop"
+    ],
+    "urdu_category_note": "Yeh Reserve-group antibiotic hai. Poora course doctor ke bataye mutabiq mukammal karein aur beech mein na chorein."
+  },
+  {
+    "brand_name": "Combutol",
+    "aliases": [
+      "Combutol"
+    ],
+    "generic_salts": [
+      "ethambutol"
+    ],
+    "common_strengths_mg": [
+      400,
+      800
+    ],
+    "max_single_dose_mg": 1600,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Myambutol"
+    ],
+    "urdu_category_note": "Yeh antibiotic hai. Course beech mein na chorein."
+  },
+  {
+    "brand_name": "Concor",
+    "aliases": [
+      "Concor",
+      "bisoprolol"
+    ],
+    "generic_salts": [
+      "bisoprolol"
+    ],
+    "common_strengths_mg": [
+      2.5,
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Corbis"
+    ],
+    "urdu_category_note": "Yeh Concor hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Concor AM",
+    "aliases": [
+      "Concor AM"
+    ],
+    "generic_salts": [
+      "amlodipine",
+      "bisoprolol"
+    ],
+    "common_strengths_mg": [
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Concor AM hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Controloc",
+    "aliases": [
+      "Controloc"
+    ],
+    "generic_salts": [
+      "pantoprazole"
+    ],
+    "common_strengths_mg": [
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zopent"
+    ],
+    "urdu_category_note": "Yeh Controloc hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Corbis",
+    "aliases": [
+      "Corbis"
+    ],
+    "generic_salts": [
+      "bisoprolol"
+    ],
+    "common_strengths_mg": [
+      2.5,
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Concor"
+    ],
+    "urdu_category_note": "Yeh Corbis hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cordarone",
+    "aliases": [
+      "Cordarone",
+      "amiodarone"
+    ],
+    "generic_salts": [
+      "amiodarone"
+    ],
+    "common_strengths_mg": [
+      100,
+      200
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 1600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Cordarone hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Coumadin",
+    "aliases": [
+      "Coumadin"
+    ],
+    "generic_salts": [
+      "warfarin"
+    ],
+    "common_strengths_mg": [
+      1,
+      2,
+      2.5,
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 15,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Warfarin",
+      "Marevan"
+    ],
+    "urdu_category_note": "Yeh Coumadin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Coversyl",
+    "aliases": [
+      "Coversyl",
+      "perindopril"
+    ],
+    "generic_salts": [
+      "perindopril"
+    ],
+    "common_strengths_mg": [
+      4,
+      8
+    ],
+    "max_single_dose_mg": 8,
+    "max_daily_dose_mg": 8,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Coversyl hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cozaar",
+    "aliases": [
+      "Cozaar",
+      "losartan"
+    ],
+    "generic_salts": [
+      "losartan"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 100,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Lozitan"
+    ],
+    "urdu_category_note": "Yeh Cozaar hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cravit",
+    "aliases": [
+      "Cravit"
+    ],
+    "generic_salts": [
+      "levofloxacin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      750
+    ],
+    "max_single_dose_mg": 750,
+    "max_daily_dose_mg": 750,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Leflox",
+      "Tavanic",
+      "Bactoflox",
+      "Levoxin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Crestor",
+    "aliases": [
+      "Crestor",
+      "rosuvastatin"
+    ],
+    "generic_salts": [
+      "rosuvastatin"
+    ],
+    "common_strengths_mg": [
+      5,
+      10,
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Rovista"
+    ],
+    "urdu_category_note": "Yeh Crestor hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Cyclokapron",
+    "aliases": [
+      "Cyclokapron"
+    ],
+    "generic_salts": [
+      "tranexamic acid"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1500,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Transamin"
+    ],
+    "urdu_category_note": "Yeh Cyclokapron hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Dalacin",
+    "aliases": [
+      "Dalacin",
+      "clindamycin"
+    ],
+    "generic_salts": [
+      "clindamycin"
+    ],
+    "common_strengths_mg": [
+      150,
+      300
+    ],
+    "max_single_dose_mg": 600,
+    "max_daily_dose_mg": 1800,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Clindacin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Daonil",
+    "aliases": [
+      "Daonil",
+      "glibenclamide",
+      "glyburide"
+    ],
+    "generic_salts": [
+      "glyburide"
+    ],
+    "common_strengths_mg": [
+      2.5,
+      5
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Euglucon"
+    ],
+    "urdu_category_note": "Yeh Daonil hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Deltacortril",
+    "aliases": [
+      "Deltacortril",
+      "prednisolone"
+    ],
+    "generic_salts": [
+      "prednisolone"
+    ],
+    "common_strengths_mg": [
+      5,
+      20
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 200,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Deltacortril hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Diamicron",
+    "aliases": [
+      "Diamicron",
+      "gliclazide"
+    ],
+    "generic_salts": [
+      "gliclazide"
+    ],
+    "common_strengths_mg": [
+      30,
+      60,
+      80
+    ],
+    "max_single_dose_mg": 160,
+    "max_daily_dose_mg": 320,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Diamicron MR"
+    ],
+    "urdu_category_note": "Yeh Diamicron hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Diamicron MR",
+    "aliases": [
+      "Diamicron MR"
+    ],
+    "generic_salts": [
+      "gliclazide"
+    ],
+    "common_strengths_mg": [
+      30,
+      60,
+      80
+    ],
+    "max_single_dose_mg": 160,
+    "max_daily_dose_mg": 320,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Diamicron"
+    ],
+    "urdu_category_note": "Yeh Diamicron MR hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Diapride",
+    "aliases": [
+      "Diapride"
+    ],
+    "generic_salts": [
+      "glimepiride"
+    ],
+    "common_strengths_mg": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "max_single_dose_mg": 8,
+    "max_daily_dose_mg": 8,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Amaryl"
+    ],
+    "urdu_category_note": "Yeh Diapride hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Dicloran",
+    "aliases": [
+      "Dicloran"
+    ],
+    "generic_salts": [
+      "diclofenac"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      75,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 150,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Caflam",
+      "Voltral",
+      "Voltaren"
+    ],
+    "urdu_category_note": "Yeh Dicloran hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Diflucan",
+    "aliases": [
+      "Diflucan",
+      "fluconazole"
+    ],
+    "generic_salts": [
+      "fluconazole"
+    ],
+    "common_strengths_mg": [
+      50,
+      150,
+      200
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 800,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Fluzol"
+    ],
+    "urdu_category_note": "Yeh Diflucan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Dilantin",
+    "aliases": [
+      "Dilantin",
+      "phenytoin"
+    ],
+    "generic_salts": [
+      "phenytoin"
+    ],
+    "common_strengths_mg": [
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Dilantin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Dilatrend",
+    "aliases": [
+      "Dilatrend",
+      "carvedilol"
+    ],
+    "generic_salts": [
+      "carvedilol"
+    ],
+    "common_strengths_mg": [
+      3.125,
+      6.25,
+      12.5,
+      25
+    ],
+    "max_single_dose_mg": 25,
+    "max_daily_dose_mg": 50,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Carveda"
+    ],
+    "urdu_category_note": "Yeh Dilatrend hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Diovan",
+    "aliases": [
+      "Diovan",
+      "valsartan"
+    ],
+    "generic_salts": [
+      "valsartan"
+    ],
+    "common_strengths_mg": [
+      80,
+      160,
+      320
+    ],
+    "max_single_dose_mg": 320,
+    "max_daily_dose_mg": 320,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Diovan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Disprin",
+    "aliases": [
+      "Disprin",
+      "aspirin"
+    ],
+    "generic_salts": [
+      "aspirin"
+    ],
+    "common_strengths_mg": [
+      75,
+      100,
+      300
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Disprin CV",
+      "Ascard",
+      "Loprin"
+    ],
+    "urdu_category_note": "Yeh Disprin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Disprin CV",
+    "aliases": [
+      "Disprin CV"
+    ],
+    "generic_salts": [
+      "aspirin"
+    ],
+    "common_strengths_mg": [
+      75,
+      100,
+      300
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Disprin",
+      "Ascard",
+      "Loprin"
+    ],
+    "urdu_category_note": "Yeh Disprin CV hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Disprol",
+    "aliases": [
+      "Disprol"
+    ],
+    "generic_salts": [
+      "acetaminophen"
+    ],
+    "common_strengths_mg": [
+      500,
+      665,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Panadol",
+      "Panadol Extend",
+      "Calpol",
+      "Febrol"
+    ],
+    "urdu_category_note": "Yeh Disprol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Domel",
+    "aliases": [
+      "Domel"
+    ],
+    "generic_salts": [
+      "domperidone"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Motilium"
+    ],
+    "urdu_category_note": "Yeh Domel hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Doxycap",
+    "aliases": [
+      "Doxycap"
+    ],
+    "generic_salts": [
+      "doxycycline"
+    ],
+    "common_strengths_mg": [
+      100
+    ],
+    "max_single_dose_mg": 200,
+    "max_daily_dose_mg": 200,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Vibramycin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Dramamine",
+    "aliases": [
+      "Dramamine"
+    ],
+    "generic_salts": [
+      "dimenhydrinate"
+    ],
+    "common_strengths_mg": [
+      50
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Gravinate"
+    ],
+    "urdu_category_note": "Yeh Dramamine hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Droxicef",
+    "aliases": [
+      "Droxicef"
+    ],
+    "generic_salts": [
+      "cefadroxil"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Duricef"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Duphalac",
+    "aliases": [
+      "Duphalac",
+      "lactulose"
+    ],
+    "generic_salts": [
+      "lactulose"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Duphalac hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Duricef",
+    "aliases": [
+      "Duricef",
+      "cefadroxil"
+    ],
+    "generic_salts": [
+      "cefadroxil"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Droxicef"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Eliquis",
+    "aliases": [
+      "Eliquis",
+      "apixaban"
+    ],
+    "generic_salts": [
+      "apixaban"
+    ],
+    "common_strengths_mg": [
+      2.5,
+      5
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Eliquis hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Eltroxin",
+    "aliases": [
+      "Eltroxin",
+      "thyroxine",
+      "levothyroxine"
+    ],
+    "generic_salts": [
+      "levothyroxine"
+    ],
+    "common_strengths_mg": [
+      0.025,
+      0.05,
+      0.1
+    ],
+    "max_single_dose_mg": 0.3,
+    "max_daily_dose_mg": 0.3,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Thyronorm"
+    ],
+    "urdu_category_note": "Yeh Eltroxin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Emthexate",
+    "aliases": [
+      "Emthexate",
+      "methotrexate"
+    ],
+    "generic_salts": [
+      "methotrexate"
+    ],
+    "common_strengths_mg": [
+      2.5,
+      10
+    ],
+    "max_single_dose_mg": 30,
+    "max_daily_dose_mg": 30,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Emthexate hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Entamizole",
+    "aliases": [
+      "Entamizole"
+    ],
+    "generic_salts": [
+      "diloxanide",
+      "metronidazole"
+    ],
+    "common_strengths_mg": [
+      250,
+      400
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Epival",
+    "aliases": [
+      "Epival",
+      "valproate",
+      "divalproex sodium"
+    ],
+    "generic_salts": [
+      "divalproex sodium"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Epival hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Eromycin",
+    "aliases": [
+      "Eromycin"
+    ],
+    "generic_salts": [
+      "erythromycin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Erythrocin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Erythrocin",
+    "aliases": [
+      "Erythrocin",
+      "erythromycin"
+    ],
+    "generic_salts": [
+      "erythromycin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Eromycin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Esidrex",
+    "aliases": [
+      "Esidrex",
+      "hydrochlorothiazide"
+    ],
+    "generic_salts": [
+      "hydrochlorothiazide"
+    ],
+    "common_strengths_mg": [
+      12.5,
+      25
+    ],
+    "max_single_dose_mg": 50,
+    "max_daily_dose_mg": 50,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Esidrex hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Euglucon",
+    "aliases": [
+      "Euglucon"
+    ],
+    "generic_salts": [
+      "glyburide"
+    ],
+    "common_strengths_mg": [
+      2.5,
+      5
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Daonil"
+    ],
+    "urdu_category_note": "Yeh Euglucon hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Exforge",
+    "aliases": [
+      "Exforge"
+    ],
+    "generic_salts": [
+      "amlodipine",
+      "valsartan"
+    ],
+    "common_strengths_mg": [
+      5,
+      10,
+      160,
+      320
+    ],
+    "max_single_dose_mg": 320,
+    "max_daily_dose_mg": 320,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Exforge hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Febrol",
+    "aliases": [
+      "Febrol"
+    ],
+    "generic_salts": [
+      "acetaminophen"
+    ],
+    "common_strengths_mg": [
+      500,
+      665,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Panadol",
+      "Panadol Extend",
+      "Calpol",
+      "Disprol"
+    ],
+    "urdu_category_note": "Yeh Febrol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Fefol",
+    "aliases": [
+      "Fefol"
+    ],
+    "generic_salts": [
+      "ferrous sulfate",
+      "folic acid"
+    ],
+    "common_strengths_mg": [
+      150,
+      200
+    ],
+    "max_single_dose_mg": 325,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Iberet"
+    ],
+    "urdu_category_note": "Yeh Fefol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Feldene",
+    "aliases": [
+      "Feldene"
+    ],
+    "generic_salts": [
+      "piroxicam"
+    ],
+    "common_strengths_mg": [
+      20
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Brexin"
+    ],
+    "urdu_category_note": "Yeh Feldene hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Fenbid",
+    "aliases": [
+      "Fenbid"
+    ],
+    "generic_salts": [
+      "ibuprofen"
+    ],
+    "common_strengths_mg": [
+      200,
+      400,
+      600,
+      800
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 3200,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Brufen",
+      "Brufen Retard"
+    ],
+    "urdu_category_note": "Yeh Fenbid hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Flagyl",
+    "aliases": [
+      "Flagyl",
+      "flagil",
+      "metronidazole"
+    ],
+    "generic_salts": [
+      "metronidazole"
+    ],
+    "common_strengths_mg": [
+      200,
+      400,
+      500
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Metrozol",
+      "Klint"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Flexin",
+    "aliases": [
+      "Flexin"
+    ],
+    "generic_salts": [
+      "naproxen"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Synflex",
+      "Naprosyn"
+    ],
+    "urdu_category_note": "Yeh Flexin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Flomax",
+    "aliases": [
+      "Flomax",
+      "tamsulosin"
+    ],
+    "generic_salts": [
+      "tamsulosin"
+    ],
+    "common_strengths_mg": [
+      0.4
+    ],
+    "max_single_dose_mg": 0.4,
+    "max_daily_dose_mg": 0.8,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Tamsol"
+    ],
+    "urdu_category_note": "Yeh Flomax hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Fluzol",
+    "aliases": [
+      "Fluzol"
+    ],
+    "generic_salts": [
+      "fluconazole"
+    ],
+    "common_strengths_mg": [
+      50,
+      150,
+      200
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 800,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Diflucan"
+    ],
+    "urdu_category_note": "Yeh Fluzol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Folvite",
+    "aliases": [
+      "Folvite",
+      "folic acid"
+    ],
+    "generic_salts": [
+      "folic acid"
+    ],
+    "common_strengths_mg": [
+      1,
+      5
+    ],
+    "max_single_dose_mg": 5,
+    "max_daily_dose_mg": 15,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Folvite hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Fortum",
+    "aliases": [
+      "Fortum",
+      "ceftazidime"
+    ],
+    "generic_salts": [
+      "ceftazidime"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 6000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Ceftaz"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Forxiga",
+    "aliases": [
+      "Forxiga",
+      "dapagliflozin"
+    ],
+    "generic_salts": [
+      "dapagliflozin"
+    ],
+    "common_strengths_mg": [
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Forxiga hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Fosamax",
+    "aliases": [
+      "Fosamax",
+      "alendronate"
+    ],
+    "generic_salts": [
+      "alendronate"
+    ],
+    "common_strengths_mg": [
+      10,
+      70
+    ],
+    "max_single_dose_mg": 70,
+    "max_daily_dose_mg": 70,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Fosamax hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Fucidin",
+    "aliases": [
+      "Fucidin",
+      "fusidic acid"
+    ],
+    "generic_salts": [
+      "fusidic acid"
+    ],
+    "common_strengths_mg": [
+      250
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": true,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Fusidin"
+    ],
+    "urdu_category_note": "Yeh antibiotic hai. Course beech mein na chorein."
+  },
+  {
+    "brand_name": "Furantin",
+    "aliases": [
+      "Furantin"
+    ],
+    "generic_salts": [
+      "nitrofurantoin"
+    ],
+    "common_strengths_mg": [
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Macrodantin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Fusidin",
+    "aliases": [
+      "Fusidin"
+    ],
+    "generic_salts": [
+      "fusidic acid"
+    ],
+    "common_strengths_mg": [
+      250
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": true,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Fucidin"
+    ],
+    "urdu_category_note": "Yeh antibiotic hai. Course beech mein na chorein."
+  },
+  {
+    "brand_name": "Gabica",
+    "aliases": [
+      "Gabica"
+    ],
+    "generic_salts": [
+      "pregabalin"
+    ],
+    "common_strengths_mg": [
+      75,
+      150,
+      300
+    ],
+    "max_single_dose_mg": 300,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Lyrica"
+    ],
+    "urdu_category_note": "Yeh Gabica hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Galvus",
+    "aliases": [
+      "Galvus",
+      "vildagliptin"
+    ],
+    "generic_salts": [
+      "vildagliptin"
+    ],
+    "common_strengths_mg": [
+      50
+    ],
+    "max_single_dose_mg": 50,
+    "max_daily_dose_mg": 100,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Galvus hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Galvus Met",
+    "aliases": [
+      "Galvus Met"
+    ],
+    "generic_salts": [
+      "metformin",
+      "vildagliptin"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Galvus Met hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Garamycin",
+    "aliases": [
+      "Garamycin"
+    ],
+    "generic_salts": [
+      "gentamicin"
+    ],
+    "common_strengths_mg": [
+      40,
+      80
+    ],
+    "max_single_dose_mg": 560,
+    "max_daily_dose_mg": 560,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Genticyn"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Gardenal",
+    "aliases": [
+      "Gardenal",
+      "phenobarbital"
+    ],
+    "generic_salts": [
+      "phenobarbital"
+    ],
+    "common_strengths_mg": [
+      30,
+      60
+    ],
+    "max_single_dose_mg": 120,
+    "max_daily_dose_mg": 300,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Gardenal hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Genticyn",
+    "aliases": [
+      "Genticyn",
+      "gentamicin"
+    ],
+    "generic_salts": [
+      "gentamicin"
+    ],
+    "common_strengths_mg": [
+      40,
+      80
+    ],
+    "max_single_dose_mg": 560,
+    "max_daily_dose_mg": 560,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Garamycin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Glucophage",
+    "aliases": [
+      "Glucophage",
+      "glucofage",
+      "metformin"
+    ],
+    "generic_salts": [
+      "metformin"
+    ],
+    "common_strengths_mg": [
+      500,
+      850,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Glucophage XR"
+    ],
+    "urdu_category_note": "Yeh Glucophage hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Glucophage XR",
+    "aliases": [
+      "Glucophage XR"
+    ],
+    "generic_salts": [
+      "metformin"
+    ],
+    "common_strengths_mg": [
+      500,
+      850,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Glucophage"
+    ],
+    "urdu_category_note": "Yeh Glucophage XR hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Glucovance",
+    "aliases": [
+      "Glucovance"
+    ],
+    "generic_salts": [
+      "metformin",
+      "glyburide"
+    ],
+    "common_strengths_mg": [
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Glucovance hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Gravinate",
+    "aliases": [
+      "Gravinate",
+      "dimenhydrinate"
+    ],
+    "generic_salts": [
+      "dimenhydrinate"
+    ],
+    "common_strengths_mg": [
+      50
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Dramamine"
+    ],
+    "urdu_category_note": "Yeh Gravinate hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Herbesser",
+    "aliases": [
+      "Herbesser",
+      "diltiazem"
+    ],
+    "generic_salts": [
+      "diltiazem"
+    ],
+    "common_strengths_mg": [
+      30,
+      60,
+      90,
+      120,
+      180
+    ],
+    "max_single_dose_mg": 360,
+    "max_daily_dose_mg": 480,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Cardizem"
+    ],
+    "urdu_category_note": "Yeh Herbesser hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Humulin",
+    "aliases": [
+      "Humulin"
+    ],
+    "generic_salts": [
+      "insulin human"
+    ],
+    "common_strengths_mg": [],
+    "max_single_dose_mg": 1,
+    "max_daily_dose_mg": 1,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Actrapid",
+      "Mixtard"
+    ],
+    "urdu_category_note": "Insulin ki dose is app se tay nahi hoti. Meharbani kar ke doctor ya pharmacist se tasdeeq karein."
+  },
+  {
+    "brand_name": "Hyzaar",
+    "aliases": [
+      "Hyzaar"
+    ],
+    "generic_salts": [
+      "losartan",
+      "hydrochlorothiazide"
+    ],
+    "common_strengths_mg": [
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 100,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Hyzaar hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Iberet",
+    "aliases": [
+      "Iberet"
+    ],
+    "generic_salts": [
+      "ferrous sulfate",
+      "folic acid"
+    ],
+    "common_strengths_mg": [
+      150,
+      200
+    ],
+    "max_single_dose_mg": 325,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Fefol"
+    ],
+    "urdu_category_note": "Yeh Iberet hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Imdur",
+    "aliases": [
+      "Imdur"
+    ],
+    "generic_salts": [
+      "isosorbide mononitrate"
+    ],
+    "common_strengths_mg": [
+      10,
+      20,
+      30,
+      60
+    ],
+    "max_single_dose_mg": 120,
+    "max_daily_dose_mg": 240,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Ismo"
+    ],
+    "urdu_category_note": "Yeh Imdur hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Imigran",
+    "aliases": [
+      "Imigran",
+      "sumatriptan"
+    ],
+    "generic_salts": [
+      "sumatriptan"
+    ],
+    "common_strengths_mg": [
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 200,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Imigran hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Imodium",
+    "aliases": [
+      "Imodium",
+      "loperamide"
+    ],
+    "generic_salts": [
+      "loperamide"
+    ],
+    "common_strengths_mg": [
+      2
+    ],
+    "max_single_dose_mg": 4,
+    "max_daily_dose_mg": 16,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Imodium hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Imuran",
+    "aliases": [
+      "Imuran",
+      "azathioprine"
+    ],
+    "generic_salts": [
+      "azathioprine"
+    ],
+    "common_strengths_mg": [
+      50
+    ],
+    "max_single_dose_mg": 150,
+    "max_daily_dose_mg": 300,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Imuran hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Inderal",
+    "aliases": [
+      "Inderal",
+      "propranolol"
+    ],
+    "generic_salts": [
+      "propranolol"
+    ],
+    "common_strengths_mg": [
+      10,
+      40
+    ],
+    "max_single_dose_mg": 160,
+    "max_daily_dose_mg": 320,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Inderal hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Indrop D",
+    "aliases": [
+      "Indrop D",
+      "cholecalciferol"
+    ],
+    "generic_salts": [
+      "cholecalciferol"
+    ],
+    "common_strengths_mg": [
+      1.25,
+      5
+    ],
+    "max_single_dose_mg": 5,
+    "max_daily_dose_mg": 5,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Indrop D hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Ismo",
+    "aliases": [
+      "Ismo",
+      "isosorbide mononitrate"
+    ],
+    "generic_salts": [
+      "isosorbide mononitrate"
+    ],
+    "common_strengths_mg": [
+      10,
+      20,
+      30,
+      60
+    ],
+    "max_single_dose_mg": 120,
+    "max_daily_dose_mg": 240,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Imdur"
+    ],
+    "urdu_category_note": "Yeh Ismo hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Isokin",
+    "aliases": [
+      "Isokin",
+      "isoniazid"
+    ],
+    "generic_salts": [
+      "isoniazid"
+    ],
+    "common_strengths_mg": [
+      100,
+      300
+    ],
+    "max_single_dose_mg": 300,
+    "max_daily_dose_mg": 300,
+    "is_antibiotic": true,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Solonex"
+    ],
+    "urdu_category_note": "Yeh antibiotic hai. Course beech mein na chorein."
+  },
+  {
+    "brand_name": "Isoptin",
+    "aliases": [
+      "Isoptin",
+      "verapamil"
+    ],
+    "generic_salts": [
+      "verapamil"
+    ],
+    "common_strengths_mg": [
+      40,
+      80,
+      120,
+      240
+    ],
+    "max_single_dose_mg": 240,
+    "max_daily_dose_mg": 480,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Calan"
+    ],
+    "urdu_category_note": "Yeh Isoptin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Isordil",
+    "aliases": [
+      "Isordil",
+      "isosorbide dinitrate"
+    ],
+    "generic_salts": [
+      "isosorbide dinitrate"
+    ],
+    "common_strengths_mg": [
+      5,
+      10,
+      20
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 240,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Isordil hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Itranox",
+    "aliases": [
+      "Itranox"
+    ],
+    "generic_salts": [
+      "itraconazole"
+    ],
+    "common_strengths_mg": [
+      100,
+      200
+    ],
+    "max_single_dose_mg": 200,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Sporanox"
+    ],
+    "urdu_category_note": "Yeh Itranox hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Janumet",
+    "aliases": [
+      "Janumet"
+    ],
+    "generic_salts": [
+      "metformin",
+      "sitagliptin"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Janumet hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Januvia",
+    "aliases": [
+      "Januvia",
+      "sitagliptin"
+    ],
+    "generic_salts": [
+      "sitagliptin"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 100,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Januvia hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Jardiance",
+    "aliases": [
+      "Jardiance",
+      "empagliflozin"
+    ],
+    "generic_salts": [
+      "empagliflozin"
+    ],
+    "common_strengths_mg": [
+      10,
+      25
+    ],
+    "max_single_dose_mg": 25,
+    "max_daily_dose_mg": 25,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Jardiance hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Keflex",
+    "aliases": [
+      "Keflex",
+      "cephalexin"
+    ],
+    "generic_salts": [
+      "cephalexin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Ceporex"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Ketozol",
+    "aliases": [
+      "Ketozol"
+    ],
+    "generic_salts": [
+      "ketoconazole"
+    ],
+    "common_strengths_mg": [
+      200
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Nizoral"
+    ],
+    "urdu_category_note": "Yeh Ketozol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Klacid",
+    "aliases": [
+      "Klacid"
+    ],
+    "generic_salts": [
+      "clarithromycin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Klaricid",
+      "Claritek",
+      "Biclar"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Klaricid",
+    "aliases": [
+      "Klaricid",
+      "clarithromycin"
+    ],
+    "generic_salts": [
+      "clarithromycin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Klacid",
+      "Claritek",
+      "Biclar"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Klint",
+    "aliases": [
+      "Klint"
+    ],
+    "generic_salts": [
+      "metronidazole"
+    ],
+    "common_strengths_mg": [
+      200,
+      400,
+      500
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Flagyl",
+      "Metrozol"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Lamictal",
+    "aliases": [
+      "Lamictal",
+      "lamotrigine"
+    ],
+    "generic_salts": [
+      "lamotrigine"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 200,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Lamictal hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lamisil",
+    "aliases": [
+      "Lamisil",
+      "terbinafine"
+    ],
+    "generic_salts": [
+      "terbinafine"
+    ],
+    "common_strengths_mg": [
+      250
+    ],
+    "max_single_dose_mg": 250,
+    "max_daily_dose_mg": 250,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Terbin"
+    ],
+    "urdu_category_note": "Yeh Lamisil hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lanoxin",
+    "aliases": [
+      "Lanoxin",
+      "digoxin"
+    ],
+    "generic_salts": [
+      "digoxin"
+    ],
+    "common_strengths_mg": [
+      0.0625,
+      0.125,
+      0.25
+    ],
+    "max_single_dose_mg": 0.5,
+    "max_daily_dose_mg": 0.5,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Lanoxin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lantus",
+    "aliases": [
+      "Lantus",
+      "insulin glargine"
+    ],
+    "generic_salts": [
+      "insulin glargine"
+    ],
+    "common_strengths_mg": [],
+    "max_single_dose_mg": 1,
+    "max_daily_dose_mg": 1,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Insulin ki dose is app se tay nahi hoti. Meharbani kar ke doctor ya pharmacist se tasdeeq karein."
+  },
+  {
+    "brand_name": "Lasix",
+    "aliases": [
+      "Lasix",
+      "furosemide"
+    ],
+    "generic_salts": [
+      "furosemide"
+    ],
+    "common_strengths_mg": [
+      20,
+      40,
+      80
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Rusyde"
+    ],
+    "urdu_category_note": "Yeh Lasix hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Leflox",
+    "aliases": [
+      "Leflox",
+      "leflx",
+      "leflo",
+      "lefloxacine",
+      "levofloxacin"
+    ],
+    "generic_salts": [
+      "levofloxacin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      750
+    ],
+    "max_single_dose_mg": 750,
+    "max_daily_dose_mg": 750,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Cravit",
+      "Tavanic",
+      "Bactoflox",
+      "Levoxin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Levemir",
+    "aliases": [
+      "Levemir",
+      "insulin detemir"
+    ],
+    "generic_salts": [
+      "insulin detemir"
+    ],
+    "common_strengths_mg": [],
+    "max_single_dose_mg": 1,
+    "max_daily_dose_mg": 1,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Insulin ki dose is app se tay nahi hoti. Meharbani kar ke doctor ya pharmacist se tasdeeq karein."
+  },
+  {
+    "brand_name": "Levoxin",
+    "aliases": [
+      "Levoxin"
+    ],
+    "generic_salts": [
+      "levofloxacin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      750
+    ],
+    "max_single_dose_mg": 750,
+    "max_daily_dose_mg": 750,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Leflox",
+      "Cravit",
+      "Tavanic",
+      "Bactoflox"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Lexotanil",
+    "aliases": [
+      "Lexotanil",
+      "bromazepam"
+    ],
+    "generic_salts": [
+      "bromazepam"
+    ],
+    "common_strengths_mg": [
+      1.5,
+      3
+    ],
+    "max_single_dose_mg": 6,
+    "max_daily_dose_mg": 18,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Lexotanil hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lioresal",
+    "aliases": [
+      "Lioresal",
+      "baclofen"
+    ],
+    "generic_salts": [
+      "baclofen"
+    ],
+    "common_strengths_mg": [
+      10,
+      25
+    ],
+    "max_single_dose_mg": 25,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Lioresal hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lipiget",
+    "aliases": [
+      "Lipiget"
+    ],
+    "generic_salts": [
+      "atorvastatin"
+    ],
+    "common_strengths_mg": [
+      10,
+      20,
+      40,
+      80
+    ],
+    "max_single_dose_mg": 80,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Lipitor",
+      "Atorva"
+    ],
+    "urdu_category_note": "Yeh Lipiget hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lipitor",
+    "aliases": [
+      "Lipitor",
+      "atorvastatin"
+    ],
+    "generic_salts": [
+      "atorvastatin"
+    ],
+    "common_strengths_mg": [
+      10,
+      20,
+      40,
+      80
+    ],
+    "max_single_dose_mg": 80,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Lipiget",
+      "Atorva"
+    ],
+    "urdu_category_note": "Yeh Lipitor hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lizolid",
+    "aliases": [
+      "Lizolid"
+    ],
+    "generic_salts": [
+      "linezolid"
+    ],
+    "common_strengths_mg": [
+      600
+    ],
+    "max_single_dose_mg": 600,
+    "max_daily_dose_mg": 1200,
+    "is_antibiotic": true,
+    "who_aware_tier": "RESERVE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zyvox"
+    ],
+    "urdu_category_note": "Yeh Reserve-group antibiotic hai. Poora course doctor ke bataye mutabiq mukammal karein aur beech mein na chorein."
+  },
+  {
+    "brand_name": "Lopid",
+    "aliases": [
+      "Lopid",
+      "gemfibrozil"
+    ],
+    "generic_salts": [
+      "gemfibrozil"
+    ],
+    "common_strengths_mg": [
+      600
+    ],
+    "max_single_dose_mg": 600,
+    "max_daily_dose_mg": 1200,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Lopid hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lopressor",
+    "aliases": [
+      "Lopressor",
+      "metoprolol"
+    ],
+    "generic_salts": [
+      "metoprolol"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 200,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Betaloc"
+    ],
+    "urdu_category_note": "Yeh Lopressor hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Loprin",
+    "aliases": [
+      "Loprin"
+    ],
+    "generic_salts": [
+      "aspirin"
+    ],
+    "common_strengths_mg": [
+      75,
+      100,
+      300
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Disprin",
+      "Disprin CV",
+      "Ascard"
+    ],
+    "urdu_category_note": "Yeh Loprin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Losec",
+    "aliases": [
+      "Losec"
+    ],
+    "generic_salts": [
+      "omeprazole"
+    ],
+    "common_strengths_mg": [
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 120,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Risek",
+      "Omez"
+    ],
+    "urdu_category_note": "Yeh Losec hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lowplat",
+    "aliases": [
+      "Lowplat"
+    ],
+    "generic_salts": [
+      "clopidogrel"
+    ],
+    "common_strengths_mg": [
+      75,
+      300
+    ],
+    "max_single_dose_mg": 600,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Plavix",
+      "Clopivas"
+    ],
+    "urdu_category_note": "Yeh Lowplat hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lozitan",
+    "aliases": [
+      "Lozitan"
+    ],
+    "generic_salts": [
+      "losartan"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 100,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Cozaar"
+    ],
+    "urdu_category_note": "Yeh Lozitan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Lyrica",
+    "aliases": [
+      "Lyrica",
+      "pregabalin"
+    ],
+    "generic_salts": [
+      "pregabalin"
+    ],
+    "common_strengths_mg": [
+      75,
+      150,
+      300
+    ],
+    "max_single_dose_mg": 300,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Gabica"
+    ],
+    "urdu_category_note": "Yeh Lyrica hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Macrodantin",
+    "aliases": [
+      "Macrodantin",
+      "nitrofurantoin"
+    ],
+    "generic_salts": [
+      "nitrofurantoin"
+    ],
+    "common_strengths_mg": [
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Furantin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Marevan",
+    "aliases": [
+      "Marevan"
+    ],
+    "generic_salts": [
+      "warfarin"
+    ],
+    "common_strengths_mg": [
+      1,
+      2,
+      2.5,
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 15,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Warfarin",
+      "Coumadin"
+    ],
+    "urdu_category_note": "Yeh Marevan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Maxolon",
+    "aliases": [
+      "Maxolon"
+    ],
+    "generic_salts": [
+      "metoclopramide"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 30,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Primperan"
+    ],
+    "urdu_category_note": "Yeh Maxolon hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Mebex",
+    "aliases": [
+      "Mebex"
+    ],
+    "generic_salts": [
+      "mebendazole"
+    ],
+    "common_strengths_mg": [
+      100,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Vermox"
+    ],
+    "urdu_category_note": "Yeh Mebex hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Medrol",
+    "aliases": [
+      "Medrol",
+      "methylprednisolone"
+    ],
+    "generic_salts": [
+      "methylprednisolone"
+    ],
+    "common_strengths_mg": [
+      4,
+      16
+    ],
+    "max_single_dose_mg": 48,
+    "max_daily_dose_mg": 200,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Medrol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Meromac",
+    "aliases": [
+      "Meromac"
+    ],
+    "generic_salts": [
+      "meropenem"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 6000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Meronem"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Meronem",
+    "aliases": [
+      "Meronem",
+      "meropenem"
+    ],
+    "generic_salts": [
+      "meropenem"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 6000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Meromac"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Methycobal",
+    "aliases": [
+      "Methycobal",
+      "mecobalamin"
+    ],
+    "generic_salts": [
+      "mecobalamin"
+    ],
+    "common_strengths_mg": [
+      0.5
+    ],
+    "max_single_dose_mg": 0.5,
+    "max_daily_dose_mg": 1.5,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Methycobal hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Metrozol",
+    "aliases": [
+      "Metrozol"
+    ],
+    "generic_salts": [
+      "metronidazole"
+    ],
+    "common_strengths_mg": [
+      200,
+      400,
+      500
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Flagyl",
+      "Klint"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Minipress",
+    "aliases": [
+      "Minipress",
+      "prazosin"
+    ],
+    "generic_salts": [
+      "prazosin"
+    ],
+    "common_strengths_mg": [
+      1,
+      2,
+      5
+    ],
+    "max_single_dose_mg": 5,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Minipress hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Mixtard",
+    "aliases": [
+      "Mixtard"
+    ],
+    "generic_salts": [
+      "insulin human"
+    ],
+    "common_strengths_mg": [],
+    "max_single_dose_mg": 1,
+    "max_daily_dose_mg": 1,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Actrapid",
+      "Humulin"
+    ],
+    "urdu_category_note": "Insulin ki dose is app se tay nahi hoti. Meharbani kar ke doctor ya pharmacist se tasdeeq karein."
+  },
+  {
+    "brand_name": "Mobic",
+    "aliases": [
+      "Mobic",
+      "meloxicam"
+    ],
+    "generic_salts": [
+      "meloxicam"
+    ],
+    "common_strengths_mg": [
+      7.5,
+      15
+    ],
+    "max_single_dose_mg": 15,
+    "max_daily_dose_mg": 15,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Mobic hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Montiget",
+    "aliases": [
+      "Montiget",
+      "montelukast"
+    ],
+    "generic_salts": [
+      "montelukast"
+    ],
+    "common_strengths_mg": [
+      4,
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Singulair"
+    ],
+    "urdu_category_note": "Yeh Montiget hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Monurol",
+    "aliases": [
+      "Monurol",
+      "fosfomycin"
+    ],
+    "generic_salts": [
+      "fosfomycin"
+    ],
+    "common_strengths_mg": [
+      3000
+    ],
+    "max_single_dose_mg": 3000,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Motilium",
+    "aliases": [
+      "Motilium",
+      "domperidone"
+    ],
+    "generic_salts": [
+      "domperidone"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Domel"
+    ],
+    "urdu_category_note": "Yeh Motilium hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Moxiget",
+    "aliases": [
+      "Moxiget"
+    ],
+    "generic_salts": [
+      "moxifloxacin"
+    ],
+    "common_strengths_mg": [
+      400
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Avelox"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "MST Continus",
+    "aliases": [
+      "MST Continus",
+      "morphine"
+    ],
+    "generic_salts": [
+      "morphine"
+    ],
+    "common_strengths_mg": [
+      10,
+      30,
+      60
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh MST Continus hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Myambutol",
+    "aliases": [
+      "Myambutol",
+      "ethambutol"
+    ],
+    "generic_salts": [
+      "ethambutol"
+    ],
+    "common_strengths_mg": [
+      400,
+      800
+    ],
+    "max_single_dose_mg": 1600,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Combutol"
+    ],
+    "urdu_category_note": "Yeh antibiotic hai. Course beech mein na chorein."
+  },
+  {
+    "brand_name": "Naprosyn",
+    "aliases": [
+      "Naprosyn"
+    ],
+    "generic_salts": [
+      "naproxen"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Synflex",
+      "Flexin"
+    ],
+    "urdu_category_note": "Yeh Naprosyn hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Natrilix",
+    "aliases": [
+      "Natrilix",
+      "indapamide"
+    ],
+    "generic_salts": [
+      "indapamide"
+    ],
+    "common_strengths_mg": [
+      1.5,
+      2.5
+    ],
+    "max_single_dose_mg": 2.5,
+    "max_daily_dose_mg": 2.5,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Natrilix hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Nebcin",
+    "aliases": [
+      "Nebcin",
+      "tobramycin"
+    ],
+    "generic_salts": [
+      "tobramycin"
+    ],
+    "common_strengths_mg": [
+      40,
+      80
+    ],
+    "max_single_dose_mg": 560,
+    "max_daily_dose_mg": 560,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Tobrex"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Neo-Mercazole",
+    "aliases": [
+      "Neo-Mercazole",
+      "carbimazole"
+    ],
+    "generic_salts": [
+      "carbimazole"
+    ],
+    "common_strengths_mg": [
+      5,
+      20
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 60,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Neo-Mercazole hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Neurobion",
+    "aliases": [
+      "Neurobion"
+    ],
+    "generic_salts": [
+      "thiamine",
+      "pyridoxine",
+      "cyanocobalamin"
+    ],
+    "common_strengths_mg": [
+      100
+    ],
+    "max_single_dose_mg": 200,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Neurobion hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Neurontin",
+    "aliases": [
+      "Neurontin",
+      "gabapentin"
+    ],
+    "generic_salts": [
+      "gabapentin"
+    ],
+    "common_strengths_mg": [
+      100,
+      300,
+      400
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 3600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Neurontin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Nexium",
+    "aliases": [
+      "Nexium"
+    ],
+    "generic_salts": [
+      "esomeprazole"
+    ],
+    "common_strengths_mg": [
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Nexum"
+    ],
+    "urdu_category_note": "Yeh Nexium hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Nexum",
+    "aliases": [
+      "Nexum",
+      "esomeprazole"
+    ],
+    "generic_salts": [
+      "esomeprazole"
+    ],
+    "common_strengths_mg": [
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Nexium"
+    ],
+    "urdu_category_note": "Yeh Nexum hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Nitromint",
+    "aliases": [
+      "Nitromint"
+    ],
+    "generic_salts": [
+      "nitroglycerin"
+    ],
+    "common_strengths_mg": [
+      0.4,
+      0.5
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Angised"
+    ],
+    "urdu_category_note": "Yeh Nitromint hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Nizoral",
+    "aliases": [
+      "Nizoral",
+      "ketoconazole"
+    ],
+    "generic_salts": [
+      "ketoconazole"
+    ],
+    "common_strengths_mg": [
+      200
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Ketozol"
+    ],
+    "urdu_category_note": "Yeh Nizoral hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Norvasc",
+    "aliases": [
+      "Norvasc",
+      "amlodipine"
+    ],
+    "generic_salts": [
+      "amlodipine"
+    ],
+    "common_strengths_mg": [
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Amlocard",
+      "Amlopin"
+    ],
+    "urdu_category_note": "Yeh Norvasc hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Novidat",
+    "aliases": [
+      "Novidat",
+      "ciprofloxacin"
+    ],
+    "generic_salts": [
+      "ciprofloxacin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      750
+    ],
+    "max_single_dose_mg": 750,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Ciproxin",
+      "Ciprobid",
+      "Tyflox"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "NovoRapid",
+    "aliases": [
+      "NovoRapid",
+      "insulin aspart"
+    ],
+    "generic_salts": [
+      "insulin aspart"
+    ],
+    "common_strengths_mg": [],
+    "max_single_dose_mg": 1,
+    "max_daily_dose_mg": 1,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Insulin ki dose is app se tay nahi hoti. Meharbani kar ke doctor ya pharmacist se tasdeeq karein."
+  },
+  {
+    "brand_name": "Nuberol",
+    "aliases": [
+      "Nuberol",
+      "orphenadrine"
+    ],
+    "generic_salts": [
+      "orphenadrine"
+    ],
+    "common_strengths_mg": [
+      35
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 200,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Nuberol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Nuberol Forte",
+    "aliases": [
+      "Nuberol Forte"
+    ],
+    "generic_salts": [
+      "orphenadrine",
+      "acetaminophen"
+    ],
+    "common_strengths_mg": [
+      450
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Nuberol Forte hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Oflobid",
+    "aliases": [
+      "Oflobid"
+    ],
+    "generic_salts": [
+      "ofloxacin"
+    ],
+    "common_strengths_mg": [
+      200,
+      400
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 800,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Tarivid"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Omez",
+    "aliases": [
+      "Omez"
+    ],
+    "generic_salts": [
+      "omeprazole"
+    ],
+    "common_strengths_mg": [
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 120,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Risek",
+      "Losec"
+    ],
+    "urdu_category_note": "Yeh Omez hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Onset",
+    "aliases": [
+      "Onset",
+      "ondansetron"
+    ],
+    "generic_salts": [
+      "ondansetron"
+    ],
+    "common_strengths_mg": [
+      4,
+      8
+    ],
+    "max_single_dose_mg": 8,
+    "max_daily_dose_mg": 32,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zofran"
+    ],
+    "urdu_category_note": "Yeh Onset hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Orbenin",
+    "aliases": [
+      "Orbenin",
+      "cloxacillin"
+    ],
+    "generic_salts": [
+      "cloxacillin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Cloxin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Oscal",
+    "aliases": [
+      "Oscal"
+    ],
+    "generic_salts": [
+      "calcium carbonate"
+    ],
+    "common_strengths_mg": [
+      500,
+      1250
+    ],
+    "max_single_dose_mg": 1500,
+    "max_daily_dose_mg": 7500,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Qalsan"
+    ],
+    "urdu_category_note": "Yeh Oscal hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Ospamox",
+    "aliases": [
+      "Ospamox"
+    ],
+    "generic_salts": [
+      "amoxicillin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Amoxil",
+      "Wymox",
+      "Polymox"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Oxidil",
+    "aliases": [
+      "Oxidil"
+    ],
+    "generic_salts": [
+      "ceftriaxone"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Rocephin",
+      "Cefaxon"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Panadol",
+    "aliases": [
+      "Panadol",
+      "paracetamol",
+      "panadole",
+      "acetaminophen"
+    ],
+    "generic_salts": [
+      "acetaminophen"
+    ],
+    "common_strengths_mg": [
+      500,
+      665,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Panadol Extend",
+      "Calpol",
+      "Febrol",
+      "Disprol"
+    ],
+    "urdu_category_note": "Yeh Panadol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Panadol Extend",
+    "aliases": [
+      "Panadol Extend"
+    ],
+    "generic_salts": [
+      "acetaminophen"
+    ],
+    "common_strengths_mg": [
+      500,
+      665,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Panadol",
+      "Calpol",
+      "Febrol",
+      "Disprol"
+    ],
+    "urdu_category_note": "Yeh Panadol Extend hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Panadol Extra",
+    "aliases": [
+      "Panadol Extra"
+    ],
+    "generic_salts": [
+      "acetaminophen",
+      "caffeine"
+    ],
+    "common_strengths_mg": [
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Panadol Extra hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Penbritin",
+    "aliases": [
+      "Penbritin",
+      "ampicillin"
+    ],
+    "generic_salts": [
+      "ampicillin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Standacillin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Penegra",
+    "aliases": [
+      "Penegra"
+    ],
+    "generic_salts": [
+      "sildenafil"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 100,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Viagra"
+    ],
+    "urdu_category_note": "Yeh Penegra hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Persantin",
+    "aliases": [
+      "Persantin",
+      "dipyridamole"
+    ],
+    "generic_salts": [
+      "dipyridamole"
+    ],
+    "common_strengths_mg": [
+      25,
+      75
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Persantin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Phenergan",
+    "aliases": [
+      "Phenergan",
+      "promethazine"
+    ],
+    "generic_salts": [
+      "promethazine"
+    ],
+    "common_strengths_mg": [
+      10,
+      25
+    ],
+    "max_single_dose_mg": 25,
+    "max_daily_dose_mg": 150,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Phenergan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Piriton",
+    "aliases": [
+      "Piriton",
+      "chlorpheniramine"
+    ],
+    "generic_salts": [
+      "chlorpheniramine"
+    ],
+    "common_strengths_mg": [
+      4
+    ],
+    "max_single_dose_mg": 4,
+    "max_daily_dose_mg": 24,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Piriton hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Plavix",
+    "aliases": [
+      "Plavix",
+      "clopidogrel"
+    ],
+    "generic_salts": [
+      "clopidogrel"
+    ],
+    "common_strengths_mg": [
+      75,
+      300
+    ],
+    "max_single_dose_mg": 600,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Lowplat",
+      "Clopivas"
+    ],
+    "urdu_category_note": "Yeh Plavix hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Polymox",
+    "aliases": [
+      "Polymox"
+    ],
+    "generic_salts": [
+      "amoxicillin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Amoxil",
+      "Wymox",
+      "Ospamox"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Ponstan",
+    "aliases": [
+      "Ponstan",
+      "mefenamic acid"
+    ],
+    "generic_salts": [
+      "mefenamic acid"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Ponstan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Pradaxa",
+    "aliases": [
+      "Pradaxa",
+      "dabigatran"
+    ],
+    "generic_salts": [
+      "dabigatran"
+    ],
+    "common_strengths_mg": [
+      75,
+      110,
+      150
+    ],
+    "max_single_dose_mg": 150,
+    "max_daily_dose_mg": 300,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Pradaxa hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Primperan",
+    "aliases": [
+      "Primperan",
+      "metoclopramide"
+    ],
+    "generic_salts": [
+      "metoclopramide"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 30,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Maxolon"
+    ],
+    "urdu_category_note": "Yeh Primperan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Proscar",
+    "aliases": [
+      "Proscar",
+      "finasteride"
+    ],
+    "generic_salts": [
+      "finasteride"
+    ],
+    "common_strengths_mg": [
+      5
+    ],
+    "max_single_dose_mg": 5,
+    "max_daily_dose_mg": 5,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Proscar hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Prothiaden",
+    "aliases": [
+      "Prothiaden",
+      "dosulepin"
+    ],
+    "generic_salts": [
+      "dosulepin"
+    ],
+    "common_strengths_mg": [
+      25,
+      75
+    ],
+    "max_single_dose_mg": 75,
+    "max_daily_dose_mg": 225,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Prothiaden hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Prozac",
+    "aliases": [
+      "Prozac",
+      "fluoxetine"
+    ],
+    "generic_salts": [
+      "fluoxetine"
+    ],
+    "common_strengths_mg": [
+      20
+    ],
+    "max_single_dose_mg": 60,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Prozac hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Pyzina",
+    "aliases": [
+      "Pyzina",
+      "pyrazinamide"
+    ],
+    "generic_salts": [
+      "pyrazinamide"
+    ],
+    "common_strengths_mg": [
+      500,
+      750
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 2500,
+    "is_antibiotic": true,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zinamide"
+    ],
+    "urdu_category_note": "Yeh antibiotic hai. Course beech mein na chorein."
+  },
+  {
+    "brand_name": "Qalsan",
+    "aliases": [
+      "Qalsan",
+      "calcium carbonate"
+    ],
+    "generic_salts": [
+      "calcium carbonate"
+    ],
+    "common_strengths_mg": [
+      500,
+      1250
+    ],
+    "max_single_dose_mg": 1500,
+    "max_daily_dose_mg": 7500,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Oscal"
+    ],
+    "urdu_category_note": "Yeh Qalsan hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Rabecid",
+    "aliases": [
+      "Rabecid"
+    ],
+    "generic_salts": [
+      "rabeprazole"
+    ],
+    "common_strengths_mg": [
+      20
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Aciphex"
+    ],
+    "urdu_category_note": "Yeh Rabecid hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Renitec",
+    "aliases": [
+      "Renitec",
+      "enalapril"
+    ],
+    "generic_salts": [
+      "enalapril"
+    ],
+    "common_strengths_mg": [
+      5,
+      10,
+      20
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Renitec hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Rifadin",
+    "aliases": [
+      "Rifadin",
+      "rifampicin",
+      "rifampin"
+    ],
+    "generic_salts": [
+      "rifampin"
+    ],
+    "common_strengths_mg": [
+      150,
+      300,
+      450,
+      600
+    ],
+    "max_single_dose_mg": 600,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Rimactal"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Rigix",
+    "aliases": [
+      "Rigix"
+    ],
+    "generic_salts": [
+      "cetirizine"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zyrtec",
+      "Cetzine"
+    ],
+    "urdu_category_note": "Yeh Rigix hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Rimactal",
+    "aliases": [
+      "Rimactal"
+    ],
+    "generic_salts": [
+      "rifampin"
+    ],
+    "common_strengths_mg": [
+      150,
+      300,
+      450,
+      600
+    ],
+    "max_single_dose_mg": 600,
+    "max_daily_dose_mg": 600,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Rifadin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Risek",
+    "aliases": [
+      "Risek",
+      "risec",
+      "rizek",
+      "omeprazole"
+    ],
+    "generic_salts": [
+      "omeprazole"
+    ],
+    "common_strengths_mg": [
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 120,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Losec",
+      "Omez"
+    ],
+    "urdu_category_note": "Yeh Risek hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Risperdal",
+    "aliases": [
+      "Risperdal",
+      "risperidone"
+    ],
+    "generic_salts": [
+      "risperidone"
+    ],
+    "common_strengths_mg": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "max_single_dose_mg": 6,
+    "max_daily_dose_mg": 16,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Risperdal hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Rivotril",
+    "aliases": [
+      "Rivotril",
+      "clonazepam"
+    ],
+    "generic_salts": [
+      "clonazepam"
+    ],
+    "common_strengths_mg": [
+      0.5,
+      2
+    ],
+    "max_single_dose_mg": 2,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Rivotril hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Rocephin",
+    "aliases": [
+      "Rocephin",
+      "ceftriaxone"
+    ],
+    "generic_salts": [
+      "ceftriaxone"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Oxidil",
+      "Cefaxon"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Rovista",
+    "aliases": [
+      "Rovista"
+    ],
+    "generic_salts": [
+      "rosuvastatin"
+    ],
+    "common_strengths_mg": [
+      5,
+      10,
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Crestor"
+    ],
+    "urdu_category_note": "Yeh Rovista hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Rusyde",
+    "aliases": [
+      "Rusyde"
+    ],
+    "generic_salts": [
+      "furosemide"
+    ],
+    "common_strengths_mg": [
+      20,
+      40,
+      80
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Lasix"
+    ],
+    "urdu_category_note": "Yeh Rusyde hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Septran",
+    "aliases": [
+      "Septran"
+    ],
+    "generic_salts": [
+      "sulfamethoxazole",
+      "trimethoprim"
+    ],
+    "common_strengths_mg": [
+      480,
+      960
+    ],
+    "max_single_dose_mg": 960,
+    "max_daily_dose_mg": 1920,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Septran DS",
+      "Bactrim"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Septran DS",
+    "aliases": [
+      "Septran DS"
+    ],
+    "generic_salts": [
+      "sulfamethoxazole",
+      "trimethoprim"
+    ],
+    "common_strengths_mg": [
+      480,
+      960
+    ],
+    "max_single_dose_mg": 960,
+    "max_daily_dose_mg": 1920,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Septran",
+      "Bactrim"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Seretide",
+    "aliases": [
+      "Seretide"
+    ],
+    "generic_salts": [
+      "salmeterol",
+      "fluticasone"
+    ],
+    "common_strengths_mg": [
+      0.25,
+      0.5
+    ],
+    "max_single_dose_mg": 1,
+    "max_daily_dose_mg": 2,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Seretide hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Seroquel",
+    "aliases": [
+      "Seroquel",
+      "quetiapine"
+    ],
+    "generic_salts": [
+      "quetiapine"
+    ],
+    "common_strengths_mg": [
+      25,
+      100,
+      200,
+      300
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 800,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Seroquel hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Sibelium",
+    "aliases": [
+      "Sibelium",
+      "flunarizine"
+    ],
+    "generic_salts": [
+      "flunarizine"
+    ],
+    "common_strengths_mg": [
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Sibelium hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Simvor",
+    "aliases": [
+      "Simvor"
+    ],
+    "generic_salts": [
+      "simvastatin"
+    ],
+    "common_strengths_mg": [
+      10,
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zocor"
+    ],
+    "urdu_category_note": "Yeh Simvor hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Singulair",
+    "aliases": [
+      "Singulair"
+    ],
+    "generic_salts": [
+      "montelukast"
+    ],
+    "common_strengths_mg": [
+      4,
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Montiget"
+    ],
+    "urdu_category_note": "Yeh Singulair hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Sirdalud",
+    "aliases": [
+      "Sirdalud",
+      "tizanidine"
+    ],
+    "generic_salts": [
+      "tizanidine"
+    ],
+    "common_strengths_mg": [
+      2,
+      4
+    ],
+    "max_single_dose_mg": 12,
+    "max_daily_dose_mg": 36,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Sirdalud hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Slow-K",
+    "aliases": [
+      "Slow-K",
+      "potassium chloride"
+    ],
+    "generic_salts": [
+      "potassium chloride"
+    ],
+    "common_strengths_mg": [
+      600
+    ],
+    "max_single_dose_mg": 1500,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Slow-K hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Solonex",
+    "aliases": [
+      "Solonex"
+    ],
+    "generic_salts": [
+      "isoniazid"
+    ],
+    "common_strengths_mg": [
+      100,
+      300
+    ],
+    "max_single_dose_mg": 300,
+    "max_daily_dose_mg": 300,
+    "is_antibiotic": true,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Isokin"
+    ],
+    "urdu_category_note": "Yeh antibiotic hai. Course beech mein na chorein."
+  },
+  {
+    "brand_name": "Spiriva",
+    "aliases": [
+      "Spiriva",
+      "tiotropium"
+    ],
+    "generic_salts": [
+      "tiotropium"
+    ],
+    "common_strengths_mg": [
+      0.018
+    ],
+    "max_single_dose_mg": 0.018,
+    "max_daily_dose_mg": 0.018,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Spiriva hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Sporanox",
+    "aliases": [
+      "Sporanox",
+      "itraconazole"
+    ],
+    "generic_salts": [
+      "itraconazole"
+    ],
+    "common_strengths_mg": [
+      100,
+      200
+    ],
+    "max_single_dose_mg": 200,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Itranox"
+    ],
+    "urdu_category_note": "Yeh Sporanox hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Standacillin",
+    "aliases": [
+      "Standacillin"
+    ],
+    "generic_salts": [
+      "ampicillin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Penbritin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Stemetil",
+    "aliases": [
+      "Stemetil",
+      "prochlorperazine"
+    ],
+    "generic_salts": [
+      "prochlorperazine"
+    ],
+    "common_strengths_mg": [
+      5
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 30,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Stemetil hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Stilnox",
+    "aliases": [
+      "Stilnox",
+      "zolpidem"
+    ],
+    "generic_salts": [
+      "zolpidem"
+    ],
+    "common_strengths_mg": [
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Stilnox hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Stugeron",
+    "aliases": [
+      "Stugeron",
+      "cinnarizine"
+    ],
+    "generic_salts": [
+      "cinnarizine"
+    ],
+    "common_strengths_mg": [
+      15,
+      25,
+      75
+    ],
+    "max_single_dose_mg": 75,
+    "max_daily_dose_mg": 225,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Stugeron hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Symbicort",
+    "aliases": [
+      "Symbicort"
+    ],
+    "generic_salts": [
+      "formoterol",
+      "budesonide"
+    ],
+    "common_strengths_mg": [
+      0.16,
+      0.32
+    ],
+    "max_single_dose_mg": 1,
+    "max_daily_dose_mg": 2,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Symbicort hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Synflex",
+    "aliases": [
+      "Synflex",
+      "naproxen"
+    ],
+    "generic_salts": [
+      "naproxen"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Naprosyn",
+      "Flexin"
+    ],
+    "urdu_category_note": "Yeh Synflex hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Tagamet",
+    "aliases": [
+      "Tagamet",
+      "cimetidine"
+    ],
+    "generic_salts": [
+      "cimetidine"
+    ],
+    "common_strengths_mg": [
+      200,
+      400,
+      800
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 1600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Tagamet hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Tamiflu",
+    "aliases": [
+      "Tamiflu",
+      "oseltamivir"
+    ],
+    "generic_salts": [
+      "oseltamivir"
+    ],
+    "common_strengths_mg": [
+      75
+    ],
+    "max_single_dose_mg": 75,
+    "max_daily_dose_mg": 150,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Tamiflu hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Tamsol",
+    "aliases": [
+      "Tamsol"
+    ],
+    "generic_salts": [
+      "tamsulosin"
+    ],
+    "common_strengths_mg": [
+      0.4
+    ],
+    "max_single_dose_mg": 0.4,
+    "max_daily_dose_mg": 0.8,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Flomax"
+    ],
+    "urdu_category_note": "Yeh Tamsol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Tarivid",
+    "aliases": [
+      "Tarivid",
+      "ofloxacin"
+    ],
+    "generic_salts": [
+      "ofloxacin"
+    ],
+    "common_strengths_mg": [
+      200,
+      400
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 800,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Oflobid"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Tavanic",
+    "aliases": [
+      "Tavanic"
+    ],
+    "generic_salts": [
+      "levofloxacin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      750
+    ],
+    "max_single_dose_mg": 750,
+    "max_daily_dose_mg": 750,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Leflox",
+      "Cravit",
+      "Bactoflox",
+      "Levoxin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Taxime",
+    "aliases": [
+      "Taxime"
+    ],
+    "generic_salts": [
+      "cefotaxime"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 12000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Claforan"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Tazar",
+    "aliases": [
+      "Tazar"
+    ],
+    "generic_salts": [
+      "piperacillin",
+      "tazobactam"
+    ],
+    "common_strengths_mg": [
+      4500
+    ],
+    "max_single_dose_mg": 4500,
+    "max_daily_dose_mg": 18000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Tazocin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Tazocin",
+    "aliases": [
+      "Tazocin"
+    ],
+    "generic_salts": [
+      "piperacillin",
+      "tazobactam"
+    ],
+    "common_strengths_mg": [
+      4500
+    ],
+    "max_single_dose_mg": 4500,
+    "max_daily_dose_mg": 18000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Tazar"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Tegretol",
+    "aliases": [
+      "Tegretol",
+      "carbamazepine"
+    ],
+    "generic_salts": [
+      "carbamazepine"
+    ],
+    "common_strengths_mg": [
+      100,
+      200,
+      400
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 1600,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Tegretol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Telfast",
+    "aliases": [
+      "Telfast",
+      "fexofenadine"
+    ],
+    "generic_salts": [
+      "fexofenadine"
+    ],
+    "common_strengths_mg": [
+      120,
+      180
+    ],
+    "max_single_dose_mg": 180,
+    "max_daily_dose_mg": 180,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Telfast hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Tenormin",
+    "aliases": [
+      "Tenormin",
+      "atenolol"
+    ],
+    "generic_salts": [
+      "atenolol"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 100,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Blokium"
+    ],
+    "urdu_category_note": "Yeh Tenormin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Terbin",
+    "aliases": [
+      "Terbin"
+    ],
+    "generic_salts": [
+      "terbinafine"
+    ],
+    "common_strengths_mg": [
+      250
+    ],
+    "max_single_dose_mg": 250,
+    "max_daily_dose_mg": 250,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Lamisil"
+    ],
+    "urdu_category_note": "Yeh Terbin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Theo-Dur",
+    "aliases": [
+      "Theo-Dur",
+      "theophylline"
+    ],
+    "generic_salts": [
+      "theophylline"
+    ],
+    "common_strengths_mg": [
+      200,
+      300
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 900,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Theo-Dur hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Thyronorm",
+    "aliases": [
+      "Thyronorm"
+    ],
+    "generic_salts": [
+      "levothyroxine"
+    ],
+    "common_strengths_mg": [
+      0.025,
+      0.05,
+      0.1
+    ],
+    "max_single_dose_mg": 0.3,
+    "max_daily_dose_mg": 0.3,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Eltroxin"
+    ],
+    "urdu_category_note": "Yeh Thyronorm hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Tobrex",
+    "aliases": [
+      "Tobrex"
+    ],
+    "generic_salts": [
+      "tobramycin"
+    ],
+    "common_strengths_mg": [
+      40,
+      80
+    ],
+    "max_single_dose_mg": 560,
+    "max_daily_dose_mg": 560,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Nebcin"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Toradol",
+    "aliases": [
+      "Toradol",
+      "ketorolac"
+    ],
+    "generic_salts": [
+      "ketorolac"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Toradol hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Tramal",
+    "aliases": [
+      "Tramal",
+      "tramadol"
+    ],
+    "generic_salts": [
+      "tramadol"
+    ],
+    "common_strengths_mg": [
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Tramazac"
+    ],
+    "urdu_category_note": "Yeh Tramal hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Tramazac",
+    "aliases": [
+      "Tramazac"
+    ],
+    "generic_salts": [
+      "tramadol"
+    ],
+    "common_strengths_mg": [
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 400,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Tramal"
+    ],
+    "urdu_category_note": "Yeh Tramazac hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Transamin",
+    "aliases": [
+      "Transamin",
+      "tranexamic acid"
+    ],
+    "generic_salts": [
+      "tranexamic acid"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1500,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Cyclokapron"
+    ],
+    "urdu_category_note": "Yeh Transamin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Tritace",
+    "aliases": [
+      "Tritace",
+      "ramipril"
+    ],
+    "generic_salts": [
+      "ramipril"
+    ],
+    "common_strengths_mg": [
+      2.5,
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Tritace hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Tyflox",
+    "aliases": [
+      "Tyflox"
+    ],
+    "generic_salts": [
+      "ciprofloxacin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500,
+      750
+    ],
+    "max_single_dose_mg": 750,
+    "max_daily_dose_mg": 1500,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Novidat",
+      "Ciproxin",
+      "Ciprobid"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Tygacil",
+    "aliases": [
+      "Tygacil",
+      "tigecycline"
+    ],
+    "generic_salts": [
+      "tigecycline"
+    ],
+    "common_strengths_mg": [
+      50
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 200,
+    "is_antibiotic": true,
+    "who_aware_tier": "RESERVE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Reserve-group antibiotic hai. Poora course doctor ke bataye mutabiq mukammal karein aur beech mein na chorein."
+  },
+  {
+    "brand_name": "Valcivir",
+    "aliases": [
+      "Valcivir"
+    ],
+    "generic_salts": [
+      "valacyclovir"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Valtrex"
+    ],
+    "urdu_category_note": "Yeh Valcivir hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Valium",
+    "aliases": [
+      "Valium",
+      "diazepam"
+    ],
+    "generic_salts": [
+      "diazepam"
+    ],
+    "common_strengths_mg": [
+      2,
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Valium hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Valtrex",
+    "aliases": [
+      "Valtrex",
+      "valacyclovir"
+    ],
+    "generic_salts": [
+      "valacyclovir"
+    ],
+    "common_strengths_mg": [
+      500,
+      1000
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 3000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Valcivir"
+    ],
+    "urdu_category_note": "Yeh Valtrex hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Vancocin",
+    "aliases": [
+      "Vancocin",
+      "vancomycin"
+    ],
+    "generic_salts": [
+      "vancomycin"
+    ],
+    "common_strengths_mg": [
+      125,
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Vancolon"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Vancolon",
+    "aliases": [
+      "Vancolon"
+    ],
+    "generic_salts": [
+      "vancomycin"
+    ],
+    "common_strengths_mg": [
+      125,
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Vancocin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Velosef",
+    "aliases": [
+      "Velosef",
+      "cephradine"
+    ],
+    "generic_salts": [
+      "cephradine"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Vericef"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Ventolin",
+    "aliases": [
+      "Ventolin",
+      "salbutamol",
+      "albuterol"
+    ],
+    "generic_salts": [
+      "albuterol"
+    ],
+    "common_strengths_mg": [
+      2,
+      4
+    ],
+    "max_single_dose_mg": 8,
+    "max_daily_dose_mg": 32,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Asthalin"
+    ],
+    "urdu_category_note": "Yeh Ventolin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Vericef",
+    "aliases": [
+      "Vericef"
+    ],
+    "generic_salts": [
+      "cephradine"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Velosef"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Vermox",
+    "aliases": [
+      "Vermox",
+      "mebendazole"
+    ],
+    "generic_salts": [
+      "mebendazole"
+    ],
+    "common_strengths_mg": [
+      100,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Mebex"
+    ],
+    "urdu_category_note": "Yeh Vermox hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Viagra",
+    "aliases": [
+      "Viagra",
+      "sildenafil"
+    ],
+    "generic_salts": [
+      "sildenafil"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 100,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Penegra"
+    ],
+    "urdu_category_note": "Yeh Viagra hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Vibramycin",
+    "aliases": [
+      "Vibramycin",
+      "doxycycline"
+    ],
+    "generic_salts": [
+      "doxycycline"
+    ],
+    "common_strengths_mg": [
+      100
+    ],
+    "max_single_dose_mg": 200,
+    "max_daily_dose_mg": 200,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Doxycap"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Voltaren",
+    "aliases": [
+      "Voltaren"
+    ],
+    "generic_salts": [
+      "diclofenac"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      75,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 150,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Caflam",
+      "Voltral",
+      "Dicloran"
+    ],
+    "urdu_category_note": "Yeh Voltaren hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Voltral",
+    "aliases": [
+      "Voltral"
+    ],
+    "generic_salts": [
+      "diclofenac"
+    ],
+    "common_strengths_mg": [
+      25,
+      50,
+      75,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 150,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Caflam",
+      "Voltaren",
+      "Dicloran"
+    ],
+    "urdu_category_note": "Yeh Voltral hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Warfarin",
+    "aliases": [
+      "Warfarin",
+      "warfrin"
+    ],
+    "generic_salts": [
+      "warfarin"
+    ],
+    "common_strengths_mg": [
+      1,
+      2,
+      2.5,
+      5,
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 15,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Coumadin",
+      "Marevan"
+    ],
+    "urdu_category_note": "Yeh Warfarin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Wymox",
+    "aliases": [
+      "Wymox"
+    ],
+    "generic_salts": [
+      "amoxicillin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 1000,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": true,
+    "who_aware_tier": "ACCESS",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Amoxil",
+      "Ospamox",
+      "Polymox"
+    ],
+    "urdu_category_note": "Yeh Access-group antibiotic hai. Doctor ke bataye huay poore din dawai mukammal karein."
+  },
+  {
+    "brand_name": "Xanax",
+    "aliases": [
+      "Xanax",
+      "alprazolam"
+    ],
+    "generic_salts": [
+      "alprazolam"
+    ],
+    "common_strengths_mg": [
+      0.25,
+      0.5,
+      1
+    ],
+    "max_single_dose_mg": 2,
+    "max_daily_dose_mg": 4,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Xanax hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Xarelto",
+    "aliases": [
+      "Xarelto",
+      "rivaroxaban"
+    ],
+    "generic_salts": [
+      "rivaroxaban"
+    ],
+    "common_strengths_mg": [
+      10,
+      15,
+      20
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 30,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Xarelto hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zeben",
+    "aliases": [
+      "Zeben"
+    ],
+    "generic_salts": [
+      "albendazole"
+    ],
+    "common_strengths_mg": [
+      200,
+      400
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 800,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zentel"
+    ],
+    "urdu_category_note": "Yeh Zeben hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zentel",
+    "aliases": [
+      "Zentel",
+      "albendazole"
+    ],
+    "generic_salts": [
+      "albendazole"
+    ],
+    "common_strengths_mg": [
+      200,
+      400
+    ],
+    "max_single_dose_mg": 400,
+    "max_daily_dose_mg": 800,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zeben"
+    ],
+    "urdu_category_note": "Yeh Zentel hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zestril",
+    "aliases": [
+      "Zestril",
+      "lisinopril"
+    ],
+    "generic_salts": [
+      "lisinopril"
+    ],
+    "common_strengths_mg": [
+      5,
+      10,
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Zestril hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zinacef",
+    "aliases": [
+      "Zinacef",
+      "cefuroxime"
+    ],
+    "generic_salts": [
+      "cefuroxime"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zinnat",
+      "Ceftin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Zinamide",
+    "aliases": [
+      "Zinamide"
+    ],
+    "generic_salts": [
+      "pyrazinamide"
+    ],
+    "common_strengths_mg": [
+      500,
+      750
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 2500,
+    "is_antibiotic": true,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Pyzina"
+    ],
+    "urdu_category_note": "Yeh antibiotic hai. Course beech mein na chorein."
+  },
+  {
+    "brand_name": "Zinnat",
+    "aliases": [
+      "Zinnat"
+    ],
+    "generic_salts": [
+      "cefuroxime"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 500,
+    "max_daily_dose_mg": 1000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Zinacef",
+      "Ceftin"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Zithromax",
+    "aliases": [
+      "Zithromax"
+    ],
+    "generic_salts": [
+      "azithromycin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Azomax",
+      "Zithrox"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Zithrox",
+    "aliases": [
+      "Zithrox"
+    ],
+    "generic_salts": [
+      "azithromycin"
+    ],
+    "common_strengths_mg": [
+      250,
+      500
+    ],
+    "max_single_dose_mg": 2000,
+    "max_daily_dose_mg": 2000,
+    "is_antibiotic": true,
+    "who_aware_tier": "WATCH",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Azomax",
+      "Zithromax"
+    ],
+    "urdu_category_note": "Yeh ek taqatwar Watch-group antibiotic hai. Doctor ke bataye huay poore din mukammal karein, beech mein na chorein."
+  },
+  {
+    "brand_name": "Zocor",
+    "aliases": [
+      "Zocor",
+      "simvastatin"
+    ],
+    "generic_salts": [
+      "simvastatin"
+    ],
+    "common_strengths_mg": [
+      10,
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Simvor"
+    ],
+    "urdu_category_note": "Yeh Zocor hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zofran",
+    "aliases": [
+      "Zofran"
+    ],
+    "generic_salts": [
+      "ondansetron"
+    ],
+    "common_strengths_mg": [
+      4,
+      8
+    ],
+    "max_single_dose_mg": 8,
+    "max_daily_dose_mg": 32,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Onset"
+    ],
+    "urdu_category_note": "Yeh Zofran hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zoloft",
+    "aliases": [
+      "Zoloft",
+      "sertraline"
+    ],
+    "generic_salts": [
+      "sertraline"
+    ],
+    "common_strengths_mg": [
+      50,
+      100
+    ],
+    "max_single_dose_mg": 100,
+    "max_daily_dose_mg": 200,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Zoloft hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zopent",
+    "aliases": [
+      "Zopent",
+      "pantoprazole"
+    ],
+    "generic_salts": [
+      "pantoprazole"
+    ],
+    "common_strengths_mg": [
+      20,
+      40
+    ],
+    "max_single_dose_mg": 40,
+    "max_daily_dose_mg": 80,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Controloc"
+    ],
+    "urdu_category_note": "Yeh Zopent hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zovirax",
+    "aliases": [
+      "Zovirax",
+      "acyclovir"
+    ],
+    "generic_salts": [
+      "acyclovir"
+    ],
+    "common_strengths_mg": [
+      200,
+      400,
+      800
+    ],
+    "max_single_dose_mg": 800,
+    "max_daily_dose_mg": 4000,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Acivir"
+    ],
+    "urdu_category_note": "Yeh Zovirax hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zycolchin",
+    "aliases": [
+      "Zycolchin"
+    ],
+    "generic_salts": [
+      "colchicine"
+    ],
+    "common_strengths_mg": [
+      0.5,
+      0.6
+    ],
+    "max_single_dose_mg": 1.2,
+    "max_daily_dose_mg": 2.4,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Colcrys"
+    ],
+    "urdu_category_note": "Yeh Zycolchin hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zyloric",
+    "aliases": [
+      "Zyloric",
+      "allopurinol"
+    ],
+    "generic_salts": [
+      "allopurinol"
+    ],
+    "common_strengths_mg": [
+      100,
+      300
+    ],
+    "max_single_dose_mg": 300,
+    "max_daily_dose_mg": 900,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Zyloric hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zyrtec",
+    "aliases": [
+      "Zyrtec",
+      "cetirizine"
+    ],
+    "generic_salts": [
+      "cetirizine"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 10,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Rigix",
+      "Cetzine"
+    ],
+    "urdu_category_note": "Yeh Zyrtec hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Zyvox",
+    "aliases": [
+      "Zyvox",
+      "linezolid"
+    ],
+    "generic_salts": [
+      "linezolid"
+    ],
+    "common_strengths_mg": [
+      600
+    ],
+    "max_single_dose_mg": 600,
+    "max_daily_dose_mg": 1200,
+    "is_antibiotic": true,
+    "who_aware_tier": "RESERVE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Lizolid"
+    ],
+    "urdu_category_note": "Yeh Reserve-group antibiotic hai. Poora course doctor ke bataye mutabiq mukammal karein aur beech mein na chorein."
+  }
+]
