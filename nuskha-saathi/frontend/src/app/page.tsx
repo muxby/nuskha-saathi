@@ -20,7 +20,7 @@ export default function Home() {
     setBusy(true); setError(""); setScan(null);
     const form = new FormData(); form.append("file", file);
     try { const result = await postForm<ScanResult>("/api/v1/scan-parchi", form); setScan(result); setView("results"); }
-    catch { setError(t("uploadError")); }
+    catch (err) { setError(t(err instanceof Error && err.message === "NETWORK" ? "networkError" : err instanceof Error && err.message === "TOO_LARGE" ? "photoLarge" : "uploadError")); }
     finally { setBusy(false); }
   }
   return <AppShell view={view} navigate={navigate}>

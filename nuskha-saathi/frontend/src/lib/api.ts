@@ -30,11 +30,11 @@ export async function postForm<T>(path: string, form: FormData): Promise<T> {
   try {
     response = await fetch(`${API_BASE}${path}`, { method: "POST", body: form });
   } catch {
-    throw new Error("انٹرنیٹ سے رابطہ نہیں ہو سکا۔ دوبارہ کوشش کریں۔");
+    throw new Error("NETWORK");
   }
   if (!response.ok) {
-    if (response.status === 413) throw new Error("تصویر 8 MB سے بڑی ہے۔ چھوٹی تصویر منتخب کریں۔");
-    throw new Error("تصویر کی جانچ نہیں ہو سکی۔ دوبارہ کوشش کریں۔");
+    if (response.status === 413) throw new Error("TOO_LARGE");
+    throw new Error("UPLOAD");
   }
   return response.json() as Promise<T>;
 }
