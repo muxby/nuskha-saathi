@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import ProcessingExperience from "@/components/ProcessingExperience";
+import { useEffect, useState } from "react";
 import AppShell, { type View } from "@/components/AppShell";
 import HomeExperience from "@/components/HomeExperience";
 import { useLanguage } from "@/lib/i18n";
@@ -13,18 +14,20 @@ export default function Home() {
   const { t } = useLanguage();
   const [view, setView] = useState<View>("home");
   const [scan, setScan] = useState<ScanResult | null>(null);
+  const [original, setOriginal] = useState<string | null>(null);
+  useEffect(() => () => { if (original) URL.revokeObjectURL(original); }, [original]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const navigate = (next: View) => { setView(next); setError(""); window.scrollTo({ top: 0, behavior: "instant" }); };
   async function handleScan(file: File) {
-    setBusy(true); setError(""); setScan(null);
+    setBusy(true); setError(""); setScan(null); setOriginal(URL.createObjectURL(file));
     const form = new FormData(); form.append("file", file);
     try { const result = await postForm<ScanResult>("/api/v1/scan-parchi", form); setScan(result); setView("results"); }
     catch (err) { setError(t(err instanceof Error && err.message === "NETWORK" ? "networkError" : err instanceof Error && err.message === "TOO_LARGE" ? "photoLarge" : "uploadError")); }
     finally { setBusy(false); }
   }
   return <AppShell view={view} navigate={navigate}>
-    {view === "home" ? <HomeExperience navigate={navigate} scan={scan}/> : <div className="content-wrap inner-page"><div className="section-heading"><div><span className="eyebrow">{t("brand")}</span><h1>{t(view === "results" ? "results" : view === "medicines" ? "cabinetTitle" : view === "history" ? "historyTitle" : view === "settings" ? "settingsTitle" : view === "verify" ? "verifyHeading" : view === "reminders" ? "reminderTitle" : "cameraTitle")}</h1></div></div>
+    {busy ? <div className="content-wrap inner-page"><ProcessingExperience image={original}/></div> : view === "home" ? <HomeExperience navigate={navigate} scan={scan}/> : <div className="content-wrap inner-page"><div className="section-heading"><div><span className="eyebrow">{t("brand")}</span><h1>{t(view === "results" ? "results" : view === "medicines" ? "cabinetTitle" : view === "history" ? "historyTitle" : view === "settings" ? "settingsTitle" : view === "verify" ? "verifyHeading" : view === "reminders" ? "reminderTitle" : "cameraTitle")}</h1></div></div>
     {error && <div className="error-panel" role="alert">{error}</div>}
     {view === "scan" && <ParchiCamera onSelect={handleScan} busy={busy}/>}
     {view === "results" && scan && <section className="results"><SafetyAlertBanner interactions={scan.interactions} medications={scan.medications}/><div className="cards-heading"><h2>{t("doseSchedule")}</h2><SpeakerButton text={scan.urdu_script} audioUrl={scan.audio_urdu_url} label={t("fullAudio")}/></div><div className="dose-grid">{scan.medications.filter(m=>m.status==="VERIFIED").map(m=><VisualDoseCard key={m.line_id} medication={m} scan={scan}/>)}</div></section>}
