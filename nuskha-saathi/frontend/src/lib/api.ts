@@ -11,7 +11,7 @@ export type Medication = {
 };
 export type Interaction = { severity: string; drug_a: string; drug_b: string; source: string; fda_verbatim_excerpt: string; urdu_warning: string; raw_fda_json: Record<string, unknown> | null };
 export type ScanResult = {
-  scan_id: string; overall_status: string; medications: Medication[]; interactions: Interaction[];
+  scan_id: string; whatsapp_scheduled?: boolean; overall_status: string; medications: Medication[]; interactions: Interaction[];
   urdu_script: string; audio_urdu_url: string | null; audio_qr_payload: string | null;
   telemetry: { vision_ms: number; resolver_ms: number; openfda_ms: number; tts_ms: number; total_ms: number; estimated_cost_usd: number; estimated_cost_pkr: number };
 };
