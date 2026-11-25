@@ -55,22 +55,42 @@ def _label_blob(result: dict) -> str:
     return "\n".join(chunks)
 
 
+_SALT_SYNONYMS: dict[str, tuple[str, ...]] = {
+    "acetylsalicylic acid": ("acetylsalicylic acid", "aspirin", "salicylate"),
+    "aspirin": ("aspirin", "acetylsalicylic acid", "salicylate"),
+    "amoxicillin + clavulanic acid": ("amoxicillin + clavulanic acid", "clavulanic acid", "clavulanate", "amoxicillin"),
+    "clavulanate": ("clavulanate", "clavulanic acid"),
+    "isosorbide mononitrate": ("isosorbide mononitrate", "isosorbide", "nitrates", "nitrate"),
+    "isosorbide dinitrate": ("isosorbide dinitrate", "isosorbide", "nitrates", "nitrate"),
+}
+
+_NON_RETRYABLE_STATUSES = frozenset({400, 401, 403, 404})
+
+
+def _terms_for_salt(salt: str) -> tuple[str, ...]:
+    key = salt.casefold().strip()
+    return _SALT_SYNONYMS.get(key, (key,))
+
+
 def _excerpt_mentioning(text: str, needle: str) -> str | None:
     if not text or not needle:
         return None
     lowered = text.lower()
-    index = lowered.find(needle.lower())
-    if index < 0:
-        return None
-    start = text.rfind(".", 0, index)
-    start = 0 if start < 0 else start + 1
-    end = text.find(".", index)
-    end = len(text) if end < 0 else end + 1
-    snippet = " ".join(text[start:end].split())
-    if 40 <= len(snippet) <= 700:
-        return snippet
-    window = " ".join(text[max(0, index - 220) : index + len(needle) + 280].split())
-    return window or None
+    for term in _terms_for_salt(needle):
+        index = lowered.find(term.lower())
+        if index < 0:
+            continue
+        start = text.rfind(".", 0, index)
+        start = 0 if start < 0 else start + 1
+        end = text.find(".", index)
+        end = len(text) if end < 0 else end + 1
+        snippet = " ".join(text[start:end].split())
+        if 40 <= len(snippet) <= 700:
+            return snippet
+        window = " ".join(text[max(0, index - 220) : index + len(term) + 280].split())
+        if window:
+            return window
+    return None
 
 
 class OpenFdaClient:
@@ -127,7 +147,7 @@ class OpenFdaClient:
         for search in (f'openfda.generic_name:"{key}"', f"openfda.generic_name:{key}*"):
             payload = await self._get_json(build_label_url(key, self.api_key, search))
             results = (payload or {}).get("results") or []
-            if results:
+            if results and isinstance(results[0], dict):
                 result = results[0]
                 break
         self._label_cache[key] = result
@@ -138,13 +158,22 @@ class OpenFdaClient:
         for attempt in range(3):
             try:
                 if self.fetcher is not None:
-                    return await self.fetcher(url)
+                    data = await self.fetcher(url)
+                    return data if isinstance(data, dict) else None
                 async with httpx.AsyncClient(timeout=8.0) as client:
                     response = await client.get(url, headers={"User-Agent": "nuskha-saathi"})
-                    if response.status_code == 404:
+                    if response.status_code in _NON_RETRYABLE_STATUSES:
                         return None
                     response.raise_for_status()
-                    return response.json()
+                    data = response.json()
+                    return data if isinstance(data, dict) else None
+            except httpx.HTTPStatusError as exc:
+                if exc.response is not None and exc.response.status_code in _NON_RETRYABLE_STATUSES:
+                    return None
+                if attempt == 2:
+                    return None
+                await asyncio.sleep(delay)
+                delay *= 2
             except Exception:
                 if attempt == 2:
                     return None
@@ -194,6 +223,20 @@ class OpenFdaClient:
                 return excerpt, label
         return None
 
+    async def _prefetch_salts(self, salts: set[str]) -> None:
+        if not self.live or not salts:
+            return
+        sem = asyncio.Semaphore(5)
+
+        async def _load(salt: str) -> None:
+            async with sem:
+                try:
+                    await self.fetch_label(salt)
+                except ValueError:
+                    return
+
+        await asyncio.gather(*(_load(salt) for salt in sorted(salts)), return_exceptions=True)
+
     async def check_medications(self, current: list[dict], cabinet: list[dict]) -> list[InteractionHit]:
         """Pair drugs on this parchi with each other and with the active cabinet.
 
@@ -202,6 +245,15 @@ class OpenFdaClient:
         """
         pool: list[tuple[str, dict]] = [("parchi", med) for med in current]
         pool.extend(("cabinet", med) for med in cabinet)
+        unique_salts: set[str] = set()
+        for _, med in pool:
+            for salt in med.get("generic_salts") or []:
+                if salt:
+                    key = salt.casefold().strip()
+                    if key in self.allowed_salts:
+                        unique_salts.add(key)
+        await self._prefetch_salts(unique_salts)
+
         found: dict[tuple[int, int], InteractionHit] = {}
         for i in range(len(pool)):
             for j in range(i + 1, len(pool)):

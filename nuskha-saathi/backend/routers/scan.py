@@ -1,15 +1,17 @@
-"""POST /api/v1/scan-parchi and POST /api/v1/verify-strip."""
+"""POST /api/v1/scan-parchi, POST /api/v1/verify-strip, and GET /api/v1/audio/{scan_id}."""
 
 from __future__ import annotations
 
 import json
-import os
+import math
 import re
+import uuid
 from pathlib import Path
-from time import perf_counter
 
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 
+from routers.cabinet import finalize_scan_response
+from services.image_ops import safe_slug
 from services.scan_service import scan_parchi, verify_strip
 from services.tts_stt_service import synthesize_urdu
 from services.urdu_formatter import dose_phrase
@@ -17,14 +19,43 @@ from services.urdu_formatter import dose_phrase
 router = APIRouter()
 
 MAX_BYTES = 8 * 1024 * 1024
+_READ_CHUNK_BYTES = 64 * 1024
+_ALLOWED_IMAGE_MIMES = frozenset(
+    {
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/webp",
+        "image/gif",
+        "image/bmp",
+        "image/tiff",
+        "image/heic",
+        "image/heif",
+    }
+)
 
 
 async def _read_upload(file: UploadFile) -> tuple[bytes, str]:
-    data = await file.read()
-    if len(data) > MAX_BYTES:
-        raise HTTPException(status_code=413, detail="Image is larger than 8 MB.")
-    mime = file.content_type or "image/jpeg"
-    return data, mime
+    raw_mime = (file.content_type or "image/jpeg").split(";")[0].strip().lower()
+    if raw_mime == "image/jpg":
+        raw_mime = "image/jpeg"
+    if raw_mime and raw_mime != "application/octet-stream" and raw_mime not in _ALLOWED_IMAGE_MIMES:
+        raise HTTPException(
+            status_code=415,
+            detail=f"Unsupported media type '{raw_mime}'. Please upload a JPEG, PNG, or WEBP prescription image.",
+        )
+
+    chunks: list[bytes] = []
+    total = 0
+    while True:
+        chunk = await file.read(_READ_CHUNK_BYTES)
+        if not chunk:
+            break
+        total += len(chunk)
+        if total > MAX_BYTES:
+            raise HTTPException(status_code=413, detail="Image is larger than 8 MB.")
+        chunks.append(chunk)
+    return b"".join(chunks), raw_mime or "image/jpeg"
 
 
 def _parse_cabinet(raw: str, resolver) -> list[dict]:
@@ -58,6 +89,32 @@ def _parse_cabinet(raw: str, resolver) -> list[dict]:
     return cabinet
 
 
+def _merge_patient_cabinet(inline_cabinet: list[dict], patient_id: str, store) -> list[dict]:
+    if store is None or not patient_id.strip() or patient_id.strip().lower() == "anonymous":
+        return inline_cabinet
+    saved = store.list_cabinet(patient_id.strip())
+    if not saved:
+        return inline_cabinet
+    merged = list(inline_cabinet)
+    seen = {
+        (item["brand_name"].casefold().strip(), tuple(sorted(s.casefold() for s in item.get("generic_salts") or [])))
+        for item in merged
+    }
+    for row in saved:
+        key = (row["brand_name"].casefold().strip(), tuple(sorted(s.casefold() for s in row.get("generic_salts") or [])))
+        if key not in seen:
+            seen.add(key)
+            merged.append(
+                {
+                    "brand_name": row["brand_name"],
+                    "generic_salts": list(row.get("generic_salts") or []),
+                    "strength_mg": row.get("strength_mg"),
+                    "source_label": row.get("source_label") or "Active Cabinet",
+                }
+            )
+    return merged
+
+
 @router.post("/api/v1/scan-parchi")
 async def scan_parchi_route(
     request: Request,
@@ -66,7 +123,10 @@ async def scan_parchi_route(
     active_cabinet: str = Form("[]"),
 ):
     image_bytes, mime = await _read_upload(file)
-    cabinet = _parse_cabinet(active_cabinet, request.app.state.resolver)
+    inline_cabinet = _parse_cabinet(active_cabinet, request.app.state.resolver)
+    store = getattr(request.app.state, "store", None)
+    cabinet = _merge_patient_cabinet(inline_cabinet, patient_id, store)
+
     result = await scan_parchi(
         image_bytes=image_bytes,
         mime=mime,
@@ -76,21 +136,7 @@ async def scan_parchi_route(
         resolver=request.app.state.resolver,
         fda=request.app.state.fda,
     )
-    speech_started = perf_counter()
-    audio = await synthesize_urdu(result.urdu_script)
-    result.telemetry.tts_ms = int(round((perf_counter() - speech_started) * 1000))
-    result.telemetry.total_ms += result.telemetry.tts_ms
-    audio_dir = Path(request.app.state.audio_dir)
-    if audio:
-        (audio_dir / f"{result.scan_id}.mp3").write_bytes(audio)
-        result.audio_urdu_url = f"/static/audio/{result.scan_id}.mp3"
-    (audio_dir / f"{result.scan_id}.json").write_text(
-        json.dumps({"scan_id": result.scan_id, "urdu_script": result.urdu_script, "audio_urdu_url": result.audio_urdu_url}),
-        encoding="utf-8",
-    )
-    base_url = os.getenv("FRONTEND_BASE_URL", "").rstrip("/")
-    result.audio_qr_payload = f"{base_url}/audio/{result.scan_id}" if base_url else f"/audio/{result.scan_id}"
-    return result
+    return await finalize_scan_response(request, result, speech_fn=synthesize_urdu)
 
 
 @router.get("/api/v1/audio/{scan_id}")
@@ -98,9 +144,19 @@ async def audio_metadata(request: Request, scan_id: str):
     if not re.fullmatch(r"scan_[0-9a-f]{24}", scan_id):
         raise HTTPException(status_code=404, detail="Audio not found.")
     metadata = Path(request.app.state.audio_dir) / f"{scan_id}.json"
-    if not metadata.is_file():
-        raise HTTPException(status_code=404, detail="Audio not found.")
-    return json.loads(metadata.read_text(encoding="utf-8"))
+    if metadata.is_file():
+        return json.loads(metadata.read_text(encoding="utf-8"))
+    store = getattr(request.app.state, "store", None)
+    if store is not None:
+        saved = store.get_scan(scan_id)
+        if saved is not None:
+            return {
+                "scan_id": saved["scan_id"],
+                "patient_id": saved.get("patient_id", "anonymous"),
+                "urdu_script": saved["urdu_script"],
+                "audio_urdu_url": saved.get("audio_urdu_url"),
+            }
+    raise HTTPException(status_code=404, detail="Audio not found.")
 
 
 @router.post("/api/v1/verify-strip")
@@ -117,12 +173,21 @@ async def verify_strip_route(
     night_qty: float = Form(0),
     meal_timing: str = Form("any"),
 ):
+    if not expected_brand.strip():
+        raise HTTPException(status_code=400, detail="expected_brand is required.")
+    if not math.isfinite(expected_strength_mg) or expected_strength_mg <= 0:
+        raise HTTPException(status_code=400, detail="expected_strength_mg must be a positive number.")
+    for label, qty in (("morning_qty", morning_qty), ("afternoon_qty", afternoon_qty), ("night_qty", night_qty)):
+        if not math.isfinite(qty) or qty < 0:
+            raise HTTPException(status_code=400, detail=f"{label} must be a non-negative number.")
+
     image_bytes, mime = await _read_upload(file)
     salts = [part.strip() for part in expected_salts.split(",") if part.strip()]
     schedule = None
     if morning_qty or afternoon_qty or night_qty:
         schedule = dose_phrase(expected_brand, expected_strength_mg, morning_qty, afternoon_qty, night_qty, meal_timing)
-    return await verify_strip(
+
+    result = await verify_strip(
         image_bytes=image_bytes,
         mime=mime,
         scan_id=scan_id,
@@ -135,3 +200,12 @@ async def verify_strip_route(
         resolver=request.app.state.resolver,
         strip_dir=request.app.state.strip_dir,
     )
+
+    audio = await synthesize_urdu(result.urdu_verdict)
+    if audio:
+        audio_dir = Path(request.app.state.audio_dir)
+        audio_dir.mkdir(parents=True, exist_ok=True)
+        audio_name = f"verify_{safe_slug(scan_id, 'scan')}_{safe_slug(matched_line_id, 'med')}_{uuid.uuid4().hex[:8]}.mp3"
+        (audio_dir / audio_name).write_bytes(audio)
+        result.audio_urdu_url = f"/static/audio/{audio_name}"
+    return result

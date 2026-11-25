@@ -17,7 +17,7 @@ from schemas.responses import (
 )
 from schemas.vision import ExtractedLine, VisionExtraction
 from services.formulary_resolver import FormularyResolver
-from services.image_ops import crop_bbox_jpeg_b64, save_jpeg
+from services.image_ops import crop_bbox_jpeg_b64, safe_slug, save_jpeg, validate_image_bytes
 from services.openfda_client import OpenFdaClient
 from services.safety_gate import evaluate_line
 from services.strip_verifier import compare_strip
@@ -58,7 +58,7 @@ async def scan_parchi(
     vision_started = perf_counter()
     extraction: VisionExtraction | None = None
     vision_error = False
-    if not image_bytes:
+    if not image_bytes or not validate_image_bytes(image_bytes):
         vision_error = True
     else:
         try:
@@ -109,12 +109,13 @@ async def scan_parchi(
 
             entry = decision.resolved.entry
             salts = list(entry.generic_salts)
+            duration = line.duration_days if (line.duration_days is not None and line.duration_days > 0) else None
             schedule = DoseSchedule(
                 morning=_qty(line.morning_qty),
                 afternoon=_qty(line.afternoon_qty),
                 night=_qty(line.night_qty),
                 meal_timing=decision.meal_timing,  # type: ignore[arg-type]
-                duration_days=line.duration_days,
+                duration_days=duration,
             )
             shortage = None
             if entry.drap_shortage_flagged:
@@ -123,6 +124,8 @@ async def scan_parchi(
                 MedicationOut(
                     line_id=line_id,
                     status="VERIFIED",
+                    raw_text=line.raw_text,
+                    ocr_confidence=line.ocr_confidence,
                     brand_matched=entry.brand_name,
                     fuzzy_score=decision.fuzzy_score,
                     generic_salts=salts,
@@ -212,19 +215,25 @@ async def scan_parchi(
 
 
 def _label_hit(salt_a: str, salt_b: str, current: list[dict], cabinet: list[dict]) -> tuple[str, str]:
-    def find(salt: str, prefer: str) -> str:
-        pools = [("parchi", current), ("cabinet", cabinet)] if prefer == "parchi" else [("cabinet", cabinet), ("parchi", current)]
-        for origin, meds in pools:
-            for med in meds:
-                salts = [item.casefold() for item in med.get("generic_salts") or []]
-                if salt.casefold() in salts:
-                    return _drug_label(med["brand_name"], med.get("generic_salts") or [salt], origin, med.get("source_label"))
-        return salt
+    def find_in(salt: str, origin: str, meds: list[dict]) -> str | None:
+        key = salt.casefold()
+        for med in meds:
+            salts = [item.casefold() for item in med.get("generic_salts") or []]
+            if key in salts:
+                return _drug_label(med["brand_name"], med.get("generic_salts") or [salt], origin, med.get("source_label"))
+        return None
 
-    # Prefer showing one current-parchi drug and one cabinet drug when both exist.
-    label_a_parchi = find(salt_a, "parchi")
-    label_b_cabinet = find(salt_b, "cabinet")
-    return label_a_parchi, label_b_cabinet
+    parchi_a = find_in(salt_a, "parchi", current)
+    cab_b = find_in(salt_b, "cabinet", cabinet)
+    if parchi_a and cab_b:
+        return parchi_a, cab_b
+
+    cab_a = find_in(salt_a, "cabinet", cabinet)
+    parchi_b = find_in(salt_b, "parchi", current)
+    if cab_a and parchi_b:
+        return parchi_b, cab_a
+
+    return parchi_a or cab_a or salt_a, parchi_b or cab_b or salt_b
 
 
 async def verify_strip(
@@ -245,7 +254,8 @@ async def verify_strip(
     detected_salts: list[str] = []
     detected_strength = None
     confidence = 0.0
-    if image_bytes:
+    valid_image = bool(image_bytes and validate_image_bytes(image_bytes))
+    if valid_image:
         try:
             extraction = await extractor.extract(image_bytes, mime, "strip")
         except VisionExtractError:
@@ -269,7 +279,12 @@ async def verify_strip(
         resolver=resolver,
         schedule_phrase=schedule_phrase,
     )
-    thumb_name = save_jpeg(image_bytes, strip_dir, f"strip_{scan_id}_{matched_line_id}.jpg") if image_bytes else None
+    thumb_name = None
+    if valid_image:
+        safe_scan = safe_slug(scan_id, "scan")
+        safe_line = safe_slug(matched_line_id, "med")
+        unique = uuid.uuid4().hex[:8]
+        thumb_name = save_jpeg(image_bytes, strip_dir, f"strip_{safe_scan}_{safe_line}_{unique}.jpg")
     thumb_url = f"/static/strips/{thumb_name}" if thumb_name else None
     return StripResponse(
         scan_id=scan_id,

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import base64
 import os
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -13,10 +14,19 @@ MAX_TTS_CHARS = 2500
 MAX_STT_BYTES = 25 * 1024 * 1024
 
 
+def tts_configured() -> bool:
+    """Return True when at least one external TTS provider has credentials."""
+    return bool(
+        (os.getenv("UPLIFT_API_KEY") and os.getenv("UPLIFT_VOICE_ID"))
+        or (os.getenv("AZURE_SPEECH_KEY") and os.getenv("AZURE_SPEECH_REGION"))
+        or os.getenv("GOOGLE_TTS_API_KEY")
+    )
+
+
 async def synthesize_urdu(text: str) -> bytes | None:
     """Return MP3 bytes, or None so the client can use browser speech."""
     text = text[:MAX_TTS_CHARS].strip()
-    if not text:
+    if not text or not tts_configured():
         return None
     async with httpx.AsyncClient(timeout=35) as client:
         for provider in (_uplift, _azure, _google):
@@ -98,6 +108,9 @@ async def _google(client: httpx.AsyncClient, text: str) -> bytes | None:
 
 def to_opus_ogg(source_mp3: Path, target_ogg: Path) -> None:
     """Conversion hook for a later WhatsApp voice note pipeline."""
+    if not shutil.which("ffmpeg"):
+        raise RuntimeError("ffmpeg binary is not available on PATH")
+    target_ogg.parent.mkdir(parents=True, exist_ok=True)
     subprocess.run(
         ["ffmpeg", "-y", "-i", str(source_mp3), "-c:a", "libopus", "-b:a", "32k", str(target_ogg)],
         check=True,

@@ -6,6 +6,11 @@ __pycache__/
 **/.pytest_cache/
 .env
 **/.env
+**/.env.local
+**/*.db
+**/*.sqlite*
+.vercel/
+**/.vercel/
 nuskha-saathi/backend/data/_fda_label_cache.json
 *.pyc
 **/node_modules/
@@ -14,3 +19,5 @@ nuskha-saathi/backend/data/_fda_label_cache.json
 nuskha-saathi/backend/static/audio/*.mp3
 nuskha-saathi/backend/static/audio/*.json
 nuskha-saathi/backend/static/strips/*.jpg
+!nuskha-saathi/backend/static/audio/.gitkeep
+!nuskha-saathi/backend/static/strips/.gitkeep

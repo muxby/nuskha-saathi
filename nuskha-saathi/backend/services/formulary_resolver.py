@@ -17,44 +17,76 @@ DATA_PATH = Path(__file__).resolve().parents[1] / "data" / "pk_formulary.json"
 
 _STOP = {
     "tab",
+    "tabs",
     "tablet",
+    "tablets",
     "cap",
+    "caps",
     "capsule",
+    "capsules",
     "syp",
     "syrup",
     "inj",
     "injection",
+    "susp",
+    "suspension",
+    "drops",
+    "cream",
+    "ointment",
+    "gel",
     "mg",
     "ml",
+    "mcg",
+    "gm",
     "od",
     "bd",
+    "bid",
     "tds",
+    "tid",
+    "qid",
+    "qds",
     "pc",
     "ac",
     "hs",
+    "sos",
+    "prn",
     "stat",
+    "daily",
+    "days",
+    "day",
+    "din",
+    "rx",
 }
+
+_DOSE_TOKEN_RE = re.compile(
+    r"^(?:\d+(?:\.\d+)?(?:mg|ml|mcg|ug|gm|g|iu|%)?|\d+x(?:od|bd|tds|qid|d)|x?\d+d(?:ays?)?|\d+\+\d+\+\d+)$"
+)
 
 
 def _compact(value: str) -> str:
     text = value.casefold()
     text = text.replace("ph", "f").replace("ck", "k")
-    text = re.sub(r"[^a-z0-9]+", " ", text)
+    text = re.sub(r"[^a-z0-9+]+", " ", text)
     text = re.sub(r"(.)\1{2,}", r"\1\1", text)
     return text.strip()
 
 
 def strict_key(value: str) -> str:
-    return _compact(value).replace(" ", "")
+    return re.sub(r"\+", "", _compact(value)).replace(" ", "")
+
+
+def _clean_tokens(value: str) -> list[str]:
+    tokens = []
+    for token in _compact(value).split():
+        plain = token.replace("+", "")
+        if not plain or plain in _STOP or plain.isdigit() or _DOSE_TOKEN_RE.match(plain):
+            continue
+        tokens.append(plain)
+    return tokens
 
 
 def loose_key(value: str) -> str:
-    tokens = []
-    for token in _compact(value).split():
-        if token in _STOP or token.isdigit():
-            continue
-        tokens.append(token)
-    return "".join(tokens)
+    return "".join(_clean_tokens(value))
 
 
 def phonetic(value: str) -> str:
@@ -132,15 +164,7 @@ class FormularyResolver:
         ]
         return cls(entries)
 
-    def resolve(self, name: str) -> ResolveHit | None:
-        if not name or not str(name).strip():
-            return None
-        strict = strict_key(name)
-        loose = loose_key(name)
-        exact = self.by_exact.get(strict) or self.by_exact.get(loose)
-        if exact is not None:
-            return ResolveHit(entry=exact, fuzzy_score=100.0)
-        key = loose or strict
+    def _match_key(self, key: str) -> ResolveHit | None:
         if len(key) < 5 or not self._choices:
             return None
         ranked = process.extract(
@@ -163,3 +187,26 @@ class FormularyResolver:
         if len(ordered) > 1 and best_score - ordered[1][0] < 4:
             return None
         return ResolveHit(entry=best_entry, fuzzy_score=best_score)
+
+    def resolve(self, name: str) -> ResolveHit | None:
+        if not name or not str(name).strip():
+            return None
+        strict = strict_key(name)
+        loose = loose_key(name)
+        exact = self.by_exact.get(strict) or self.by_exact.get(loose)
+        if exact is not None:
+            return ResolveHit(entry=exact, fuzzy_score=100.0)
+
+        tokens = _clean_tokens(name)
+        if len(tokens) > 1:
+            for size in range(len(tokens) - 1, 0, -1):
+                candidate = "".join(tokens[:size])
+                if candidate in self.by_exact:
+                    return ResolveHit(entry=self.by_exact[candidate], fuzzy_score=98.0)
+
+        hit = self._match_key(loose or strict)
+        if hit is not None:
+            return hit
+        if len(tokens) > 1:
+            return self._match_key(tokens[0])
+        return None

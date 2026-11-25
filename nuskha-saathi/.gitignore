@@ -3,6 +3,10 @@ __pycache__/
 .venv/
 venv/
 .env
+.env.local
+.vercel/
+*.db
+*.sqlite*
 backend/data/_fda_label_cache.json
 backend/static/strips/*
 backend/static/audio/*

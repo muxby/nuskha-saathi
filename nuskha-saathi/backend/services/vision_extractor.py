@@ -81,6 +81,16 @@ def _text_from_gemini(payload: dict) -> str:
     return _strip_fence(text)
 
 
+_NON_RETRYABLE_STATUSES = frozenset({400, 401, 403, 404})
+
+
+def _normalize_mime(mime: str | None) -> str:
+    clean = (mime or "image/jpeg").split(";")[0].strip().lower()
+    if clean == "image/jpg":
+        return "image/jpeg"
+    return clean or "image/jpeg"
+
+
 class GeminiVisionExtractor:
     counts_as_live = True
 
@@ -103,7 +113,7 @@ class GeminiVisionExtractor:
                         {"text": prompt},
                         {
                             "inline_data": {
-                                "mime_type": mime or "image/jpeg",
+                                "mime_type": _normalize_mime(mime),
                                 "data": base64.b64encode(image_bytes).decode("ascii"),
                             }
                         },
@@ -125,7 +135,18 @@ class GeminiVisionExtractor:
             try:
                 payload = await self._post(url, body)
                 parsed = json.loads(_text_from_gemini(payload))
+                if isinstance(parsed, list):
+                    parsed = {"extracted_lines": parsed, "image_quality_warning": False}
+                if not isinstance(parsed, dict):
+                    raise VisionExtractError("Gemini JSON root must be an object")
                 return VisionExtraction.model_validate(parsed)
+            except httpx.HTTPStatusError as exc:
+                status = exc.response.status_code if exc.response is not None else 0
+                if status in _NON_RETRYABLE_STATUSES:
+                    raise VisionExtractError(f"Gemini API rejected request with HTTP {status}") from exc
+                last_error = exc
+                if attempt == 0:
+                    await asyncio.sleep(self.backoff_seconds)
             except Exception as exc:  # noqa: BLE001 — fail closed after the single retry
                 last_error = exc
                 if attempt == 0:

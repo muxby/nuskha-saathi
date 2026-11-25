@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 
 from services.formulary_resolver import FormularyResolver, ResolveHit
@@ -35,6 +36,8 @@ def _salts(hit: ResolveHit | None, fallback: list[str]) -> tuple[str, ...]:
 def _same_strength(left: float | None, right: float | None) -> bool:
     if left is None or right is None:
         return False
+    if not (math.isfinite(float(left)) and math.isfinite(float(right))):
+        return False
     return abs(float(left) - float(right)) < 0.01
 
 
@@ -58,7 +61,8 @@ def compare_strip(
 ) -> StripVerdict:
     expected_hit = resolver.resolve(expected_brand)
     shown_expected = expected_hit.brand_name if expected_hit else expected_brand
-    if detected_confidence < 0.85 or not (detected_brand or "").strip():
+    valid_conf = math.isfinite(detected_confidence) and 0.85 <= detected_confidence <= 1.0
+    if not valid_conf or not (detected_brand or "").strip():
         return StripVerdict(
             status="UNREADABLE_STRIP",
             expected_brand=shown_expected,
@@ -66,7 +70,7 @@ def compare_strip(
             expected_strength=expected_strength,
             detected_brand=detected_brand or None,
             detected_salts=list(detected_salts),
-            detected_strength=detected_strength,
+            detected_strength=detected_strength if (detected_strength is not None and math.isfinite(detected_strength)) else None,
             urdu_verdict=UNREADABLE_STRIP_URDU,
         )
 
@@ -79,7 +83,7 @@ def compare_strip(
             expected_strength=expected_strength,
             detected_brand=detected_brand,
             detected_salts=list(detected_salts),
-            detected_strength=detected_strength,
+            detected_strength=detected_strength if (detected_strength is not None and math.isfinite(detected_strength)) else None,
             urdu_verdict=UNREADABLE_STRIP_URDU,
         )
 
@@ -87,8 +91,22 @@ def compare_strip(
     salts_expected = _salts(expected_hit, expected_salts)
     salts_detected = _salts(detected_hit, detected_salts)
     same_drug = _same_row(expected_hit, detected_hit, expected_brand, detected_brand) or (
-        salts_expected and salts_expected == salts_detected
+        bool(salts_expected) and salts_expected == salts_detected
     )
+
+    if detected_strength is None or not math.isfinite(float(detected_strength)) or detected_strength <= 0:
+        if same_drug:
+            return StripVerdict(
+                status="UNREADABLE_STRIP",
+                expected_brand=shown_expected,
+                expected_salts=list(expected_hit.generic_salts if expected_hit else expected_salts),
+                expected_strength=expected_strength,
+                detected_brand=shown_detected,
+                detected_salts=list(detected_hit.generic_salts),
+                detected_strength=None,
+                urdu_verdict=UNREADABLE_STRIP_URDU,
+            )
+
     same_strength = _same_strength(expected_strength, detected_strength)
 
     if same_drug and not same_strength:
