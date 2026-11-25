@@ -1,10 +1,133 @@
 "use client";
-import { AlertTriangle, ShieldAlert, ShieldCheck, ScanLine } from "lucide-react";
+import {
+  AlertTriangle,
+  ShieldAlert,
+  ShieldCheck,
+  ScanLine,
+} from "lucide-react";
 import type { Interaction, Medication } from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
 import SpeakerButton from "./SpeakerButton";
-export default function SafetyAlertBanner({ interactions,medications,onRetake }: { interactions:Interaction[];medications:Medication[];onRetake?:()=>void }) {
-  const { t,language }=useLanguage();
-  const refused=medications.filter(m=>m.status!=="VERIFIED");
-  return <div className="safety-alerts">{[...interactions].sort((a,b)=>Number(b.severity==="HIGH")-Number(a.severity==="HIGH")).map((hit,index)=><section className={`alert-card ${hit.severity==="HIGH" ? "alert-red":"alert-amber"}`} key={`${hit.drug_a}-${index}`} role="alert"><div className="alert-icon"><ShieldAlert size={28}/></div><div className="alert-body"><span className="eyebrow">{t(hit.severity==="HIGH" ? "seriousWarning":"moderateWarning")}</span><h3 className="alert-title" dir="ltr">{hit.drug_a} + {hit.drug_b}</h3><p className="warning-action">{t("warningAction")}</p>{language==="en" && <span className="backend-label">{t("backendUrdu")}</span>}<p className="backend-urdu" lang="ur" dir="rtl">{hit.urdu_warning}</p><SpeakerButton text={hit.urdu_warning}/><details className="source-detail"><summary>{t("viewSource")}</summary><p dir="auto">{hit.fda_verbatim_excerpt}</p><span className="evidence-source" dir="ltr">{hit.source}</span><p className="evidence-disclaimer">{t("noEndorsement")}</p></details></div></section>)}{refused.map(m=><section className="alert-card alert-amber" key={m.line_id} role="alert"><div className="alert-icon"><AlertTriangle size={28}/></div><div className="alert-body"><span className="eyebrow">{t("confirmationRequired")}</span><h3 className="alert-title">{t("unknownWarning")}</h3><p className="warning-action">{t("pharmacistAction")}</p>{m.raw_text && <p className="uncertain-wording" dir="auto">{m.raw_text}</p>}{m.refusal_reason_urdu && <><span className="backend-label">{t("backendUrdu")}</span><p className="backend-urdu" lang="ur" dir="rtl">{m.refusal_reason_urdu}</p><SpeakerButton text={m.refusal_reason_urdu}/></>}{m.cropped_handwriting_b64 && <figure className="crop-wrap"><img src={m.cropped_handwriting_b64.startsWith("data:") ? m.cropped_handwriting_b64:`data:image/jpeg;base64,${m.cropped_handwriting_b64}`} alt={t("sourceCrop")} className="crop-image"/><figcaption>{t("sourceCrop")}</figcaption></figure>}{onRetake && <button type="button" className="secondary-button retake-warning" onClick={onRetake}><ScanLine size={18}/>{t("retake")}</button>}</div></section>)}{!interactions.length&&!refused.length&&medications.length>0 && <section className="alert-card alert-green"><ShieldCheck size={28}/><div><strong>{t("identityMatched")}</strong><p>{t("noInteraction")}</p></div></section>}</div>;
+export default function SafetyAlertBanner({
+  interactions,
+  medications,
+  onRetake,
+}: {
+  interactions: Interaction[];
+  medications: Medication[];
+  onRetake?: () => void;
+}) {
+  const { t, language } = useLanguage();
+  const refused = medications.filter((m) => m.status !== "VERIFIED");
+  return (
+    <div className="safety-alerts">
+      {[...interactions]
+        .sort(
+          (a, b) =>
+            Number(b.severity === "HIGH") - Number(a.severity === "HIGH"),
+        )
+        .map((hit, index) => (
+          <section
+            className={`alert-card ${hit.severity === "HIGH" ? "alert-red" : "alert-amber"}`}
+            key={`${hit.drug_a}-${index}`}
+            role="alert"
+          >
+            <div className="alert-icon">
+              <ShieldAlert size={28} />
+            </div>
+            <div className="alert-body">
+              <span className="eyebrow">
+                {t(
+                  hit.severity === "HIGH"
+                    ? "seriousWarning"
+                    : "moderateWarning",
+                )}
+              </span>
+              <h3 className="alert-title" dir="ltr">
+                {hit.drug_a} + {hit.drug_b}
+              </h3>
+              <p className="warning-action">{t("warningAction")}</p>
+              {language === "en" && (
+                <span className="backend-label">{t("backendUrdu")}</span>
+              )}
+              <p className="backend-urdu" lang="ur" dir="rtl">
+                {hit.urdu_warning}
+              </p>
+              <SpeakerButton text={hit.urdu_warning} />
+              <details className="source-detail">
+                <summary>{t("viewSource")}</summary>
+                <p dir="auto">{hit.fda_verbatim_excerpt}</p>
+                <span className="evidence-source" dir="ltr">
+                  {hit.source}
+                </span>
+                <p className="evidence-disclaimer">{t("noEndorsement")}</p>
+              </details>
+            </div>
+          </section>
+        ))}
+      {refused.map((m) => (
+        <section
+          className="alert-card alert-amber"
+          key={m.line_id}
+          role="alert"
+        >
+          <div className="alert-icon">
+            <AlertTriangle size={28} />
+          </div>
+          <div className="alert-body">
+            <span className="eyebrow">{t("confirmationRequired")}</span>
+            <h3 className="alert-title">{t("unknownWarning")}</h3>
+            <p className="warning-action">{t("pharmacistAction")}</p>
+            {m.raw_text && (
+              <p className="uncertain-wording" dir="auto">
+                {m.raw_text}
+              </p>
+            )}
+            {m.refusal_reason_urdu && (
+              <>
+                <span className="backend-label">{t("backendUrdu")}</span>
+                <p className="backend-urdu" lang="ur" dir="rtl">
+                  {m.refusal_reason_urdu}
+                </p>
+                <SpeakerButton text={m.refusal_reason_urdu} />
+              </>
+            )}
+            {m.cropped_handwriting_b64 && (
+              <figure className="crop-wrap">
+                <img
+                  src={
+                    m.cropped_handwriting_b64.startsWith("data:")
+                      ? m.cropped_handwriting_b64
+                      : `data:image/jpeg;base64,${m.cropped_handwriting_b64}`
+                  }
+                  alt={t("sourceCrop")}
+                  className="crop-image"
+                />
+                <figcaption>{t("sourceCrop")}</figcaption>
+              </figure>
+            )}
+            {onRetake && (
+              <button
+                type="button"
+                className="secondary-button retake-warning"
+                onClick={onRetake}
+              >
+                <ScanLine size={18} />
+                {t("retake")}
+              </button>
+            )}
+          </div>
+        </section>
+      ))}
+      {!interactions.length && !refused.length && medications.length > 0 && (
+        <section className="alert-card alert-green">
+          <ShieldCheck size={28} />
+          <div>
+            <strong>{t("identityMatched")}</strong>
+            <p>{t("noInteraction")}</p>
+          </div>
+        </section>
+      )}
+    </div>
+  );
 }

@@ -1,17 +1,298 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Pill, FileText, Trash2, ArrowRight, ScanLine, CalendarDays, MessageCircle, BellOff, Save, Languages, ShieldCheck, Sun } from "lucide-react";
+import {
+  Pill,
+  FileText,
+  Trash2,
+  ArrowRight,
+  ScanLine,
+  CalendarDays,
+  MessageCircle,
+  BellOff,
+  Save,
+  Languages,
+  ShieldCheck,
+  Sun,
+} from "lucide-react";
 import type { ScanResult } from "@/lib/api";
 import type { SavedPrescription } from "@/lib/records";
 import { LanguageSwitch, useLanguage } from "@/lib/i18n";
-export function MedicineLibrary({records,current,history,onOpen,onDelete,onScan}:{records:SavedPrescription[];current:ScanResult|null;history:boolean;onOpen:(scan:ScanResult)=>void;onDelete:(id:string)=>void;onScan:()=>void}) {
-  const {t,language}=useLanguage();const scans=records.map(r=>r.scan);if(current&&!scans.some(s=>s.scan_id===current.scan_id))scans.unshift(current);
-  const meds=scans.flatMap(scan=>scan.medications.filter(m=>m.status==="VERIFIED").map(m=>({scan,med:m})));
-  const empty=history ? !records.length:!meds.length;
-  return <section className="library"><p className="library-description">{t(history?"historyBody":"cabinetBody")}</p>{empty ? <div className="panel empty-state"><span className="empty-art">{history?<FileText size={40}/>:<Pill size={40}/>}</span><h2>{t(history?"historyEmpty":"cabinetEmpty")}</h2><p>{t("cabinetEmptyBody")}</p><button className="primary-button" onClick={onScan}><ScanLine size={20}/>{t("scan")}</button></div> : history ? <div className="history-list">{records.map(record=><article className="history-card" key={record.scan.scan_id}><div className="history-symbol"><FileText size={28}/></div><div><span className="eyebrow">{t("prescriptions")}</span><h2 dir="ltr">#{record.scan.scan_id.slice(-6)}</h2><p>{t("savedOn")} <time dateTime={record.savedAt}>{new Date(record.savedAt).toLocaleDateString(language==="ur"?"ur-PK":"en-GB",{day:"numeric",month:"short",year:"numeric"})}</time></p><div className="history-meds">{record.scan.medications.map(m=><span key={m.line_id} dir="auto">{m.brand_matched||t("unknownMedicine")}</span>)}</div><button className="secondary-button" onClick={()=>onOpen(record.scan)}>{t("viewPrescription")}<ArrowRight size={18} className="directional"/></button></div><button className="icon-button delete-record" aria-label={t("remove")} onClick={()=>{if(window.confirm(t("deleteRecord")))onDelete(record.scan.scan_id);}}><Trash2 size={19}/></button></article>)}</div> : <><div className="cabinet-grid">{meds.map(({scan,med})=><article className="cabinet-card" key={`${scan.scan_id}-${med.line_id}`}><span className="medicine-icon"><Pill size={30}/></span><div><h2 dir="ltr">{med.brand_matched}</h2>{med.strength_mg!=null&&<p dir="ltr">{med.strength_mg} mg</p>}<span className="cabinet-status">{t("identityMatched")}</span></div><div className="cabinet-schedule">{(["morning","afternoon","night"] as const).map(slot=><span key={slot}><span>{t(slot)}</span><strong>{med.schedule?.[slot]!=null ? `${med.schedule[slot]} ${t("tablet")}`:t("unknownDose")}</strong></span>)}</div><button className="secondary-button" onClick={()=>onOpen(scan)}>{t("viewPrescription")}<ArrowRight className="directional" size={17}/></button></article>)}</div><p className="library-footnote"><CalendarDays size={20}/>{t("completedUnknown")}</p></>}</section>;
+export function MedicineLibrary({
+  records,
+  current,
+  history,
+  onOpen,
+  onDelete,
+  onScan,
+}: {
+  records: SavedPrescription[];
+  current: ScanResult | null;
+  history: boolean;
+  onOpen: (scan: ScanResult) => void;
+  onDelete: (id: string) => void;
+  onScan: () => void;
+}) {
+  const { t, language } = useLanguage();
+  const scans = records.map((r) => r.scan);
+  if (current && !scans.some((s) => s.scan_id === current.scan_id))
+    scans.unshift(current);
+  const meds = scans.flatMap((scan) =>
+    scan.medications
+      .filter((m) => m.status === "VERIFIED")
+      .map((m) => ({ scan, med: m })),
+  );
+  const empty = history ? !records.length : !meds.length;
+  return (
+    <section className="library">
+      <p className="library-description">
+        {t(history ? "historyBody" : "cabinetBody")}
+      </p>
+      {empty ? (
+        <div className="panel empty-state">
+          <span className="empty-art">
+            {history ? <FileText size={40} /> : <Pill size={40} />}
+          </span>
+          <h2>{t(history ? "historyEmpty" : "cabinetEmpty")}</h2>
+          <p>{t("cabinetEmptyBody")}</p>
+          <button className="primary-button" onClick={onScan}>
+            <ScanLine size={20} />
+            {t("scan")}
+          </button>
+        </div>
+      ) : history ? (
+        <div className="history-list">
+          {records.map((record) => (
+            <article className="history-card" key={record.scan.scan_id}>
+              <div className="history-symbol">
+                <FileText size={28} />
+              </div>
+              <div>
+                <span className="eyebrow">{t("prescriptions")}</span>
+                <h2 dir="ltr">#{record.scan.scan_id.slice(-6)}</h2>
+                <p>
+                  {t("savedOn")}{" "}
+                  <time dateTime={record.savedAt}>
+                    {new Date(record.savedAt).toLocaleDateString(
+                      language === "ur" ? "ur-PK" : "en-GB",
+                      { day: "numeric", month: "short", year: "numeric" },
+                    )}
+                  </time>
+                </p>
+                <div className="history-meds">
+                  {record.scan.medications.map((m) => (
+                    <span key={m.line_id} dir="auto">
+                      {m.brand_matched || t("unknownMedicine")}
+                    </span>
+                  ))}
+                </div>
+                <button
+                  className="secondary-button"
+                  onClick={() => onOpen(record.scan)}
+                >
+                  {t("viewPrescription")}
+                  <ArrowRight size={18} className="directional" />
+                </button>
+              </div>
+              <button
+                className="icon-button delete-record"
+                aria-label={t("remove")}
+                onClick={() => {
+                  if (window.confirm(t("deleteRecord")))
+                    onDelete(record.scan.scan_id);
+                }}
+              >
+                <Trash2 size={19} />
+              </button>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <>
+          <div className="cabinet-grid">
+            {meds.map(({ scan, med }) => (
+              <article
+                className="cabinet-card"
+                key={`${scan.scan_id}-${med.line_id}`}
+              >
+                <span className="medicine-icon">
+                  <Pill size={30} />
+                </span>
+                <div>
+                  <h2 dir="ltr">{med.brand_matched}</h2>
+                  {med.strength_mg != null && (
+                    <p dir="ltr">{med.strength_mg} mg</p>
+                  )}
+                  <span className="cabinet-status">{t("identityMatched")}</span>
+                </div>
+                <div className="cabinet-schedule">
+                  {(["morning", "afternoon", "night"] as const).map((slot) => (
+                    <span key={slot}>
+                      <span>{t(slot)}</span>
+                      <strong>
+                        {med.schedule?.[slot] != null
+                          ? `${med.schedule[slot]} ${t("tablet")}`
+                          : t("unknownDose")}
+                      </strong>
+                    </span>
+                  ))}
+                </div>
+                <button
+                  className="secondary-button"
+                  onClick={() => onOpen(scan)}
+                >
+                  {t("viewPrescription")}
+                  <ArrowRight className="directional" size={17} />
+                </button>
+              </article>
+            ))}
+          </div>
+          <p className="library-footnote">
+            <CalendarDays size={20} />
+            {t("completedUnknown")}
+          </p>
+        </>
+      )}
+    </section>
+  );
 }
-export function ReminderExperience({scan}:{scan:ScanResult|null}) {
-  const {t,language}=useLanguage();const [time,setTime]=useState("08:00");const confirmed=scan?.medications.filter(m=>m.status==="VERIFIED"&&m.schedule)||[];
-  return <section className="reminder-layout"><div className="panel reminder-form"><MessageCircle size={38}/><h2>{t("whatsapp")}</h2><p>{t("reminderUnavailable")}</p>{confirmed.length>0?<div className="reminder-medicines">{confirmed.map(m=><div key={m.line_id}><strong dir="ltr">{m.brand_matched}</strong><span>{(["morning","afternoon","night"] as const).filter(k=>m.schedule![k]>0).map(k=>`${t(k)}: ${m.schedule![k]}`).join(" · ")}</span></div>)}</div>:<p>{t("reminderNoMedicine")}</p>}<label htmlFor="reminder-time">{t("reminderTime")}</label><input id="reminder-time" type="time" value={time} onChange={e=>setTime(e.target.value)} disabled/><label htmlFor="reminder-lang">{t("reminderLanguage")}</label><select id="reminder-lang" value={language} disabled><option value="en">English</option><option value="ur">اردو</option></select><label className="checkbox-line"><input type="checkbox" disabled/>{t("voiceNote")}</label><button className="primary-button" disabled><BellOff size={20}/>{t("enableReminder")}</button><p className="reminder-confirmation" role="status">{t(scan?.whatsapp_scheduled ? "backendScheduled":"backendNotScheduled")}</p></div><aside className="reminder-aside"><div className="reminder-orbit"><MessageCircle size={60}/></div><span className="eyebrow">{t("comingSoon")}</span><h2>{t("remindersTitle")}</h2><p>{t("reminderUnavailable")}</p></aside></section>;
+export function ReminderExperience({ scan }: { scan: ScanResult | null }) {
+  const { t, language } = useLanguage();
+  const [time, setTime] = useState("08:00");
+  const confirmed =
+    scan?.medications.filter((m) => m.status === "VERIFIED" && m.schedule) ||
+    [];
+  return (
+    <section className="reminder-layout">
+      <div className="panel reminder-form">
+        <MessageCircle size={38} />
+        <h2>{t("whatsapp")}</h2>
+        <p>{t("reminderUnavailable")}</p>
+        {confirmed.length > 0 ? (
+          <div className="reminder-medicines">
+            {confirmed.map((m) => (
+              <div key={m.line_id}>
+                <strong dir="ltr">{m.brand_matched}</strong>
+                <span>
+                  {(["morning", "afternoon", "night"] as const)
+                    .filter((k) => m.schedule![k] > 0)
+                    .map((k) => `${t(k)}: ${m.schedule![k]}`)
+                    .join(" · ")}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>{t("reminderNoMedicine")}</p>
+        )}
+        <label htmlFor="reminder-time">{t("reminderTime")}</label>
+        <input
+          id="reminder-time"
+          type="time"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+          disabled
+        />
+        <label htmlFor="reminder-lang">{t("reminderLanguage")}</label>
+        <select id="reminder-lang" value={language} disabled>
+          <option value="en">English</option>
+          <option value="ur">اردو</option>
+        </select>
+        <label className="checkbox-line">
+          <input type="checkbox" disabled />
+          {t("voiceNote")}
+        </label>
+        <button className="primary-button" disabled>
+          <BellOff size={20} />
+          {t("enableReminder")}
+        </button>
+        <p className="reminder-confirmation" role="status">
+          {t(
+            scan?.whatsapp_scheduled
+              ? "backendScheduled"
+              : "backendNotScheduled",
+          )}
+        </p>
+      </div>
+      <aside className="reminder-aside">
+        <div className="reminder-orbit">
+          <MessageCircle size={60} />
+        </div>
+        <span className="eyebrow">{t("comingSoon")}</span>
+        <h2>{t("remindersTitle")}</h2>
+        <p>{t("reminderUnavailable")}</p>
+      </aside>
+    </section>
+  );
 }
-export function SettingsExperience({onHistory,diagnostics,onDiagnostics}:{onHistory:()=>void;diagnostics:boolean;onDiagnostics:(value:boolean)=>void}) {const{t}=useLanguage();const[theme,setTheme]=useState("dark");useEffect(()=>setTheme(document.documentElement.dataset.theme||"dark"),[]);function chooseTheme(value:string){setTheme(value);document.documentElement.dataset.theme=value;try{localStorage.setItem("nuskha-theme",value);}catch{}}return <section className="settings-grid"><div className="panel"><Sun size={28}/><h2>{t("theme")}</h2><div className="theme-controls" role="group" aria-label={t("theme")}><button aria-pressed={theme==="dark"} onClick={()=>chooseTheme("dark")}>{t("darkTheme")}</button><button aria-pressed={theme==="light"} onClick={()=>chooseTheme("light")}>{t("lightTheme")}</button></div></div><div className="panel"><Languages size={28}/><h2>{t("language")}</h2><LanguageSwitch/></div><div className="panel"><Save size={28}/><h2>{t("deviceStorage")}</h2><p>{t("storageBody")}</p><button className="secondary-button" onClick={onHistory}>{t("history")}</button></div><div className="panel"><ShieldCheck size={28}/><h2>{t("diagnostics")}</h2><p>{t("diagnosticsHint")}</p><label className="settings-toggle"><span>{t("diagnostics")}</span><input type="checkbox" role="switch" checked={diagnostics} onChange={e=>onDiagnostics(e.target.checked)}/></label></div></section>;}
+export function SettingsExperience({
+  onHistory,
+  diagnostics,
+  onDiagnostics,
+}: {
+  onHistory: () => void;
+  diagnostics: boolean;
+  onDiagnostics: (value: boolean) => void;
+}) {
+  const { t } = useLanguage();
+  const [theme, setTheme] = useState("dark");
+  useEffect(
+    () => setTheme(document.documentElement.dataset.theme || "dark"),
+    [],
+  );
+  function chooseTheme(value: string) {
+    setTheme(value);
+    document.documentElement.dataset.theme = value;
+    try {
+      localStorage.setItem("nuskha-theme", value);
+    } catch {}
+  }
+  return (
+    <section className="settings-grid">
+      <div className="panel">
+        <Sun size={28} />
+        <h2>{t("theme")}</h2>
+        <div className="theme-controls" role="group" aria-label={t("theme")}>
+          <button
+            aria-pressed={theme === "dark"}
+            onClick={() => chooseTheme("dark")}
+          >
+            {t("darkTheme")}
+          </button>
+          <button
+            aria-pressed={theme === "light"}
+            onClick={() => chooseTheme("light")}
+          >
+            {t("lightTheme")}
+          </button>
+        </div>
+      </div>
+      <div className="panel">
+        <Languages size={28} />
+        <h2>{t("language")}</h2>
+        <LanguageSwitch />
+      </div>
+      <div className="panel">
+        <Save size={28} />
+        <h2>{t("deviceStorage")}</h2>
+        <p>{t("storageBody")}</p>
+        <button className="secondary-button" onClick={onHistory}>
+          {t("history")}
+        </button>
+      </div>
+      <div className="panel">
+        <ShieldCheck size={28} />
+        <h2>{t("diagnostics")}</h2>
+        <p>{t("diagnosticsHint")}</p>
+        <label className="settings-toggle">
+          <span>{t("diagnostics")}</span>
+          <input
+            type="checkbox"
+            role="switch"
+            checked={diagnostics}
+            onChange={(e) => onDiagnostics(e.target.checked)}
+          />
+        </label>
+      </div>
+    </section>
+  );
+}
