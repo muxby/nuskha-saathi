@@ -5,6 +5,7 @@ import AppShell, { type View } from "@/components/AppShell";
 import HomeExperience from "@/components/HomeExperience";
 import { useLanguage } from "@/lib/i18n";
 import ParchiCamera from "@/components/ParchiCamera";
+import VerificationExperience from "@/components/VerificationExperience";
 import PrescriptionResults from "@/components/PrescriptionResults";
 import DevProofDrawer from "@/components/DevProofDrawer";
 import { postForm, type ScanResult } from "@/lib/api";
@@ -29,7 +30,8 @@ export default function Home() {
     {error && <div className="error-panel" role="alert">{error}</div>}
     {view === "scan" && <ParchiCamera onSelect={handleScan} busy={busy}/>}
     {view === "results" && scan && <PrescriptionResults scan={scan} original={original} onRetake={()=>navigate("scan")}/>}
-    {!["scan","results"].includes(view) && <div className="panel"><h2>{t(view === "verify" ? "verifyFirst" : view === "reminders" ? "comingSoon" : "noSchedule")}</h2><p>{t(view === "reminders" ? "reminderUnavailable" : view === "verify" ? "verifyFirstBody" : "noScheduleBody")}</p><button className="primary-button" onClick={()=>navigate("scan")}>{t("scan")}</button></div>}
+    {view === "verify" && <VerificationExperience scan={scan} onScan={()=>navigate("scan")}/>}
+    {!["scan","results","verify"].includes(view) && <div className="panel"><h2>{t(view === "verify" ? "verifyFirst" : view === "reminders" ? "comingSoon" : "noSchedule")}</h2><p>{t(view === "reminders" ? "reminderUnavailable" : view === "verify" ? "verifyFirstBody" : "noScheduleBody")}</p><button className="primary-button" onClick={()=>navigate("scan")}>{t("scan")}</button></div>}
     </div>}<DevProofDrawer scan={scan}/>
   </AppShell>;
 }
