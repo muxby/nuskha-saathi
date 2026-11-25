@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "English and Urdu responsive homepages, language persistence, and accessibility",
+    "empty cabinet, verification prerequisites, and unavailable reminders",
+    "camera permission denial, gallery file checks, and photo review",
+    "simulated live camera capture and retake",
+    "scan processing, source text, confirmed dose and explicit zero",
+    "recorded audio playback drives duration and waveform",
+    "print and audio QR remain available",
+    "all strip outcomes, generic substitution caution, and focus containment",
+    "explicit saving, local history replay, and reminders stay disabled",
+    "developer proof is opt in and shows actual response evidence",
+    "high contrast light theme and reduced motion",
+    "unknown doses are never displayed as zero; safety warnings remain prominent",
+    "Urdu fallback never silently uses an English voice",
+    "malformed success responses fail closed",
+    "network errors show an actionable failure",
+    "QR route replays the same Urdu script and audio",
+    "saved prescriptions can be deleted",
+    "bilingual not-found screen",
+    "PWA manifest and install icons are served"
+  ],
+  "pageErrors": [],
+  "notes": "API states use controlled test responses; external vision/TTS and physical camera are not certified by these tests."
+}
