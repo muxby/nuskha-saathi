@@ -25,11 +25,12 @@ export function assetUrl(path: string | null): string | undefined {
   return path.startsWith("http") ? path : `${API_BASE}${path}`;
 }
 
-export async function postForm<T>(path: string, form: FormData): Promise<T> {
+export async function postForm<T>(path: string, form: FormData, signal?: AbortSignal): Promise<T> {
   let response: Response;
   try {
-    response = await fetch(`${API_BASE}${path}`, { method: "POST", body: form });
-  } catch {
+    response = await fetch(`${API_BASE}${path}`, { method: "POST", body: form, signal });
+  } catch (error) {
+    if (signal?.aborted) throw error;
     throw new Error("NETWORK");
   }
   if (!response.ok) {

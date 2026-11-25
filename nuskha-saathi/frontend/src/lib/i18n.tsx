@@ -27,7 +27,7 @@ export const messages = { en, ur };
 const Context = createContext<{ language: Language; setLanguage: (v: Language) => void; t: (k: Key) => string }>({ language: "en", setLanguage: () => {}, t: k => en[k] });
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, update] = useState<Language>("en");
-  useEffect(() => { try { if (localStorage.getItem("nuskha-language") === "ur") update("ur"); } catch {} }, []);
+  useEffect(() => { try { if (localStorage.getItem("nuskha-language") === "ur") update("ur"); document.documentElement.dataset.theme=localStorage.getItem("nuskha-theme")==="light"?"light":"dark"; } catch {} }, []);
   useEffect(() => { document.documentElement.lang = language === "ur" ? "ur-PK" : "en"; document.documentElement.dir = language === "ur" ? "rtl" : "ltr"; }, [language]);
   const setLanguage = (value: Language) => { update(value); try { localStorage.setItem("nuskha-language", value); } catch {} };
   return <Context.Provider value={{ language, setLanguage, t: key => messages[language][key] }}>{children}</Context.Provider>;
