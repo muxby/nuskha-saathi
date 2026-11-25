@@ -16,6 +16,7 @@ export default function Home() {
   const { t } = useLanguage();
   const [view, setView] = useState<View>("home");
   const [scan, setScan] = useState<ScanResult | null>(null);
+  const [diagnostics, setDiagnostics] = useState(false);
   const [records, setRecords] = useState<SavedPrescription[]>([]);
   useEffect(() => setRecords(readRecords()), []);
   function saveCurrent() { if (!scan) return; const updated = [{ savedAt: new Date().toISOString(), scan }, ...records.filter(r=>r.scan.scan_id!==scan.scan_id)].slice(0,20); try { writeRecords(updated);setRecords(updated); } catch {setError(t("saveFailed"));} }
@@ -40,7 +41,7 @@ export default function Home() {
     {view === "verify" && <VerificationExperience scan={scan} onScan={()=>navigate("scan")}/>}
     {(view === "medicines" || view === "history") && <MedicineLibrary records={records} current={scan} history={view === "history"} onOpen={record=>{setScan(record);setOriginal(null);navigate("results");}} onDelete={removeRecord} onScan={()=>navigate("scan")}/>}
     {view === "reminders" && <ReminderExperience scan={scan}/>}
-    {view === "settings" && <SettingsExperience onHistory={()=>navigate("history")}/>}
-    </div>}<DevProofDrawer scan={scan}/>
+    {view === "settings" && <SettingsExperience onHistory={()=>navigate("history")} diagnostics={diagnostics} onDiagnostics={setDiagnostics}/>}
+    </div>}<DevProofDrawer scan={scan} enabled={diagnostics}/>
   </AppShell>;
 }
