@@ -237,6 +237,10 @@ DEMO_CASES: tuple[DemoCase, ...] = (
 )
 
 DEMO_CASES_BY_ID: dict[str, DemoCase] = {case.case_id: case for case in DEMO_CASES}
+DEMO_SCAN_ID_BY_CASE: dict[str, str] = {
+    case.case_id: f"scan_de{idx:022x}" for idx, case in enumerate(DEMO_CASES, start=1)
+}
+DEMO_CASE_BY_SCAN_ID: dict[str, str] = {v: k for k, v in DEMO_SCAN_ID_BY_CASE.items()}
 
 
 def _render_demo_parchi_jpeg(case: DemoCase) -> bytes:
@@ -297,7 +301,7 @@ async def run_demo_case(
         extracted_lines=list(case.lines),
         image_quality_warning=any(line.ocr_confidence < 0.85 for line in case.lines),
     )
-    return await scan_parchi(
+    response = await scan_parchi(
         image_bytes=_render_demo_parchi_jpeg(case),
         mime="image/jpeg",
         patient_id=case.patient_id,
@@ -306,3 +310,5 @@ async def run_demo_case(
         resolver=resolver,
         fda=offline_fda,
     )
+    response.scan_id = DEMO_SCAN_ID_BY_CASE[case_id]
+    return response

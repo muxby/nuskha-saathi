@@ -11,8 +11,9 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from schemas.responses import ScanResponse
+from services.runtime_paths import writable_db_path
 
-DEFAULT_DB_PATH = Path(__file__).resolve().parents[1] / "data" / "nuskha_local.db"
+DEFAULT_DB_PATH = writable_db_path()
 
 
 def _utc_now_iso() -> str:

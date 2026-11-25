@@ -11,6 +11,7 @@ from pathlib import Path
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 
 from routers.cabinet import finalize_scan_response
+from services.demo_fixtures import DEMO_CASE_BY_SCAN_ID, run_demo_case
 from services.image_ops import safe_slug
 from services.scan_service import scan_parchi, verify_strip
 from services.tts_stt_service import synthesize_urdu
@@ -156,6 +157,19 @@ async def audio_metadata(request: Request, scan_id: str):
                 "urdu_script": saved["urdu_script"],
                 "audio_urdu_url": saved.get("audio_urdu_url"),
             }
+    demo_case_id = DEMO_CASE_BY_SCAN_ID.get(scan_id)
+    if demo_case_id is not None:
+        rebuilt = await run_demo_case(
+            demo_case_id,
+            resolver=request.app.state.resolver,
+            fda=request.app.state.fda,
+        )
+        return {
+            "scan_id": rebuilt.scan_id,
+            "patient_id": rebuilt.patient_id,
+            "urdu_script": rebuilt.urdu_script,
+            "audio_urdu_url": rebuilt.audio_urdu_url,
+        }
     raise HTTPException(status_code=404, detail="Audio not found.")
 
 

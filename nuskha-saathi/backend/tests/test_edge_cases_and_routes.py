@@ -479,3 +479,26 @@ def test_whatsapp_honest_unconfigured_and_webhook_classification(monkeypatch, tm
     )
     assert reply_stop.status_code == 200
     assert reply_stop.json()["classification"] == "STOPPED_OR_SIDE_EFFECT"
+
+
+def test_serverless_tmp_paths_and_demo_qr_cold_recovery(monkeypatch, tmp_path):
+    from services import runtime_paths
+
+    monkeypatch.setenv("VERCEL", "1")
+    assert runtime_paths.is_serverless_readonly() is True
+    assert str(runtime_paths.writable_root()).endswith("nuskha-saathi")
+
+    app = _isolated_app(tmp_path)
+    client = TestClient(app)
+
+    demo = client.post("/api/v1/demo-cases/case-01-zubaida-warfarin")
+    assert demo.status_code == 200
+    scan_id = demo.json()["scan_id"]
+    assert scan_id.startswith("scan_de")
+
+    # Simulate cold instance where local JSON file & SQLite do not have scan_id
+    fresh_app = _isolated_app(tmp_path / "cold")
+    fresh_client = TestClient(fresh_app)
+    replay = fresh_client.get(f"/api/v1/audio/{scan_id}")
+    assert replay.status_code == 200
+    assert replay.json()["urdu_script"] == demo.json()["urdu_script"]

@@ -17,11 +17,11 @@ from routers.whatsapp import router as whatsapp_router, whatsapp_configured
 from services.formulary_resolver import FormularyResolver
 from services.local_store import LocalStore
 from services.openfda_client import OpenFdaClient
+from services.runtime_paths import BACKEND_ROOT, is_serverless_readonly, writable_static_root
 from services.tts_stt_service import tts_configured
 from services.vision_extractor import GeminiVisionExtractor
 
-BACKEND_ROOT = Path(__file__).resolve().parent
-STATIC_ROOT = BACKEND_ROOT / "static"
+STATIC_ROOT = writable_static_root()
 
 
 def load_env_file() -> None:
@@ -109,9 +109,19 @@ def create_app(
                 "tts_configured": tts_configured(),
                 "openfda_live": bool(app.state.fda.live),
                 "whatsapp_configured": whatsapp_configured(),
+                "ephemeral_storage": is_serverless_readonly(),
             },
             "store": app.state.store.counts(),
         }
+
+    @app.get("/api/v1/benchmark")
+    def eval_benchmark():
+        report_path = BACKEND_ROOT / "tests" / "eval_results.json"
+        if not report_path.is_file():
+            return {"available": False, "summary": None}
+        import json
+
+        return {"available": True, "summary": json.loads(report_path.read_text(encoding="utf-8"))}
 
     return app
 

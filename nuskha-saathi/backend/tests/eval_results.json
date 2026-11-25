@@ -1,0 +1,33 @@
+{
+  "mode": "deterministic_offline_harness",
+  "note": "Measures deterministic clinical engine across 30 curated test vectors (non-VLM latency); real-world handwriting photos also require Gemini Vision calls.",
+  "total_cases": 30,
+  "total_passed": 30,
+  "p50_engine_ms": 0.068,
+  "subsets": [
+    {
+      "name": "Standard Pakistani Brands",
+      "passed": 15,
+      "total": 15,
+      "misses": []
+    },
+    {
+      "name": "Illegible & Low-Confidence Refusals",
+      "passed": 5,
+      "total": 5,
+      "misses": []
+    },
+    {
+      "name": "High-Risk Drug Interactions",
+      "passed": 5,
+      "total": 5,
+      "misses": []
+    },
+    {
+      "name": "Strip Swaps & Overdose Ceilings",
+      "passed": 5,
+      "total": 5,
+      "misses": []
+    }
+  ]
+}
