@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Nastaliq_Urdu } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/lib/i18n";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const nastaliq = Noto_Nastaliq_Urdu({ subsets: ["arabic"], variable: "--font-urdu", display: "swap" });
@@ -15,5 +16,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: "#131D38", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="ur-PK" dir="rtl" className={`${inter.variable} ${nastaliq.variable}`}><body className="leading-loose">{children}</body></html>;
+  return <html lang="en" dir="ltr" className={`${inter.variable} ${nastaliq.variable}`}><body><LanguageProvider>{children}</LanguageProvider></body></html>;
 }
