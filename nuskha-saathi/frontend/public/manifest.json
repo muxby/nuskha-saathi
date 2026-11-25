@@ -4,8 +4,8 @@
   "description": "Read your parchi, understand your medicine, and check safety warnings.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f6f8f6",
-  "theme_color": "#176b5a",
+  "background_color": "#131D38",
+  "theme_color": "#131D38",
   "lang": "ur-PK",
   "dir": "rtl",
   "icons": [

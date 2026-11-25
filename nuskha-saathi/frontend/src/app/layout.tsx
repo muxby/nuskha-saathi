@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   appleWebApp: { capable: true, title: "Nuskha Saathi" },
   icons: { icon: "/icon.svg" },
 };
-export const viewport: Viewport = { themeColor: "#176b5a", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#131D38", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="ur-PK" dir="rtl" className={`${inter.variable} ${nastaliq.variable}`}><body className="leading-loose">{children}</body></html>;
