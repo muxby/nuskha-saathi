@@ -1,10 +1,18 @@
 "use client";
-import { FileText, CheckCircle2, AlertTriangle, ScanLine } from "lucide-react";
+import { useState } from "react";
+import {
+  FileText,
+  CheckCircle2,
+  AlertTriangle,
+  ScanLine,
+  Eye,
+} from "lucide-react";
 import type { ScanResult } from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
 import SafetyAlertBanner from "./SafetyAlertBanner";
 import VisualDoseCard from "./VisualDoseCard";
 import AudioPlayer from "./AudioPlayer";
+
 export default function PrescriptionResults({
   scan,
   original,
@@ -15,7 +23,9 @@ export default function PrescriptionResults({
   onRetake: () => void;
 }) {
   const { t } = useLanguage();
+  const [clarity, setClarity] = useState(false);
   const confirmed = scan.medications.filter((m) => m.status === "VERIFIED");
+
   return (
     <section className="prescription-results">
       <SafetyAlertBanner
@@ -28,12 +38,25 @@ export default function PrescriptionResults({
           <div className="source-title">
             <FileText size={19} />
             <h2>{t("original")}</h2>
+            {original && (
+              <button
+                type="button"
+                className={`clarity-toggle ${clarity ? "is-on" : ""}`}
+                aria-pressed={clarity}
+                onClick={() => setClarity((v) => !v)}
+              >
+                <Eye size={15} />
+                <span>
+                  {t(clarity ? "clarityLensActive" : "clarityLens")}
+                </span>
+              </button>
+            )}
           </div>
           {original ? (
             <img
               src={original}
               alt={t("original")}
-              className="original-prescription"
+              className={`original-prescription ${clarity ? "has-clarity" : ""}`}
             />
           ) : (
             <p className="original-empty">{t("originalUnavailable")}</p>

@@ -2,6 +2,37 @@ export const API_BASE = (
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000"
 ).replace(/\/$/, "");
 
+export type HealthStatus = {
+  status: string;
+  formulary_brands: number;
+  interaction_pairs: number;
+};
+
+export async function fetchHealth(
+  signal?: AbortSignal,
+): Promise<HealthStatus | null> {
+  try {
+    const response = await fetch(`${API_BASE}/health`, {
+      method: "GET",
+      signal,
+    });
+    if (!response.ok) return null;
+    const data: unknown = await response.json();
+    if (!data || typeof data !== "object") return null;
+    const h = data as Partial<HealthStatus>;
+    if (
+      typeof h.status === "string" &&
+      typeof h.formulary_brands === "number" &&
+      typeof h.interaction_pairs === "number"
+    ) {
+      return h as HealthStatus;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export type Schedule = {
   morning: number;
   afternoon: number;

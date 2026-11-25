@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, HeartPulse } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { API_BASE } from "@/lib/api";
 import { LanguageSwitch, useLanguage } from "@/lib/i18n";
 import AudioPlayer from "@/components/AudioPlayer";
+import { BrandMark } from "@/components/MedicalArt";
 type AudioMeta = {
   scan_id: string;
   urdu_script: string;
@@ -38,7 +39,7 @@ export default function AudioPage() {
       <div className="audio-box">
         <header className="audio-page-header">
           <span className="brand-mark">
-            <HeartPulse size={26} />
+            <BrandMark size={24} />
           </span>
           <strong>{t("brand")}</strong>
           <LanguageSwitch />

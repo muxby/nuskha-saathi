@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
-import { HeartPulse, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { LanguageSwitch, useLanguage } from "@/lib/i18n";
+import { BrandMark } from "@/components/MedicalArt";
 export default function NotFound() {
   const { t } = useLanguage();
   return (
@@ -9,7 +10,7 @@ export default function NotFound() {
       <section className="audio-box">
         <header className="audio-page-header">
           <span className="brand-mark">
-            <HeartPulse size={24} />
+            <BrandMark size={24} />
           </span>
           <strong>{t("brand")}</strong>
           <LanguageSwitch />

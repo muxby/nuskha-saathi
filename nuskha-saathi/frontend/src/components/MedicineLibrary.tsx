@@ -9,14 +9,18 @@ import {
   CalendarDays,
   MessageCircle,
   BellOff,
-  Save,
+  HardDrive,
   Languages,
   ShieldCheck,
-  Sun,
+  Palette,
+  Activity,
+  Clock3,
 } from "lucide-react";
-import type { ScanResult } from "@/lib/api";
+import { API_BASE, fetchHealth, type HealthStatus, type ScanResult } from "@/lib/api";
 import type { SavedPrescription } from "@/lib/records";
 import { LanguageSwitch, useLanguage } from "@/lib/i18n";
+import { IconMedallion } from "@/components/MedicalArt";
+
 export function MedicineLibrary({
   records,
   current,
@@ -49,9 +53,13 @@ export function MedicineLibrary({
       </p>
       {empty ? (
         <div className="panel empty-state">
-          <span className="empty-art">
-            {history ? <FileText size={40} /> : <Pill size={40} />}
-          </span>
+          <div className="empty-art">
+            <IconMedallion
+              icon={history ? FileText : Pill}
+              tone="blue"
+              size={28}
+            />
+          </div>
           <h2>{t(history ? "historyEmpty" : "cabinetEmpty")}</h2>
           <p>{t("cabinetEmptyBody")}</p>
           <button className="primary-button" onClick={onScan}>
@@ -64,7 +72,7 @@ export function MedicineLibrary({
           {records.map((record) => (
             <article className="history-card" key={record.scan.scan_id}>
               <div className="history-symbol">
-                <FileText size={28} />
+                <IconMedallion icon={FileText} tone="blue" size={22} />
               </div>
               <div>
                 <span className="eyebrow">{t("prescriptions")}</span>
@@ -114,9 +122,7 @@ export function MedicineLibrary({
                 className="cabinet-card"
                 key={`${scan.scan_id}-${med.line_id}`}
               >
-                <span className="medicine-icon">
-                  <Pill size={30} />
-                </span>
+                <IconMedallion icon={Pill} tone="blue" size={22} />
                 <div>
                   <h2 dir="ltr">{med.brand_matched}</h2>
                   {med.strength_mg != null && (
@@ -155,6 +161,7 @@ export function MedicineLibrary({
     </section>
   );
 }
+
 export function ReminderExperience({ scan }: { scan: ScanResult | null }) {
   const { t, language } = useLanguage();
   const [time, setTime] = useState("08:00");
@@ -164,9 +171,13 @@ export function ReminderExperience({ scan }: { scan: ScanResult | null }) {
   return (
     <section className="reminder-layout">
       <div className="panel reminder-form">
-        <MessageCircle size={38} />
-        <h2>{t("whatsapp")}</h2>
-        <p>{t("reminderUnavailable")}</p>
+        <div className="setting-card-head">
+          <IconMedallion icon={MessageCircle} tone="blue" size={20} />
+          <div>
+            <h2>{t("whatsapp")}</h2>
+            <p>{t("reminderUnavailable")}</p>
+          </div>
+        </div>
         {confirmed.length > 0 ? (
           <div className="reminder-medicines">
             {confirmed.map((m) => (
@@ -215,7 +226,7 @@ export function ReminderExperience({ scan }: { scan: ScanResult | null }) {
       </div>
       <aside className="reminder-aside">
         <div className="reminder-orbit">
-          <MessageCircle size={60} />
+          <MessageCircle size={54} />
         </div>
         <span className="eyebrow">{t("comingSoon")}</span>
         <h2>{t("remindersTitle")}</h2>
@@ -224,6 +235,7 @@ export function ReminderExperience({ scan }: { scan: ScanResult | null }) {
     </section>
   );
 }
+
 export function SettingsExperience({
   onHistory,
   diagnostics,
@@ -234,11 +246,20 @@ export function SettingsExperience({
   onDiagnostics: (value: boolean) => void;
 }) {
   const { t } = useLanguage();
-  const [theme, setTheme] = useState("dark");
-  useEffect(
-    () => setTheme(document.documentElement.dataset.theme || "dark"),
-    [],
+  const [theme, setTheme] = useState("editorial");
+  const [health, setHealth] = useState<HealthStatus | null | "loading">(
+    "loading",
   );
+
+  useEffect(() => {
+    setTheme(document.documentElement.dataset.theme || "editorial");
+    const ctrl = new AbortController();
+    void fetchHealth(ctrl.signal).then((h) => {
+      if (!ctrl.signal.aborted) setHealth(h);
+    });
+    return () => ctrl.abort();
+  }, []);
+
   function chooseTheme(value: string) {
     setTheme(value);
     document.documentElement.dataset.theme = value;
@@ -246,52 +267,138 @@ export function SettingsExperience({
       localStorage.setItem("nuskha-theme", value);
     } catch {}
   }
+
   return (
     <section className="settings-grid">
-      <div className="panel">
-        <Sun size={28} />
-        <h2>{t("theme")}</h2>
-        <div className="theme-controls" role="group" aria-label={t("theme")}>
+      <div className="panel setting-card">
+        <div className="setting-card-head">
+          <IconMedallion icon={Palette} tone="blue" size={20} />
+          <div>
+            <h2>{t("theme")}</h2>
+            <p>{t("themeDesc")}</p>
+          </div>
+        </div>
+        <div className="setting-control">
+          <div className="theme-controls" role="group" aria-label={t("theme")}>
+            <button
+              type="button"
+              aria-pressed={theme === "editorial"}
+              onClick={() => chooseTheme("editorial")}
+            >
+              {t("editorialTheme")}
+            </button>
+            <button
+              type="button"
+              aria-pressed={theme === "light"}
+              onClick={() => chooseTheme("light")}
+            >
+              {t("lightTheme")}
+            </button>
+            <button
+              type="button"
+              aria-pressed={theme === "dark"}
+              onClick={() => chooseTheme("dark")}
+            >
+              {t("darkTheme")}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="panel setting-card">
+        <div className="setting-card-head">
+          <IconMedallion icon={Languages} tone="blue" size={20} />
+          <div>
+            <h2>{t("language")}</h2>
+            <p>{t("languageDesc")}</p>
+          </div>
+        </div>
+        <div className="setting-control">
+          <LanguageSwitch />
+        </div>
+      </div>
+
+      <div className="panel setting-card">
+        <div className="setting-card-head">
+          <IconMedallion icon={HardDrive} tone="neutral" size={20} />
+          <div>
+            <h2>{t("deviceStorage")}</h2>
+            <p>{t("storageBody")}</p>
+          </div>
+        </div>
+        <div className="setting-control">
           <button
-            aria-pressed={theme === "dark"}
-            onClick={() => chooseTheme("dark")}
+            type="button"
+            className="secondary-button setting-action-btn"
+            onClick={onHistory}
           >
-            {t("darkTheme")}
-          </button>
-          <button
-            aria-pressed={theme === "light"}
-            onClick={() => chooseTheme("light")}
-          >
-            {t("lightTheme")}
+            <Clock3 size={17} />
+            <span>{t("history")}</span>
           </button>
         </div>
       </div>
-      <div className="panel">
-        <Languages size={28} />
-        <h2>{t("language")}</h2>
-        <LanguageSwitch />
+
+      <div className="panel setting-card">
+        <div className="setting-card-head">
+          <IconMedallion icon={ShieldCheck} tone="amber" size={20} />
+          <div>
+            <h2>{t("diagnostics")}</h2>
+            <p>{t("diagnosticsHint")}</p>
+          </div>
+        </div>
+        <div className="setting-control">
+          <label className="settings-toggle">
+            <span>{t("diagnosticsToggle")}</span>
+            <input
+              type="checkbox"
+              role="switch"
+              checked={diagnostics}
+              onChange={(e) => onDiagnostics(e.target.checked)}
+            />
+          </label>
+        </div>
       </div>
-      <div className="panel">
-        <Save size={28} />
-        <h2>{t("deviceStorage")}</h2>
-        <p>{t("storageBody")}</p>
-        <button className="secondary-button" onClick={onHistory}>
-          {t("history")}
-        </button>
-      </div>
-      <div className="panel">
-        <ShieldCheck size={28} />
-        <h2>{t("diagnostics")}</h2>
-        <p>{t("diagnosticsHint")}</p>
-        <label className="settings-toggle">
-          <span>{t("diagnostics")}</span>
-          <input
-            type="checkbox"
-            role="switch"
-            checked={diagnostics}
-            onChange={(e) => onDiagnostics(e.target.checked)}
-          />
-        </label>
+
+      <div className="panel setting-card settings-health">
+        <div className="health-strip">
+          <div className="setting-card-head">
+            <IconMedallion
+              icon={Activity}
+              tone={health && health !== "loading" ? "green" : "neutral"}
+              size={20}
+            />
+            <div>
+              <h2>{t("backendStatus")}</h2>
+              {health === "loading" ? (
+                <p>{t("loading")}</p>
+              ) : health ? (
+                <div className="health-url-row">
+                  <span className="health-badge-ok">{t("backendConnected")}</span>
+                  <span dir="ltr" className="health-url">
+                    {API_BASE}
+                  </span>
+                </div>
+              ) : (
+                <p>
+                  {t("backendOffline")} <span dir="ltr">{API_BASE}</span>
+                </p>
+              )}
+            </div>
+          </div>
+
+          {health && health !== "loading" && (
+            <div className="health-metrics-row">
+              <div className="health-metric-pill">
+                <span>{t("backendBrands")}</span>
+                <strong>{health.formulary_brands}</strong>
+              </div>
+              <div className="health-metric-pill">
+                <span>{t("backendPairs")}</span>
+                <strong>{health.interaction_pairs}</strong>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

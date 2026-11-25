@@ -11,19 +11,27 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { API_BASE, fetchHealth } from "@/lib/api";
 import SpeakerButton, { speak } from "./SpeakerButton";
 
 type TorchTrack = MediaStreamTrack & {
   getCapabilities: () => MediaTrackCapabilities & { torch?: boolean };
 };
+
 export default function ParchiCamera({
   onSelect,
   busy,
   kind = "prescription",
+  cabinetCount = 0,
+  useCabinet = false,
+  onToggleCabinet,
 }: {
   onSelect: (file: File) => void;
   busy: boolean;
   kind?: "prescription" | "strip";
+  cabinetCount?: number;
+  useCabinet?: boolean;
+  onToggleCabinet?: (checked: boolean) => void;
 }) {
   const { t, language } = useLanguage();
   const gallery = useRef<HTMLInputElement>(null);
@@ -39,19 +47,31 @@ export default function ParchiCamera({
   const [torchSupported, setTorchSupported] = useState(false);
   const [error, setError] = useState("");
   const [dark, setDark] = useState(false);
+  const [dragging, setDragging] = useState(false);
+  const [backendOffline, setBackendOffline] = useState(false);
   const mounted = useRef(true);
+
   const stop = () => {
     stream.current?.getTracks().forEach((track) => track.stop());
     stream.current = null;
   };
+
   useEffect(() => {
     mounted.current = true;
+    const ctrl = new AbortController();
+    void fetchHealth(ctrl.signal).then((h) => {
+      if (mounted.current && !ctrl.signal.aborted) {
+        setBackendOffline(h === null);
+      }
+    });
     return () => {
       mounted.current = false;
+      ctrl.abort();
       stop();
       URL.revokeObjectURL(previewUrl.current);
     };
   }, []);
+
   useEffect(() => {
     if (live && video.current && stream.current) {
       video.current.srcObject = stream.current;
@@ -62,6 +82,7 @@ export default function ParchiCamera({
       });
     }
   }, [live, t]);
+
   async function start() {
     setError("");
     if (!navigator.mediaDevices?.getUserMedia) {
@@ -103,6 +124,7 @@ export default function ParchiCamera({
       if (mounted.current) setStarting(false);
     }
   }
+
   async function choose(file?: File) {
     if (!file) return;
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
@@ -145,6 +167,7 @@ export default function ParchiCamera({
       setError(t("photoBroken"));
     }
   }
+
   function capture() {
     const source = video.current;
     if (!source?.videoWidth || !source.videoHeight) {
@@ -167,6 +190,7 @@ export default function ParchiCamera({
       0.9,
     );
   }
+
   async function toggleTorch() {
     try {
       const track = stream.current?.getVideoTracks()[0];
@@ -178,10 +202,28 @@ export default function ParchiCamera({
       setError(t("flashUnavailable"));
     }
   }
+
   return (
     <section className="capture-layout">
       <div className="capture-panel">
-        <div className={`camera-viewport ${preview ? "has-preview" : ""}`}>
+        {backendOffline && (
+          <div className="lighting-notice" role="status">
+            {t("backendOffline")} <span dir="ltr">{API_BASE}</span>
+          </div>
+        )}
+        <div
+          className={`camera-viewport ${preview ? "has-preview" : ""} ${dragging ? "is-dragging" : ""}`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            if (!busy) setDragging(true);
+          }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setDragging(false);
+            if (!busy) void choose(e.dataTransfer.files?.[0]);
+          }}
+        >
           {preview ? (
             <img
               src={preview.url}
@@ -197,7 +239,7 @@ export default function ParchiCamera({
             />
           ) : (
             <div className="camera-idle">
-              <ScanLine size={64} strokeWidth={1} />
+              <ScanLine size={56} strokeWidth={1.3} />
               <p>{t(kind === "strip" ? "verifyHint" : "cameraHint")}</p>
               <button
                 type="button"
@@ -205,9 +247,10 @@ export default function ParchiCamera({
                 disabled={starting || busy}
                 onClick={start}
               >
-                <Camera size={21} />
+                <Camera size={20} />
                 {starting ? t("loading") : t("startCamera")}
               </button>
+              <span className="drop-hint">{t("dropHint")}</span>
             </div>
           )}
           {!preview && (
@@ -225,6 +268,7 @@ export default function ParchiCamera({
             </span>
           )}
         </div>
+
         <div className="capture-controls">
           <button
             type="button"
@@ -233,7 +277,7 @@ export default function ParchiCamera({
             onClick={() => gallery.current?.click()}
             aria-label={t("gallery")}
           >
-            <ImagePlus size={23} />
+            <ImagePlus size={22} />
           </button>
           {preview ? (
             <button
@@ -242,7 +286,7 @@ export default function ParchiCamera({
               disabled={busy}
               onClick={() => onSelect(preview.file)}
             >
-              <Check size={21} />
+              <Check size={20} />
               {t(kind === "strip" ? "verifyPhoto" : "confirmPhoto")}
             </button>
           ) : (
@@ -268,7 +312,7 @@ export default function ParchiCamera({
               }}
               aria-label={t("retake")}
             >
-              <RefreshCw size={22} />
+              <RefreshCw size={21} />
             </button>
           ) : (
             <button
@@ -280,10 +324,11 @@ export default function ParchiCamera({
               title={t(torchSupported ? "flash" : "flashUnavailable")}
               aria-pressed={torch}
             >
-              <Zap size={22} />
+              <Zap size={21} />
             </button>
           )}
         </div>
+
         <input
           ref={gallery}
           type="file"
@@ -306,6 +351,18 @@ export default function ParchiCamera({
             {t("gallery")}
           </button>
         )}
+        {kind === "prescription" && cabinetCount > 0 && onToggleCabinet && (
+          <label className="cabinet-optin">
+            <input
+              type="checkbox"
+              checked={useCabinet}
+              onChange={(e) => onToggleCabinet(e.target.checked)}
+            />
+            <span>
+              {t("cabinetOptIn")} (<bdi>{cabinetCount}</bdi>)
+            </span>
+          </label>
+        )}
         {error && (
           <div className="capture-error" role="alert">
             <AlertCircle size={21} />
@@ -321,6 +378,7 @@ export default function ParchiCamera({
           </p>
         )}
       </div>
+
       <aside className="capture-help">
         <span className="eyebrow">{t("intelligence")}</span>
         <h2>{t(kind === "strip" ? "verifyHeading" : "scanTitle")}</h2>

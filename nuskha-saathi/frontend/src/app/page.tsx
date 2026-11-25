@@ -12,8 +12,8 @@ import {
   writeRecords,
   type SavedPrescription,
 } from "@/lib/records";
-import { Save, Check } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Save, Check, ArrowLeft } from "lucide-react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import AppShell, { type View } from "@/components/AppShell";
 import HomeExperience from "@/components/HomeExperience";
 import { useLanguage } from "@/lib/i18n";
@@ -39,7 +39,20 @@ export default function Home() {
   }, [scan]);
   const [diagnostics, setDiagnostics] = useState(false);
   const [records, setRecords] = useState<SavedPrescription[]>([]);
+  const [useCabinet, setUseCabinet] = useState(false);
   useEffect(() => setRecords(readRecords()), []);
+
+  const cabinetMeds = records.flatMap((r) =>
+    r.scan.medications
+      .filter((m) => m.status === "VERIFIED" && m.brand_matched)
+      .map((m) => ({
+        brand_name: m.brand_matched!,
+        generic_salts: m.generic_salts || [],
+        strength_mg: m.strength_mg,
+        source_label: `Saved #${r.scan.scan_id.slice(-6)}`,
+      })),
+  );
+
   function saveCurrent() {
     if (!scan) return;
     const updated = [
@@ -53,6 +66,7 @@ export default function Home() {
       setError("saveFailed");
     }
   }
+
   function removeRecord(id: string) {
     const updated = records.filter((r) => r.scan.scan_id !== id);
     try {
@@ -62,6 +76,7 @@ export default function Home() {
       setError("saveFailed");
     }
   }
+
   const [original, setOriginal] = useState<string | null>(null);
   useEffect(
     () => () => {
@@ -73,6 +88,7 @@ export default function Home() {
   const [error, setError] = useState<
     "" | "saveFailed" | "networkError" | "photoLarge" | "uploadError"
   >("");
+
   const navigate = (next: View) => {
     controller.current?.abort();
     setBusy(false);
@@ -84,7 +100,8 @@ export default function Home() {
       document.getElementById("main-content")?.focus({ preventScroll: true }),
     );
   };
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     const sync = () => {
       const target = window.location.hash.slice(1);
       if (
@@ -113,6 +130,7 @@ export default function Home() {
       controller.current?.abort();
     };
   }, []);
+
   async function handleScan(file: File) {
     const request = new AbortController();
     controller.current?.abort();
@@ -123,6 +141,9 @@ export default function Home() {
     setOriginal(URL.createObjectURL(file));
     const form = new FormData();
     form.append("file", file);
+    if (useCabinet && cabinetMeds.length > 0) {
+      form.append("active_cabinet", JSON.stringify(cabinetMeds));
+    }
     try {
       const result = await postForm<ScanResult>(
         "/api/v1/scan-parchi",
@@ -133,6 +154,7 @@ export default function Home() {
         setScan(result);
         setView("results");
         window.history.pushState(null, "", "#results");
+        window.scrollTo({ top: 0, behavior: "instant" });
       }
     } catch (err) {
       if (!request.signal.aborted)
@@ -147,6 +169,7 @@ export default function Home() {
       if (controller.current === request) setBusy(false);
     }
   }
+
   return (
     <AppShell view={view} navigate={navigate}>
       {busy ? (
@@ -159,6 +182,14 @@ export default function Home() {
         <div className="content-wrap inner-page">
           <div className="section-heading">
             <div>
+              <button
+                type="button"
+                className="page-back-chip"
+                onClick={() => navigate("home")}
+              >
+                <ArrowLeft size={16} className="directional" />
+                <span>{t("back")}</span>
+              </button>
               <span className="eyebrow">{t("brand")}</span>
               <h1>
                 {t(
@@ -186,7 +217,13 @@ export default function Home() {
             </div>
           )}
           {view === "scan" && (
-            <ParchiCamera onSelect={handleScan} busy={busy} />
+            <ParchiCamera
+              onSelect={handleScan}
+              busy={busy}
+              cabinetCount={cabinetMeds.length}
+              useCabinet={useCabinet}
+              onToggleCabinet={setUseCabinet}
+            />
           )}
           {view === "results" && scan && (
             <>
