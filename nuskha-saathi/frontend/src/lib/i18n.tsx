@@ -38,9 +38,10 @@ const en = {
   heroTwo: "prescription clearly.",
   heroBody:
     "Take a photo of any handwritten prescription. Nuskha Saathi matches Pakistani brands, checks for drug clashes, lays out morning, afternoon, and night doses, and plays instructions in Urdu.",
-  heroSplitLeft: "SA",
-  heroSplitRight: "FE",
-  heroTag: "Dawa-Guard · Prescription Clarity",
+  heroSplitLeft: "RX",
+  heroSplitRight: "DOSE",
+  heroTag:
+    "Read handwritten doctor prescriptions · Catch drug clashes · Hear doses in Urdu",
   heroEditorialCap: "P",
   heroEditorialRest:
     "hotograph any handwritten parchi. We match Pakistani brands, catch dangerous clashes, map daily doses, and read instructions aloud in Urdu.",
@@ -388,9 +389,10 @@ const ur: Record<Key, string> = {
   heroTwo: "آسان اردو میں سمجھیں۔",
   heroBody:
     "ہاتھ سے لکھی پرچی کی تصویر لیں۔ نسخہ ساتھی پاکستانی دوائیں پہچانتا ہے، آپس کے نقصان دہ اثر چیک کرتا ہے، صبح دوپہر رات کی خوراک دکھاتا ہے اور اردو میں سناتا ہے۔",
-  heroSplitLeft: "محفوظ",
-  heroSplitRight: "دوا",
-  heroTag: "دوا گارڈ · نسخے کی واضح رہنمائی",
+  heroSplitLeft: "نسخہ",
+  heroSplitRight: "خوراک",
+  heroTag:
+    "ہاتھ سے لکھے نسخے پڑھیں · خطرناک دوا ٹکراؤ جانچیں · اردو میں خوراک سنیں",
   heroEditorialCap: "",
   heroEditorialRest:
     "ڈاکٹر کا لکھا نسخہ اسکین کریں۔ پاکستانی برانڈز کی شناخت، خطرناک ٹکراؤ کی جانچ، روزانہ خوراک اور آسان اردو آواز فوری پائیں۔",
