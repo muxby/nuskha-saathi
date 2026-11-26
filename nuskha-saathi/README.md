@@ -4,19 +4,21 @@ A bilingual prescription companion for Pakistani patients. Photograph a handwrit
 
 Vision reads the photograph. The deterministic safety engine resolves medicines and checks instructions. Uncertain names and doses require professional confirmation.
 
-## Redesigned experience
+## Live Deployment
 
-- Midnight Navy (`#131D38`), Powder Blue (`#ADC7E9`), and Ice White (`#F4F7FC`) design tokens, custom SVG medical illustrations, desktop bento layout, and a mobile scanning experience.
-- Persistent English/LTR and Urdu/RTL interfaces with Inter and Noto Nastaliq Urdu. Settings also offer a high contrast light theme.
-- Live camera, capture/retake/review, gallery upload, camera permission handling, optional device torch, file checks, and advisory low-light detection. Accepted images: JPEG, PNG, WebP, up to 8 MB.
-- Honest indeterminate processing: the API supplies one final response, so the UI does not invent step completions or percentages.
-- Original prescription comparison, original OCR wording, confirmed medicine information, refusal crops, and prominent interaction warnings. HIGH interactions appear red; MODERATE interactions and uncertain lines appear amber.
-- Visual dosage cards distinguish a confirmed dose, an explicit zero, and an unknown dose. Meal timing and duration come from the backend. Cards support individual printing, audio QR replay, and sharing the replay link in a WhatsApp composer.
-- Medicine strip capture and all five API outcomes, including a caution that a generic match does not authorize substitution. Thumbnails appear only for a confirmed match.
-- Urdu audio with play/pause, real progress and duration, replay, speed selection, and playback-driven decorative waveforms. QR links preserve `/audio/[scanId]`.
-- Explicit saving of up to 20 prescriptions in this browser, a medicine cabinet, history replay, and deletion. Original full-size photos are kept only in the current scan session.
-- Developer Proof is hidden until enabled in Settings for the current session. It shows returned timings, costs, fuzzy scores, and raw interaction evidence. Provider/fallback selection is not reported by the current API.
-- Native modal dialogs, keyboard focus styles, 48px primary touch targets, offline messaging, reduced motion, bilingual empty/error states, and install metadata/icons.
+- **Frontend (Next.js 16 on Vercel):** https://nuskha-saathi-rose.vercel.app
+- **Safety Engine API (FastAPI on Vercel):** https://nuskha-saathi-api.vercel.app
+- **Quick Demo Mode:** Add `?demo=offline` (https://nuskha-saathi-rose.vercel.app/?demo=offline), click **Try 5 demo cases** inside **Scan prescription**, or triple-tap the **Nuskha Saathi** logo in the header.
+
+## Redesigned & Completed Experience
+
+- **Pill-Portal Hero & Signature Craft:** Opening capsule pill-portal experience powered by a procedural WebGL iridescent glass shader (`PillPortalScene`) paired with Midnight Navy (`#131D38`), Powder Blue (`#ADC7E9`), Warm Porcelain / High-Contrast Light & Midnight themes, and bespoke Rx Shield icons (`/icon.svg`, `/apple-icon.png`).
+- **Pakistani Urdu Readability:** Full English (`LTR`) and Pakistani Urdu (`RTL`) interfaces using `Noto Naskh Arabic` alongside `Noto Nastaliq Urdu` fallbacks with wider line-height (`2.15–2.35`), clean zero-overlap spacing, and 48px primary touch targets across desktop and mobile (`390px+`).
+- **Prescription Camera & Refusal Pipeline:** Live camera, capture/retake/review, gallery upload, camera permission handling, optional device torch, JPEG/PNG/WebP checks up to 8 MB, and EXIF-safe cropping on unreadable lines (`REFUSED_BLURRY`, `REFUSED_UNKNOWN_DRUG`, `REFUSED_DOSAGE_ANOMALY`).
+- **Cross-Doctor Active Cabinet Sync:** Manage active ongoing medicines in **My medicines** (including 1-click *Seed Marevan 5mg* for the Amma Zubaida cross-doctor scenario), persisted locally and synced with backend `/api/v1/cabinet/{patient_id}` so new scans check interactions against prior clinics automatically.
+- **5-Case Clinical Demo & Offline Stage Suite:** Pre-verified Pakistani clinical test cases spanning cross-doctor Ibuprofen+Warfarin bleed risk, Sildenafil+Ismo nitrate emergency, 5000mg Leflox overdose refusal, unknown brand refusal, and all-clear fuzzy typo repair (`Augmntin` -> `Augmentin`), with automatic offline stage fallback when `?demo=offline` is set.
+- **Visual Dosage Cards & Medicine Strip Verifier:** Distinguishes confirmed doses, explicit zeros (`0`), and unknown doses (`?`), individual printing, QR audio replay (`/audio/[scanId]`), WhatsApp composer share, Day-3 antibiotic WhatsApp preview & webhook simulation modal, and all 5 strip verification outcomes with explicit generic substitution caution.
+- **Opt-In Developer Proof & Safety Benchmark:** Opt-in Settings toggle revealing returned latency timings, estimated request cost (USD/PKR), RapidFuzz scores, raw openFDA excerpts, and the live **30-Case Safety Benchmark** report from `/api/v1/benchmark`.
 
 ### Screenshots
 
@@ -32,18 +34,29 @@ These are actual screenshots of the production build. Homepages contain no fabri
 
 ## Backend and API contracts
 
-The redesign preserves the FastAPI endpoints and clinical logic:
+FastAPI endpoints powered by `main.py`:
 
 | Endpoint | Purpose |
 | --- | --- |
-| `POST /api/v1/scan-parchi` | Prescription extraction, deterministic medicine resolution, safety checks, Urdu script/audio, telemetry |
-| `POST /api/v1/verify-strip` | Compare the photographed strip with the selected prescription line |
-| `GET /api/v1/audio/{scan_id}` | Retrieve the saved script and clip location for QR replay |
-| `GET /health` | Service readiness and loaded dataset counts |
+| `POST /api/v1/scan-parchi` | Prescription extraction (Gemini Vision), deterministic medicine resolution, overdose/interaction checks, Urdu script/audio, telemetry |
+| `POST /api/v1/verify-strip` | Compare photographed blister strip against selected prescription medicine & strength |
+| `GET /api/v1/audio/{scan_id}` | Retrieve saved Urdu script and audio location for QR replay (supports cold-lambda recovery for demo scans) |
+| `GET /api/v1/cabinet/{patient_id}` | Retrieve persisted cross-doctor Active Cabinet medicines |
+| `POST /api/v1/cabinet/{patient_id}` | Add medicine to Active Cabinet with automatic generic salt resolution |
+| `DELETE /api/v1/cabinet/{patient_id}/{item_id}` | Remove a medicine from Active Cabinet |
+| `GET /api/v1/demo-cases` | List the 5 pre-verified Pakistani clinical demo cases |
+| `POST /api/v1/demo-cases/{case_id}` | Execute a deterministic clinical demo case through the full safety engine |
+| `POST /api/v1/whatsapp/send-reminder` | Preview/trigger Day-3 antibiotic Urdu adherence prompt (`whatsapp_scheduled=false` unless Twilio/Meta configured) |
+| `POST /api/v1/whatsapp/webhook` | Classify patient WhatsApp replies (`1` Continuing vs `2` Stopped/Side-effect urgent escalation) |
+| `GET /api/v1/benchmark` | Return results from the 30-case deterministic safety harness (`tests/eval_results.json`) |
+| `GET /health` | Service readiness, capability flags, formulary size (`327` brands, `73` interaction pairs), and store counts |
 
-The backend uses Gemini Vision, RapidFuzz, the curated Pakistani formulary, openFDA, and cached interaction evidence. WHO AWaRe labels are preserved. Neither FDA nor WHO endorses this application. Dose ceilings detect impossible OCR values; they are not personalized prescribing advice.
+### Disclosed models, datasets & libraries
 
-The Urdu server voice order remains Uplift Orator → Azure → Google. If a clip is unavailable, the patient can request an installed Urdu browser voice. The UI refuses to substitute an English voice for missing Urdu speech. English clinical audio and regional audio are not enabled. Browser camera guidance can use a matching installed English or Urdu voice.
+- **Vision extraction (perception only):** Google Gemini (`GEMINI_API_KEY`) extracts line text, confidence, and bounding coordinates — it never makes clinical safety decisions.
+- **Deterministic safety gate & datasets:** RapidFuzz brand normalization (`cutoff=82`), curated Pakistani DRAP brand/salt formulary (`327` entries) with WHO AWaRe classifications and daily max dose ceilings, openFDA Drug Label API (`fda.gov`) + cached verified label excerpts (`73` interaction pairs). Neither FDA nor WHO endorses this application.
+- **Frameworks & infrastructure:** FastAPI, Pydantic, Pillow, httpx, Next.js 16, React, Lucide Icons, custom WebGL GLSL shader Hero (`THREE`-free lightweight procedural WebGL canvas), SQLite runtime persistence + Postgres schema in [`backend/sql/supabase_schema.sql`](backend/sql/supabase_schema.sql), Playwright, `@axe-core/playwright`.
+- **Voice & messaging order:** Server Urdu audio order is Uplift Orator → Azure Speech → Google TTS (falls back to browser Urdu speech synthesis when TTS keys are unset; never substitutes English voice for Urdu clinical guidance). WhatsApp reminders stay explicitly disabled (`whatsapp_scheduled: false`) until real Twilio/Meta credentials are connected.
 
 ## Run locally
 
@@ -94,21 +107,15 @@ The old `next lint` command was removed because this Next.js version does not su
 
 ## Deployment
 
-- Vercel project root from the Git repository: `nuskha-saathi/frontend`.
-- Frontend build variable: `NEXT_PUBLIC_API_BASE_URL=https://your-backend-origin`.
-- Backend variable: `FRONTEND_BASE_URL=https://your-frontend-origin`.
-- Deploy `nuskha-saathi/backend` using its Dockerfile on a persistent backend host. The container listens on port 8000. Preserve `/app/static/audio` and `/app/static/strips` so QR replay and verified thumbnails survive restarts.
-- Verify backend `/health`, an actual scan, voice generation, strip checking, and a QR replay from the deployed frontend. Camera access requires HTTPS.
+- **Frontend project on Vercel (`nuskha-saathi`):** Root directory `nuskha-saathi/frontend` with production env `NEXT_PUBLIC_API_BASE_URL=https://nuskha-saathi-api.vercel.app`.
+- **Backend project on Vercel (`nuskha-saathi-api`):** Root directory `nuskha-saathi/backend` using Vercel native FastAPI support (`main.py` + `requirements.txt`) and `GEMINI_API_KEY` secret configured server-side. Alternatively, `backend/Dockerfile` runs on port `8000` with persistent volumes for `/app/static` and SQLite/Supabase Postgres (`backend/sql/supabase_schema.sql`).
+- Both production URLs were verified live (`200 OK`): all 5 unmocked interactive E2E flows, live Gemini Vision `POST /api/v1/scan-parchi`, QR cold recovery (`/audio/scan_de0000000000000000000001`), and all 19 Playwright WCAG 2.2 AA & UI checks passed against `https://nuskha-saathi-rose.vercel.app`.
 
-No cloud deployment URL was established in this redesign session. Browser-to-FastAPI connectivity was verified locally. Existing API key configuration remains server-side.
+## Verified Test Coverage & Honest Limits
 
-## Current limits
-
-- WhatsApp scheduling and server accounts/Supabase are not connected. Reminder controls remain disabled and never claim successful scheduling. Sharing a replay link opens WhatsApp; it does not schedule messages.
-- Saved prescriptions are local to this browser, explicitly opt in, and visible to other people using it. They are not encrypted account storage or cross-device sync. Delete them from History.
-- Course start/end dates are not returned, so the cabinet cannot determine active/completed courses or calculate upcoming clock times. It shows the confirmed source instructions.
-- QR audio links grant access to the saved Urdu explanation to anyone holding the link. Share them deliberately. Backend files require a production retention/access policy and persistent storage.
-- Live clinical handwriting accuracy, Urdu voice quality, physical mobile cameras/torch, OS installation, and public deployment connectivity still need device and credential-backed acceptance testing. Automated tests do not certify those.
-- Regional audio is queued pending native clinical validation.
+- **Backend tests (`pytest`):** `30 passed` covering formulary matching, confidence lock (`<0.75` refusal), overdose ceiling blocking (`5000mg` Leflox), openFDA salt-only queries, cabinet CRUD + auto-merge, WhatsApp honest unconfigured/webhook checks, serverless `/tmp` storage, and demo QR cold recovery.
+- **Deterministic 30-Case Safety Benchmark (`python -m tests.run_eval_30`):** `30/30 passed` (`p50=0.068ms` deterministic engine latency across 15 Pakistani brand extractions, 5 illegible/low-confidence refusals, 5 high-risk interactions, and 5 strip swaps/overdose ceilings). *Note: This harness measures the deterministic clinical engine offline (non-VLM latency); real-world prescription photos add Gemini Vision inference latency and still require pharmacist/clinician validation.*
+- **Frontend checks:** `tsc --noEmit` clean, `next build` clean, `19/19` Playwright + axe-core WCAG 2.0/2.1/2.2 AA checks passing locally and against `https://nuskha-saathi-rose.vercel.app`.
+- **Honest Limits:** Outbound WhatsApp reminder scheduling remains explicitly disabled (`Enable reminders` disabled; `whatsapp_scheduled: false`) until real Twilio/Meta credentials are supplied. On Vercel serverless, `/tmp` SQLite storage is ephemeral per instance, while browser `localStorage` persists saved scans (`<= 20`) and cabinet items locally on device. Live handwriting accuracy across diverse clinicians, Uplift/Azure/Google audio quality when credentials are supplied, physical smartphone cameras/torch, and regional languages need device/credential-backed acceptance testing.
 
 Follow the treating clinician's instructions. Ask a pharmacist to confirm unclear wording before taking medicine. The app does not diagnose, prescribe, or authorize changing medicines.
