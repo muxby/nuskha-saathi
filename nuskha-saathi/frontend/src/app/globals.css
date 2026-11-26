@@ -112,6 +112,8 @@ body {
   font-size: 16px;
   line-height: 1.65;
   overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button,
@@ -618,38 +620,39 @@ html[data-theme="dark"] .verify-button {
    Icon Medallions (Custom Premium Clinical Squircle Icons)
    ========================================================================== */
 .icon-medallion {
-  width: 42px;
-  height: 42px;
-  border-radius: 13px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   display: inline-grid;
   place-items: center;
   flex-shrink: 0;
   border: 1px solid var(--border);
-  box-shadow: 0 2px 8px -3px rgba(15, 31, 66, 0.12);
+  background: var(--surface-soft);
+  color: var(--ink);
 }
 
 .icon-medallion.tone-blue {
-  background: linear-gradient(145deg, color-mix(in srgb, var(--accent) 14%, var(--surface)), var(--surface-soft));
+  background: var(--surface-soft);
   color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 26%, var(--border));
+  border-color: var(--border);
 }
 
 .icon-medallion.tone-green {
-  background: linear-gradient(145deg, color-mix(in srgb, var(--green) 14%, var(--surface)), var(--green-bg));
+  background: var(--green-bg);
   color: var(--green);
-  border-color: color-mix(in srgb, var(--green) 28%, var(--border));
+  border-color: color-mix(in srgb, var(--green) 24%, var(--border));
 }
 
 .icon-medallion.tone-amber {
-  background: linear-gradient(145deg, color-mix(in srgb, var(--amber) 14%, var(--surface)), var(--amber-bg));
+  background: var(--amber-bg);
   color: var(--amber);
-  border-color: color-mix(in srgb, var(--amber) 32%, var(--border));
+  border-color: color-mix(in srgb, var(--amber) 24%, var(--border));
 }
 
 .icon-medallion.tone-red {
-  background: linear-gradient(145deg, color-mix(in srgb, var(--red) 14%, var(--surface)), var(--red-bg));
+  background: var(--red-bg);
   color: var(--red);
-  border-color: color-mix(in srgb, var(--red) 28%, var(--border));
+  border-color: color-mix(in srgb, var(--red) 24%, var(--border));
 }
 
 .icon-medallion.tone-neutral {
@@ -683,7 +686,7 @@ html[data-theme="dark"] .verify-button {
   flex-direction: column;
   background: var(--bg);
   color: var(--ink);
-  --pill-open-w: clamp(320px, 39vw, 530px);
+  --pill-open-w: clamp(340px, 40vw, 540px);
 }
 
 .pill-hero-curves {
@@ -775,19 +778,33 @@ html[data-theme="dark"] .pill-hero-curves {
 .hero-pill-portal {
   position: relative;
   width: var(--pill-open-w);
-  height: clamp(206px, 23.5vw, 312px);
+  height: clamp(144px, 15.6vw, 210px);
   border-radius: 9999px;
   overflow: hidden;
   background: linear-gradient(155deg, #0b2b74 0%, #1648b8 55%, #1d5ee0 100%);
   box-shadow:
-    0 28px 64px -18px rgba(14, 42, 114, 0.42),
+    0 28px 64px -18px rgba(14, 42, 114, 0.44),
     0 8px 22px -6px rgba(14, 42, 114, 0.25);
   transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  animation: pill-portal-expand 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
+  animation: pill-portal-expand 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
   will-change: transform, clip-path;
   contain: layout paint;
   flex-shrink: 0;
+}
+
+.portal-capsule-seam {
+  position: absolute;
+  top: 6%;
+  bottom: 6%;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  z-index: 4;
+  pointer-events: none;
+  border-radius: 999px;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  animation: capsule-seam-part 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
 }
 
 html[data-theme="dark"] .hero-pill-portal {
@@ -849,73 +866,37 @@ html[data-theme="dark"] .hero-pill-portal {
   transform: scale(0.92);
 }
 
-.portal-rx-card {
-  width: min(100%, 300px);
-  padding: 14px 16px;
-  border-radius: 20px;
-  background: rgba(7, 21, 60, 0.62);
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  color: #ffffff;
-  display: grid;
-  gap: 10px;
-  box-shadow: 0 14px 32px -10px rgba(4, 12, 38, 0.55);
-}
-
-.portal-rx-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.portal-rx-badge,
-.portal-rx-ok {
+.portal-rx-minimal {
   display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10.5px;
-  font-weight: 600;
-}
-
-.portal-rx-badge {
-  color: #dbeafe;
-}
-
-.portal-rx-ok {
-  color: #86efac;
-}
-
-.portal-rx-script {
-  font-family: var(--font-serif), Georgia, serif;
-  font-style: italic;
-  font-weight: 500;
-  font-size: 16px;
-  color: #ffffff;
-}
-
-.portal-rx-slots {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-}
-
-.portal-rx-slots span {
-  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 6px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #f0f6ff;
-  font-size: 12px;
+  padding: 10px 26px;
+  border-radius: 9999px;
+  background: rgba(7, 21, 60, 0.36);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  text-align: center;
 }
 
-.portal-rx-slots b {
-  font-size: 14px;
+.portal-rx-cap {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.portal-rx-dose {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.1;
+  letter-spacing: 0.04em;
   color: #ffffff;
 }
 
@@ -1169,12 +1150,13 @@ html[data-theme="dark"] .pill-cta-button:hover {
 }
 
 .workspace-frame {
-  background: var(--surface-soft);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 22px;
-  padding: 20px;
+  padding: clamp(18px, 2.4vw, 28px);
   box-shadow: var(--shadow-soft);
   margin-bottom: 52px;
+  contain: layout paint;
 }
 
 .workspace-topbar {
@@ -1245,14 +1227,14 @@ html[data-theme="dark"] .pill-cta-button:hover {
 .workspace-canvas {
   position: relative;
   overflow: hidden;
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 22px;
+  border-radius: 18px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 310px;
+  min-height: 300px;
 }
 
 .workspace-fluted-glow {
@@ -1285,7 +1267,7 @@ html[data-theme="dark"] .pill-cta-button:hover {
 .sample-pill {
   padding: 5px 12px;
   border-radius: 999px;
-  background: var(--surface-soft);
+  background: var(--surface);
   border: 1px solid var(--border);
   color: var(--ink-muted);
   font-size: 11.5px;
@@ -1295,10 +1277,24 @@ html[data-theme="dark"] .pill-cta-button:hover {
 .canvas-step-chip {
   padding: 5px 12px;
   border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--ink);
-  font-size: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--ink-muted);
+  font-size: 11.5px;
   font-weight: 600;
+}
+
+.workspace-canvas .primary-button {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.workspace-canvas .primary-button:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
 }
 
 .canvas-split {
@@ -1347,8 +1343,8 @@ html[data-theme="dark"] .pill-cta-button:hover {
 
 .ocr-line {
   padding: 14px 16px;
-  border-radius: 16px;
-  background: var(--surface-soft);
+  border-radius: 14px;
+  background: var(--surface);
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -1370,18 +1366,21 @@ html[data-theme="dark"] .pill-cta-button:hover {
   width: fit-content;
   padding: 4px 10px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--ink);
 }
 
-.ocr-badge-good {
-  background: var(--green-bg);
-  color: var(--green);
+.ocr-badge-good svg {
+  color: var(--accent);
 }
 
 .ocr-badge-warn {
-  background: var(--amber-bg);
-  color: var(--amber);
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--ink-muted);
 }
 
 .preview-slot {
@@ -1432,9 +1431,9 @@ html[data-theme="dark"] .pill-cta-button:hover {
 
 /* Right Timeline Rail (Nexa AI) */
 .workspace-rail {
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 22px;
+  border-radius: 18px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -1481,12 +1480,15 @@ html[data-theme="dark"] .pill-cta-button:hover {
   padding: 12px 14px;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: var(--bg);
-  transition: border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--surface);
+  transition:
+    border-color 0.26s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .rail-card:hover {
   border-color: var(--accent);
+  transform: translateY(-1px);
 }
 
 .rail-card>div {
@@ -4231,7 +4233,11 @@ html[dir="rtl"] .alert-body p {
 
 @media (max-width: 960px) {
   .pill-hero {
-    --pill-open-w: clamp(240px, 44vw, 380px);
+    --pill-open-w: clamp(248px, 44vw, 370px);
+  }
+
+  .hero-pill-portal {
+    height: clamp(112px, 18vw, 156px);
   }
 
   .pill-hero-footer {
@@ -4399,7 +4405,7 @@ html[dir="rtl"] .alert-body p {
   }
 
   .hero-pill-portal {
-    height: clamp(118px, 31vw, 158px);
+    height: clamp(86px, 21.5vw, 108px);
   }
 
   .portal-inner-scene {
@@ -4821,14 +4827,20 @@ html[dir="rtl"] .alert-body p {
 
 @keyframes pill-portal-expand {
   0% {
-    clip-path: inset(8% 46% 8% 46% round 9999px);
-    scale: 0.9;
-    opacity: 0.55;
+    clip-path: inset(0% 34% 0% 34% round 9999px);
+    scale: 0.72 0.94;
+    opacity: 0.35;
   }
 
-  58% {
+  38% {
+    clip-path: inset(0% 24% 0% 24% round 9999px);
+    scale: 0.92 1;
+    opacity: 0.95;
+  }
+
+  74% {
     clip-path: inset(0% 0% 0% 0% round 9999px);
-    scale: 1.014;
+    scale: 1.015 1.005;
     opacity: 1;
   }
 
@@ -4839,10 +4851,27 @@ html[dir="rtl"] .alert-body p {
   }
 }
 
+@keyframes capsule-seam-part {
+  0% {
+    opacity: 0.95;
+    transform: translateX(-50%) scaleY(0.9);
+  }
+
+  45% {
+    opacity: 0.72;
+    transform: translateX(-50%) scaleY(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scaleY(1.06);
+  }
+}
+
 @keyframes wing-slide-start {
   0% {
-    transform: translateX(48px);
-    opacity: 0.45;
+    transform: translateX(76px);
+    opacity: 0.35;
   }
 
   100% {
@@ -4853,8 +4882,8 @@ html[dir="rtl"] .alert-body p {
 
 @keyframes wing-slide-end {
   0% {
-    transform: translateX(-48px);
-    opacity: 0.45;
+    transform: translateX(-76px);
+    opacity: 0.35;
   }
 
   100% {
@@ -4865,8 +4894,8 @@ html[dir="rtl"] .alert-body p {
 
 @keyframes wing-slide-start-rtl {
   0% {
-    transform: translateX(-48px);
-    opacity: 0.45;
+    transform: translateX(-76px);
+    opacity: 0.35;
   }
 
   100% {
@@ -4877,8 +4906,8 @@ html[dir="rtl"] .alert-body p {
 
 @keyframes wing-slide-end-rtl {
   0% {
-    transform: translateX(48px);
-    opacity: 0.45;
+    transform: translateX(76px);
+    opacity: 0.35;
   }
 
   100% {

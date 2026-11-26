@@ -20,7 +20,6 @@ import {
   VolumeX,
   ScanLine,
   CheckCircle2,
-  FileText,
   Eye,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
@@ -230,6 +229,7 @@ export default function HomeExperience({
               >
                 <OpticalPrismFilter />
                 <div className="portal-flutes" aria-hidden="true" />
+                <div className="portal-capsule-seam" aria-hidden="true" />
                 <div className="portal-bevel" aria-hidden="true" />
 
                 <button
@@ -246,34 +246,13 @@ export default function HomeExperience({
                   className={`portal-inner-scene ${showRxOverlay ? "is-visible" : "is-prism-only"}`}
                   aria-hidden="true"
                 >
-                  <div className="portal-rx-card">
-                    <div className="portal-rx-top">
-                      <span className="portal-rx-badge">
-                        <FileText size={12} />
-                        Rx · {t("sampleLabel")}
-                      </span>
-                      <span className="portal-rx-ok">
-                        <CheckCircle2 size={12} />
-                        {t("identityMatched")}
-                      </span>
-                    </div>
-                    <strong className="portal-rx-script" dir="ltr">
-                      &ldquo;Tab Panadol 500mg · 1+0+1&rdquo;
+                  <div className="portal-rx-minimal">
+                    <span className="portal-rx-cap" dir="ltr">
+                      Rx · Panadol 500mg
+                    </span>
+                    <strong className="portal-rx-dose" dir="ltr">
+                      1 · 0 · 1
                     </strong>
-                    <div className="portal-rx-slots">
-                      <span>
-                        <Sunrise size={13} />
-                        <b>1</b>
-                      </span>
-                      <span>
-                        <Sun size={13} />
-                        <b>0</b>
-                      </span>
-                      <span>
-                        <Moon size={13} />
-                        <b>1</b>
-                      </span>
-                    </div>
                   </div>
                 </div>
 
@@ -504,14 +483,14 @@ export default function HomeExperience({
                 </div>
                 <div className="rail-cards">
                   <div className="rail-card">
-                    <IconMedallion icon={ShieldAlert} tone="red" size={17} />
+                    <IconMedallion icon={ShieldAlert} tone="neutral" size={17} />
                     <div>
                       <strong>{t("timelineHigh")}</strong>
                       <span>{t("timelineHighSub")}</span>
                     </div>
                   </div>
                   <div className="rail-card">
-                    <IconMedallion icon={AlertTriangle} tone="amber" size={17} />
+                    <IconMedallion icon={AlertTriangle} tone="neutral" size={17} />
                     <div>
                       <strong>{t("timelineBlur")}</strong>
                       <span>{t("timelineBlurSub")}</span>
@@ -525,7 +504,7 @@ export default function HomeExperience({
                     </div>
                   </div>
                   <div className="rail-card">
-                    <IconMedallion icon={Volume2} tone="green" size={17} />
+                    <IconMedallion icon={Volume2} tone="neutral" size={17} />
                     <div>
                       <strong>{t("timelineUrdu")}</strong>
                       <span>{t("timelineUrduSub")}</span>
@@ -587,7 +566,7 @@ export default function HomeExperience({
               >
                 <div className="feature-top">
                   <div className="feature-badge-row">
-                    <IconMedallion icon={Volume2} tone="green" size={18} />
+                    <IconMedallion icon={Volume2} tone="blue" size={18} />
                     <span className="eyebrow">02 · {t("voice")}</span>
                   </div>
                   <ArrowUpRight size={20} />
@@ -698,7 +677,7 @@ export default function HomeExperience({
                 </>
               ) : (
                 <div className="mobile-schedule-empty">
-                  <IconMedallion icon={Sunrise} tone="amber" size={20} />
+                  <IconMedallion icon={Sunrise} tone="neutral" size={20} />
                   <div>
                     <h3>{t("noSchedule")}</h3>
                     <p>{t("noScheduleBody")}</p>
@@ -718,7 +697,7 @@ export default function HomeExperience({
               type="button"
               onClick={() => navigate(scan ? "results" : "scan")}
             >
-              <IconMedallion icon={Play} tone="green" size={18} />
+              <IconMedallion icon={Play} tone="blue" size={18} />
               <strong>{t("listen")}</strong>
               <span>{t("urduVoice")}</span>
             </button>
