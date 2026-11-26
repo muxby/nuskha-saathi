@@ -10,6 +10,7 @@ from time import perf_counter
 
 from fastapi import APIRouter, HTTPException, Request
 
+from services.monitoring import event, stage
 from schemas.responses import CabinetMedIn, ScanResponse
 from services.demo_fixtures import list_demo_cases, run_demo_case
 from services.tts_stt_service import synthesize_urdu
@@ -31,35 +32,40 @@ async def finalize_scan_response(
     speech_fn=synthesize_urdu,
 ) -> ScanResponse:
     """Run TTS, save audio metadata files, attach QR payload, and log to SQLite."""
+    event("clinical_outcome", result.overall_status.lower())
     speech_started = perf_counter()
-    audio = await speech_fn(result.urdu_script)
+    with stage("urdu_audio"):
+        audio = await speech_fn(result.urdu_script)
+    if not audio:
+        event("urdu_audio_result", "unavailable")
     result.telemetry.tts_ms = int(round((perf_counter() - speech_started) * 1000))
     result.telemetry.total_ms += result.telemetry.tts_ms
 
-    audio_dir = Path(request.app.state.audio_dir)
-    audio_dir.mkdir(parents=True, exist_ok=True)
-    if audio:
-        (audio_dir / f"{result.scan_id}.mp3").write_bytes(audio)
-        result.audio_urdu_url = f"/static/audio/{result.scan_id}.mp3"
+    with stage("persistence"):
+        audio_dir = Path(request.app.state.audio_dir)
+        audio_dir.mkdir(parents=True, exist_ok=True)
+        if audio:
+            (audio_dir / f"{result.scan_id}.mp3").write_bytes(audio)
+            result.audio_urdu_url = f"/static/audio/{result.scan_id}.mp3"
 
-    base_url = os.getenv("FRONTEND_BASE_URL", "").rstrip("/")
-    result.audio_qr_payload = f"{base_url}/audio/{result.scan_id}" if base_url else f"/audio/{result.scan_id}"
+        base_url = os.getenv("FRONTEND_BASE_URL", "").rstrip("/")
+        result.audio_qr_payload = f"{base_url}/audio/{result.scan_id}" if base_url else f"/audio/{result.scan_id}"
 
-    (audio_dir / f"{result.scan_id}.json").write_text(
-        json.dumps(
-            {
-                "scan_id": result.scan_id,
-                "patient_id": result.patient_id,
-                "urdu_script": result.urdu_script,
-                "audio_urdu_url": result.audio_urdu_url,
-            }
-        ),
-        encoding="utf-8",
-    )
+        (audio_dir / f"{result.scan_id}.json").write_text(
+            json.dumps(
+                {
+                    "scan_id": result.scan_id,
+                    "patient_id": result.patient_id,
+                    "urdu_script": result.urdu_script,
+                    "audio_urdu_url": result.audio_urdu_url,
+                }
+            ),
+            encoding="utf-8",
+        )
 
-    store = getattr(request.app.state, "store", None)
-    if store is not None:
-        store.record_scan(result)
+        store = getattr(request.app.state, "store", None)
+        if store is not None:
+            store.record_scan(result)
     return result
 
 

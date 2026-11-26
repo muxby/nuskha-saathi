@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from services.monitoring import event, error_category
+
 import base64
 import os
 import shutil
@@ -34,7 +36,8 @@ async def synthesize_urdu(text: str) -> bytes | None:
                 audio = await provider(client, text)
                 if audio:
                     return audio
-            except (httpx.HTTPError, ValueError, KeyError):
+            except (httpx.HTTPError, ValueError, KeyError) as exc:
+                event("tts" + provider.__name__, "failed", error=error_category(exc))
                 continue
     return None
 

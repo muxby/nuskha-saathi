@@ -6,6 +6,8 @@ any HTTP call.
 
 from __future__ import annotations
 
+from services.monitoring import event, error_category
+
 import asyncio
 import json
 import os
@@ -163,19 +165,23 @@ class OpenFdaClient:
                 async with httpx.AsyncClient(timeout=8.0) as client:
                     response = await client.get(url, headers={"User-Agent": "nuskha-saathi"})
                     if response.status_code in _NON_RETRYABLE_STATUSES:
+                        event("openfda_lookup", "no_labels" if response.status_code == 404 else "failed", error=f"HTTP_{response.status_code}")
                         return None
                     response.raise_for_status()
                     data = response.json()
                     return data if isinstance(data, dict) else None
             except httpx.HTTPStatusError as exc:
                 if exc.response is not None and exc.response.status_code in _NON_RETRYABLE_STATUSES:
+                    event("openfda_lookup", "no_labels" if exc.response.status_code == 404 else "failed", error=error_category(exc))
                     return None
                 if attempt == 2:
+                    event("openfda_lookup", "failed", error=error_category(exc))
                     return None
                 await asyncio.sleep(delay)
                 delay *= 2
-            except Exception:
+            except Exception as exc:
                 if attempt == 2:
+                    event("openfda_lookup", "failed", error=error_category(exc))
                     return None
                 await asyncio.sleep(delay)
                 delay *= 2

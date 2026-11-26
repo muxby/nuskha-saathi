@@ -117,6 +117,14 @@ The Render API is available at [nuskha-saathi-api.onrender.com](https://nuskha-s
 - Auto-deploy watches changes within the backend root directory. For a manual release, choose **Manual Deploy → Deploy latest commit**, then verify the deployed commit and `/health`. `vision_configured: true` confirms a key is present; a successful live scan is needed to verify Gemini access.
 - Free instances sleep after inactivity. Warm `/health` before a demo. SQLite records, generated audio, and strip thumbnails on the instance disk can be lost on redeploy or restart; durable storage requires separate configuration.
 
+### Private Render diagnostics
+
+Open [the backend panel](https://nuskha-saathi-api.onrender.com/admin). In Render → backend → Environment, add `ADMIN_MONITOR_PASSWORD` with a unique password of at least 16 characters, then save and deploy. Never commit this password or place it in a frontend variable. Until it is configured, login is disabled and diagnostics remain private.
+
+The panel refreshes every 10 seconds while visible and shows application health, Render's `RENDER_GIT_COMMIT`, process uptime, configuration flags, active stages, and the latest 100 API requests. Expand a request for stage timings and sanitized error categories (for example `HTTP_403`). The `X-Request-ID` response header correlates requests with sanitized failure entries in Render logs. Gemini, interaction checks, Urdu audio, and persistence are traced when executed; skipped/unavailable stages and clinical outcomes are separate from technical failures. Configuration flags alone do not prove a provider works.
+
+Sessions expire after 8 hours, restart, or a password change. Five failed logins block that client for five minutes. Diagnostics and login limits are bounded and local to one process, reset on restart, and do not aggregate across instances. They retain no patient bodies, images, query strings, raw error messages, or API keys. Existing application storage and Render's own access logs are separate. Pause or close the panel to stop polling; polling can keep a free Render service awake. The browser marks data stale if it cannot reach the backend, but this is not an independent uptime or Render infrastructure monitor. Use the Render logs link for platform deployment/runtime logs.
+
 ### Vercel deployments
 
 - **Frontend project on Vercel (`nuskha-saathi`):** Root directory `nuskha-saathi/frontend` with production env `NEXT_PUBLIC_API_BASE_URL=https://nuskha-saathi-api.vercel.app`.

@@ -151,7 +151,7 @@ class GeminiVisionExtractor:
                 last_error = exc
                 if attempt == 0:
                     await asyncio.sleep(self.backoff_seconds)
-        raise VisionExtractError(str(last_error or "vision extraction failed"))
+        raise VisionExtractError(str(last_error or "vision extraction failed")) from last_error
 
     async def _post(self, url: str, body: dict) -> dict:
         if self.http_post is not None:

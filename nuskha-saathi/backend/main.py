@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
+from routers.monitor import install_monitor
 from routers.cabinet import router as cabinet_router
 from routers.scan import router as scan_router
 from routers.whatsapp import router as whatsapp_router, whatsapp_configured
@@ -86,6 +87,7 @@ def create_app(
     async def unhandled_exception_handler(_request: Request, _exc: Exception):
         return JSONResponse(
             status_code=500,
+            headers={"X-Request-ID": _request.state.diagnostic_request_id} if hasattr(_request.state, "diagnostic_request_id") else {},
             content={
                 "error": "INTERNAL_ERROR",
                 "detail": "Unexpected server error while processing clinical safety check.",
@@ -123,6 +125,7 @@ def create_app(
 
         return {"available": True, "summary": json.loads(report_path.read_text(encoding="utf-8"))}
 
+    install_monitor(app, health)
     return app
 
 

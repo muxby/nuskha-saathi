@@ -10,6 +10,7 @@ from pathlib import Path
 
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 
+from services.monitoring import stage
 from routers.cabinet import finalize_scan_response
 from services.demo_fixtures import DEMO_CASE_BY_SCAN_ID, run_demo_case
 from services.image_ops import safe_slug
@@ -123,7 +124,8 @@ async def scan_parchi_route(
     patient_id: str = Form("anonymous"),
     active_cabinet: str = Form("[]"),
 ):
-    image_bytes, mime = await _read_upload(file)
+    with stage("upload_validation"):
+        image_bytes, mime = await _read_upload(file)
     inline_cabinet = _parse_cabinet(active_cabinet, request.app.state.resolver)
     store = getattr(request.app.state, "store", None)
     cabinet = _merge_patient_cabinet(inline_cabinet, patient_id, store)
@@ -195,7 +197,8 @@ async def verify_strip_route(
         if not math.isfinite(qty) or qty < 0:
             raise HTTPException(status_code=400, detail=f"{label} must be a non-negative number.")
 
-    image_bytes, mime = await _read_upload(file)
+    with stage("upload_validation"):
+        image_bytes, mime = await _read_upload(file)
     salts = [part.strip() for part in expected_salts.split(",") if part.strip()]
     schedule = None
     if morning_qty or afternoon_qty or night_qty:

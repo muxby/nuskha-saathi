@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from services.monitoring import event, stage
+
 import uuid
 from pathlib import Path
 from time import perf_counter
@@ -60,9 +62,11 @@ async def scan_parchi(
     vision_error = False
     if not image_bytes or not validate_image_bytes(image_bytes):
         vision_error = True
+        event('image_validation', 'refused', error='InvalidImage')
     else:
         try:
-            extraction = await extractor.extract(image_bytes, mime, "parchi")
+            with stage("gemini_extraction"):
+                extraction = await extractor.extract(image_bytes, mime, "parchi")
         except VisionExtractError:
             vision_error = True
     vision_ms = int(round((perf_counter() - vision_started) * 1000))
@@ -159,8 +163,14 @@ async def scan_parchi(
             )
 
     resolver_ms = int(round((perf_counter() - resolver_started) * 1000))
+    event("medicine_safety_checks", milliseconds=resolver_ms)
     fda_started = perf_counter()
-    hits = await fda.check_medications(verified_for_pairs, cabinet) if verified_for_pairs else []
+    if verified_for_pairs:
+        with stage("interaction_checks"):
+            hits = await fda.check_medications(verified_for_pairs, cabinet)
+    else:
+        hits = []
+        event("interaction_checks", "skipped")
     openfda_ms = int(round((perf_counter() - fda_started) * 1000))
 
     interactions: list[InteractionOut] = []
@@ -257,7 +267,8 @@ async def verify_strip(
     valid_image = bool(image_bytes and validate_image_bytes(image_bytes))
     if valid_image:
         try:
-            extraction = await extractor.extract(image_bytes, mime, "strip")
+            with stage("gemini_extraction"):
+                extraction = await extractor.extract(image_bytes, mime, "strip")
         except VisionExtractError:
             extraction = None
         if extraction is not None and extraction.extracted_lines:
@@ -279,6 +290,7 @@ async def verify_strip(
         resolver=resolver,
         schedule_phrase=schedule_phrase,
     )
+    event("strip_safety_checks")
     thumb_name = None
     if valid_image:
         safe_scan = safe_slug(scan_id, "scan")
