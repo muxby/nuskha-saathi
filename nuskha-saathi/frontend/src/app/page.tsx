@@ -1,5 +1,7 @@
 "use client";
-import dynamic from "next/dynamic";
+import ParchiCamera from "@/components/ParchiCamera";
+import VerificationExperience from "@/components/VerificationExperience";
+import PrescriptionResults from "@/components/PrescriptionResults";
 import SpeakerButton from "@/components/SpeakerButton";
 import ProcessingExperience from "@/components/ProcessingExperience";
 import {
@@ -30,14 +32,6 @@ import {
   type CabinetItem,
   type ScanResult,
 } from "@/lib/api";
-
-const ParchiCamera = dynamic(() => import("@/components/ParchiCamera"));
-const VerificationExperience = dynamic(
-  () => import("@/components/VerificationExperience"),
-);
-const PrescriptionResults = dynamic(
-  () => import("@/components/PrescriptionResults"),
-);
 
 export default function Home() {
   const { t, language } = useLanguage();
