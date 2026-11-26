@@ -1,8 +1,13 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { X, Activity, Timer, Coins } from "lucide-react";
-import type { ScanResult } from "@/lib/api";
+import {
+  fetchBenchmark,
+  type EvalBenchmarkReport,
+  type ScanResult,
+} from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
+
 export default function DevProofDrawer({
   scan,
   enabled = false,
@@ -12,11 +17,21 @@ export default function DevProofDrawer({
 }) {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
+  const [benchmark, setBenchmark] = useState<EvalBenchmarkReport | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
+
   useEffect(() => {
-    if (enabled && open) dialog.current?.showModal();
-    else dialog.current?.close();
+    if (enabled && open) {
+      dialog.current?.showModal();
+      const ctrl = new AbortController();
+      void fetchBenchmark(ctrl.signal).then((b) => {
+        if (!ctrl.signal.aborted) setBenchmark(b);
+      });
+      return () => ctrl.abort();
+    }
+    dialog.current?.close();
   }, [open, enabled]);
+
   if (!enabled) return null;
   return (
     <>
@@ -132,6 +147,26 @@ export default function DevProofDrawer({
             </>
           ) : (
             <p>{t("proofEmpty")}</p>
+          )}
+
+          {benchmark && (
+            <div className="proof-benchmark" dir="ltr">
+              <h3>
+                30-Case Safety Benchmark ({benchmark.total_passed}/
+                {benchmark.total_cases} · p50 {benchmark.p50_engine_ms} ms)
+              </h3>
+              <p className="proof-provider-note">{benchmark.note}</p>
+              <div className="benchmark-rows">
+                {benchmark.subsets.map((row) => (
+                  <div key={row.name} className="benchmark-row">
+                    <span>{row.name}</span>
+                    <strong>
+                      {row.passed}/{row.total}
+                    </strong>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </dialog>

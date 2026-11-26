@@ -16,25 +16,43 @@ import {
   Activity,
   Clock3,
 } from "lucide-react";
-import { API_BASE, fetchHealth, type HealthStatus, type ScanResult } from "@/lib/api";
+import {
+  API_BASE,
+  fetchHealth,
+  type CabinetItem,
+  type HealthStatus,
+  type ScanResult,
+} from "@/lib/api";
 import type { SavedPrescription } from "@/lib/records";
 import { LanguageSwitch, useLanguage } from "@/lib/i18n";
 import { IconMedallion } from "@/components/MedicalArt";
+import ActiveCabinetView from "@/components/ActiveCabinetView";
+import WhatsAppPreviewModal from "@/components/WhatsAppPreviewModal";
 
 export function MedicineLibrary({
   records,
+  cabinetItems = [],
   current,
   history,
   onOpen,
   onDelete,
   onScan,
+  onAddCabinet,
+  onRemoveCabinet,
 }: {
   records: SavedPrescription[];
+  cabinetItems?: CabinetItem[];
   current: ScanResult | null;
   history: boolean;
   onOpen: (scan: ScanResult) => void;
   onDelete: (id: string) => void;
   onScan: () => void;
+  onAddCabinet?: (payload: {
+    brand_name: string;
+    strength_mg?: number | null;
+    source_label?: string;
+  }) => Promise<void>;
+  onRemoveCabinet?: (id: string) => Promise<void>;
 }) {
   const { t, language } = useLanguage();
   const scans = records.map((r) => r.scan);
@@ -158,6 +176,13 @@ export function MedicineLibrary({
           </p>
         </>
       )}
+      {!history && onAddCabinet && onRemoveCabinet && (
+        <ActiveCabinetView
+          items={cabinetItems}
+          onAdd={onAddCabinet}
+          onRemove={onRemoveCabinet}
+        />
+      )}
     </section>
   );
 }
@@ -165,6 +190,7 @@ export function MedicineLibrary({
 export function ReminderExperience({ scan }: { scan: ScanResult | null }) {
   const { t, language } = useLanguage();
   const [time, setTime] = useState("08:00");
+  const [waPreviewOpen, setWaPreviewOpen] = useState(false);
   const confirmed =
     scan?.medications.filter((m) => m.status === "VERIFIED" && m.schedule) ||
     [];
@@ -223,6 +249,14 @@ export function ReminderExperience({ scan }: { scan: ScanResult | null }) {
               : "backendNotScheduled",
           )}
         </p>
+        <button
+          type="button"
+          className="secondary-button wa-preview-trigger"
+          onClick={() => setWaPreviewOpen(true)}
+        >
+          <MessageCircle size={18} />
+          <span>{t("waOpenPreview")}</span>
+        </button>
       </div>
       <aside className="reminder-aside">
         <div className="reminder-orbit">
@@ -232,6 +266,11 @@ export function ReminderExperience({ scan }: { scan: ScanResult | null }) {
         <h2>{t("remindersTitle")}</h2>
         <p>{t("reminderUnavailable")}</p>
       </aside>
+      <WhatsAppPreviewModal
+        open={waPreviewOpen}
+        scan={scan}
+        onClose={() => setWaPreviewOpen(false)}
+      />
     </section>
   );
 }

@@ -25,6 +25,7 @@ export default function ParchiCamera({
   cabinetCount = 0,
   useCabinet = false,
   onToggleCabinet,
+  onOpenDemo,
 }: {
   onSelect: (file: File) => void;
   busy: boolean;
@@ -32,6 +33,7 @@ export default function ParchiCamera({
   cabinetCount?: number;
   useCabinet?: boolean;
   onToggleCabinet?: (checked: boolean) => void;
+  onOpenDemo?: () => void;
 }) {
   const { t, language } = useLanguage();
   const gallery = useRef<HTMLInputElement>(null);
@@ -398,6 +400,16 @@ export default function ParchiCamera({
           <Volume2 size={20} />
           {t("guidance")}
         </button>
+        {kind === "prescription" && onOpenDemo && (
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={onOpenDemo}
+          >
+            <ScanLine size={18} />
+            {t("tryDemoCases")}
+          </button>
+        )}
         <p className="privacy-copy">{t("privacyNote")}</p>
       </aside>
     </section>

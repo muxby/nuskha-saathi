@@ -334,6 +334,29 @@ const en = {
   notReported: "Not reported",
   skip: "Skip to main content",
   offline: "You appear to be offline. Scanning needs an internet connection.",
+  demoModeTitle: "5-Case Demo Suite",
+  demoCasesHeading: "Pre-verified Pakistani clinical cases",
+  demoModeDesc:
+    "Run deterministic safety checks across cross-doctor interactions, blurry scribbles, overdoses, unknown brands, and typo repair.",
+  demoOfflineActive: "Offline stage mode active — cached clinical cases available without network.",
+  tryDemoCases: "Try 5 demo cases",
+  activeCabinetEyebrow: "Cross-doctor safety",
+  activeCabinetTitle: "Other medicines you take regularly",
+  activeCabinetDesc:
+    "Add active medicines from earlier doctors so new prescriptions are checked against them automatically.",
+  seedZubaidaCabinet: "Seed Marevan 5mg",
+  cabinetBrandPlaceholder: "Medicine name (e.g. Marevan, Ismo)",
+  cabinetDoctorPlaceholder: "Clinic / source note",
+  cabinetInvalidStrength: "Strength must be a positive number in mg.",
+  addMedicine: "Add medicine",
+  waOpenPreview: "Preview Day-3 WhatsApp check-in",
+  waPreviewHeading: "Day-3 Antibiotic Adherence Loop",
+  waPreviewDesc:
+    "Test the outgoing Urdu reminder prompt and simulate a patient reply against the live backend webhook.",
+  waPhoneLabel: "Patient WhatsApp number",
+  waTriggerBtn: "Send check-in",
+  waSimContinue: "Simulate: 1 (Continuing)",
+  waSimStop: "Simulate: 2 (Stopped / Rash)",
 } as const;
 
 type Key = keyof typeof en;
@@ -643,6 +666,29 @@ const ur: Record<Key, string> = {
   notReported: "فراہم نہیں کیا گیا",
   skip: "مرکزی صفحے پر جائیں",
   offline: "انٹرنیٹ بند لگ رہا ہے۔ نیا نسخہ اسکین کرنے کے لیے انٹرنیٹ ضروری ہے۔",
+  demoModeTitle: "۵ ڈیمو طبی کیسز",
+  demoCasesHeading: "پاکستانی نسخوں کے تصدیق شدہ ڈیمو کیسز",
+  demoModeDesc:
+    "مختلف ڈاکٹروں کی دواؤں کے ٹکراؤ، دھندلی تحریر، زیادہ خوراک، نامعلوم برانڈ اور غلط املا کی حفاظتی جانچ فوراً آزمائیں۔",
+  demoOfflineActive: "آف لائن اسٹیج موڈ فعال ہے — محفوظ ڈیمو کیسز بغیر انٹرنیٹ دستیاب ہیں۔",
+  tryDemoCases: "۵ ڈیمو کیسز آزمائیں",
+  activeCabinetEyebrow: "مختلف ڈاکٹروں کے درمیان حفاظت",
+  activeCabinetTitle: "دوسری دوائیں جو آپ باقاعدہ لیتے ہیں",
+  activeCabinetDesc:
+    "پہلے سے جاری دوائیں شامل کریں تاکہ نیا نسخہ اسکین کرتے وقت ان کا باہمی ٹکراؤ خودکار چیک ہو سکے۔",
+  seedZubaidaCabinet: "Marevan 5mg شامل کریں",
+  cabinetBrandPlaceholder: "دوا کا نام (مثلاً Marevan یا Ismo)",
+  cabinetDoctorPlaceholder: "کلینک یا ڈاکٹر کا حوالہ",
+  cabinetInvalidStrength: "دوا کی طاقت ملی گرام میں درست مثبت عدد ہونی چاہیے۔",
+  addMedicine: "دوا شامل کریں",
+  waOpenPreview: "تیسرے دن کا واٹس ایپ پیغام آزمائیں",
+  waPreviewHeading: "تیسرے دن کی اینٹی بائیوٹک یاددہانی",
+  waPreviewDesc:
+    "اردو یاددہانی کا پیغام دیکھیں اور براہِ راست سرور پر مریض کے جواب کا تجربہ کریں۔",
+  waPhoneLabel: "مریض کا واٹس ایپ نمبر",
+  waTriggerBtn: "پیغام بھیجیں",
+  waSimContinue: "جواب آزمائیں: 1 (جاری ہے)",
+  waSimStop: "جواب آزمائیں: 2 (بند / الرجی)",
 };
 
 export const messages = { en, ur };

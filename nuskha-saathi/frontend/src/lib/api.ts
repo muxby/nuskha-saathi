@@ -6,6 +6,62 @@ export type HealthStatus = {
   status: string;
   formulary_brands: number;
   interaction_pairs: number;
+  capabilities?: {
+    vision_configured: boolean;
+    tts_configured: boolean;
+    openfda_live: boolean;
+    whatsapp_configured: boolean;
+    ephemeral_storage?: boolean;
+  };
+};
+
+export type DemoCaseMeta = {
+  case_id: string;
+  title: string;
+  subtitle: string;
+  patient_id: string;
+  highlights: string[];
+  cabinet_count: number;
+};
+
+export type CabinetItem = {
+  id: string;
+  patient_id: string;
+  brand_name: string;
+  generic_salts: string[];
+  strength_mg: number | null;
+  source_label: string;
+  added_at: string;
+};
+
+export type WhatsAppReminderResult = {
+  whatsapp_scheduled: boolean;
+  status: string;
+  provider: string | null;
+  reminder_id: string;
+  day3_checkin_due_at: string;
+  urdu_message: string;
+  detail: string | null;
+};
+
+export type WhatsAppWebhookResult = {
+  status: string;
+  classification: string;
+  urdu_reply: string;
+};
+
+export type EvalBenchmarkReport = {
+  mode: string;
+  note: string;
+  total_cases: number;
+  total_passed: number;
+  p50_engine_ms: number;
+  subsets: Array<{
+    name: string;
+    passed: number;
+    total: number;
+    misses: string[];
+  }>;
 };
 
 export async function fetchHealth(
@@ -221,4 +277,134 @@ export function isStripResult(value: unknown): value is StripResult {
     (result.detected_on_strip!.strength_mg == null ||
       finite(result.detected_on_strip!.strength_mg))
   );
+}
+
+
+export async function fetchDemoCases(
+  signal?: AbortSignal,
+): Promise<DemoCaseMeta[]> {
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/demo-cases`, { signal });
+    if (!res.ok) return [];
+    const data = (await res.json()) as { cases?: DemoCaseMeta[] };
+    return Array.isArray(data.cases) ? data.cases : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function runDemoCase(
+  caseId: string,
+  signal?: AbortSignal,
+): Promise<ScanResult> {
+  const res = await fetch(
+    `${API_BASE}/api/v1/demo-cases/${encodeURIComponent(caseId)}`,
+    { method: "POST", signal },
+  );
+  if (!res.ok) throw new Error("UPLOAD");
+  const data: unknown = await res.json();
+  if (!isScanResult(data)) throw new Error("UPLOAD");
+  return data;
+}
+
+export async function fetchCabinet(
+  patientId: string,
+  signal?: AbortSignal,
+): Promise<CabinetItem[] | null> {
+  try {
+    const res = await fetch(
+      `${API_BASE}/api/v1/cabinet/${encodeURIComponent(patientId)}`,
+      { signal },
+    );
+    if (!res.ok) return null;
+    const data = (await res.json()) as { medications?: CabinetItem[] };
+    return Array.isArray(data.medications) ? data.medications : [];
+  } catch {
+    return null;
+  }
+}
+
+export async function addCabinetMed(
+  patientId: string,
+  payload: {
+    brand_name: string;
+    generic_salts?: string[];
+    strength_mg?: number | null;
+    source_label?: string;
+  },
+): Promise<{ item: CabinetItem; medications: CabinetItem[] }> {
+  const res = await fetch(
+    `${API_BASE}/api/v1/cabinet/${encodeURIComponent(patientId)}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    },
+  );
+  if (!res.ok) throw new Error("UPLOAD");
+  return (await res.json()) as {
+    item: CabinetItem;
+    medications: CabinetItem[];
+  };
+}
+
+export async function removeCabinetMed(
+  patientId: string,
+  itemId: string,
+): Promise<CabinetItem[] | null> {
+  const res = await fetch(
+    `${API_BASE}/api/v1/cabinet/${encodeURIComponent(patientId)}/${encodeURIComponent(itemId)}`,
+    { method: "DELETE" },
+  );
+  if (!res.ok) return null;
+  const data = (await res.json()) as { medications?: CabinetItem[] };
+  return Array.isArray(data.medications) ? data.medications : [];
+}
+
+export async function sendWhatsAppReminder(payload: {
+  patient_id: string;
+  scan_id?: string | null;
+  brand_name: string;
+  phone_e164: string;
+  reminder_type?: "day3_checkin" | "daily_dose";
+}): Promise<WhatsAppReminderResult> {
+  const res = await fetch(`${API_BASE}/api/v1/whatsapp/send-reminder`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(typeof err.detail === "string" ? err.detail : "Request failed");
+  }
+  return (await res.json()) as WhatsAppReminderResult;
+}
+
+export async function simulateWhatsAppReply(payload: {
+  from: string;
+  body: string;
+}): Promise<WhatsAppWebhookResult> {
+  const res = await fetch(`${API_BASE}/api/v1/whatsapp/webhook`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error("Webhook request failed");
+  return (await res.json()) as WhatsAppWebhookResult;
+}
+
+export async function fetchBenchmark(
+  signal?: AbortSignal,
+): Promise<EvalBenchmarkReport | null> {
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/benchmark`, { signal });
+    if (!res.ok) return null;
+    const data = (await res.json()) as {
+      available?: boolean;
+      summary?: EvalBenchmarkReport;
+    };
+    return data.available && data.summary ? data.summary : null;
+  } catch {
+    return null;
+  }
 }

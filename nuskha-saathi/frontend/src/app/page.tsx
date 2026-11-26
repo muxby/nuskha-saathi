@@ -8,7 +8,10 @@ import {
   SettingsExperience,
 } from "@/components/MedicineLibrary";
 import {
+  getPatientId,
+  readLocalCabinet,
   readRecords,
+  writeLocalCabinet,
   writeRecords,
   type SavedPrescription,
 } from "@/lib/records";
@@ -18,7 +21,15 @@ import AppShell, { type View } from "@/components/AppShell";
 import HomeExperience from "@/components/HomeExperience";
 import { useLanguage } from "@/lib/i18n";
 import DevProofDrawer from "@/components/DevProofDrawer";
-import { postForm, type ScanResult } from "@/lib/api";
+import DemoModeDrawer from "@/components/DemoModeDrawer";
+import {
+  addCabinetMed,
+  fetchCabinet,
+  postForm,
+  removeCabinetMed,
+  type CabinetItem,
+  type ScanResult,
+} from "@/lib/api";
 
 const ParchiCamera = dynamic(() => import("@/components/ParchiCamera"));
 const VerificationExperience = dynamic(
@@ -37,12 +48,47 @@ export default function Home() {
   useEffect(() => {
     scanRef.current = scan;
   }, [scan]);
-  const [diagnostics, setDiagnostics] = useState(false);
-  const [records, setRecords] = useState<SavedPrescription[]>([]);
-  const [useCabinet, setUseCabinet] = useState(false);
-  useEffect(() => setRecords(readRecords()), []);
 
-  const cabinetMeds = records.flatMap((r) =>
+  function openScanResults(nextScan: ScanResult, imageUrl: string | null = null) {
+    // Update scanRef synchronously before hashchange fires inside navigate("results")
+    scanRef.current = nextScan;
+    setScan(nextScan);
+    setOriginal(imageUrl);
+    navigate("results");
+  }
+
+  const [diagnostics, setDiagnostics] = useState(false);
+  const [demoOpen, setDemoOpen] = useState(false);
+  const [demoOffline, setDemoOffline] = useState(false);
+  const [records, setRecords] = useState<SavedPrescription[]>([]);
+  const [cabinetItems, setCabinetItems] = useState<CabinetItem[]>([]);
+  const [patientId, setPatientId] = useState("anonymous");
+  const [useCabinet, setUseCabinet] = useState(true);
+
+  useEffect(() => {
+    setRecords(readRecords());
+    const localCab = readLocalCabinet();
+    if (localCab.length) setCabinetItems(localCab);
+    const pid = getPatientId();
+    setPatientId(pid);
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("demo") === "offline") {
+      setDemoOffline(true);
+      setDemoOpen(true);
+    }
+
+    const ctrl = new AbortController();
+    void fetchCabinet(pid, ctrl.signal).then((remote) => {
+      if (!ctrl.signal.aborted && remote && remote.length > 0) {
+        setCabinetItems(remote);
+        writeLocalCabinet(remote);
+      }
+    });
+    return () => ctrl.abort();
+  }, []);
+
+  const savedMeds = records.flatMap((r) =>
     r.scan.medications
       .filter((m) => m.status === "VERIFIED" && m.brand_matched)
       .map((m) => ({
@@ -52,6 +98,53 @@ export default function Home() {
         source_label: `Saved #${r.scan.scan_id.slice(-6)}`,
       })),
   );
+
+  const explicitCabinetMeds = cabinetItems.map((c) => ({
+    brand_name: c.brand_name,
+    generic_salts: c.generic_salts,
+    strength_mg: c.strength_mg,
+    source_label: c.source_label,
+  }));
+
+  const cabinetMeds = [...explicitCabinetMeds, ...savedMeds];
+
+  async function handleAddCabinet(payload: {
+    brand_name: string;
+    strength_mg?: number | null;
+    source_label?: string;
+  }) {
+    try {
+      const res = await addCabinetMed(patientId, payload);
+      setCabinetItems(res.medications);
+      writeLocalCabinet(res.medications);
+    } catch {
+      const localItem: CabinetItem = {
+        id: `local_${Date.now().toString(36)}`,
+        patient_id: patientId,
+        brand_name: payload.brand_name,
+        generic_salts: [],
+        strength_mg: payload.strength_mg ?? null,
+        source_label: payload.source_label || "Active Cabinet",
+        added_at: new Date().toISOString(),
+      };
+      const updated = [localItem, ...cabinetItems];
+      setCabinetItems(updated);
+      writeLocalCabinet(updated);
+    }
+  }
+
+  async function handleRemoveCabinet(itemId: string) {
+    const updated = cabinetItems.filter((item) => item.id !== itemId);
+    setCabinetItems(updated);
+    writeLocalCabinet(updated);
+    if (!itemId.startsWith("local_")) {
+      const remote = await removeCabinetMed(patientId, itemId).catch(() => null);
+      if (remote) {
+        setCabinetItems(remote);
+        writeLocalCabinet(remote);
+      }
+    }
+  }
 
   function saveCurrent() {
     if (!scan) return;
@@ -141,6 +234,7 @@ export default function Home() {
     setOriginal(URL.createObjectURL(file));
     const form = new FormData();
     form.append("file", file);
+    form.append("patient_id", patientId);
     if (useCabinet && cabinetMeds.length > 0) {
       form.append("active_cabinet", JSON.stringify(cabinetMeds));
     }
@@ -171,7 +265,11 @@ export default function Home() {
   }
 
   return (
-    <AppShell view={view} navigate={navigate}>
+    <AppShell
+      view={view}
+      navigate={navigate}
+      onTripleLogoTap={() => setDemoOpen(true)}
+    >
       {busy ? (
         <div className="content-wrap inner-page">
           <ProcessingExperience image={original} />
@@ -223,6 +321,7 @@ export default function Home() {
               cabinetCount={cabinetMeds.length}
               useCabinet={useCabinet}
               onToggleCabinet={setUseCabinet}
+              onOpenDemo={() => setDemoOpen(true)}
             />
           )}
           {view === "results" && scan && (
@@ -264,15 +363,14 @@ export default function Home() {
           {(view === "medicines" || view === "history") && (
             <MedicineLibrary
               records={records}
+              cabinetItems={cabinetItems}
               current={scan}
               history={view === "history"}
-              onOpen={(record) => {
-                setScan(record);
-                setOriginal(null);
-                navigate("results");
-              }}
+              onOpen={(record) => openScanResults(record)}
               onDelete={removeRecord}
               onScan={() => navigate("scan")}
+              onAddCabinet={handleAddCabinet}
+              onRemoveCabinet={handleRemoveCabinet}
             />
           )}
           {view === "reminders" && <ReminderExperience scan={scan} />}
@@ -285,6 +383,12 @@ export default function Home() {
           )}
         </div>
       )}
+      <DemoModeDrawer
+        open={demoOpen}
+        offlineRequested={demoOffline}
+        onClose={() => setDemoOpen(false)}
+        onSelectScan={(demoScan) => openScanResults(demoScan)}
+      />
       {diagnostics && <DevProofDrawer scan={scan} enabled />}
     </AppShell>
   );

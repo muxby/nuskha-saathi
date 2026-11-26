@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { LanguageSwitch, useLanguage } from "@/lib/i18n";
 import { BrandMark, FooterEngravingArt } from "@/components/MedicalArt";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export type View =
   | "home"
@@ -33,14 +33,30 @@ const links = [
 export default function AppShell({
   view,
   navigate,
+  onTripleLogoTap,
   children,
 }: {
   view: View;
   navigate: (v: View) => void;
+  onTripleLogoTap?: () => void;
   children: ReactNode;
 }) {
   const { t } = useLanguage();
   const [offline, setOffline] = useState(false);
+  const logoTaps = useRef<number[]>([]);
+
+  function handleLogoClick() {
+    const now = Date.now();
+    const recent = logoTaps.current.filter((ts) => now - ts < 1400);
+    recent.push(now);
+    logoTaps.current = recent;
+    if (recent.length >= 3 && onTripleLogoTap) {
+      logoTaps.current = [];
+      onTripleLogoTap();
+      return;
+    }
+    navigate("home");
+  }
 
   useEffect(() => {
     const update = () => setOffline(!navigator.onLine);
@@ -67,7 +83,7 @@ export default function AppShell({
           <button
             className="brand"
             type="button"
-            onClick={() => navigate("home")}
+            onClick={handleLogoClick}
             aria-label={t("home")}
           >
             <span className="brand-mark">
