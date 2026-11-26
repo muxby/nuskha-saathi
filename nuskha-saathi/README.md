@@ -107,6 +107,18 @@ The old `next lint` command was removed because this Next.js version does not su
 
 ## Deployment
 
+### Render backend
+
+The Render API is available at [nuskha-saathi-api.onrender.com](https://nuskha-saathi-api.onrender.com). Use [`/docs`](https://nuskha-saathi-api.onrender.com/docs) to explore the API and [`/health`](https://nuskha-saathi-api.onrender.com/health) to check readiness and capability flags. The root `/` has no homepage.
+
+- Repository branch: `main`; root directory: `nuskha-saathi/backend`.
+- Runtime: Docker; Dockerfile: `Dockerfile`; port: `8000`; health check: `/health`.
+- Configure `GEMINI_API_KEY` as a Render environment variable, with `GEMINI_MODEL=gemini-2.5-flash`. Set `FRONTEND_BASE_URL` to the intended frontend origin for audio replay links. Keep API keys out of Git and frontend variables.
+- Auto-deploy watches changes within the backend root directory. For a manual release, choose **Manual Deploy → Deploy latest commit**, then verify the deployed commit and `/health`. `vision_configured: true` confirms a key is present; a successful live scan is needed to verify Gemini access.
+- Free instances sleep after inactivity. Warm `/health` before a demo. SQLite records, generated audio, and strip thumbnails on the instance disk can be lost on redeploy or restart; durable storage requires separate configuration.
+
+### Vercel deployments
+
 - **Frontend project on Vercel (`nuskha-saathi`):** Root directory `nuskha-saathi/frontend` with production env `NEXT_PUBLIC_API_BASE_URL=https://nuskha-saathi-api.vercel.app`.
 - **Backend project on Vercel (`nuskha-saathi-api`):** Root directory `nuskha-saathi/backend` using Vercel native FastAPI support (`main.py` + `requirements.txt`) and `GEMINI_API_KEY` secret configured server-side. Alternatively, `backend/Dockerfile` runs on port `8000` with persistent volumes for `/app/static` and SQLite/Supabase Postgres (`backend/sql/supabase_schema.sql`).
 - Both production URLs were verified live (`200 OK`): all 5 unmocked interactive E2E flows, live Gemini Vision `POST /api/v1/scan-parchi`, QR cold recovery (`/audio/scan_de0000000000000000000001`), and all 19 Playwright WCAG 2.2 AA & UI checks passed against `https://nuskha-saathi-rose.vercel.app`.
