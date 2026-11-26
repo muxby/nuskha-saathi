@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Plus, Trash2, Pill, Sparkles } from "lucide-react";
+import { Plus, Trash2, Pill, PlusCircle } from "lucide-react";
 import type { CabinetItem } from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
 
@@ -85,7 +85,7 @@ export default function ActiveCabinetView({
             disabled={busy}
             onClick={() => void seedWarfarin()}
           >
-            <Sparkles size={16} />
+            <PlusCircle size={15} />
             <span>{t("seedZubaidaCabinet")}</span>
           </button>
         )}

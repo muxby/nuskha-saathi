@@ -21,7 +21,7 @@ import {
   ScanLine,
   CheckCircle2,
   FileText,
-  Sparkles,
+  Eye,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import type { View } from "./AppShell";
@@ -47,26 +47,101 @@ export default function HomeExperience({
   const [step, setStep] = useState<ExplainerStep>("read");
   const [showRxOverlay, setShowRxOverlay] = useState(true);
   const [pulseWave, setPulseWave] = useState(false);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const portalRef = useRef<HTMLDivElement>(null);
+  const homeRootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const portal = portalRef.current;
     const reduce = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (reduce) return;
-    const onMove = (e: PointerEvent) => {
-      const el = portalRef.current;
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top + r.height / 2;
-      const nx = Math.max(-1, Math.min(1, (e.clientX - cx) / 520));
-      const ny = Math.max(-1, Math.min(1, (e.clientY - cy) / 360));
-      setTilt({ x: ny * -3.5, y: nx * 4.5 });
+    const fine = window.matchMedia(
+      "(hover: hover) and (pointer: fine)",
+    ).matches;
+    if (!portal || reduce || !fine) return;
+
+    let tx = 0;
+    let ty = 0;
+    let cx = 0;
+    let cy = 0;
+    let raf = 0;
+    let visible = true;
+
+    const tick = () => {
+      if (!visible || document.hidden) {
+        raf = 0;
+        return;
+      }
+      cx += (tx - cx) * 0.14;
+      cy += (ty - cy) * 0.14;
+      portal.style.setProperty("--tilt-x", `${cx.toFixed(2)}deg`);
+      portal.style.setProperty("--tilt-y", `${cy.toFixed(2)}deg`);
+      if (Math.abs(tx - cx) > 0.02 || Math.abs(ty - cy) > 0.02) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        raf = 0;
+      }
     };
+
+    const scheduleTick = () => {
+      if (!raf && visible && !document.hidden) {
+        raf = requestAnimationFrame(tick);
+      }
+    };
+
+    const onMove = (e: PointerEvent) => {
+      const r = portal.getBoundingClientRect();
+      const nx = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / 520));
+      const ny = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / 360));
+      tx = ny * -3.2;
+      ty = nx * 4.0;
+      scheduleTick();
+    };
+
+    const onLeave = () => {
+      tx = 0;
+      ty = 0;
+      scheduleTick();
+    };
+
+    const io = new IntersectionObserver((entries) => {
+      visible = entries[0]?.isIntersecting ?? true;
+      if (visible) scheduleTick();
+    });
+    io.observe(portal);
+
     window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
+    window.addEventListener("pointerleave", onLeave, { passive: true });
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      io.disconnect();
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerleave", onLeave);
+    };
+  }, []);
+
+  useEffect(() => {
+    const root = homeRootRef.current;
+    if (!root) return;
+    const targets = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || typeof IntersectionObserver === "undefined") {
+      targets.forEach((el) => el.classList.add("is-revealed"));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -28px 0px" },
+    );
+    targets.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
 
   const explainerCopy: Record<
@@ -101,7 +176,7 @@ export default function HomeExperience({
   }
 
   return (
-    <div className="homepage">
+    <div className="homepage" ref={homeRootRef}>
       {/* Band 1: Opening Pill-Portal Split Stage (Pure Minimalism First Visual) */}
       <section className="pill-hero">
         <svg
@@ -152,9 +227,6 @@ export default function HomeExperience({
               <div
                 ref={portalRef}
                 className="hero-pill-portal"
-                style={{
-                  transform: `perspective(1200px) rotateX(${tilt.x.toFixed(2)}deg) rotateY(${tilt.y.toFixed(2)}deg)`,
-                }}
               >
                 <OpticalPrismFilter />
                 <div className="portal-flutes" aria-hidden="true" />
@@ -167,7 +239,7 @@ export default function HomeExperience({
                   aria-label={t("pillPreviewToggle")}
                   aria-pressed={showRxOverlay}
                 >
-                  <Sparkles size={16} />
+                  <Eye size={16} />
                 </button>
 
                 <div
@@ -295,7 +367,8 @@ export default function HomeExperience({
         <div className="content-wrap sheet-inner">
           {/* Interactive Workflow Explorer */}
           <section
-            className="workspace-frame"
+            className="workspace-frame reveal-block"
+            data-reveal
             aria-label={t("workspaceEyebrow")}
           >
             <div className="workspace-topbar">
@@ -362,7 +435,7 @@ export default function HomeExperience({
                     </button>
                   </div>
 
-                  <div className="canvas-visual" aria-hidden="true">
+                  <div className="canvas-visual" key={step} aria-hidden="true">
                     {step === "read" && (
                       <div className="preview-ocr-card">
                         <div className="ocr-line">
@@ -464,7 +537,7 @@ export default function HomeExperience({
           </section>
 
           {/* Band 3: Editorial Clinical Boundary */}
-          <section className="boundary-band">
+          <section className="boundary-band reveal-block" data-reveal>
             <div className="boundary-meta">
               <span className="eyebrow">{t("boundaryNumber")}</span>
             </div>

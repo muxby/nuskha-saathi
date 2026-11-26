@@ -3,7 +3,7 @@ import type { DemoCaseMeta, ScanResult } from "./api";
 export const OFFLINE_DEMO_CASES: DemoCaseMeta[] = [
   {
     case_id: "case-01-zubaida-warfarin",
-    title: "Amma Zubaida — Cabinet Conflict + Blurry Syrup",
+    title: "Amma Zubaida: Cabinet clash + blurry syrup",
     subtitle: "Cross-doctor NSAID + Warfarin bleed risk alongside an unclear line",
     patient_id: "demo-zubaida-01",
     highlights: ["HIGH Ibuprofen + Warfarin clash", "REFUSED_BLURRY", "Augmentin Day-3"],
@@ -11,7 +11,7 @@ export const OFFLINE_DEMO_CASES: DemoCaseMeta[] = [
   },
   {
     case_id: "case-02-tariq-nitrate-sildenafil",
-    title: "Tariq Mahmood — Fatal Nitrate + Sildenafil Clash",
+    title: "Tariq Mahmood: Nitrate + sildenafil clash",
     subtitle: "Detects hypotension risk against heart clinic Ismo",
     patient_id: "demo-tariq-02",
     highlights: ["HIGH Isosorbide Mononitrate + Sildenafil", "Concor verified"],
@@ -19,7 +19,7 @@ export const OFFLINE_DEMO_CASES: DemoCaseMeta[] = [
   },
   {
     case_id: "case-03-leflox-overdose",
-    title: "Fatima Bibi — Extreme 5000mg Dosage Anomaly",
+    title: "Fatima Bibi: 5000mg overdose refusal",
     subtitle: "Overdose ceiling triggers REFUSED_DOSAGE_ANOMALY",
     patient_id: "demo-fatima-03",
     highlights: ["REFUSED_DOSAGE_ANOMALY", "Risek 40mg before food"],
@@ -27,7 +27,7 @@ export const OFFLINE_DEMO_CASES: DemoCaseMeta[] = [
   },
   {
     case_id: "case-04-unknown-mystery-brand",
-    title: "Bilal Ahmed — Unlisted Brand Refusal",
+    title: "Bilal Ahmed: Unlisted brand refusal",
     subtitle: "Low formulary match score refuses unknown brand without guessing",
     patient_id: "demo-bilal-04",
     highlights: ["REFUSED_UNKNOWN_DRUG", "Panadol 500mg verified"],
@@ -35,7 +35,7 @@ export const OFFLINE_DEMO_CASES: DemoCaseMeta[] = [
   },
   {
     case_id: "case-05-augmntin-all-clear",
-    title: "Ayesha Siddiqui — All-Clear Prescription",
+    title: "Ayesha Siddiqui: All-clear prescription",
     subtitle: "Resolves handwritten 'Augmntin' -> Augmentin cleanly",
     patient_id: "demo-ayesha-05",
     highlights: ["VERIFIED status", "Augmentin typo resolved"],

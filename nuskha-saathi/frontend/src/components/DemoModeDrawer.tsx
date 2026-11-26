@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Play, Sparkles, X, WifiOff, ArrowRight } from "lucide-react";
+import { Play, ClipboardCheck, X, WifiOff, ArrowRight } from "lucide-react";
 import {
   fetchDemoCases,
   runDemoCase,
@@ -78,7 +78,7 @@ export default function DemoModeDrawer({
       <div className="dialog-content">
         <div className="dialog-header">
           <span className="eyebrow">
-            <Sparkles size={14} /> {t("demoModeTitle")}
+            <ClipboardCheck size={14} /> {t("demoModeTitle")}
           </span>
           <button
             type="button"

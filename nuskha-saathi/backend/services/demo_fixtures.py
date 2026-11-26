@@ -40,7 +40,7 @@ class _DemoExtractor:
 DEMO_CASES: tuple[DemoCase, ...] = (
     DemoCase(
         case_id="case-01-zubaida-warfarin",
-        title="Amma Zubaida — Cabinet Conflict + Blurry Syrup",
+        title="Amma Zubaida: Cabinet clash + blurry syrup",
         subtitle="Cross-doctor NSAID + Warfarin bleed risk alongside an unclear line crop",
         patient_id="demo-zubaida-01",
         highlights=("HIGH Ibuprofen + Warfarin clash", "REFUSED_BLURRY crop", "Augmentin Day-3 antibiotic"),
@@ -93,7 +93,7 @@ DEMO_CASES: tuple[DemoCase, ...] = (
     ),
     DemoCase(
         case_id="case-02-tariq-nitrate-sildenafil",
-        title="Tariq Mahmood — Fatal Nitrate + Sildenafil Clash",
+        title="Tariq Mahmood: Nitrate + sildenafil clash",
         subtitle="Detects life-threatening hypotension risk against heart clinic Ismo",
         patient_id="demo-tariq-02",
         highlights=("HIGH Isosorbide Mononitrate + Sildenafil", "Concor beta-blocker verified"),
@@ -134,7 +134,7 @@ DEMO_CASES: tuple[DemoCase, ...] = (
     ),
     DemoCase(
         case_id="case-03-leflox-overdose",
-        title="Fatima Bibi — Extreme 5000mg Dosage Anomaly",
+        title="Fatima Bibi: 5000mg overdose refusal",
         subtitle="Fail-closed overdose ceiling triggers REFUSED_DOSAGE_ANOMALY",
         patient_id="demo-fatima-03",
         highlights=("REFUSED_DOSAGE_ANOMALY on Leflox 5000mg", "Risek 40mg verified before food"),
@@ -168,7 +168,7 @@ DEMO_CASES: tuple[DemoCase, ...] = (
     ),
     DemoCase(
         case_id="case-04-unknown-mystery-brand",
-        title="Bilal Ahmed — Unlisted Brand Refusal",
+        title="Bilal Ahmed: Unlisted brand refusal",
         subtitle="Low formulary match score (<82) refuses unknown brand instead of guessing",
         patient_id="demo-bilal-04",
         highlights=("REFUSED_UNKNOWN_DRUG fails closed", "Panadol 500mg verified"),
@@ -202,7 +202,7 @@ DEMO_CASES: tuple[DemoCase, ...] = (
     ),
     DemoCase(
         case_id="case-05-augmntin-all-clear",
-        title="Ayesha Siddiqui — All-Clear Verified Prescription",
+        title="Ayesha Siddiqui: All-clear prescription",
         subtitle="Resolves handwritten typo 'Augmntin' -> Augmentin with clean schedule",
         patient_id="demo-ayesha-05",
         highlights=("VERIFIED overall status", "Fuzzy typo repair Augmntin -> Augmentin", "Zero interactions"),

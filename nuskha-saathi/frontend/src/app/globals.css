@@ -513,10 +513,17 @@ html[data-theme="dark"] .brand-mark {
   font-size: 15px;
   border: 1px solid var(--border);
   transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    transform 0.18s ease,
-    box-shadow 0.18s ease;
+    background 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.primary-button:active,
+.secondary-button:active,
+.verify-button:active,
+.pill-cta-button:active {
+  transform: scale(0.975);
 }
 
 .primary-button,
@@ -756,11 +763,13 @@ html[data-theme="dark"] .pill-hero-curves {
 }
 
 .split-wing-start {
-  animation: wing-slide-start 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  animation: wing-slide-start 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
+  will-change: transform, opacity;
 }
 
 .split-wing-end {
-  animation: wing-slide-end 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  animation: wing-slide-end 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
+  will-change: transform, opacity;
 }
 
 .hero-pill-portal {
@@ -773,9 +782,11 @@ html[data-theme="dark"] .pill-hero-curves {
   box-shadow:
     0 28px 64px -18px rgba(14, 42, 114, 0.42),
     0 8px 22px -6px rgba(14, 42, 114, 0.25);
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  animation: pill-portal-expand 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
-  will-change: width, transform;
+  transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: pill-portal-expand 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
+  will-change: transform, clip-path;
+  contain: layout paint;
   flex-shrink: 0;
 }
 
@@ -1607,24 +1618,37 @@ html[data-theme="dark"] .pill-cta-button:hover {
   position: relative;
   text-align: start;
   color: var(--ink);
-  animation: card-in 0.5s ease both;
+  contain: layout paint;
+  animation: card-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .bento-card:nth-child(2) {
-  animation-delay: 0.05s;
+  animation-delay: 0.04s;
 }
 
 .bento-card:nth-child(3) {
   animation-delay: 0.08s;
 }
 
+.bento-card:nth-child(4) {
+  animation-delay: 0.12s;
+}
+
+.bento-card:nth-child(5) {
+  animation-delay: 0.16s;
+}
+
+.bento-card:nth-child(6) {
+  animation-delay: 0.2s;
+}
+
 .bento-card:is(button) {
   width: 100%;
   transition:
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+    border-color 0.26s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.24s ease,
+    box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-card:is(button):hover {
@@ -1632,6 +1656,10 @@ html[data-theme="dark"] .pill-cta-button:hover {
   border-color: var(--accent);
   transform: translateY(-3px);
   box-shadow: var(--shadow-soft);
+}
+
+.bento-card:is(button):active {
+  transform: scale(0.985);
 }
 
 .bento-card h2 {
@@ -4273,8 +4301,13 @@ html[dir="rtl"] .alert-body p {
     font-weight: 600;
     padding: 4px 2px;
     transition:
-      background 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-      color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      background 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+      color 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bottom-nav button:active {
+    transform: scale(0.95);
   }
 
   .bottom-nav button[aria-current="page"] {
@@ -4334,8 +4367,16 @@ html[dir="rtl"] .alert-body p {
   }
 
   .pill-hero {
-    min-height: calc(100svh - 68px);
-    --pill-open-w: clamp(164px, 46vw, 240px);
+    min-height: calc(100dvh - 68px);
+    --pill-open-w: clamp(184px, 48vw, 248px);
+  }
+
+  .header-wrap,
+  .pill-hero-eyebrow,
+  .bottom-nav,
+  .portal-edge-btn {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   .pill-hero-inner {
@@ -4356,20 +4397,20 @@ html[dir="rtl"] .alert-body p {
   }
 
   .hero-pill-portal {
-    height: clamp(128px, 34vw, 176px);
+    height: clamp(118px, 31vw, 158px);
   }
 
   .portal-inner-scene {
     display: none;
   }
 
-  .portal-edge-btn {
-    width: 32px;
-    height: 32px;
+  .portal-edge-start {
+    display: none;
   }
 
-  .portal-edge-start {
-    inset-inline-start: 10px;
+  .portal-edge-btn {
+    width: 44px;
+    height: 44px;
   }
 
   .portal-edge-end {
@@ -4672,11 +4713,32 @@ html[dir="rtl"] .alert-body p {
 }
 
 .strip-dialog[open] {
-  animation: dialog-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: dialog-in 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .proof-dialog[open] {
-  animation: drawer-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: drawer-in 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.reveal-block {
+  opacity: 0.92;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-block.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.canvas-visual > * {
+  animation: fade-soft-in 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes scan-line {
@@ -4757,25 +4819,28 @@ html[dir="rtl"] .alert-body p {
 
 @keyframes pill-portal-expand {
   0% {
-    width: 10px;
-    opacity: 0.72;
+    clip-path: inset(8% 46% 8% 46% round 9999px);
+    scale: 0.9;
+    opacity: 0.55;
   }
 
-  18% {
-    width: 16px;
+  58% {
+    clip-path: inset(0% 0% 0% 0% round 9999px);
+    scale: 1.014;
     opacity: 1;
   }
 
   100% {
-    width: var(--pill-open-w);
+    clip-path: inset(0% 0% 0% 0% round 9999px);
+    scale: 1;
     opacity: 1;
   }
 }
 
 @keyframes wing-slide-start {
   0% {
-    transform: translateX(18px);
-    opacity: 0.55;
+    transform: translateX(48px);
+    opacity: 0.45;
   }
 
   100% {
@@ -4786,8 +4851,8 @@ html[dir="rtl"] .alert-body p {
 
 @keyframes wing-slide-end {
   0% {
-    transform: translateX(-18px);
-    opacity: 0.55;
+    transform: translateX(-48px);
+    opacity: 0.45;
   }
 
   100% {
@@ -4798,8 +4863,8 @@ html[dir="rtl"] .alert-body p {
 
 @keyframes wing-slide-start-rtl {
   0% {
-    transform: translateX(-18px);
-    opacity: 0.55;
+    transform: translateX(-48px);
+    opacity: 0.45;
   }
 
   100% {
@@ -4810,8 +4875,8 @@ html[dir="rtl"] .alert-body p {
 
 @keyframes wing-slide-end-rtl {
   0% {
-    transform: translateX(18px);
-    opacity: 0.55;
+    transform: translateX(48px);
+    opacity: 0.45;
   }
 
   100% {
@@ -5108,7 +5173,7 @@ html[dir="rtl"] .alert-body p {
   color: var(--accent);
 }
 
-.cabinet-active-info > div {
+.cabinet-active-info>div {
   display: grid;
   gap: 2px;
 }
@@ -5226,6 +5291,7 @@ html[dir="rtl"] .alert-body p {
   .cabinet-add-form {
     grid-template-columns: 1fr;
   }
+
   .wa-sim-row {
     flex-direction: column;
   }

@@ -148,10 +148,14 @@ export default function OpticalPrismFilter({
 
     let width = 0;
     let height = 0;
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const finePointer = window.matchMedia(
+      "(hover: hover) and (pointer: fine)",
+    ).matches;
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      // Cap DPR at 1.5 for silky 60fps mobile GPU throughput
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      // Cap DPR tightly on mobile (1.25) and desktop (1.5) for steady 60fps
+      const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 1.5);
       const nextW = Math.max(1, Math.floor(rect.width * dpr));
       const nextH = Math.max(1, Math.floor(rect.height * dpr));
       if (nextW !== width || nextH !== height) {
@@ -199,7 +203,7 @@ export default function OpticalPrismFilter({
     };
 
     const onPointerMove = (e: PointerEvent) => {
-      if (reduceMotion) return;
+      if (reduceMotion || !finePointer) return;
       const rect = canvas.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
       targetX = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));

@@ -1,4 +1,4 @@
-# Nuskha Saathi — نسخہ ساتھی
+# Nuskha Saathi (نسخہ ساتھی)
 
 A bilingual prescription companion for Pakistani patients. Photograph a handwritten prescription, compare the source with the extracted information, check medicine identity, and replay Urdu instructions.
 
@@ -12,11 +12,11 @@ Vision reads the photograph. The deterministic safety engine resolves medicines 
 
 ## Redesigned & Completed Experience
 
-- **Pill-Portal Hero & Signature Craft:** Opening capsule pill-portal experience powered by a procedural WebGL iridescent glass shader (`PillPortalScene`) paired with Midnight Navy (`#131D38`), Powder Blue (`#ADC7E9`), Warm Porcelain / High-Contrast Light & Midnight themes, and bespoke Rx Shield icons (`/icon.svg`, `/apple-icon.png`).
-- **Pakistani Urdu Readability:** Full English (`LTR`) and Pakistani Urdu (`RTL`) interfaces using `Noto Naskh Arabic` alongside `Noto Nastaliq Urdu` fallbacks with wider line-height (`2.15–2.35`), clean zero-overlap spacing, and 48px primary touch targets across desktop and mobile (`390px+`).
+- **Pill-Portal Hero & Optical Filter:** Opening capsule aperture built with a hardware-accelerated WebGL glass refraction filter (`OpticalPrismFilter`), Midnight Navy (`#131D38`), Powder Blue (`#ADC7E9`), Warm Porcelain / High-Contrast Light & Midnight themes, and Rx Shield icons (`/icon.svg`, `/apple-icon.png`).
+- **Pakistani Urdu Readability:** Full English (`LTR`) and Pakistani Urdu (`RTL`) interfaces using `Noto Naskh Arabic` alongside `Noto Nastaliq Urdu` fallbacks with generous line-height (`2.15–2.35`), clean zero-overlap spacing, and 48px primary touch targets across desktop and mobile (`390px+`).
 - **Prescription Camera & Refusal Pipeline:** Live camera, capture/retake/review, gallery upload, camera permission handling, optional device torch, JPEG/PNG/WebP checks up to 8 MB, and EXIF-safe cropping on unreadable lines (`REFUSED_BLURRY`, `REFUSED_UNKNOWN_DRUG`, `REFUSED_DOSAGE_ANOMALY`).
-- **Cross-Doctor Active Cabinet Sync:** Manage active ongoing medicines in **My medicines** (including 1-click *Seed Marevan 5mg* for the Amma Zubaida cross-doctor scenario), persisted locally and synced with backend `/api/v1/cabinet/{patient_id}` so new scans check interactions against prior clinics automatically.
-- **5-Case Clinical Demo & Offline Stage Suite:** Pre-verified Pakistani clinical test cases spanning cross-doctor Ibuprofen+Warfarin bleed risk, Sildenafil+Ismo nitrate emergency, 5000mg Leflox overdose refusal, unknown brand refusal, and all-clear fuzzy typo repair (`Augmntin` -> `Augmentin`), with automatic offline stage fallback when `?demo=offline` is set.
+- **Cross-Doctor Active Cabinet Sync:** Manage active ongoing medicines in **My medicines** (including 1-click *Seed Marevan 5mg* for the Amma Zubaida cross-doctor scenario), stored locally and synced with backend `/api/v1/cabinet/{patient_id}` so new scans check interactions against prior clinics automatically.
+- **5-Case Clinical Demo & Offline Stage Suite:** Sample Pakistani clinical test cases covering cross-doctor Ibuprofen+Warfarin bleed risk, Sildenafil+Ismo nitrate emergency, 5000mg Leflox overdose refusal, unknown brand refusal, and all-clear typo resolution (`Augmntin` -> `Augmentin`), with automatic offline fallback when `?demo=offline` is set.
 - **Visual Dosage Cards & Medicine Strip Verifier:** Distinguishes confirmed doses, explicit zeros (`0`), and unknown doses (`?`), individual printing, QR audio replay (`/audio/[scanId]`), WhatsApp composer share, Day-3 antibiotic WhatsApp preview & webhook simulation modal, and all 5 strip verification outcomes with explicit generic substitution caution.
 - **Opt-In Developer Proof & Safety Benchmark:** Opt-in Settings toggle revealing returned latency timings, estimated request cost (USD/PKR), RapidFuzz scores, raw openFDA excerpts, and the live **30-Case Safety Benchmark** report from `/api/v1/benchmark`.
 
@@ -34,27 +34,27 @@ These are actual screenshots of the production build. Homepages contain no fabri
 
 ## Backend and API contracts
 
-FastAPI endpoints powered by `main.py`:
+FastAPI endpoints in `main.py`:
 
 | Endpoint | Purpose |
 | --- | --- |
 | `POST /api/v1/scan-parchi` | Prescription extraction (Gemini Vision), deterministic medicine resolution, overdose/interaction checks, Urdu script/audio, telemetry |
 | `POST /api/v1/verify-strip` | Compare photographed blister strip against selected prescription medicine & strength |
 | `GET /api/v1/audio/{scan_id}` | Retrieve saved Urdu script and audio location for QR replay (supports cold-lambda recovery for demo scans) |
-| `GET /api/v1/cabinet/{patient_id}` | Retrieve persisted cross-doctor Active Cabinet medicines |
+| `GET /api/v1/cabinet/{patient_id}` | Retrieve saved cross-doctor Active Cabinet medicines |
 | `POST /api/v1/cabinet/{patient_id}` | Add medicine to Active Cabinet with automatic generic salt resolution |
 | `DELETE /api/v1/cabinet/{patient_id}/{item_id}` | Remove a medicine from Active Cabinet |
-| `GET /api/v1/demo-cases` | List the 5 pre-verified Pakistani clinical demo cases |
-| `POST /api/v1/demo-cases/{case_id}` | Execute a deterministic clinical demo case through the full safety engine |
-| `POST /api/v1/whatsapp/send-reminder` | Preview/trigger Day-3 antibiotic Urdu adherence prompt (`whatsapp_scheduled=false` unless Twilio/Meta configured) |
-| `POST /api/v1/whatsapp/webhook` | Classify patient WhatsApp replies (`1` Continuing vs `2` Stopped/Side-effect urgent escalation) |
+| `GET /api/v1/demo-cases` | List the 5 sample Pakistani clinical demo cases |
+| `POST /api/v1/demo-cases/{case_id}` | Run a deterministic clinical demo case through the safety engine |
+| `POST /api/v1/whatsapp/send-reminder` | Preview Day-3 antibiotic Urdu prompt (`whatsapp_scheduled=false` unless Twilio/Meta configured) |
+| `POST /api/v1/whatsapp/webhook` | Classify patient WhatsApp replies (`1` Continuing vs `2` Stopped/Side-effect escalation) |
 | `GET /api/v1/benchmark` | Return results from the 30-case deterministic safety harness (`tests/eval_results.json`) |
 | `GET /health` | Service readiness, capability flags, formulary size (`327` brands, `73` interaction pairs), and store counts |
 
 ### Disclosed models, datasets & libraries
 
-- **Vision extraction (perception only):** Google Gemini (`GEMINI_API_KEY`) extracts line text, confidence, and bounding coordinates — it never makes clinical safety decisions.
-- **Deterministic safety gate & datasets:** RapidFuzz brand normalization (`cutoff=82`), curated Pakistani DRAP brand/salt formulary (`327` entries) with WHO AWaRe classifications and daily max dose ceilings, openFDA Drug Label API (`fda.gov`) + cached verified label excerpts (`73` interaction pairs). Neither FDA nor WHO endorses this application.
+- **Vision extraction (perception only):** Google Gemini (`GEMINI_API_KEY`) extracts line text, confidence, and bounding coordinates; it never makes clinical safety decisions.
+- **Deterministic safety gate & datasets:** RapidFuzz brand normalization (`cutoff=82`), compiled Pakistani DRAP brand/salt formulary (`327` entries) with WHO AWaRe classifications and daily max dose ceilings, openFDA Drug Label API (`fda.gov`) plus cached verified label excerpts (`73` interaction pairs). Neither FDA nor WHO endorses this application.
 - **Frameworks & infrastructure:** FastAPI, Pydantic, Pillow, httpx, Next.js 16, React, Lucide Icons, custom WebGL GLSL shader Hero (`THREE`-free lightweight procedural WebGL canvas), SQLite runtime persistence + Postgres schema in [`backend/sql/supabase_schema.sql`](backend/sql/supabase_schema.sql), Playwright, `@axe-core/playwright`.
 - **Voice & messaging order:** Server Urdu audio order is Uplift Orator → Azure Speech → Google TTS (falls back to browser Urdu speech synthesis when TTS keys are unset; never substitutes English voice for Urdu clinical guidance). WhatsApp reminders stay explicitly disabled (`whatsapp_scheduled: false`) until real Twilio/Meta credentials are connected.
 
