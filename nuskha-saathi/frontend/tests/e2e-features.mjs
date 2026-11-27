@@ -168,6 +168,43 @@ check("settings show the backend connection state and host", async ({ page }) =>
   assert.match(await status.locator(".backend-status-host").innerText(), new RegExp(new URL(API).host));
 });
 
+check("an unanalysed photo is compressed, uploaded and reported as a service problem", async ({ page }) => {
+  const health = await (await page.request.get(`${API}/health`)).json();
+  if (health.capabilities.vision_configured) {
+    console.log("     (skipped: a reader key is configured on this backend)");
+    return;
+  }
+  await page.goto(`${BASE}/#scan`, { waitUntil: "networkidle" });
+  await page.locator(".backend-status.is-reader-not-configured").waitFor({ state: "visible" });
+  const png = await page.evaluate(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 3200;
+    canvas.height = 2400;
+    const context = canvas.getContext("2d");
+    context.fillStyle = "#fff";
+    context.fillRect(0, 0, 3200, 2400);
+    context.fillStyle = "#111";
+    context.font = "120px sans-serif";
+    context.fillText("Tab Panadol 500mg 1+0+1", 200, 600);
+    return canvas.toDataURL("image/png").split(",")[1];
+  });
+  const upload = page.waitForRequest((request) => request.url().endsWith("/api/v1/scan-parchi"));
+  await page.locator('input[type="file"]').first().setInputFiles({
+    name: "parchi.png",
+    mimeType: "image/png",
+    buffer: Buffer.from(png, "base64"),
+  });
+  const confirm = page.locator(".capture-review button.primary-button, .review-actions button.primary-button").first();
+  await confirm.click({ timeout: 4000 }).catch(() => {});
+  const request = await upload;
+  const body = request.postDataBuffer();
+  assert.ok(body.includes(Buffer.from("image/jpeg")), "photo should be re-encoded as JPEG");
+  assert.ok(body.length < 1_500_000, `upload should be compressed, was ${body.length} bytes`);
+  await page.locator(".vision-notice").waitFor({ state: "visible" });
+  assert.equal(await page.locator(".alert-amber").count(), 0, "no blur warning for a service fault");
+  assert.equal(await page.locator(".scan-summary").count(), 0);
+});
+
 const browser = await chromium.launch({
   executablePath: process.env.E2E_CHROMIUM_PATH || undefined,
   args: process.env.E2E_CHROMIUM_PATH ? ["--no-sandbox"] : [],
