@@ -128,3 +128,31 @@ def test_key_is_not_placed_in_the_url():
     assert urls and all("super-secret-key" not in url and "key=" not in url for url in urls)
 
 
+def test_selftest_reports_not_configured(tmp_path, monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    body = _client(tmp_path, GeminiVisionExtractor(api_key="")).get("/api/v1/diagnostics/vision").json()
+    assert body["ok"] is False
+    assert body["status"] == "NOT_CONFIGURED"
+    assert "GEMINI_API_KEY" in body["hint"]
+
+
+def test_selftest_reports_ok_with_a_working_reader(tmp_path):
+    async def http_post(url, body):
+        text = '{"extracted_lines":[{"raw_text":"Tab Panadol 500mg","brand_or_salt_guess":"Panadol","ocr_confidence":0.97}],"image_quality_warning":false}'
+        return {"candidates": [{"content": {"parts": [{"text": text}]}}]}
+
+    extractor = GeminiVisionExtractor(api_key="secret", http_post=http_post, backoff_seconds=0)
+    body = _client(tmp_path, extractor).get("/api/v1/diagnostics/vision").json()
+    assert body == {**body, "ok": True, "status": "OK", "lines_read": 1}
+    assert "secret" not in str(body)
+
+
+def test_selftest_reports_rejected_key(tmp_path):
+    body = _client(tmp_path, _extractor_raising(403)).get("/api/v1/diagnostics/vision").json()
+    assert body["status"] == "UPSTREAM_REJECTED"
+    assert body["ok"] is False
+
+
+def test_health_reports_the_vision_model(tmp_path):
+    health = _client(tmp_path, GeminiVisionExtractor(api_key="k", model="gemini-2.5-flash")).get("/health").json()
+    assert health["capabilities"]["vision_model"] == "gemini-2.5-flash"
