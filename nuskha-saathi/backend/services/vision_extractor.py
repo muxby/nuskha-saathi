@@ -151,7 +151,7 @@ class GeminiVisionExtractor:
                 extraction = await self._extract_with_model(model, body)
             except VisionExtractError as exc:
                 retired = getattr(exc, "http_status", None) == 404
-                if retired and index < len(models) - 1 and self.http_post is None:
+                if retired and index < len(models) - 1:
                     continue
                 raise
             self.active_model = model
