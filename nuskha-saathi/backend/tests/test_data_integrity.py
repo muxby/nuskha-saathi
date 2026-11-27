@@ -40,3 +40,17 @@ def test_formulary_meets_the_planned_size():
     assert len(FORMULARY) >= 200
 
 
+def test_brand_names_are_unique():
+    names = [row["brand_name"].casefold() for row in FORMULARY]
+    duplicates = {name for name in names if names.count(name) > 1}
+    assert not duplicates
+
+
+def test_every_brand_has_a_salt_and_an_alias():
+    for row in FORMULARY:
+        assert row["brand_name"].strip()
+        assert row["generic_salts"], row["brand_name"]
+        assert all(salt == salt.strip().lower() for salt in row["generic_salts"]), row["brand_name"]
+        assert row["aliases"], row["brand_name"]
+
+
