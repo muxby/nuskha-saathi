@@ -10,6 +10,7 @@ import {
 import type { Medication, StripResult } from "@/lib/api";
 import { postForm } from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
+import ClinicalText from "./ClinicalText";
 import ParchiCamera from "./ParchiCamera";
 import SpeakerButton from "./SpeakerButton";
 export default function StripVerifierModal({
@@ -161,9 +162,7 @@ export default function StripVerifierModal({
               <p className="generic-caution">{t("genericCaution")}</p>
             )}
             <p className="backend-label">{t("backendUrdu")}</p>
-            <p className="backend-urdu" lang="ur" dir="rtl">
-              {result.urdu_verdict}
-            </p>
+            <ClinicalText text={result.urdu_verdict} />
             <SpeakerButton
               text={result.urdu_verdict}
               audioUrl={result.audio_urdu_url}
