@@ -52,3 +52,20 @@ wrong attempts lock sign-in from that device for five minutes.
 A failed check names the cause and the fix. Results never include patient
 data, keys or a provider's raw error text.
 
+## Waking the backend
+
+Free hosting puts the backend to sleep after about 15 idle minutes. The next
+request then waits for it to start, which can take most of a minute.
+
+- **Before a demo:** open `/admin` on the frontend address. It pings until
+  the backend answers and shows the wake time.
+- **Ping backend now** in the panel measures the response time. Over four
+  seconds is reported as a cold start.
+- **Keep awake** pings every four minutes while the panel tab stays open.
+- **Around the clock:** set the repository variable `BACKEND_HEALTH_URL` to
+  your `/health` address. The scheduled workflow
+  [`keep-awake.yml`](../.github/workflows/keep-awake.yml) then pings every
+  ten minutes. Remove the variable to stop it.
+
+Keeping an instance awake uses the host's free monthly hours.
+
