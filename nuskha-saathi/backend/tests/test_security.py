@@ -132,3 +132,21 @@ def test_scan_rate_limit_reads_env(monkeypatch):
     assert scan_rate_limit() == 0
 
 
+def test_scan_route_returns_429_when_limited(tmp_path, monkeypatch):
+    monkeypatch.setenv("SCAN_RATE_LIMIT_PER_MINUTE", "2")
+    limited = TestClient(create_app(store=LocalStore(tmp_path / "limited.db")))
+    statuses = [limited.post("/api/v1/scan-parchi").status_code for _ in range(3)]
+    assert statuses[:2] == [422, 422]
+    assert statuses[2] == 429
+    response = limited.post("/api/v1/scan-parchi")
+    assert response.status_code == 429
+    assert int(response.headers["retry-after"]) >= 1
+    body = response.json()
+    assert body["error"] == "HTTP_429"
+    assert body["urdu_message"]
+
+
+def test_read_routes_are_not_rate_limited(tmp_path, monkeypatch):
+    monkeypatch.setenv("SCAN_RATE_LIMIT_PER_MINUTE", "1")
+    limited = TestClient(create_app(store=LocalStore(tmp_path / "reads.db")))
+    assert all(limited.get("/health").status_code == 200 for _ in range(5))
