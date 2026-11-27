@@ -151,3 +151,24 @@ check("app shell and offline demo case load with no network", async ({ browser }
   await context.close();
 });
 
+const browser = await chromium.launch();
+let failed = 0;
+for (const { name, fn } of checks) {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await context.newPage();
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  try {
+    await fn({ page, browser });
+    assert.deepEqual(errors, [], "page threw an exception");
+    console.log(`ok   ${name}`);
+  } catch (error) {
+    failed += 1;
+    console.log(`FAIL ${name}\n     ${String(error.message).split("\n").join("\n     ")}`);
+  } finally {
+    await context.close();
+  }
+}
+await browser.close();
+console.log(`\n${checks.length - failed}/${checks.length} end-to-end checks passed`);
+process.exit(failed ? 1 : 0);
