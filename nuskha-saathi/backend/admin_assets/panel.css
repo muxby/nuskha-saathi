@@ -175,10 +175,13 @@ input {
 html[lang="ur"] body { font-size: 18px; line-height: 2.1; }
 html[lang="ur"] h1 { letter-spacing: 0; line-height: 1.9; font-weight: 400; }
 html[lang="ur"] h2 { font-size: 24px; line-height: 1.9; font-weight: 400; }
-html[lang="ur"] p, html[lang="ur"] footer { line-height: 2.3; font-size: 17px; }
+html[lang="ur"] p, html[lang="ur"] footer { line-height: 2.4; font-size: 20px; }
 html[lang="ur"] button { font-weight: 400; line-height: 1.9; padding-block: 6px; }
 html[lang="ur"] .label, html[lang="ur"] .muted, html[lang="ur"] .badge,
-html[lang="ur"] .check .detail, html[lang="ur"] #checked, html[lang="ur"] #counts { font-size: 15px; }
+html[lang="ur"] .check .detail, html[lang="ur"] #checked, html[lang="ur"] #counts,
+html[lang="ur"] #test-summary, html[lang="ur"] #wake-state { font-size: 18px; }
+html[lang="ur"] .check .name { font-size: 21px; }
+html[lang="ur"] .check .detail.ltr { font-size: 14px; }
 html[lang="ur"] .eyebrow, html[lang="ur"] code, html[lang="ur"] .ms, html[lang="ur"] .ltr {
   font-family: ui-sans-serif, system-ui, sans-serif;
   direction: ltr;
