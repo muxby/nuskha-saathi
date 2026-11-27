@@ -155,6 +155,19 @@ check("app shell and offline demo case load with no network", async ({ browser }
   await context.close();
 });
 
+check("settings show the backend connection state and host", async ({ page }) => {
+  await page.goto(`${BASE}/#settings`, { waitUntil: "networkidle" });
+  const status = page.locator(".settings-connection .backend-status");
+  await status.waitFor({ state: "visible" });
+  await page.waitForFunction(
+    () => !document.querySelector(".settings-connection .backend-status.is-checking"),
+  );
+  const health = await (await page.request.get(`${API}/health`)).json();
+  const expected = health.capabilities.vision_configured ? "is-ready" : "is-reader-not-configured";
+  assert.match(await status.getAttribute("class"), new RegExp(expected));
+  assert.match(await status.locator(".backend-status-host").innerText(), new RegExp(new URL(API).host));
+});
+
 const browser = await chromium.launch({
   executablePath: process.env.E2E_CHROMIUM_PATH || undefined,
   args: process.env.E2E_CHROMIUM_PATH ? ["--no-sandbox"] : [],
