@@ -120,7 +120,7 @@ class GeminiVisionExtractor:
         if not image_bytes:
             raise VisionExtractError("empty image")
         if not self.api_key and self.http_post is None:
-            raise VisionExtractError("GEMINI_API_KEY is not set")
+            raise VisionExtractError("GEMINI_API_KEY is not set", code="NOT_CONFIGURED")
         prompt = _STRIP_PROMPT if mode == "strip" else _PARCHI_PROMPT
         body = {
             "contents": [
