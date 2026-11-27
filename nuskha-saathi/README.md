@@ -132,7 +132,7 @@ The Render API is available at [nuskha-saathi-api.onrender.com](https://nuskha-s
 
 ### Private Render diagnostics
 
-Open [the backend panel](https://nuskha-saathi-api.onrender.com/admin). In Render → backend → Environment, add `ADMIN_MONITOR_PASSWORD` with a unique password of at least 16 characters, then save and deploy. Never commit this password or place it in a frontend variable. Until it is configured, login is disabled and diagnostics remain private.
+Open [the backend panel](https://nuskha-saathi-api.onrender.com/admin). In Render → backend → Environment, add `ADMIN_MONITOR_PASSWORD` with a unique password of at least 12 characters, then save and deploy. Never commit this password or place it in a frontend variable. Until it is configured, login is disabled and diagnostics remain private.
 
 The panel refreshes every 10 seconds while visible and shows application health, Render's `RENDER_GIT_COMMIT`, process uptime, configuration flags, active stages, and the latest 100 API requests. Expand a request for stage timings and sanitized error categories (for example `HTTP_403`). The `X-Request-ID` response header correlates requests with sanitized failure entries in Render logs. Gemini, interaction checks, Urdu audio, and persistence are traced when executed; skipped/unavailable stages and clinical outcomes are separate from technical failures. Configuration flags alone do not prove a provider works.
 
