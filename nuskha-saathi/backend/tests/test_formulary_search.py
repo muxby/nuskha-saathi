@@ -37,3 +37,24 @@ def test_salt_name_finds_its_brands(entries):
     assert brands, "warfarin should resolve to at least one listed brand"
 
 
+def test_short_query_returns_nothing(entries):
+    assert search_formulary(entries, "a") == []
+    assert search_formulary(entries, "   ") == []
+
+
+def test_unknown_name_returns_nothing(entries):
+    assert search_formulary(entries, "zzzzqqq") == []
+
+
+def test_limit_is_clamped(entries):
+    assert len(search_formulary(entries, "pa", limit=1000)) <= MAX_LIMIT
+    assert len(search_formulary(entries, "pa", limit=0)) == 1
+
+
+def test_results_expose_antibiotic_tier(entries):
+    row = search_formulary(entries, "leflox")[0]
+    assert row["is_antibiotic"] is True
+    assert row["who_aware_tier"] == "WATCH"
+    assert 500 in row["common_strengths_mg"]
+
+
