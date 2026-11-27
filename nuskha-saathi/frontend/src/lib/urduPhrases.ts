@@ -29,3 +29,12 @@ export function urduScriptFor(roman: string | null | undefined): string | null {
   return FIXED[normalise(roman)] ?? null;
 }
 
+/**
+ * Text to display for an engine line. English readers keep the engine's
+ * Roman Urdu; Urdu readers get Urdu script when the line is a known one.
+ */
+export function displayUrdu(roman: string | null | undefined, language: "en" | "ur"): string {
+  if (!roman) return "";
+  if (language !== "ur") return roman;
+  return urduScriptFor(roman) ?? roman;
+}
