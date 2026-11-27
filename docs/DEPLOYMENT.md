@@ -123,3 +123,17 @@ Open the Vercel URL on a phone using mobile data.
 4. **My medicines** → type `aug` → *Augmentin* is suggested.
 5. Add `?demo=offline` to the URL: the five demo cases open with no network.
 
+## Troubleshooting
+
+| What you see | Cause | Fix |
+| --- | --- | --- |
+| "This app is not connected to a server" | Frontend built without `NEXT_PUBLIC_API_BASE_URL`, or it is `http://` on an `https://` site. | Set it to the `https://` backend URL in Vercel, then redeploy. |
+| "The server is not answering" | Backend asleep (free tier), crashed, or the URL is wrong. | Open `/health` in a browser. A free Render service takes up to a minute to wake. |
+| "Live reading is switched off on the server" | `GEMINI_API_KEY` missing. | Add it on the backend and redeploy. |
+| "Your photo was not read. This is not a problem with your photo." | Gemini rejected or timed out. | Run `/api/v1/diagnostics/vision` and follow its `hint`. |
+| Every photo is "needs confirmation" | The reader works but confidence is under 0.85. | Better light, whole page in frame. This is the safety gate doing its job. |
+| Browser console shows a CORS error | `ALLOWED_ORIGINS` does not include the frontend origin. | Add the exact origin (scheme + host, no path). |
+| "Too many scans in a short time" | Rate limit reached. | Wait a minute, or raise `SCAN_RATE_LIMIT_PER_MINUTE`. |
+| QR code opens the wrong site | `FRONTEND_BASE_URL` unset or stale. | Set it to the frontend origin. |
+| First scan after a quiet period is slow | Cold start. | Open `/health` a few minutes before a demo. |
+
