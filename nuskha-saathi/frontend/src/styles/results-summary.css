@@ -24,3 +24,19 @@
   background: var(--tone);
 }
 
+.scan-summary.tone-stop {
+  --tone: var(--red);
+  --tone-bg: var(--red-bg);
+}
+
+.scan-summary.tone-ask,
+.scan-summary.tone-empty {
+  --tone: var(--amber);
+  --tone-bg: var(--amber-bg);
+}
+
+.scan-summary.tone-clear {
+  --tone: var(--green);
+  --tone-bg: var(--green-bg);
+}
+
