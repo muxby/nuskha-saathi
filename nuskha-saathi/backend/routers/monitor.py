@@ -13,6 +13,8 @@ from services.monitoring import Monitor, MonitoringMiddleware
 
 ASSETS = Path(__file__).resolve().parents[1] / 'admin_assets'
 COOKIE = 'nuskha_admin'
+# The password lives only in the ADMIN_MONITOR_PASSWORD environment variable.
+MIN_PASSWORD_LENGTH = 12
 
 
 def install_monitor(app, health):
@@ -23,7 +25,7 @@ def install_monitor(app, health):
 
     def config():
         password = os.getenv('ADMIN_MONITOR_PASSWORD', '')
-        return password if len(password) >= 16 else None
+        return password if len(password) >= MIN_PASSWORD_LENGTH else None
 
     def fingerprint(password):
         return hashlib.sha256(password.encode()).digest()
@@ -61,7 +63,7 @@ def install_monitor(app, health):
             return secure(JSONResponse({'error': 'Invalid origin'}, status_code=403))
         password = config()
         if not password:
-            return secure(JSONResponse({'error': 'Set ADMIN_MONITOR_PASSWORD in Render to at least 16 characters.'}, status_code=503))
+            return secure(JSONResponse({'error': f'Set ADMIN_MONITOR_PASSWORD on the server to at least {MIN_PASSWORD_LENGTH} characters.'}, status_code=503))
         now = monotonic()
         for key, value in list(failures.items()):
             if value[1] <= now:
