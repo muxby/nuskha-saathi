@@ -55,3 +55,13 @@ check("day plan schedules verified medicines and withholds refused lines", async
   assert.equal(await page.locator(".day-plan").getByText("???").count(), 0);
 });
 
+check("urdu interface shows the refusal line in urdu script", async ({ page }) => {
+  await useUrdu(page);
+  await openDemoCase(page, 0);
+  const refusal = page.locator(".alert-amber .clinical-text").first();
+  assert.equal(await refusal.getAttribute("dir"), "rtl");
+  assert.equal(await refusal.getAttribute("lang"), "ur");
+  assert.match(await refusal.innerText(), /فارماسسٹ/);
+  assert.match(await page.locator(".dose-sentence").first().innerText(), /صبح 1/);
+});
+
