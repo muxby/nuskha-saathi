@@ -156,24 +156,38 @@ export function assetUrl(path: string | null): string | undefined {
   return path.startsWith("http") ? path : `${API_BASE}${path}`;
 }
 
+export const UPLOAD_TIMEOUT_MS = 90_000;
+
 export async function postForm<T>(
   path: string,
   form: FormData,
   signal?: AbortSignal,
 ): Promise<T> {
   let response: Response;
+  // A scan waits on vision, interaction lookups and speech. Past this the
+  // host has almost certainly dropped the request, so stop and say so.
+  const deadline = new AbortController();
+  const timer = setTimeout(() => deadline.abort(), UPLOAD_TIMEOUT_MS);
+  const onAbort = () => deadline.abort();
+  signal?.addEventListener("abort", onAbort, { once: true });
   try {
     response = await fetch(`${API_BASE}${path}`, {
       method: "POST",
       body: form,
-      signal,
+      signal: deadline.signal,
     });
   } catch (error) {
     if (signal?.aborted) throw error;
+    if (deadline.signal.aborted) throw new Error("TIMEOUT");
     throw new Error("NETWORK");
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener("abort", onAbort);
   }
   if (!response.ok) {
     if (response.status === 413) throw new Error("TOO_LARGE");
+    if (response.status === 429) throw new Error("RATE_LIMITED");
+    if (response.status === 504 || response.status === 408) throw new Error("TIMEOUT");
     throw new Error("UPLOAD");
   }
   const data: unknown = await response.json();
