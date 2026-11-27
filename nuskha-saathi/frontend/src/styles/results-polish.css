@@ -1,0 +1,16 @@
+.comparison-layout.no-source {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.comparison-layout.no-source .extraction-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.comparison-layout.no-source .extraction-row {
+  margin: 0;
+  block-size: 100%;
+}
+
