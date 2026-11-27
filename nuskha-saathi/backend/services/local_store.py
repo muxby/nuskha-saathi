@@ -225,6 +225,16 @@ class LocalStore:
             )
             return cursor.rowcount > 0
 
+    def clear_cabinet(self, patient_id: str) -> int:
+        """Deactivate every active cabinet row for one patient. Returns rows cleared."""
+        pid = _normalize_patient_id(patient_id)
+        with self._lock, self._connect() as conn:
+            cursor = conn.execute(
+                "UPDATE cabinet_medications SET is_active = 0 WHERE patient_id = ? AND is_active = 1",
+                (pid,),
+            )
+            return cursor.rowcount
+
     def record_scan(self, scan: ScanResponse) -> None:
         pid = self.ensure_patient(scan.patient_id)
         now = _utc_now_iso()
