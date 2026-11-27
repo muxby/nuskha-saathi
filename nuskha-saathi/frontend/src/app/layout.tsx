@@ -10,6 +10,7 @@ import "./globals.css";
 import "../styles/clinical-text.css";
 import "../styles/results-summary.css";
 import "../styles/day-plan.css";
+import "../styles/results-polish.css";
 import { LanguageProvider } from "@/lib/i18n";
 
 const jakarta = Plus_Jakarta_Sans({
