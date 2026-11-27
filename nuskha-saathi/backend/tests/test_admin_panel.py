@@ -99,3 +99,24 @@ def test_live_selftest_passes_with_a_working_reader(monkeypatch, tmp_path):
     assert "reader-secret" not in response.text
 
 
+def test_urdu_font_is_served_as_a_panel_asset(monkeypatch, tmp_path):
+    client = _client(monkeypatch, tmp_path)
+    font = client.get("/admin/assets/gulzar-urdu.woff2")
+    assert font.status_code == 200
+    assert font.content[:4] == b"wOF2"
+    assert client.get("/admin/assets/login.html").status_code == 404
+    assert client.get("/admin/assets/gulzar-OFL.txt").status_code == 404
+
+
+def test_panel_pages_are_not_indexable(monkeypatch, tmp_path):
+    client = _client(monkeypatch, tmp_path)
+    assert "noindex" in client.get("/admin").text
+    _signin(client)
+    panel = client.get("/admin").text
+    assert "noindex" in panel and "Backend tests" in panel and "keep-awake" in panel
+
+
+def test_status_reports_the_vision_model(monkeypatch, tmp_path):
+    client = _client(monkeypatch, tmp_path, extractor=GeminiVisionExtractor(api_key="k", model="gemini-2.5-flash"))
+    _signin(client)
+    assert client.get("/admin/api/status").json()["vision_model"] == "gemini-2.5-flash"
