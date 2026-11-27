@@ -15,3 +15,17 @@ test("matching tolerates extra whitespace", () => {
   assert.equal(urduScriptFor(`  ${BLURRY.replace(" — ", "  —  ")} `), urduScriptFor(BLURRY));
 });
 
+test("an unrecognised warning is returned unchanged", () => {
+  const warning = "Khabardar! Brufen is ke sath lene se bleeding ka khatra barh sakta hai.";
+  assert.equal(urduScriptFor(warning), null);
+  assert.equal(displayUrdu(warning, "ur"), warning);
+});
+
+test("english interface keeps the engine wording", () => {
+  assert.equal(displayUrdu(BLURRY, "en"), BLURRY);
+});
+
+test("empty input displays nothing", () => {
+  assert.equal(displayUrdu(null, "ur"), "");
+  assert.equal(urduScriptFor(""), null);
+});
