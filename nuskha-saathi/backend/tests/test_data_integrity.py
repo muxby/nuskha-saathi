@@ -71,3 +71,14 @@ def test_common_strengths_never_exceed_the_single_dose_ceiling():
             assert 0 < strength <= row["max_single_dose_mg"], (row["brand_name"], strength)
 
 
+def test_aware_tiers_are_valid():
+    for row in FORMULARY:
+        assert row["who_aware_tier"] in {"ACCESS", "WATCH", "RESERVE", "NONE"}, row["brand_name"]
+
+
+def test_non_antibiotics_have_no_aware_tier():
+    for row in FORMULARY:
+        if not row["is_antibiotic"]:
+            assert row["who_aware_tier"] == "NONE", row["brand_name"]
+
+
