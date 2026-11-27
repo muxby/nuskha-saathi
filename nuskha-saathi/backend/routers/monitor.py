@@ -106,6 +106,16 @@ def install_monitor(app, health):
         response.delete_cookie(COOKIE, path='/admin')
         return secure(response)
 
+    @app.post('/admin/api/selftest', include_in_schema=False)
+    async def selftest(request: Request):
+        if not valid(request):
+            return secure(JSONResponse({'error': 'Login required'}, status_code=401))
+        if not same_origin(request):
+            return secure(JSONResponse({'error': 'Invalid origin'}, status_code=403))
+        from services.selftest import run_selftest
+        live = request.query_params.get('live') == '1'
+        return secure(JSONResponse(await run_selftest(app, live=live)))
+
     @app.get('/admin/api/status', include_in_schema=False)
     async def status(request: Request):
         if not valid(request):
