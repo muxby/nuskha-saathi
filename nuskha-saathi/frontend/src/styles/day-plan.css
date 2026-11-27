@@ -1,0 +1,37 @@
+.day-plan {
+  margin-block: 28px;
+  padding: 28px 32px 30px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+.day-plan-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-block-end: 20px;
+}
+
+.day-plan-head h2 {
+  margin-block-start: 4px;
+  font-size: clamp(1.25rem, 1rem + 0.9vw, 1.6rem);
+  letter-spacing: -0.015em;
+}
+
+html[lang="ur"] .day-plan-head h2 {
+  letter-spacing: 0;
+}
+
+.day-plan-count {
+  flex: none;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
