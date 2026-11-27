@@ -20,6 +20,7 @@ import { assetUrl } from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
 import SpeakerButton from "./SpeakerButton";
 import StripVerifierModal from "./StripVerifierModal";
+import ClinicalText from "./ClinicalText";
 const slots = [
   { key: "morning", icon: Sunrise },
   { key: "afternoon", icon: Sun },
@@ -183,9 +184,7 @@ export default function VisualDoseCard({
                       : "mismatch",
               )}
             </strong>
-            <p lang="ur" dir="rtl" className="backend-urdu">
-              {strip.urdu_verdict}
-            </p>
+            <ClinicalText text={strip.urdu_verdict} />
             {strip.verification_status === "GENERIC_EQUIVALENT_MATCH" && (
               <p>{t("genericCaution")}</p>
             )}
