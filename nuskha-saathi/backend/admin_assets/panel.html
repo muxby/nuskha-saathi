@@ -1,1 +1,89 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nuskha Saathi · Backend monitor</title><link rel="stylesheet" href="/admin/assets/panel.css"><script src="/admin/assets/panel.js" defer></script></head><body><main><header><div><div class="eyebrow">NUSKHA SAATHI / OPERATIONS</div><h1>Backend monitor</h1><p>Live application diagnostics · Render</p></div><form method="post" action="/admin/logout"><button class="secondary">Sign out</button></form></header><section class="toolbar"><strong id="connection" role="status">Connecting…</strong><span id="checked">Waiting for first response</span><button id="refresh" class="secondary">Refresh now</button><button id="pause" class="secondary" aria-pressed="false">Pause updates</button><a href="https://dashboard.render.com/web/srv-dc386ss0916s73824470/logs" target="_blank" rel="noopener noreferrer">Render logs ↗</a></section><div class="cards" id="cards"></div><section><h2>Service configuration</h2><p class="muted">Configured means enabled in the environment. Recent traces below show observed execution, not a guarantee of provider availability.</p><div id="capabilities" class="badges"></div></section><section><h2>In progress</h2><div id="active">No active API requests.</div></section><section><div class="section-title"><h2>Recent API requests</h2><span id="counts"></span></div><p class="muted">Select a request to inspect stages. A safety refusal is a clinical outcome; a failed stage is a technical issue.</p><div id="requests"></div></section><footer>Refreshes every 10 seconds while this tab is visible. Polling may keep a free instance awake and use its free hours. History is limited to 100 requests on this process and resets on restart. No patient content, images, query strings or API keys are retained here. This panel cannot detect an outage while the backend itself is unreachable; connection failures are shown from this browser. Render infrastructure and full logs are available through Render above.</footer></main></body></html>
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Nuskha Saathi · Backend monitor</title>
+  <link rel="stylesheet" href="/admin/assets/panel.css">
+  <script src="/admin/assets/panel.js" defer></script>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <div class="eyebrow">NUSKHA SAATHI / OPERATIONS</div>
+      <h1 data-i18n="title">Backend monitor</h1>
+      <p data-i18n="subtitle">Live application diagnostics, self-tests and keep-awake.</p>
+    </div>
+    <div class="header-actions">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" id="lang-en" class="secondary" aria-pressed="true">EN</button>
+        <button type="button" id="lang-ur" class="secondary" aria-pressed="false" lang="ur">اردو</button>
+      </div>
+      <form method="post" action="/admin/logout">
+        <button class="secondary" data-i18n="signOut">Sign out</button>
+      </form>
+    </div>
+  </header>
+
+  <section class="toolbar">
+    <strong id="connection" role="status">Connecting…</strong>
+    <span id="checked"></span>
+    <button id="refresh" class="secondary" data-i18n="refresh">Refresh now</button>
+    <button id="pause" class="secondary" aria-pressed="false" data-i18n="pause">Pause updates</button>
+    <a href="https://dashboard.render.com/web/srv-dc386ss0916s73824470/logs" target="_blank" rel="noopener noreferrer" data-i18n="logs">Render logs ↗</a>
+  </section>
+
+  <div class="cards" id="cards"></div>
+
+  <section id="tests">
+    <div class="section-title">
+      <h2 data-i18n="testsTitle">Backend tests</h2>
+      <span id="test-summary" role="status"></span>
+    </div>
+    <p class="muted" data-i18n="testsBody">Quick checks run inside the server with no network calls and no cost. Live checks also send one test image to Gemini and one request to openFDA.</p>
+    <div class="actions">
+      <button id="run-quick" data-i18n="runQuick">Run quick checks</button>
+      <button id="run-live" class="secondary" data-i18n="runLive">Run live checks</button>
+    </div>
+    <div id="test-results"></div>
+  </section>
+
+  <section id="wake">
+    <div class="section-title">
+      <h2 data-i18n="wakeTitle">Wake and keep awake</h2>
+      <span id="wake-state" role="status"></span>
+    </div>
+    <p class="muted" data-i18n="wakeBody">Free hosting puts the backend to sleep when idle, so the first scan after a quiet period is slow. Ping it before a demo, or keep it awake while this tab stays open.</p>
+    <div class="actions">
+      <button id="ping" data-i18n="pingNow">Ping backend now</button>
+      <button id="keep-awake" class="secondary" aria-pressed="false" data-i18n="keepAwakeOff">Keep awake: off</button>
+    </div>
+    <div class="cards" id="wake-cards"></div>
+  </section>
+
+  <section>
+    <h2 data-i18n="configTitle">Service configuration</h2>
+    <p class="muted" data-i18n="configBody">Configured means enabled in the environment. Use the live checks above to prove a provider actually answers.</p>
+    <div id="capabilities" class="badges"></div>
+  </section>
+
+  <section>
+    <h2 data-i18n="activeTitle">In progress</h2>
+    <div id="active"></div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2 data-i18n="recentTitle">Recent API requests</h2>
+      <span id="counts"></span>
+    </div>
+    <p class="muted" data-i18n="recentBody">Select a request to inspect stages. A safety refusal is a clinical outcome; a failed stage is a technical issue.</p>
+    <div id="requests"></div>
+  </section>
+
+  <footer data-i18n="footer">Refreshes every 10 seconds while this tab is visible. History is limited to 100 requests on this process and resets on restart. No patient content, images, query strings or API keys are retained here. This panel cannot detect an outage while the backend itself is unreachable; connection failures are shown from this browser.</footer>
+</main>
+</body>
+</html>
