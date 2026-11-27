@@ -32,3 +32,25 @@ refused, never guessed.
 | [`docs/phases`](docs/phases) | Sprint plan |
 | [`nuskha-saathi/README.md`](nuskha-saathi/README.md) | API contracts, disclosed models and datasets, limits |
 
+## Quick start
+
+```bash
+make setup
+```
+
+```bash
+cp nuskha-saathi/.env.example nuskha-saathi/.env
+```
+
+Add `GEMINI_API_KEY` to that file, then in two terminals:
+
+```bash
+make api
+```
+
+```bash
+make web
+```
+
+Open `http://localhost:3000`. No key? Open `http://localhost:3000/?demo=offline`.
+
