@@ -54,6 +54,7 @@ def create_app(
         allow_origins=allowed_origins(),
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=["X-Request-ID", "Retry-After"],
     )
     app.state.resolver = resolver or FormularyResolver.load()
     app.state.fda = fda or OpenFdaClient.from_resolver(app.state.resolver)
