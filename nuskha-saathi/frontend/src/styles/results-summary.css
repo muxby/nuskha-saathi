@@ -1,0 +1,26 @@
+.scan-summary {
+  --tone: var(--accent);
+  --tone-bg: var(--surface-soft);
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 28px 40px;
+  align-items: center;
+  padding: 28px 32px;
+  margin-block-end: 20px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-summary::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: 6px;
+  background: var(--tone);
+}
+
