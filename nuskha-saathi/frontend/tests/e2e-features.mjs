@@ -89,3 +89,16 @@ check("results summary and day plan have no axe violations", async ({ page }) =>
   assert.deepEqual(results.violations.map((v) => v.id), []);
 });
 
+check("cabinet suggests listed brands and offers strength chips", async ({ page }) => {
+  await page.goto(`${BASE}/#medicines`, { waitUntil: "networkidle" });
+  const input = page.locator(".brand-suggest input");
+  await input.pressSequentially("leflo", { delay: 40 });
+  const option = page.getByRole("option", { name: /Leflox/ });
+  await option.waitFor({ state: "visible" });
+  assert.match(await option.innerText(), /levofloxacin/);
+  await option.dispatchEvent("mousedown");
+  assert.equal(await input.inputValue(), "Leflox");
+  const chips = await page.locator(".strength-chips button").allInnerTexts();
+  assert.ok(chips.includes("500 mg"));
+});
+
