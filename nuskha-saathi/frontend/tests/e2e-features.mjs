@@ -65,3 +65,17 @@ check("urdu interface shows the refusal line in urdu script", async ({ page }) =
   assert.match(await page.locator(".dose-sentence").first().innerText(), /صبح 1/);
 });
 
+check("results fit a 360px viewport in English and Urdu", async ({ browser }) => {
+  for (const urdu of [false, true]) {
+    const context = await browser.newContext({ viewport: { width: 360, height: 740 } });
+    const page = await context.newPage();
+    if (urdu) await useUrdu(page);
+    await openDemoCase(page, 0);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    assert.ok(overflow <= 1, `horizontal overflow of ${overflow}px (urdu=${urdu})`);
+    await context.close();
+  }
+});
+
