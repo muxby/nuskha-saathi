@@ -7,9 +7,12 @@ const BASE = process.env.UI_TEST_BASE_URL || "http://localhost:3000";
 const OUT = process.env.UI_TEST_OUTPUT || "/tmp/nuskha-ui-results";
 await mkdir(OUT, { recursive: true });
 const browser = await chromium.launch({
-  channel: process.env.UI_TEST_BROWSER || "chrome",
+  ...(process.env.UI_TEST_CHROMIUM_PATH
+    ? { executablePath: process.env.UI_TEST_CHROMIUM_PATH }
+    : { channel: process.env.UI_TEST_BROWSER || "chrome" }),
   headless: true,
   args: [
+    ...(process.env.UI_TEST_CHROMIUM_PATH ? ["--no-sandbox"] : []),
     "--use-fake-ui-for-media-stream",
     "--use-fake-device-for-media-stream",
   ],
