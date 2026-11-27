@@ -35,3 +35,8 @@ export function courseProgress(
   return { day, total, remaining: total - day, finished, fraction: day / total };
 }
 
+/** Day 3 or later of an unfinished antibiotic course: the stewardship moment. */
+export function isDay3Window(progress: CourseProgress | null): boolean {
+  return Boolean(progress && !progress.finished && progress.day >= 3);
+}
+
