@@ -58,3 +58,23 @@ def test_results_expose_antibiotic_tier(entries):
     assert 500 in row["common_strengths_mg"]
 
 
+@pytest.fixture()
+def client(tmp_path):
+    return TestClient(create_app(store=LocalStore(tmp_path / "store.db")))
+
+
+def test_search_route_returns_results(client):
+    response = client.get("/api/v1/formulary/search", params={"q": "Risek"})
+    assert response.status_code == 200
+    body = response.json()
+    assert body["query"] == "Risek"
+    assert body["results"][0]["brand_name"] == "Risek"
+
+
+def test_search_route_rejects_oversized_input(client):
+    assert client.get("/api/v1/formulary/search", params={"q": "x" * 61}).status_code == 422
+    assert client.get("/api/v1/formulary/search", params={"q": "pan", "limit": 21}).status_code == 422
+
+
+def test_search_route_with_no_query_is_empty(client):
+    assert client.get("/api/v1/formulary/search").json()["results"] == []
