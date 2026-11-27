@@ -104,7 +104,10 @@ def client_key(forwarded_for: str | None, peer: str | None) -> str:
     return (peer or "unknown")[:64]
 
 
-RATE_LIMITED_PATHS: frozenset[str] = frozenset({"/api/v1/scan-parchi", "/api/v1/verify-strip"})
+RATE_LIMITED_PATHS: frozenset[str] = frozenset(
+    # Each of these spends one or more vision provider requests.
+    {"/api/v1/scan-parchi", "/api/v1/verify-strip", "/api/v1/vision/chat"}
+)
 # Each call to the self-test spends one provider request, so it is limited too.
 RATE_LIMITED_ANY_METHOD: frozenset[str] = frozenset({"/api/v1/diagnostics/vision"})
 
