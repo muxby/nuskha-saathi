@@ -8,6 +8,7 @@ import {
 import type { Interaction, Medication } from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
 import SpeakerButton from "./SpeakerButton";
+import ClinicalText from "./ClinicalText";
 export default function SafetyAlertBanner({
   interactions,
   medications,
@@ -50,9 +51,7 @@ export default function SafetyAlertBanner({
               {language === "en" && (
                 <span className="backend-label">{t("backendUrdu")}</span>
               )}
-              <p className="backend-urdu" lang="ur" dir="rtl">
-                {hit.urdu_warning}
-              </p>
+              <ClinicalText text={hit.urdu_warning} />
               <SpeakerButton text={hit.urdu_warning} />
               <details className="source-detail">
                 <summary>{t("viewSource")}</summary>
