@@ -170,3 +170,15 @@ html[lang="ur"] .scan-summary h2 {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .scan-summary-bar span {
+    transition: none;
+  }
+}
+
+@media print {
+  .scan-summary {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
