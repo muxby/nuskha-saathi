@@ -146,3 +146,27 @@ html[lang="ur"] .scan-summary h2 {
   transition: inline-size 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+@media (max-width: 900px) {
+  .scan-summary {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 22px 20px 22px 24px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scan-summary-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .scan-summary-icon {
+    inline-size: 48px;
+    block-size: 48px;
+    border-radius: 14px;
+  }
+
+  .scan-summary-stats dt {
+    min-block-size: 0;
+  }
+}
+
