@@ -111,3 +111,8 @@
     block-size: 24px;
   }
 }
+
+.source-unavailable .original-empty {
+  padding-block: 0;
+  font-size: inherit;
+}
