@@ -55,3 +55,18 @@
   outline-offset: -2px;
 }
 
+.brand-suggest-empty {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: calc(100% + 6px);
+  z-index: 30;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--amber-bg);
+  color: var(--amber);
+  border: 1px solid color-mix(in srgb, var(--amber) 35%, transparent);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
