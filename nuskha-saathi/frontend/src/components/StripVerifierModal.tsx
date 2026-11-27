@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import type { Medication, StripResult } from "@/lib/api";
 import { postForm } from "@/lib/api";
+import { prepareImage } from "@/lib/imagePrep";
 import { useLanguage } from "@/lib/i18n";
 import ClinicalText from "./ClinicalText";
 import ParchiCamera from "./ParchiCamera";
@@ -51,7 +52,7 @@ export default function StripVerifierModal({
     setError("");
     setPhoto(URL.createObjectURL(file));
     const form = new FormData();
-    form.append("file", file);
+    form.append("file", await prepareImage(file));
     form.append("scan_id", scanId);
     form.append("matched_line_id", medication.line_id);
     form.append("expected_brand", medication.brand_matched || "");
