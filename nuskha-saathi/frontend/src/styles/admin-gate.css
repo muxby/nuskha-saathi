@@ -77,3 +77,29 @@ html:lang(ur) .admin-gate-card h1 {
   .admin-gate-icon .is-spinning { animation: none; }
 }
 
+.admin-gate-timer {
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.admin-gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-block-start: 12px;
+}
+
+.admin-gate-actions .primary-button,
+.admin-gate-actions .secondary-button {
+  inline-size: auto;
+  text-decoration: none;
+}
+
+.admin-gate-host {
+  margin-block-start: 10px;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
