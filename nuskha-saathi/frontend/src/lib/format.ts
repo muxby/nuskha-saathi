@@ -26,3 +26,13 @@ export function formatQuantity(qty: number | null | undefined): string {
   return whole === 0 ? glyph : `${whole}${glyph}`;
 }
 
+/** Duration label. Unknown stays unknown: the app never invents a course length. */
+export function formatDuration(days: number | null | undefined, lang: Lang): string {
+  if (days == null || !Number.isFinite(days) || days <= 0) {
+    return lang === "ur" ? "مدت معلوم نہیں" : "Duration not stated";
+  }
+  const whole = Math.round(days);
+  if (lang === "ur") return `${whole} دن`;
+  return whole === 1 ? "1 day" : `${whole} days`;
+}
+
