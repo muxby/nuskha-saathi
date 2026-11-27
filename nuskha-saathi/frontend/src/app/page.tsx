@@ -228,7 +228,10 @@ export default function Home() {
     };
   }, []);
 
+  const [errorDetail, setErrorDetail] = useState("");
+
   async function handleScan(file: File) {
+    setErrorDetail("");
     const request = new AbortController();
     controller.current?.abort();
     controller.current = request;
@@ -256,7 +259,11 @@ export default function Home() {
         window.scrollTo({ top: 0, behavior: "instant" });
       }
     } catch (err) {
-      if (!request.signal.aborted)
+      const code = err instanceof Error ? err.message : "";
+      if (!request.signal.aborted && (code === "RATE_LIMITED" || code === "TIMEOUT")) {
+        const copy = pick(visionCopy, language);
+        setErrorDetail(code === "RATE_LIMITED" ? copy.rateLimited : copy.timeout);
+      } else if (!request.signal.aborted)
         setError(
           err instanceof Error && err.message === "NETWORK"
             ? "networkError"
@@ -318,6 +325,14 @@ export default function Home() {
               {t(error)}
               <SpeakerButton text={t(error)} language={language} />
             </div>
+          )}
+          {errorDetail && !error && (
+            <div className="error-panel" role="alert">
+              {errorDetail}
+            </div>
+          )}
+          {view === "scan" && (
+            <BackendStatus quiet onOpenDemo={() => setDemoOpen(true)} />
           )}
           {view === "scan" && (
             <ParchiCamera
