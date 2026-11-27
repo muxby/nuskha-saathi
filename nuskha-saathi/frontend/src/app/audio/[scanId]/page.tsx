@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import ClinicalText from "@/components/ClinicalText";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -54,9 +55,7 @@ export default function AudioPage() {
             />
             <details className="audio-transcript">
               <summary>{t("backendUrdu")}</summary>
-              <p className="backend-urdu" lang="ur" dir="rtl">
-                {meta.urdu_script}
-              </p>
+              <ClinicalText text={meta.urdu_script} />
             </details>
           </>
         ) : error ? (
