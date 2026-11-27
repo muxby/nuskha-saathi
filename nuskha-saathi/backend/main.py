@@ -19,6 +19,7 @@ from routers.whatsapp import router as whatsapp_router, whatsapp_configured
 from services.formulary_resolver import FormularyResolver
 from services.local_store import LocalStore
 from services.openfda_client import OpenFdaClient
+from services.security import HardeningMiddleware, allowed_origins
 from services.runtime_paths import BACKEND_ROOT, is_serverless_readonly, writable_static_root
 from services.tts_stt_service import tts_configured
 from services.vision_extractor import GeminiVisionExtractor
@@ -49,7 +50,7 @@ def create_app(
     app = FastAPI(title="Nuskha Saathi Dawa-Guard", version="0.3.0")
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=allowed_origins(),
         allow_methods=["*"],
         allow_headers=["*"],
     )
