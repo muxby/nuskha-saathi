@@ -45,3 +45,42 @@ export const summaryCopy = {
   },
 } satisfies Bilingual<Record<string, string>>;
 
+export const dayPlanCopy = {
+  en: {
+    eyebrow: "Your day",
+    title: "When to take each medicine",
+    morning: "Morning",
+    afternoon: "Afternoon",
+    night: "Night",
+    nothing: "Nothing scheduled",
+    before_food: "before food",
+    after_food: "after food",
+    any: "",
+    hidden: (n: number) =>
+      n === 1
+        ? "1 line is not shown here because it needs confirmation."
+        : `${n} lines are not shown here because they need confirmation.`,
+    untimed: "Timing not confirmed",
+    untimedBody: "Ask your pharmacist when to take:",
+    perDay: (n: number) => (n === 1 ? "1 dose a day" : `${n} doses a day`),
+  },
+  ur: {
+    eyebrow: "آپ کا دن",
+    title: "ہر دوا کب لینی ہے",
+    morning: "صبح",
+    afternoon: "دوپہر",
+    night: "رات",
+    nothing: "کوئی خوراک نہیں",
+    before_food: "کھانے سے پہلے",
+    after_food: "کھانے کے بعد",
+    any: "",
+    hidden: (n: number) =>
+      n === 1
+        ? "1 سطر یہاں نہیں دکھائی گئی کیونکہ اس کی تصدیق درکار ہے۔"
+        : `${n} سطریں یہاں نہیں دکھائی گئیں کیونکہ ان کی تصدیق درکار ہے۔`,
+    untimed: "وقت کی تصدیق نہیں ہوئی",
+    untimedBody: "فارماسسٹ سے پوچھیں کہ یہ کب لینی ہے:",
+    perDay: (n: number) => `دن میں ${n} خوراکیں`,
+  },
+};
+
