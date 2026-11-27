@@ -84,3 +84,29 @@ def test_limiter_keys_are_independent():
     assert limiter.check("a")[0] is False
 
 
+def test_limiter_window_slides():
+    clock = FakeClock()
+    limiter = RateLimiter(1, 60, clock=clock)
+    assert limiter.check("a")[0] is True
+    clock.now += 59
+    assert limiter.check("a")[0] is False
+    clock.now += 2
+    assert limiter.check("a")[0] is True
+
+
+def test_zero_limit_disables_the_limiter():
+    limiter = RateLimiter(0)
+    assert limiter.enabled is False
+    assert all(limiter.check("a")[0] for _ in range(100))
+
+
+def test_prune_drops_idle_clients():
+    clock = FakeClock()
+    limiter = RateLimiter(5, 60, clock=clock)
+    limiter.check("a")
+    clock.now += 30
+    limiter.check("b")
+    clock.now += 31
+    assert limiter.prune() == 1
+
+
