@@ -13,6 +13,7 @@ import SafetyAlertBanner from "./SafetyAlertBanner";
 import VisualDoseCard from "./VisualDoseCard";
 import AudioPlayer from "./AudioPlayer";
 import ScanSummary from "./ScanSummary";
+import DayPlan from "./DayPlan";
 
 export default function PrescriptionResults({
   scan,
@@ -126,6 +127,7 @@ export default function PrescriptionResults({
           </div>
         </div>
       </div>
+      <DayPlan medications={scan.medications} />
       {confirmed.length > 0 && (
         <section className="dosage-section">
           <div className="section-heading">
