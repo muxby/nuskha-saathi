@@ -11,3 +11,10 @@ setup-backend:
 setup-frontend:
 	cd $(APP)/frontend && npm ci
 
+.PHONY: api web
+api:
+	cd $(APP)/backend && .venv/bin/python -m uvicorn main:app --reload --port 8000
+
+web:
+	cd $(APP)/frontend && npm run dev
+
