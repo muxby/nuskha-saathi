@@ -124,6 +124,8 @@ export type Interaction = {
 };
 export type ScanResult = {
   scan_id: string;
+  /** Absent on older servers and saved records; treated as "OK". */
+  vision_status?: "OK" | "INVALID_IMAGE" | "UNREADABLE" | "NOT_CONFIGURED" | "SERVICE_UNAVAILABLE";
   whatsapp_scheduled?: boolean;
   overall_status: string;
   medications: Medication[];
