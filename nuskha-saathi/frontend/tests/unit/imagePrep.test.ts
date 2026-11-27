@@ -19,3 +19,16 @@ test("extreme aspect ratios never collapse to zero", () => {
   assert.deepEqual(fitWithin({ width: 0, height: 10 }), { width: 0, height: 0 });
 });
 
+test("a small in-bounds jpeg is sent untouched", () => {
+  assert.equal(needsReencode({ type: "image/jpeg", size: 400_000 }, { width: 1600, height: 1200 }), false);
+});
+
+test("png and webp are always converted to jpeg", () => {
+  assert.equal(needsReencode({ type: "image/png", size: 10_000 }, { width: 100, height: 100 }), true);
+  assert.equal(needsReencode({ type: "image/webp", size: 10_000 }, { width: 100, height: 100 }), true);
+});
+
+test("heavy or oversized jpegs are re-encoded", () => {
+  assert.equal(needsReencode({ type: "image/jpeg", size: SMALL_ENOUGH_BYTES + 1 }, { width: 1000, height: 800 }), true);
+  assert.equal(needsReencode({ type: "image/jpeg", size: 300_000 }, { width: MAX_EDGE + 1, height: 800 }), true);
+});
