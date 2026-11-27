@@ -132,6 +132,21 @@ export default function ActiveCabinetView({
         </button>
       </form>
 
+      {strengths.length > 1 && (
+        <div className="strength-chips" role="group" aria-label="mg">
+          {strengths.map((mg) => (
+            <button
+              type="button"
+              key={mg}
+              aria-pressed={strength === String(mg)}
+              onClick={() => setStrength(String(mg))}
+            >
+              <bdi dir="ltr">{mg} mg</bdi>
+            </button>
+          ))}
+        </div>
+      )}
+
       {error && (
         <p className="capture-error" role="alert">
           {error}
