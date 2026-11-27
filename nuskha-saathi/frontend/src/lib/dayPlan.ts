@@ -52,3 +52,11 @@ export function dosesPerDay(plan: DayPlan): number {
   return DAY_SLOTS.reduce((sum, slot) => sum + plan[slot].length, 0);
 }
 
+/** Verified medicines whose timing is unknown. They are listed, not scheduled. */
+export function unscheduled(medications: Medication[]): Medication[] {
+  return medications.filter((med) => {
+    if (med.status !== "VERIFIED") return false;
+    if (!med.schedule) return true;
+    return !DAY_SLOTS.some((slot) => validQuantity(med.schedule?.[slot]));
+  });
+}
