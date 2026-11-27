@@ -154,3 +154,26 @@ html[data-theme="dark"] .day-slot-afternoon {
   font-size: 0.9rem;
 }
 
+.day-plan-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-block-start: 16px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--amber-bg);
+  color: var(--amber);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.day-plan-note svg {
+  flex: none;
+  margin-block-start: 2px;
+}
+
+.day-plan-note p {
+  margin: 0;
+}
+
