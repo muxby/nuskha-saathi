@@ -1,7 +1,8 @@
-"""POST /api/v1/scan-parchi, POST /api/v1/verify-strip, and GET /api/v1/audio/{scan_id}."""
+"""POST /api/v1/scan-parchi, POST /api/v1/verify-strip, audio/TTS/STT endpoints."""
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import re
@@ -9,14 +10,23 @@ import uuid
 from pathlib import Path
 
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
+from pydantic import BaseModel, Field
 
-from services.monitoring import stage
 from routers.cabinet import finalize_scan_response
 from services.demo_fixtures import DEMO_CASE_BY_SCAN_ID, run_demo_case
 from services.image_ops import safe_slug
+from services.monitoring import event, stage
 from services.scan_service import scan_parchi, verify_strip
-from services.tts_stt_service import synthesize_urdu
+from services.tts_stt_service import (
+    MAX_STT_BYTES,
+    configured_stt_provider,
+    configured_tts_provider,
+    stt_configured,
+    synthesize_urdu,
+    transcribe_urdu,
+)
 from services.urdu_formatter import dose_phrase
+from services.vision_extractor import VisionExtractError
 
 router = APIRouter()
 
@@ -138,6 +148,8 @@ async def scan_parchi_route(
         extractor=request.app.state.extractor,
         resolver=request.app.state.resolver,
         fda=request.app.state.fda,
+        medster=getattr(request.app.state, "medster", None),
+        web_resolver=getattr(request.app.state, "web_resolver", None),
     )
     return await finalize_scan_response(request, result, speech_fn=synthesize_urdu)
 
@@ -182,7 +194,7 @@ async def verify_strip_route(
     scan_id: str = Form(...),
     matched_line_id: str = Form(...),
     expected_brand: str = Form(...),
-    expected_strength_mg: float = Form(...),
+    expected_strength_mg: float | None = Form(None),
     expected_salts: str = Form(""),
     morning_qty: float = Form(0),
     afternoon_qty: float = Form(0),
@@ -191,7 +203,7 @@ async def verify_strip_route(
 ):
     if not expected_brand.strip():
         raise HTTPException(status_code=400, detail="expected_brand is required.")
-    if not math.isfinite(expected_strength_mg) or expected_strength_mg <= 0:
+    if expected_strength_mg is not None and (not math.isfinite(expected_strength_mg) or expected_strength_mg <= 0):
         raise HTTPException(status_code=400, detail="expected_strength_mg must be a positive number.")
     for label, qty in (("morning_qty", morning_qty), ("afternoon_qty", afternoon_qty), ("night_qty", night_qty)):
         if not math.isfinite(qty) or qty < 0:
@@ -216,13 +228,113 @@ async def verify_strip_route(
         extractor=request.app.state.extractor,
         resolver=request.app.state.resolver,
         strip_dir=request.app.state.strip_dir,
+        web_resolver=getattr(request.app.state, "web_resolver", None),
     )
+    event("strip_verification", result.verification_status.lower())
 
-    audio = await synthesize_urdu(result.urdu_verdict)
+    with stage("urdu_audio"):
+        audio = await synthesize_urdu(result.urdu_verdict)
     if audio:
         audio_dir = Path(request.app.state.audio_dir)
         audio_dir.mkdir(parents=True, exist_ok=True)
         audio_name = f"verify_{safe_slug(scan_id, 'scan')}_{safe_slug(matched_line_id, 'med')}_{uuid.uuid4().hex[:8]}.mp3"
         (audio_dir / audio_name).write_bytes(audio)
         result.audio_urdu_url = f"/static/audio/{audio_name}"
+
+    store = getattr(request.app.state, "store", None)
+    if store is not None and result.verification_status in {"EXACT_MATCH", "GENERIC_EQUIVALENT_MATCH"}:
+        store.mark_strip_verified(scan_id, matched_line_id, result.strip_thumbnail_url)
     return result
+
+
+class TtsIn(BaseModel):
+    text: str = Field(..., min_length=1, max_length=2500)
+
+
+@router.post("/api/v1/tts/urdu")
+async def synthesize_urdu_route(request: Request, body: TtsIn):
+    clean = body.text.strip()
+    if not clean:
+        raise HTTPException(status_code=400, detail="text is required.")
+    provider = configured_tts_provider()
+    with stage("urdu_audio"):
+        audio = await synthesize_urdu(clean)
+    if not audio:
+        return {
+            "configured": provider is not None,
+            "provider": provider,
+            "audio_urdu_url": None,
+        }
+    audio_dir = Path(request.app.state.audio_dir)
+    audio_dir.mkdir(parents=True, exist_ok=True)
+    digest = hashlib.sha256(clean.encode("utf-8")).hexdigest()[:16]
+    audio_name = f"tts_{digest}.mp3"
+    (audio_dir / audio_name).write_bytes(audio)
+    return {
+        "configured": True,
+        "provider": provider,
+        "audio_urdu_url": f"/static/audio/{audio_name}",
+    }
+
+
+@router.post("/api/v1/stt/urdu")
+async def transcribe_urdu_route(
+    file: UploadFile = File(...),
+    language: str = Form("ur"),
+):
+    chunks: list[bytes] = []
+    total = 0
+    while True:
+        chunk = await file.read(_READ_CHUNK_BYTES)
+        if not chunk:
+            break
+        total += len(chunk)
+        if total > MAX_STT_BYTES:
+            raise HTTPException(status_code=413, detail="Audio file is larger than 25 MB.")
+        chunks.append(chunk)
+    audio_bytes = b"".join(chunks)
+    if not audio_bytes:
+        raise HTTPException(status_code=400, detail="Audio file is empty.")
+    with stage("urdu_stt"):
+        transcript = await transcribe_urdu(
+            audio_bytes,
+            filename=file.filename or "speech.ogg",
+            mime_type=file.content_type,
+            language=language.strip() or "ur",
+        )
+    return {
+        "configured": stt_configured(),
+        "provider": configured_stt_provider(),
+        "text": transcript,
+    }
+
+
+@router.post("/api/v1/vision/chat")
+async def vision_chat_route(
+    request: Request,
+    file: UploadFile = File(...),
+    user_prompt: str = Form(...),
+    messages: str = Form("[]"),
+):
+    clean_prompt = user_prompt.strip()
+    if not clean_prompt:
+        raise HTTPException(status_code=400, detail="user_prompt is required.")
+    try:
+        parsed_messages = json.loads(messages) if messages.strip() else []
+    except json.JSONDecodeError as exc:
+        raise HTTPException(status_code=400, detail="messages must be a JSON array.") from exc
+    if not isinstance(parsed_messages, list):
+        raise HTTPException(status_code=400, detail="messages must be a JSON array.")
+    with stage("upload_validation"):
+        image_bytes, mime = await _read_upload(file)
+    try:
+        with stage("vision_chat"):
+            reply = await request.app.state.extractor.chat_image(
+                image_bytes=image_bytes,
+                mime=mime,
+                user_prompt=clean_prompt,
+                messages=parsed_messages,
+            )
+    except VisionExtractError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    return reply

@@ -8,7 +8,7 @@ import {
   Pill,
 } from "lucide-react";
 import type { Medication, StripResult } from "@/lib/api";
-import { postForm } from "@/lib/api";
+import { ApiRequestError, assetUrl, formatApiError, postForm } from "@/lib/api";
 import { prepareImage } from "@/lib/imagePrep";
 import { useLanguage } from "@/lib/i18n";
 import ClinicalText from "./ClinicalText";
@@ -56,7 +56,9 @@ export default function StripVerifierModal({
     form.append("scan_id", scanId);
     form.append("matched_line_id", medication.line_id);
     form.append("expected_brand", medication.brand_matched || "");
-    form.append("expected_strength_mg", String(medication.strength_mg));
+    if (medication.strength_mg != null) {
+      form.append("expected_strength_mg", String(medication.strength_mg));
+    }
     form.append("expected_salts", medication.generic_salts?.join(",") || "");
     if (medication.schedule) {
       form.append("morning_qty", String(medication.schedule.morning));
@@ -72,15 +74,17 @@ export default function StripVerifierModal({
       setResult(response);
       onVerified(response);
     } catch (err) {
-      setError(
-        t(
+      if (err instanceof ApiRequestError) {
+        setError(err.code === "TOO_LARGE" ? t("photoLarge") : err.message);
+      } else {
+        setError(
           err instanceof Error && err.message === "NETWORK"
-            ? "networkError"
+            ? t("networkError")
             : err instanceof Error && err.message === "TOO_LARGE"
-              ? "photoLarge"
-              : "verificationFailed",
-        ),
-      );
+              ? t("photoLarge")
+              : formatApiError(err, t("verificationFailed")),
+        );
+      }
     } finally {
       setBusy(false);
     }
@@ -134,9 +138,7 @@ export default function StripVerifierModal({
             </strong>
           </div>
         </div>
-        {medication.strength_mg == null ? (
-          <p role="alert">{t("noStrength")}</p>
-        ) : busy ? (
+        {busy ? (
           <div className="strip-processing" role="status">
             <LoaderCircle size={36} className="animate-spin" />
             <h3>{t("verifyBusy")}</h3>

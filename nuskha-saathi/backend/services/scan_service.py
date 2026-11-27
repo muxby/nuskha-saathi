@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from services.monitoring import event, stage
-
+import asyncio
 import uuid
 from pathlib import Path
 from time import perf_counter
+
+from services.monitoring import event, stage
 
 from schemas.responses import (
     DoseSchedule,
@@ -18,10 +19,10 @@ from schemas.responses import (
     TelemetryOut,
 )
 from schemas.vision import ExtractedLine, VisionExtraction
-from services.formulary_resolver import FormularyResolver
+from services.formulary_resolver import FormularyResolver, ResolveHit
 from services.image_ops import crop_bbox_jpeg_b64, safe_slug, save_jpeg, validate_image_bytes
 from services.openfda_client import OpenFdaClient
-from services.safety_gate import evaluate_line
+from services.safety_gate import evaluate_line, evaluate_resolved_line, is_non_medication_line
 from services.strip_verifier import compare_strip
 from services.urdu_formatter import BLURRY_URDU, dose_phrase, join_script, shortage_urdu
 from services.vision_extractor import SERVICE_ERROR_CODES, VisionExtractError
@@ -55,6 +56,8 @@ async def scan_parchi(
     extractor,
     resolver: FormularyResolver,
     fda: OpenFdaClient,
+    medster=None,
+    web_resolver=None,
 ) -> ScanResponse:
     started = perf_counter()
     vision_started = perf_counter()
@@ -88,7 +91,11 @@ async def scan_parchi(
 
     lines: list[ExtractedLine] = []
     if extraction is not None and not vision_error:
-        lines = list(extraction.extracted_lines)
+        lines = [
+            line
+            for line in extraction.extracted_lines
+            if not is_non_medication_line(line, resolver)
+        ]
 
     if not lines:
         medications.append(
@@ -102,8 +109,16 @@ async def scan_parchi(
         )
         script_parts.append(BLURRY_URDU)
     else:
-        for index, line in enumerate(lines, start=1):
-            decision = evaluate_line(line, resolver)
+        decisions = [evaluate_line(line, resolver) for line in lines]
+        if web_resolver is not None:
+            unknown_idxs = [i for i, dec in enumerate(decisions) if dec.status == "REFUSED_UNKNOWN_DRUG"]
+            if unknown_idxs:
+                web_hits = await web_resolver.resolve_lines([lines[i] for i in unknown_idxs])
+                for pos, entry in web_hits.items():
+                    idx = unknown_idxs[pos]
+                    decisions[idx] = evaluate_resolved_line(lines[idx], ResolveHit(entry=entry, fuzzy_score=92.0))
+
+        for index, (line, decision) in enumerate(zip(lines, decisions), start=1):
             line_id = f"med_{index}"
             if decision.status != "VERIFIED" or decision.resolved is None:
                 crop = crop_bbox_jpeg_b64(image_bytes, line.bbox_1000)
@@ -200,6 +215,20 @@ async def scan_parchi(
         )
         script_parts.append(hit.urdu_warning)
 
+    if verified_for_pairs and medster is not None and getattr(medster, "live", False):
+        async def _enrich_med(med_out: MedicationOut) -> None:
+            if med_out.status != "VERIFIED" or not med_out.brand_matched:
+                return
+            try:
+                summary = await asyncio.wait_for(medster.lookup_brand_summary(med_out.brand_matched), timeout=3.5)
+            except Exception:
+                summary = None
+            if summary:
+                med_out.medster_id = summary.get("id")
+                med_out.medster_price = summary.get("price")
+
+        await asyncio.gather(*(_enrich_med(m) for m in medications), return_exceptions=True)
+
     refused = any(med.status != "VERIFIED" for med in medications)
     if not medications:
         overall = "REFUSED"
@@ -270,11 +299,19 @@ async def verify_strip(
     extractor,
     resolver: FormularyResolver,
     strip_dir: Path,
+    web_resolver=None,
 ) -> StripResponse:
     detected_brand = ""
     detected_salts: list[str] = []
     detected_strength = None
     confidence = 0.0
+    expected_hit = resolver.resolve(expected_brand)
+    if expected_hit is None and web_resolver is not None:
+        cached_exp = web_resolver.get_cached(expected_brand)
+        if cached_exp is not None:
+            expected_hit = ResolveHit(entry=cached_exp, fuzzy_score=92.0)
+
+    detected_hit: ResolveHit | None = None
     valid_image = bool(image_bytes and validate_image_bytes(image_bytes))
     if valid_image:
         try:
@@ -283,12 +320,36 @@ async def verify_strip(
         except VisionExtractError:
             extraction = None
         if extraction is not None and extraction.extracted_lines:
-            line = extraction.extracted_lines[0]
-            detected_brand = line.brand_or_salt_guess or ""
+            best_line = None
+            best_resolved = None
+            for candidate in extraction.extracted_lines:
+                resolved = resolver.resolve(candidate.brand_or_salt_guess) if candidate.brand_or_salt_guess else None
+                if resolved is None and candidate.raw_text:
+                    resolved = resolver.resolve(candidate.raw_text)
+                if resolved is None and web_resolver is not None:
+                    cached = (
+                        web_resolver.get_cached(candidate.brand_or_salt_guess)
+                        if candidate.brand_or_salt_guess
+                        else None
+                    ) or (web_resolver.get_cached(candidate.raw_text) if candidate.raw_text else None)
+                    if cached is None and getattr(web_resolver, "live", False):
+                        hits = await web_resolver.resolve_lines([candidate])
+                        cached = hits.get(0)
+                    if cached is not None:
+                        resolved = ResolveHit(entry=cached, fuzzy_score=92.0)
+                if resolved is not None and (best_resolved is None or candidate.ocr_confidence > best_line.ocr_confidence):
+                    best_line = candidate
+                    best_resolved = resolved
+            line = best_line or max(extraction.extracted_lines, key=lambda item: item.ocr_confidence)
+            detected_hit = best_resolved
+            detected_brand = (
+                best_resolved.brand_name
+                if best_resolved is not None
+                else (line.brand_or_salt_guess or line.raw_text or "")
+            )
             detected_strength = line.strength_mg
             confidence = line.ocr_confidence
-            resolved = resolver.resolve(detected_brand)
-            detected_salts = list(resolved.generic_salts) if resolved else []
+            detected_salts = list(best_resolved.generic_salts) if best_resolved else []
 
     verdict = compare_strip(
         expected_brand=expected_brand,
@@ -300,6 +361,8 @@ async def verify_strip(
         detected_confidence=confidence,
         resolver=resolver,
         schedule_phrase=schedule_phrase,
+        expected_hit=expected_hit,
+        detected_hit=detected_hit,
     )
     event("strip_safety_checks")
     thumb_name = None

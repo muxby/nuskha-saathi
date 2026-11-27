@@ -4,12 +4,16 @@ from __future__ import annotations
 
 import os
 import re
+import uuid
+from pathlib import Path
 from typing import Literal
 
 import httpx
 from fastapi import APIRouter, HTTPException, Query, Request
 from fastapi.responses import PlainTextResponse
 from pydantic import BaseModel, Field
+
+from services.tts_stt_service import synthesize_urdu, to_opus_ogg, transcribe_urdu
 
 router = APIRouter()
 
@@ -50,6 +54,9 @@ class WhatsAppReminderIn(BaseModel):
     brand_name: str = Field(..., min_length=1)
     phone_e164: str
     reminder_type: Literal["day3_checkin", "daily_dose"] = "day3_checkin"
+    send_voice_note: bool = False
+    preferred_time: str = "08:00"
+    language: str = "en"
 
 
 def _reminder_text(brand_name: str, reminder_type: str) -> str:
@@ -83,17 +90,42 @@ def _classify_adherence_reply(body: str) -> tuple[str, str]:
     )
 
 
-async def _send_via_provider(provider: str, phone_e164: str, message: str) -> tuple[bool, str | None]:
-    async with httpx.AsyncClient(timeout=15.0) as client:
+async def _prepare_opus_voice_note(audio_dir: Path, text: str) -> Path | None:
+    mp3_bytes = await synthesize_urdu(text)
+    if not mp3_bytes:
+        return None
+    audio_dir.mkdir(parents=True, exist_ok=True)
+    stem = f"wa_{uuid.uuid4().hex[:12]}"
+    mp3_path = audio_dir / f"{stem}.mp3"
+    ogg_path = audio_dir / f"{stem}.ogg"
+    mp3_path.write_bytes(mp3_bytes)
+    try:
+        to_opus_ogg(mp3_path, ogg_path)
+    except Exception:
+        return None
+    return ogg_path
+
+
+async def _send_via_provider(
+    provider: str,
+    phone_e164: str,
+    message: str,
+    ogg_path: Path | None = None,
+) -> tuple[bool, str | None]:
+    async with httpx.AsyncClient(timeout=20.0) as client:
         if provider == "twilio":
             sid = os.environ["TWILIO_ACCOUNT_SID"]
             token = os.environ["TWILIO_AUTH_TOKEN"]
             sender = os.environ["TWILIO_WHATSAPP_FROM"]
             from_addr = sender if sender.startswith("whatsapp:") else f"whatsapp:{sender}"
+            form_data = {"From": from_addr, "To": f"whatsapp:{phone_e164}", "Body": message}
+            public_backend = os.getenv("PUBLIC_BACKEND_URL", "").strip().rstrip("/")
+            if ogg_path is not None and public_backend:
+                form_data["MediaUrl"] = f"{public_backend}/static/audio/{ogg_path.name}"
             resp = await client.post(
                 f"https://api.twilio.com/2010-04-01/Accounts/{sid}/Messages.json",
                 auth=(sid, token),
-                data={"From": from_addr, "To": f"whatsapp:{phone_e164}", "Body": message},
+                data=form_data,
             )
             if resp.status_code >= 400:
                 return False, f"Twilio returned HTTP {resp.status_code}"
@@ -113,7 +145,69 @@ async def _send_via_provider(provider: str, phone_e164: str, message: str) -> tu
         )
         if resp.status_code >= 400:
             return False, f"WhatsApp Cloud API returned HTTP {resp.status_code}"
+
+        if ogg_path is not None and ogg_path.is_file():
+            try:
+                upload = await client.post(
+                    f"https://graph.facebook.com/v20.0/{phone_id}/media",
+                    headers={"Authorization": f"Bearer {token}"},
+                    data={"messaging_product": "whatsapp", "type": "audio/ogg"},
+                    files={"file": (ogg_path.name, ogg_path.read_bytes(), "audio/ogg")},
+                )
+                if upload.status_code < 400:
+                    media_id = upload.json().get("id")
+                    if media_id:
+                        await client.post(
+                            f"https://graph.facebook.com/v20.0/{phone_id}/messages",
+                            headers={"Authorization": f"Bearer {token}"},
+                            json={
+                                "messaging_product": "whatsapp",
+                                "to": phone_e164.lstrip("+"),
+                                "type": "audio",
+                                "audio": {"id": media_id},
+                            },
+                        )
+            except httpx.HTTPError:
+                pass
         return True, None
+
+
+@router.get("/api/v1/whatsapp/reminders")
+async def list_whatsapp_reminders(request: Request, patient_id: str | None = None):
+    reminders = request.app.state.store.list_reminders(patient_id=patient_id)
+    return {
+        "configured": whatsapp_configured(),
+        "provider": configured_whatsapp_provider(),
+        "reminders": reminders,
+    }
+
+
+class ReminderStatusIn(BaseModel):
+    status: str = Field(..., min_length=1, max_length=40)
+    adherence_reply: str | None = Field(None, max_length=500)
+
+
+@router.patch("/api/v1/whatsapp/reminders/{reminder_id}")
+async def update_whatsapp_reminder_status(
+    request: Request,
+    reminder_id: str,
+    body: ReminderStatusIn,
+    patient_id: str = Query("anonymous"),
+):
+    updated = request.app.state.store.update_reminder_status(
+        patient_id, reminder_id, body.status, body.adherence_reply
+    )
+    if updated is None:
+        raise HTTPException(status_code=404, detail="Reminder not found.")
+    return {"updated": True, "reminder": updated}
+
+
+@router.delete("/api/v1/whatsapp/reminders/{reminder_id}")
+async def delete_whatsapp_reminder(request: Request, reminder_id: str, patient_id: str = Query("anonymous")):
+    deleted = request.app.state.store.delete_reminder(patient_id, reminder_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Reminder not found.")
+    return {"deleted": True, "reminder_id": reminder_id}
 
 
 @router.post("/api/v1/whatsapp/send-reminder")
@@ -133,6 +227,8 @@ async def send_whatsapp_reminder(request: Request, body: WhatsAppReminderIn):
             phone_e164=phone,
             channel="whatsapp",
             status="UNCONFIGURED",
+            preferred_time=body.preferred_time,
+            language=body.language,
         )
         return {
             "whatsapp_scheduled": False,
@@ -140,12 +236,18 @@ async def send_whatsapp_reminder(request: Request, body: WhatsAppReminderIn):
             "provider": None,
             "reminder_id": saved["id"],
             "day3_checkin_due_at": saved["day3_checkin_due_at"],
+            "preferred_time": saved["preferred_time"],
+            "language": saved["language"],
             "urdu_message": message,
-            "detail": "WhatsApp provider credentials (TWILIO_* or WHATSAPP_*) are not configured.",
+            "detail": "Saved locally. Configure TWILIO_* or WHATSAPP_* in backend/.env to dispatch live WhatsApp messages automatically.",
         }
 
+    ogg_path: Path | None = None
+    if body.send_voice_note:
+        ogg_path = await _prepare_opus_voice_note(Path(request.app.state.audio_dir), message)
+
     try:
-        ok, err_detail = await _send_via_provider(provider, phone, message)
+        ok, err_detail = await _send_via_provider(provider, phone, message, ogg_path=ogg_path)
     except httpx.HTTPError as exc:
         ok, err_detail = False, f"WhatsApp network failure: {exc}"
 
@@ -157,6 +259,8 @@ async def send_whatsapp_reminder(request: Request, body: WhatsAppReminderIn):
         phone_e164=phone,
         channel="whatsapp",
         status=status,
+        preferred_time=body.preferred_time,
+        language=body.language,
     )
     return {
         "whatsapp_scheduled": ok,
@@ -164,6 +268,8 @@ async def send_whatsapp_reminder(request: Request, body: WhatsAppReminderIn):
         "provider": provider,
         "reminder_id": saved["id"],
         "day3_checkin_due_at": saved["day3_checkin_due_at"],
+        "preferred_time": saved["preferred_time"],
+        "language": saved["language"],
         "urdu_message": message,
         "detail": err_detail,
     }
@@ -181,6 +287,68 @@ async def verify_whatsapp_webhook(
     raise HTTPException(status_code=403, detail="Webhook verification failed.")
 
 
+async def _extract_meta_message(payload: dict) -> tuple[str, str]:
+    for entry in payload.get("entry") or []:
+        for change in (entry.get("changes") or []) if isinstance(entry, dict) else []:
+            value = change.get("value") if isinstance(change, dict) else None
+            messages = (value or {}).get("messages") or []
+            for msg in messages:
+                if not isinstance(msg, dict):
+                    continue
+                sender = str(msg.get("from") or "")
+                if sender and not sender.startswith("+"):
+                    sender = f"+{sender}"
+                msg_type = msg.get("type")
+                if msg_type == "text":
+                    return sender, str((msg.get("text") or {}).get("body") or "")
+                if msg_type == "audio":
+                    media_id = (msg.get("audio") or {}).get("id")
+                    token = os.getenv("WHATSAPP_TOKEN", "")
+                    if media_id and token:
+                        try:
+                            async with httpx.AsyncClient(timeout=20.0) as client:
+                                meta_info = await client.get(
+                                    f"https://graph.facebook.com/v20.0/{media_id}",
+                                    headers={"Authorization": f"Bearer {token}"},
+                                )
+                                meta_info.raise_for_status()
+                                media_url = meta_info.json().get("url")
+                                if media_url:
+                                    media_resp = await client.get(
+                                        media_url,
+                                        headers={"Authorization": f"Bearer {token}"},
+                                    )
+                                    media_resp.raise_for_status()
+                                    transcript = await transcribe_urdu(
+                                        media_resp.content,
+                                        filename="whatsapp_voice.ogg",
+                                        mime_type=media_resp.headers.get("content-type"),
+                                    )
+                                    return sender, transcript or ""
+                        except httpx.HTTPError:
+                            return sender, ""
+                    return sender, ""
+    return "", ""
+
+
+async def _transcribe_twilio_media(media_url: str, mime_type: str | None) -> str:
+    sid = os.getenv("TWILIO_ACCOUNT_SID")
+    token = os.getenv("TWILIO_AUTH_TOKEN")
+    auth = (sid, token) if sid and token else None
+    try:
+        async with httpx.AsyncClient(timeout=20.0, follow_redirects=True) as client:
+            resp = await client.get(media_url, auth=auth)
+            resp.raise_for_status()
+            transcript = await transcribe_urdu(
+                resp.content,
+                filename="twilio_voice.ogg",
+                mime_type=mime_type or resp.headers.get("content-type"),
+            )
+            return transcript or ""
+    except httpx.HTTPError:
+        return ""
+
+
 @router.post("/api/v1/whatsapp/webhook")
 async def whatsapp_webhook(request: Request):
     content_type = (request.headers.get("content-type") or "").lower()
@@ -189,12 +357,19 @@ async def whatsapp_webhook(request: Request):
     if "application/json" in content_type:
         payload = await request.json()
         if isinstance(payload, dict):
-            raw_from = str(payload.get("from") or payload.get("From") or "")
-            raw_body = str(payload.get("body") or payload.get("Body") or "")
+            if "entry" in payload:
+                raw_from, raw_body = await _extract_meta_message(payload)
+            else:
+                raw_from = str(payload.get("from") or payload.get("From") or "")
+                raw_body = str(payload.get("body") or payload.get("Body") or "")
     else:
         form = await request.form()
         raw_from = str(form.get("From") or form.get("from") or "")
         raw_body = str(form.get("Body") or form.get("body") or "")
+        media_url = str(form.get("MediaUrl0") or "")
+        media_type = str(form.get("MediaContentType0") or "")
+        if not raw_body.strip() and media_url.startswith(("http://", "https://")) and media_type.startswith("audio/"):
+            raw_body = await _transcribe_twilio_media(media_url, media_type)
 
     classification, urdu_reply = _classify_adherence_reply(raw_body)
     matched = None
@@ -208,6 +383,7 @@ async def whatsapp_webhook(request: Request):
     return {
         "status": "received",
         "classification": classification,
+        "transcript": raw_body,
         "urdu_reply": urdu_reply,
         "matched_reminder": matched,
     }

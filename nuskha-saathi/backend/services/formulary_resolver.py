@@ -56,6 +56,7 @@ _STOP = {
     "day",
     "din",
     "rx",
+    "adv",
 }
 
 _DOSE_TOKEN_RE = re.compile(
@@ -107,6 +108,7 @@ class FormularyEntry:
     drap_shortage_flagged: bool
     bioequivalent_pk_brands: tuple[str, ...]
     urdu_category_note: str
+    is_topical: bool = False
 
 
 @dataclass(frozen=True)
@@ -159,6 +161,7 @@ class FormularyResolver:
                 drap_shortage_flagged=bool(row["drap_shortage_flagged"]),
                 bioequivalent_pk_brands=tuple(row["bioequivalent_pk_brands"]),
                 urdu_category_note=row["urdu_category_note"],
+                is_topical=bool(row.get("is_topical", False)),
             )
             for row in payload
         ]

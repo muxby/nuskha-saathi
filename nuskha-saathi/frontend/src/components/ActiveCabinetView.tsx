@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Plus, Trash2, Pill, PlusCircle } from "lucide-react";
-import type { CabinetItem, FormularyMatch } from "@/lib/api";
+import { formatApiError, type CabinetItem, type FormularyMatch } from "@/lib/api";
 import BrandSuggest from "./BrandSuggest";
 import { cabinetCopy, pick } from "@/lib/copy";
 import { useLanguage } from "@/lib/i18n";
@@ -55,8 +55,8 @@ export default function ActiveCabinetView({
       setStrengths([]);
       setStrength("");
       setSource("");
-    } catch {
-      setError(t("networkError"));
+    } catch (err) {
+      setError(formatApiError(err, t("networkError")));
     } finally {
       setBusy(false);
     }
@@ -71,8 +71,8 @@ export default function ActiveCabinetView({
         strength_mg: 5,
         source_label: "Cardiologist (14 Nov)",
       });
-    } catch {
-      setError(t("networkError"));
+    } catch (err) {
+      setError(formatApiError(err, t("networkError")));
     } finally {
       setBusy(false);
     }
