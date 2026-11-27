@@ -408,3 +408,39 @@ export async function fetchBenchmark(
     return null;
   }
 }
+
+export type FormularyMatch = {
+  brand_name: string;
+  generic_salts: string[];
+  common_strengths_mg: number[];
+  is_antibiotic: boolean;
+  who_aware_tier: string;
+};
+
+/** Listed brands matching what the patient typed. Empty on any failure. */
+export async function searchFormulary(
+  query: string,
+  signal?: AbortSignal,
+): Promise<FormularyMatch[]> {
+  const q = query.trim();
+  if (q.length < 2) return [];
+  try {
+    const res = await fetch(
+      `${API_BASE}/api/v1/formulary/search?q=${encodeURIComponent(q)}&limit=6`,
+      { signal },
+    );
+    if (!res.ok) return [];
+    const data = (await res.json()) as { results?: unknown };
+    if (!Array.isArray(data.results)) return [];
+    return data.results.filter(
+      (row): row is FormularyMatch =>
+        Boolean(row) &&
+        typeof (row as FormularyMatch).brand_name === "string" &&
+        Array.isArray((row as FormularyMatch).generic_salts) &&
+        Array.isArray((row as FormularyMatch).common_strengths_mg),
+    );
+  } catch {
+    return [];
+  }
+}
+
