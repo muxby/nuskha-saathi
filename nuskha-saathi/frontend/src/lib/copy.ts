@@ -184,3 +184,31 @@ export const visionCopy = {
     timeout: "سرور نے جواب دینے میں بہت دیر کی۔ اپنا انٹرنیٹ دیکھ کر دوبارہ کوشش کریں۔",
   },
 } satisfies Bilingual<Record<string, string>>;
+export const adminCopy = {
+  en: {
+    eyebrow: "Private backend panel",
+    waking: "Waking the backend…",
+    wakingBody: "A sleeping server can take up to a minute to answer its first request. This page keeps trying.",
+    awake: "The backend is awake.",
+    awakeBody: (s: number) => `It answered in ${s} second${s === 1 ? "" : "s"}. Opening the panel sign-in.`,
+    failed: "The backend did not answer.",
+    failedBody: "It may still be starting, or the server address may be wrong. Try again in a moment.",
+    seconds: "seconds",
+    retry: "Try again",
+    open: "Open the panel",
+    server: "Server",
+  },
+  ur: {
+    eyebrow: "بیک اینڈ کا نجی پینل",
+    waking: "سرور کو جگایا جا رہا ہے…",
+    wakingBody: "سویا ہوا سرور پہلی درخواست کا جواب دینے میں ایک منٹ تک لے سکتا ہے۔ یہ صفحہ کوشش جاری رکھتا ہے۔",
+    awake: "سرور جاگ گیا ہے۔",
+    awakeBody: (s: number) => `اس نے ${s} سیکنڈ میں جواب دیا۔ پینل کا سائن اِن کھل رہا ہے۔`,
+    failed: "سرور نے جواب نہیں دیا۔",
+    failedBody: "ممکن ہے سرور ابھی شروع ہو رہا ہو یا اس کا پتہ غلط ہو۔ تھوڑی دیر بعد دوبارہ کوشش کریں۔",
+    seconds: "سیکنڈ",
+    retry: "دوبارہ کوشش کریں",
+    open: "پینل کھولیں",
+    server: "سرور",
+  },
+};
