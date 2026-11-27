@@ -6,6 +6,7 @@ venv/
 .env.local
 .vercel/
 *.db
+*.db-*
 *.sqlite*
 backend/data/_fda_label_cache.json
 backend/static/strips/*

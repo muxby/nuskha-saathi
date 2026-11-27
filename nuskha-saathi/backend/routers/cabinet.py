@@ -119,6 +119,25 @@ async def list_patient_history(request: Request, patient_id: str):
     return {"patient_id": pid, "scans": scans}
 
 
+@router.get("/api/v1/scans/{scan_id}")
+async def get_saved_scan(request: Request, scan_id: str):
+    store = getattr(request.app.state, "store", None)
+    if store is not None:
+        saved = store.get_scan(scan_id.strip())
+        if saved is not None:
+            return saved
+    from services.demo_fixtures import DEMO_CASE_BY_SCAN_ID
+
+    demo_case_id = DEMO_CASE_BY_SCAN_ID.get(scan_id.strip())
+    if demo_case_id is not None:
+        return await run_demo_case(
+            demo_case_id,
+            resolver=request.app.state.resolver,
+            fda=request.app.state.fda,
+        )
+    raise HTTPException(status_code=404, detail="Scan not found.")
+
+
 @router.get("/api/v1/demo-cases")
 async def demo_cases_index():
     return {"cases": list_demo_cases()}

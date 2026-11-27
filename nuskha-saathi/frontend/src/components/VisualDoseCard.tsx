@@ -13,6 +13,7 @@ import {
   CircleHelp,
   ShieldCheck,
   MessageCircle,
+  BookOpen,
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import type { Medication, ScanResult, StripResult } from "@/lib/api";
@@ -20,6 +21,7 @@ import { assetUrl } from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
 import SpeakerButton from "./SpeakerButton";
 import StripVerifierModal from "./StripVerifierModal";
+import MedicineExplorerModal from "./MedicineExplorerModal";
 const slots = [
   { key: "morning", icon: Sunrise },
   { key: "afternoon", icon: Sun },
@@ -35,6 +37,7 @@ export default function VisualDoseCard({
   const { t } = useLanguage();
   const id = useId();
   const [verifyOpen, setVerifyOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const [strip, setStrip] = useState<StripResult | null>(null);
   const schedule = medication.schedule;
   const qrValue =
@@ -57,6 +60,9 @@ export default function VisualDoseCard({
     document.body.classList.remove("print-one");
     card?.removeAttribute("data-print-selected");
   }
+  const isNonTabletUnit = /(gum paint|gel|cream|ointment|lotion|drop|spray|mouthwash|rinse|syp|syrup|ml)/i.test(
+    medication.raw_text || "",
+  );
   return (
     <article className="dose-card" id={id}>
       <div className="dose-top">
@@ -73,6 +79,7 @@ export default function VisualDoseCard({
             </h3>
             <p dir="ltr" className="salt-name">
               {medication.generic_salts?.join(" + ")}
+              {medication.medster_price ? ` · ${medication.medster_price}` : ""}
             </p>
           </div>
         </div>
@@ -96,7 +103,10 @@ export default function VisualDoseCard({
           const qty = schedule?.[key];
           const known =
             typeof qty === "number" && Number.isFinite(qty) && qty >= 0;
-          return (
+          const isNonTabletUnit = /(gum paint|gel|cream|ointment|lotion|drop|spray|mouthwash|rinse|syp|syrup|ml)/i.test(
+    medication.raw_text || "",
+  );
+  return (
             <div
               className={`slot ${key} ${known ? (qty === 0 ? "no-dose" : "confirmed-dose") : "unknown-dose"}`}
               key={key}
@@ -119,7 +129,7 @@ export default function VisualDoseCard({
                   t("noDose")
                 ) : (
                   <>
-                    <bdi>{qty}</bdi> {t("tablet")}
+                    <bdi>{qty}</bdi> {t(isNonTabletUnit ? "doseUnit" : "tablet")}
                   </>
                 )}
               </strong>
@@ -216,6 +226,16 @@ export default function VisualDoseCard({
           <Printer size={19} />
           {t("print")}
         </button>
+        {medication.brand_matched && (
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => setDetailsOpen(true)}
+          >
+            <BookOpen size={18} />
+            {t("medicineDetails")}
+          </button>
+        )}
       </div>
       <div className="qr-row">
         <div>
@@ -247,6 +267,12 @@ export default function VisualDoseCard({
         medication={medication}
         scanId={scan.scan_id}
         onVerified={setStrip}
+      />
+      <MedicineExplorerModal
+        open={detailsOpen}
+        medId={medication.medster_id}
+        brand={medication.brand_matched}
+        onClose={() => setDetailsOpen(false)}
       />
     </article>
   );

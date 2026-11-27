@@ -3,14 +3,25 @@
 from __future__ import annotations
 
 import math
+import re
 from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
+
+_SINGLE_UNIT_NUM_RE = re.compile(
+    r"^\s*([+-]?\d+(?:\.\d+)?)\s*(?:mg|ml|mcg|ug|gm|g|days?|d|tabs?|tablets?|caps?|capsules?)?\s*$",
+    re.IGNORECASE,
+)
 
 
 def _finite_or_none(value: Any) -> float | None:
     if value is None or isinstance(value, bool):
         return None
+    if isinstance(value, str):
+        match = _SINGLE_UNIT_NUM_RE.match(value)
+        if not match:
+            return None
+        value = match.group(1)
     try:
         num = float(value)
     except (TypeError, ValueError):

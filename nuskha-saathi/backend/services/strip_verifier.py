@@ -58,8 +58,10 @@ def compare_strip(
     detected_confidence: float,
     resolver: FormularyResolver,
     schedule_phrase: str | None = None,
+    expected_hit: ResolveHit | None = None,
+    detected_hit: ResolveHit | None = None,
 ) -> StripVerdict:
-    expected_hit = resolver.resolve(expected_brand)
+    expected_hit = expected_hit or resolver.resolve(expected_brand)
     shown_expected = expected_hit.brand_name if expected_hit else expected_brand
     valid_conf = math.isfinite(detected_confidence) and 0.85 <= detected_confidence <= 1.0
     if not valid_conf or not (detected_brand or "").strip():
@@ -74,7 +76,7 @@ def compare_strip(
             urdu_verdict=UNREADABLE_STRIP_URDU,
         )
 
-    detected_hit = resolver.resolve(detected_brand)
+    detected_hit = detected_hit or resolver.resolve(detected_brand)
     if detected_hit is None:
         return StripVerdict(
             status="UNREADABLE_STRIP",
@@ -94,8 +96,14 @@ def compare_strip(
         bool(salts_expected) and salts_expected == salts_detected
     )
 
+    single_or_topical = bool(
+        expected_strength is None
+        and expected_hit is not None
+        and (expected_hit.entry.is_topical or len(expected_hit.entry.common_strengths_mg) == 1)
+    )
+
     if detected_strength is None or not math.isfinite(float(detected_strength)) or detected_strength <= 0:
-        if same_drug:
+        if same_drug and not single_or_topical:
             return StripVerdict(
                 status="UNREADABLE_STRIP",
                 expected_brand=shown_expected,
@@ -107,7 +115,28 @@ def compare_strip(
                 urdu_verdict=UNREADABLE_STRIP_URDU,
             )
 
-    same_strength = _same_strength(expected_strength, detected_strength)
+    if single_or_topical:
+        inferred = (
+            detected_strength
+            if (detected_strength is not None and math.isfinite(float(detected_strength)) and detected_strength > 0)
+            else None
+        )
+        same_strength = (
+            expected_hit is not None
+            and expected_hit.entry.is_topical
+        ) or inferred is None or (
+            expected_hit is not None
+            and len(expected_hit.entry.common_strengths_mg) == 1
+            and _same_strength(expected_hit.entry.common_strengths_mg[0], inferred)
+        )
+        effective_expected_strength = (
+            expected_hit.entry.common_strengths_mg[0]
+            if (expected_hit is not None and len(expected_hit.entry.common_strengths_mg) == 1 and inferred is not None)
+            else expected_strength
+        )
+    else:
+        same_strength = _same_strength(expected_strength, detected_strength)
+        effective_expected_strength = expected_strength
 
     if same_drug and not same_strength:
         brand_for_voice = shown_expected or shown_detected
@@ -115,11 +144,11 @@ def compare_strip(
             status="STRENGTH_MISMATCH",
             expected_brand=shown_expected,
             expected_salts=list(expected_hit.generic_salts if expected_hit else expected_salts),
-            expected_strength=expected_strength,
+            expected_strength=effective_expected_strength,
             detected_brand=shown_detected,
             detected_salts=list(detected_hit.generic_salts),
             detected_strength=detected_strength,
-            urdu_verdict=strength_mismatch_urdu(brand_for_voice, expected_strength, detected_strength),
+            urdu_verdict=strength_mismatch_urdu(brand_for_voice, effective_expected_strength, detected_strength),
         )
 
     if _same_row(expected_hit, detected_hit, expected_brand, detected_brand) and same_strength:
@@ -127,7 +156,7 @@ def compare_strip(
             status="EXACT_MATCH",
             expected_brand=shown_expected,
             expected_salts=list(expected_hit.generic_salts if expected_hit else expected_salts),
-            expected_strength=expected_strength,
+            expected_strength=effective_expected_strength,
             detected_brand=shown_detected,
             detected_salts=list(detected_hit.generic_salts),
             detected_strength=detected_strength,
@@ -139,7 +168,7 @@ def compare_strip(
             status="GENERIC_EQUIVALENT_MATCH",
             expected_brand=shown_expected,
             expected_salts=list(expected_hit.generic_salts if expected_hit else expected_salts),
-            expected_strength=expected_strength,
+            expected_strength=effective_expected_strength,
             detected_brand=shown_detected,
             detected_salts=list(detected_hit.generic_salts),
             detected_strength=detected_strength,
@@ -150,7 +179,7 @@ def compare_strip(
         status="WRONG_MEDICINE",
         expected_brand=shown_expected,
         expected_salts=list(expected_hit.generic_salts if expected_hit else expected_salts),
-        expected_strength=expected_strength,
+        expected_strength=effective_expected_strength,
         detected_brand=shown_detected,
         detected_salts=list(detected_hit.generic_salts),
         detected_strength=detected_strength,

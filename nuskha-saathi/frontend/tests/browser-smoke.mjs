@@ -115,6 +115,47 @@ await context.route("**/api/v1/audio/*", (route) =>
     },
   }),
 );
+const mockReminders = [];
+await context.route("**/api/v1/whatsapp/reminders*", (route) => {
+  if (route.request().method() === "DELETE") {
+    return route.fulfill({ json: { deleted: true } });
+  }
+  return route.fulfill({
+    json: { configured: false, provider: null, reminders: mockReminders },
+  });
+});
+await context.route("**/api/v1/whatsapp/send-reminder", async (route) => {
+  const payload = JSON.parse(route.request().postData() || "{}");
+  const item = {
+    id: `rem_smoke_${mockReminders.length + 1}`,
+    patient_id: payload.patient_id || "anon",
+    scan_id: payload.scan_id || null,
+    brand_name: payload.brand_name || "Augmentin",
+    phone_e164: payload.phone_e164 || "+923001234567",
+    channel: "whatsapp",
+    status: "UNCONFIGURED",
+    day3_checkin_due_at: new Date().toISOString(),
+    preferred_time: payload.preferred_time || "08:00",
+    language: payload.language || "en",
+    adherence_reply: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
+  mockReminders.unshift(item);
+  await route.fulfill({
+    json: {
+      whatsapp_scheduled: false,
+      status: "UNCONFIGURED",
+      provider: null,
+      reminder_id: item.id,
+      day3_checkin_due_at: item.day3_checkin_due_at,
+      preferred_time: item.preferred_time,
+      language: item.language,
+      urdu_message: `Reminder for ${item.brand_name}`,
+      detail: "Saved locally.",
+    },
+  });
+});
 const wav = Buffer.alloc(44 + 16000 * 2);
 wav.write("RIFF");
 wav.writeUInt32LE(wav.length - 8, 4);
@@ -250,8 +291,10 @@ try {
     await nav("reminders");
     assert.equal(
       await page.getByRole("button", { name: "Enable reminders" }).isDisabled(),
-      true,
+      false,
     );
+    await page.getByRole("button", { name: "Enable reminders" }).click();
+    await page.locator(".reminder-saved-card").first().waitFor();
     await audit("reminders");
   });
   await test("camera permission denial, gallery file checks, and photo review", async () => {
@@ -507,7 +550,11 @@ try {
     assert.equal(await page.locator(".slot.unknown-dose").count(), 3);
     assert.equal(await page.locator(".slot.no-dose").count(), 0);
     assert.equal(await page.locator(".alert-red").count(), 1);
-    assert.equal(await page.locator(".alert-amber").count(), 2);
+    assert.equal(await page.locator(".alert-amber").count(), 1);
+    assert.equal(await page.locator(".med-issue-dropdown").count(), 1);
+    const bodyText = await page.locator("body").innerText();
+    assert.equal(bodyText.includes("The medicine name or dose needs confirmation."), false);
+    assert.equal(bodyText.includes("Ask a pharmacist to read this part before taking medicine."), false);
     await audit("safety");
     await page.screenshot({ path: `${OUT}/safety-states.png`, fullPage: true });
   });
@@ -553,7 +600,7 @@ try {
     await page.locator(".error-panel").waitFor();
     assert.match(
       await page.locator(".error-panel").innerText(),
-      /internet connection/,
+      /backend|connection|interrupted/i,
     );
     uploadFailure = false;
   });

@@ -5,11 +5,11 @@ let paused=false, busy=false, lastSuccess=null;
 function render(data, latency) {
   $('cards').replaceChildren();
   const health=data.health.status==='ok';
-  const values=[['Application',health?'Healthy':'Degraded',health?'good':'bad'],['Deployed commit',data.commit.slice(0,12),''],['Process uptime',`${Math.floor(data.uptime_seconds/3600)}h ${Math.floor(data.uptime_seconds/60)%60}m`,''],['Status round trip',`${Math.round(latency)} ms`,'']];
+  const values=[['Application',health?'Healthy':'Degraded',health?'good':'bad'],['Build commit',data.commit.slice(0,12),''],['Process uptime',`${Math.floor(data.uptime_seconds/3600)}h ${Math.floor(data.uptime_seconds/60)%60}m`,''],['Status round trip',`${Math.round(latency)} ms`,'']];
   for(const [label,value,cls] of values){const c=node('div','','card');c.append(node('div',label,'label'),node('div',value,`value ${cls}`));$('cards').append(c);}
   $('cards').append(node('div',`API v${data.version} · Started ${new Date(data.started_at).toLocaleString()}`,'card muted'));
   $('capabilities').replaceChildren();
-  const names={vision_configured:'Gemini configured',tts_configured:'Urdu voice configured',openfda_live:'openFDA live enabled',whatsapp_configured:'WhatsApp configured'};
+  const names={vision_configured:'Vision OCR',openrouter_configured:'OpenRouter',medster_live:'MedSter API',freeapi_transcribe_enabled:'FreeAPI STT',freeapi_imgchat_enabled:'FreeAPI ImgChat',tts_configured:'Urdu TTS',stt_configured:'Urdu STT',openfda_live:'openFDA live',whatsapp_configured:'WhatsApp',admin_monitor_configured:'Admin auth'};
   for(const [key,label] of Object.entries(names)) $('capabilities').append(node('span',`${label}: ${data.health.capabilities?.[key]?'yes':'no'}`,'badge'));
   $('active').replaceChildren();
   if(!data.active.length)$('active').append(node('p','No active API requests.','muted'));

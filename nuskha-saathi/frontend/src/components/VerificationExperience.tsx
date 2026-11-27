@@ -1,15 +1,17 @@
 "use client";
 import { useState } from "react";
 import { Pill, ScanLine, ArrowRight } from "lucide-react";
-import type { ScanResult } from "@/lib/api";
+import type { ScanResult, StripResult } from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
 import StripVerifierModal from "./StripVerifierModal";
 export default function VerificationExperience({
   scan,
   onScan,
+  onVerified,
 }: {
   scan: ScanResult | null;
   onScan: () => void;
+  onVerified?: (lineId: string, result: StripResult) => void;
 }) {
   const { t } = useLanguage();
   const [selected, setSelected] = useState<string | null>(null);
@@ -49,7 +51,7 @@ export default function VerificationExperience({
                 onClose={() => setSelected(null)}
                 medication={m}
                 scanId={scan.scan_id}
-                onVerified={() => {}}
+                onVerified={(res) => onVerified?.(m.line_id, res)}
               />
             ))}
         </>

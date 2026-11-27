@@ -17,7 +17,7 @@ import {
   writeRecords,
   type SavedPrescription,
 } from "@/lib/records";
-import { Save, Check, ArrowLeft } from "lucide-react";
+import { Save, Check, ArrowLeft, BellRing, X } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import AppShell, { type View } from "@/components/AppShell";
 import HomeExperience from "@/components/HomeExperience";
@@ -26,12 +26,40 @@ import DevProofDrawer from "@/components/DevProofDrawer";
 import DemoModeDrawer from "@/components/DemoModeDrawer";
 import {
   addCabinetMed,
+  ApiRequestError,
   fetchCabinet,
+  fetchPatientScans,
+  fetchReminders,
+  fetchScanById,
+  formatApiError,
   postForm,
   removeCabinetMed,
+  updateReminderStatus,
   type CabinetItem,
+  type SavedReminderItem,
   type ScanResult,
+  type StripResult,
 } from "@/lib/api";
+
+function playReminderChime() {
+  try {
+    const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    [523.25, 659.25].forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.frequency.value = freq;
+      osc.type = "sine";
+      gain.gain.setValueAtTime(0.08, ctx.currentTime + i * 0.16);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.16 + 0.25);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + i * 0.16);
+      osc.stop(ctx.currentTime + i * 0.16 + 0.28);
+    });
+  } catch {}
+}
 
 export default function Home() {
   const { t, language } = useLanguage();
@@ -48,6 +76,7 @@ export default function Home() {
     scanRef.current = nextScan;
     setScan(nextScan);
     setOriginal(imageUrl);
+    setOriginalFile(null);
     navigate("results");
   }
 
@@ -58,6 +87,18 @@ export default function Home() {
   const [cabinetItems, setCabinetItems] = useState<CabinetItem[]>([]);
   const [patientId, setPatientId] = useState("anonymous");
   const [useCabinet, setUseCabinet] = useState(true);
+  const [activeReminders, setActiveReminders] = useState<SavedReminderItem[]>([]);
+  const [dueToast, setDueToast] = useState<{ id?: string; label: string; time: string } | null>(null);
+
+  function triggerDoseNotification(label: string, time: string, id?: string) {
+    setDueToast({ id, label, time });
+    playReminderChime();
+    if (typeof window !== "undefined" && "Notification" in window && Notification.permission === "granted") {
+      try {
+        new Notification("Nuskha Saathi Reminder", { body: `${label} (${time})` });
+      } catch {}
+    }
+  }
 
   useEffect(() => {
     setRecords(readRecords());
@@ -79,8 +120,36 @@ export default function Home() {
         writeLocalCabinet(remote);
       }
     });
+    void fetchReminders(pid, ctrl.signal)
+      .then((res) => {
+        if (!ctrl.signal.aborted) setActiveReminders(res.reminders);
+      })
+      .catch(() => {});
     return () => ctrl.abort();
   }, []);
+
+  useEffect(() => {
+    if (!activeReminders.length) return;
+    let lastMinute = "";
+    const check = () => {
+      const now = new Date();
+      const hhmm = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+      if (hhmm === lastMinute) return;
+      const due = activeReminders.filter(
+        (r) => r.status !== "TAKEN" && (r.preferred_time || "08:00") === hhmm,
+      );
+      if (due.length > 0) {
+        lastMinute = hhmm;
+        triggerDoseNotification(
+          due.map((d) => d.brand_name).join(", "),
+          hhmm,
+          due[0].id,
+        );
+      }
+    };
+    const timer = window.setInterval(check, 20_000);
+    return () => window.clearInterval(timer);
+  }, [activeReminders]);
 
   const savedMeds = records.flatMap((r) =>
     r.scan.medications
@@ -165,6 +234,7 @@ export default function Home() {
   }
 
   const [original, setOriginal] = useState<string | null>(null);
+  const [originalFile, setOriginalFile] = useState<File | null>(null);
   useEffect(
     () => () => {
       if (original) URL.revokeObjectURL(original);
@@ -172,9 +242,7 @@ export default function Home() {
     [original],
   );
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<
-    "" | "saveFailed" | "networkError" | "photoLarge" | "uploadError"
-  >("");
+  const [error, setError] = useState("");
 
   const navigate = (next: View) => {
     controller.current?.abort();
@@ -226,6 +294,7 @@ export default function Home() {
     setError("");
     setScan(null);
     setOriginal(URL.createObjectURL(file));
+    setOriginalFile(file);
     const form = new FormData();
     form.append("file", file);
     form.append("patient_id", patientId);
@@ -245,26 +314,69 @@ export default function Home() {
         window.scrollTo({ top: 0, behavior: "instant" });
       }
     } catch (err) {
-      if (!request.signal.aborted)
-        setError(
-          err instanceof Error && err.message === "NETWORK"
-            ? "networkError"
-            : err instanceof Error && err.message === "TOO_LARGE"
-              ? "photoLarge"
-              : "uploadError",
-        );
+      if (!request.signal.aborted) {
+        if (err instanceof ApiRequestError) {
+          setError(err.code === "TOO_LARGE" ? t("photoLarge") : err.message);
+        } else if (err instanceof Error && err.message === "NETWORK") {
+          setError(t("networkError"));
+        } else if (err instanceof Error && err.message === "TOO_LARGE") {
+          setError(t("photoLarge"));
+        } else {
+          setError(formatApiError(err, t("uploadError")));
+        }
+      }
     } finally {
       if (controller.current === request) setBusy(false);
     }
   }
 
   return (
-    <AppShell
-      view={view}
-      navigate={navigate}
-      onTripleLogoTap={() => setDemoOpen(true)}
-    >
-      {busy ? (
+      <AppShell
+        view={view}
+        navigate={navigate}
+        onTripleLogoTap={() => setDemoOpen(true)}
+      >
+        {dueToast && (
+          <div className="global-reminder-toast" role="alert">
+            <BellRing size={18} />
+            <strong>
+              {t("reminderDueNow")}: {dueToast.label} ({dueToast.time})
+            </strong>
+            <div className="global-reminder-actions">
+              <SpeakerButton
+                text={`Apni dawa ${dueToast.label} waqt par lein`}
+                language="ur"
+              />
+              {dueToast.id && (
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={() => {
+                    const id = dueToast.id!;
+                    void updateReminderStatus(patientId, id, "TAKEN", "Taken from alert")
+                      .then((updated) =>
+                        setActiveReminders((prev) => prev.map((r) => (r.id === id ? updated : r))),
+                      )
+                      .catch(() => {});
+                    setDueToast(null);
+                  }}
+                >
+                  <Check size={15} />
+                  <span>{t("reminderMarkTaken")}</span>
+                </button>
+              )}
+              <button
+                type="button"
+                className="icon-button"
+                aria-label={t("reminderDismiss")}
+                onClick={() => setDueToast(null)}
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+        )}
+        {busy ? (
         <div className="content-wrap inner-page">
           <ProcessingExperience image={original} />
         </div>
@@ -304,8 +416,11 @@ export default function Home() {
           </div>
           {error && (
             <div className="error-panel" role="alert">
-              {t(error)}
-              <SpeakerButton text={t(error)} language={language} />
+              {error === "saveFailed" ? t("saveFailed") : error}
+              <SpeakerButton
+                text={error === "saveFailed" ? t("saveFailed") : error}
+                language={language}
+              />
             </div>
           )}
           {view === "scan" && (
@@ -344,7 +459,9 @@ export default function Home() {
               <PrescriptionResults
                 scan={scan}
                 original={original}
+                originalFile={originalFile}
                 onRetake={() => navigate("scan")}
+                onScheduleReminders={() => navigate("reminders")}
               />
             </>
           )}
@@ -352,6 +469,30 @@ export default function Home() {
             <VerificationExperience
               scan={scan}
               onScan={() => navigate("scan")}
+              onVerified={(lineId: string, stripRes: StripResult) => {
+                if (!scan) return;
+                if (!["EXACT_MATCH", "GENERIC_EQUIVALENT_MATCH"].includes(stripRes.verification_status)) return;
+                const updatedScan: ScanResult = {
+                  ...scan,
+                  medications: scan.medications.map((m) =>
+                    m.line_id === lineId
+                      ? {
+                          ...m,
+                          strip_verified: true,
+                          strip_thumbnail_url: stripRes.strip_thumbnail_url ?? m.strip_thumbnail_url,
+                        }
+                      : m,
+                  ),
+                };
+                setScan(updatedScan);
+                const nextRecords = records.map((r) =>
+                  r.scan.scan_id === updatedScan.scan_id ? { ...r, scan: updatedScan } : r,
+                );
+                if (nextRecords.some((r) => r.scan.scan_id === updatedScan.scan_id)) {
+                  writeRecords(nextRecords);
+                  setRecords(nextRecords);
+                }
+              }}
             />
           )}
           {(view === "medicines" || view === "history") && (
@@ -365,9 +506,38 @@ export default function Home() {
               onScan={() => navigate("scan")}
               onAddCabinet={handleAddCabinet}
               onRemoveCabinet={handleRemoveCabinet}
+              onSyncHistory={async () => {
+                const summaries = await fetchPatientScans(patientId);
+                if (!summaries.length) return 0;
+                const existingIds = new Set(records.map((r) => r.scan.scan_id));
+                const fetched = await Promise.all(
+                  summaries
+                    .filter((s) => !existingIds.has(s.scan_id))
+                    .slice(0, 10)
+                    .map(async (s) => {
+                      const full = await fetchScanById(s.scan_id);
+                      return full ? { savedAt: s.created_at, scan: full } : null;
+                    }),
+                );
+                const fresh = fetched.filter(
+                  (item): item is SavedPrescription => item !== null,
+                );
+                if (fresh.length > 0) {
+                  const merged = [...fresh, ...records].slice(0, 20);
+                  writeRecords(merged);
+                  setRecords(merged);
+                }
+                return summaries.length;
+              }}
             />
           )}
-          {view === "reminders" && <ReminderExperience scan={scan} />}
+          {view === "reminders" && (
+            <ReminderExperience
+              scan={scan}
+              onRemindersChanged={setActiveReminders}
+              onTestAlert={(label, time) => triggerDoseNotification(label, time)}
+            />
+          )}
           {view === "settings" && (
             <SettingsExperience
               onHistory={() => navigate("history")}

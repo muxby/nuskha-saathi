@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Play, ClipboardCheck, X, WifiOff, ArrowRight } from "lucide-react";
 import {
   fetchDemoCases,
+  formatApiError,
   runDemoCase,
   type DemoCaseMeta,
   type ScanResult,
@@ -52,13 +53,13 @@ export default function DemoModeDrawer({
       const scan = await runDemoCase(caseId);
       onSelectScan(scan);
       onClose();
-    } catch {
+    } catch (err) {
       const fallback = buildOfflineDemoFallback(caseId);
       if (offlineRequested && fallback) {
         onSelectScan(fallback);
         onClose();
       } else {
-        setError(t("networkError"));
+        setError(formatApiError(err, t("networkError")));
       }
     } finally {
       setBusyId(null);

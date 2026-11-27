@@ -44,6 +44,8 @@ class MedicationOut(BaseModel):
     drap_shortage_alert: str | None = None
     strip_verified: bool | None = None
     strip_thumbnail_url: str | None = None
+    medster_id: str | None = None
+    medster_price: str | None = None
     raw_text: str | None = None
     ocr_confidence: float | None = None
     cropped_handwriting_b64: str | None = None

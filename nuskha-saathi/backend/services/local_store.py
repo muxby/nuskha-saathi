@@ -29,8 +29,12 @@ class LocalStore:
     """Zero-dependency SQLite persistence matching the Dawa-Guard schema."""
 
     def __init__(self, db_path: Path | str | None = None):
-        resolved = db_path or os.environ.get("NUSKHA_DB_PATH") or DEFAULT_DB_PATH
-        self.db_path = Path(resolved)
+        if db_path is not None:
+            resolved = Path(db_path)
+        else:
+            env_override = os.environ.get("NUSKHA_DB_PATH", "").strip()
+            resolved = Path(env_override) if env_override else writable_db_path()
+        self.db_path = resolved
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self._lock = threading.RLock()
         self._init_schema()
@@ -39,10 +43,15 @@ class LocalStore:
         conn = sqlite3.connect(self.db_path, timeout=15.0, check_same_thread=False)
         conn.row_factory = sqlite3.Row
         conn.execute("PRAGMA foreign_keys = ON")
+        conn.execute("PRAGMA busy_timeout = 5000")
         return conn
 
     def _init_schema(self) -> None:
         with self._lock, self._connect() as conn:
+            try:
+                conn.execute("PRAGMA journal_mode = WAL")
+            except sqlite3.OperationalError:
+                pass
             conn.executescript(
                 """
                 CREATE TABLE IF NOT EXISTS patients (
@@ -87,6 +96,8 @@ class LocalStore:
                     channel TEXT NOT NULL,
                     status TEXT NOT NULL,
                     day3_checkin_due_at TEXT NOT NULL,
+                    preferred_time TEXT NOT NULL DEFAULT '08:00',
+                    language TEXT NOT NULL DEFAULT 'en',
                     adherence_reply TEXT,
                     created_at TEXT NOT NULL,
                     updated_at TEXT NOT NULL
@@ -94,6 +105,13 @@ class LocalStore:
 
                 CREATE INDEX IF NOT EXISTS idx_reminders_phone_created
                     ON reminders (phone_e164, created_at DESC);
+
+                CREATE TABLE IF NOT EXISTS web_medicines (
+                    query_key TEXT PRIMARY KEY,
+                    brand_name TEXT NOT NULL,
+                    entry_json TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                );
 
                 CREATE TABLE IF NOT EXISTS telemetry_logs (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -109,6 +127,14 @@ class LocalStore:
                 );
                 """
             )
+            for col_sql in (
+                "ALTER TABLE reminders ADD COLUMN preferred_time TEXT NOT NULL DEFAULT '08:00'",
+                "ALTER TABLE reminders ADD COLUMN language TEXT NOT NULL DEFAULT 'en'",
+            ):
+                try:
+                    conn.execute(col_sql)
+                except sqlite3.OperationalError:
+                    pass
 
     def ensure_patient(self, patient_id: str, phone_e164: str | None = None) -> str:
         pid = _normalize_patient_id(patient_id)
@@ -260,6 +286,39 @@ class LocalStore:
                 ),
             )
 
+    def mark_strip_verified(
+        self,
+        scan_id: str,
+        matched_line_id: str,
+        strip_thumbnail_url: str | None,
+    ) -> bool:
+        with self._lock, self._connect() as conn:
+            row = conn.execute(
+                "SELECT response_json FROM prescriptions WHERE scan_id = ?",
+                (scan_id,),
+            ).fetchone()
+            if row is None:
+                return False
+            try:
+                payload = json.loads(row["response_json"])
+            except json.JSONDecodeError:
+                return False
+            updated = False
+            for med in payload.get("medications") or []:
+                if isinstance(med, dict) and med.get("line_id") == matched_line_id:
+                    med["strip_verified"] = True
+                    if strip_thumbnail_url:
+                        med["strip_thumbnail_url"] = strip_thumbnail_url
+                    updated = True
+                    break
+            if not updated:
+                return False
+            conn.execute(
+                "UPDATE prescriptions SET response_json = ? WHERE scan_id = ?",
+                (json.dumps(payload), scan_id),
+            )
+            return True
+
     def get_scan(self, scan_id: str) -> dict | None:
         with self._lock, self._connect() as conn:
             row = conn.execute(
@@ -298,20 +357,24 @@ class LocalStore:
         phone_e164: str,
         channel: str,
         status: str,
+        preferred_time: str = "08:00",
+        language: str = "en",
     ) -> dict:
         pid = self.ensure_patient(patient_id, phone_e164=phone_e164)
         now_dt = datetime.now(timezone.utc)
         now = now_dt.isoformat()
         due_at = (now_dt + timedelta(days=3)).isoformat()
         rem_id = f"rem_{uuid.uuid4().hex[:12]}"
+        clean_time = (preferred_time or "08:00").strip()[:10] or "08:00"
+        clean_lang = "ur" if (language or "en").strip().lower().startswith("ur") else "en"
         with self._lock, self._connect() as conn:
             conn.execute(
                 """
                 INSERT INTO reminders
-                    (id, patient_id, scan_id, brand_name, phone_e164, channel, status, day3_checkin_due_at, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    (id, patient_id, scan_id, brand_name, phone_e164, channel, status, day3_checkin_due_at, preferred_time, language, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (rem_id, pid, scan_id, brand_name.strip(), phone_e164, channel, status, due_at, now, now),
+                (rem_id, pid, scan_id, brand_name.strip(), phone_e164, channel, status, due_at, clean_time, clean_lang, now, now),
             )
         return {
             "id": rem_id,
@@ -322,8 +385,124 @@ class LocalStore:
             "channel": channel,
             "status": status,
             "day3_checkin_due_at": due_at,
+            "preferred_time": clean_time,
+            "language": clean_lang,
             "created_at": now,
         }
+
+    def list_reminders(self, patient_id: str | None = None, limit: int = 50) -> list[dict]:
+        safe_limit = max(1, min(limit, 100))
+        with self._lock, self._connect() as conn:
+            if patient_id is not None and patient_id.strip():
+                pid = _normalize_patient_id(patient_id)
+                rows = conn.execute(
+                    """
+                    SELECT id, patient_id, scan_id, brand_name, phone_e164, channel, status,
+                           day3_checkin_due_at, preferred_time, language, adherence_reply, created_at, updated_at
+                    FROM reminders
+                    WHERE patient_id = ?
+                    ORDER BY created_at DESC, rowid DESC
+                    LIMIT ?
+                    """,
+                    (pid, safe_limit),
+                ).fetchall()
+            else:
+                rows = conn.execute(
+                    """
+                    SELECT id, patient_id, scan_id, brand_name, phone_e164, channel, status,
+                           day3_checkin_due_at, preferred_time, language, adherence_reply, created_at, updated_at
+                    FROM reminders
+                    ORDER BY created_at DESC, rowid DESC
+                    LIMIT ?
+                    """,
+                    (safe_limit,),
+                ).fetchall()
+        return [dict(row) for row in rows]
+
+    def delete_reminder(self, patient_id: str, reminder_id: str) -> bool:
+        pid = _normalize_patient_id(patient_id)
+        with self._lock, self._connect() as conn:
+            cur = conn.execute(
+                "DELETE FROM reminders WHERE id = ? AND patient_id = ?",
+                (reminder_id, pid),
+            )
+            return cur.rowcount > 0
+
+    def update_reminder_status(
+        self,
+        patient_id: str,
+        reminder_id: str,
+        status: str,
+        adherence_reply: str | None = None,
+    ) -> dict | None:
+        pid = _normalize_patient_id(patient_id)
+        now = _utc_now_iso()
+        with self._lock, self._connect() as conn:
+            cur = conn.execute(
+                """
+                UPDATE reminders
+                SET status = ?, adherence_reply = COALESCE(?, adherence_reply), updated_at = ?
+                WHERE id = ? AND patient_id = ?
+                """,
+                (status.strip(), adherence_reply[:500] if adherence_reply else None, now, reminder_id, pid),
+            )
+            if cur.rowcount == 0:
+                return None
+            row = conn.execute(
+                """
+                SELECT id, patient_id, scan_id, brand_name, phone_e164, channel, status,
+                       day3_checkin_due_at, preferred_time, language, adherence_reply, created_at, updated_at
+                FROM reminders
+                WHERE id = ?
+                """,
+                (reminder_id,),
+            ).fetchone()
+        return dict(row) if row is not None else None
+
+    def get_web_medicine(self, query_key: str) -> dict | None:
+        if not query_key:
+            return None
+        with self._lock, self._connect() as conn:
+            row = conn.execute(
+                "SELECT entry_json FROM web_medicines WHERE query_key = ?",
+                (query_key,),
+            ).fetchone()
+        if row is None:
+            return None
+        try:
+            data = json.loads(row["entry_json"])
+            return data if isinstance(data, dict) else None
+        except json.JSONDecodeError:
+            return None
+
+    def list_web_medicines(self) -> list[tuple[str, dict]]:
+        with self._lock, self._connect() as conn:
+            rows = conn.execute("SELECT query_key, entry_json FROM web_medicines").fetchall()
+        out: list[tuple[str, dict]] = []
+        for row in rows:
+            try:
+                data = json.loads(row["entry_json"])
+                if isinstance(data, dict):
+                    out.append((row["query_key"], data))
+            except json.JSONDecodeError:
+                continue
+        return out
+
+    def save_web_medicine(self, query_key: str, brand_name: str, entry_dict: dict) -> None:
+        if not query_key:
+            return
+        now = _utc_now_iso()
+        with self._lock, self._connect() as conn:
+            conn.execute(
+                """
+                INSERT INTO web_medicines (query_key, brand_name, entry_json, created_at)
+                VALUES (?, ?, ?, ?)
+                ON CONFLICT(query_key) DO UPDATE SET
+                    brand_name = excluded.brand_name,
+                    entry_json = excluded.entry_json
+                """,
+                (query_key, brand_name, json.dumps(entry_dict, ensure_ascii=False), now),
+            )
 
     def record_whatsapp_reply(self, phone_e164: str, reply_status: str, reply_text: str) -> dict | None:
         now = _utc_now_iso()
