@@ -30,3 +30,10 @@ test-frontend:
 eval:
 	cd $(APP)/backend && .venv/bin/python -m tests.run_eval_30
 
+# Both need the API on :8000 and a production frontend on :3000.
+.PHONY: test-ui test-e2e
+test-ui:
+	cd $(APP)/frontend && npm run test:ui
+
+test-e2e:
+	cd $(APP)/frontend && npm run test:e2e
