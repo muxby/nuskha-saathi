@@ -50,6 +50,7 @@ FastAPI endpoints in `main.py`:
 | `POST /api/v1/whatsapp/webhook` | Classify patient WhatsApp replies (`1` Continuing vs `2` Stopped/Side-effect escalation) |
 | `DELETE /api/v1/cabinet/{patient_id}` | One-tap clear of every active cabinet medicine for the patient |
 | `GET /api/v1/formulary/search?q=` | Look up listed brands by name or salt for the cabinet form |
+| `GET /api/v1/diagnostics/vision` | Live reader self-test: sends one generated image through Gemini and reports `OK` or the failure class |
 | `GET /api/v1/benchmark` | Return results from the 30-case deterministic safety harness (`tests/eval_results.json`) |
 | `GET /health` | Service readiness, capability flags, formulary size (`327` brands, `73` interaction pairs), and store counts |
 
