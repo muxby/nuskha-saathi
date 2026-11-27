@@ -34,7 +34,7 @@ export default function VisualDoseCard({
   medication: Medication;
   scan: ScanResult;
 }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const id = useId();
   const [verifyOpen, setVerifyOpen] = useState(false);
   const [strip, setStrip] = useState<StripResult | null>(null);
