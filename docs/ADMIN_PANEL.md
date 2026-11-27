@@ -30,3 +30,25 @@ same line in `nuskha-saathi/.env`, which Git ignores.
 Sessions last 8 hours and end on restart or when the password changes. Five
 wrong attempts lock sign-in from that device for five minutes.
 
+## Backend tests
+
+**Run quick checks** runs inside the server. No network calls, no cost.
+
+| Check | Proves |
+| --- | --- |
+| Clinical datasets | The formulary loaded with at least 200 brands. |
+| Brand-to-salt resolver | A misspelt `Augmntin` resolves to Augmentin. |
+| Safety refusal locks | A blurry line, an unknown brand and 5000 mg Leflox are all refused. |
+| Offline interaction cache | ibuprofen + warfarin is present and HIGH with no network. |
+| Database write and read | A row can be written, read back and cleared. |
+
+**Run live checks** adds two that reach outside the server:
+
+| Check | Proves |
+| --- | --- |
+| Gemini vision reader | The key and model really work: one generated test image is read. Uses one Gemini request. |
+| openFDA live label | The live drug-label API answers. If it does not, the offline cache is used. |
+
+A failed check names the cause and the fix. Results never include patient
+data, keys or a provider's raw error text.
+
