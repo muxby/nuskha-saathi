@@ -44,3 +44,18 @@ async function cacheFirst(request) {
   return response;
 }
 
+async function networkFirstPage(request) {
+  const cache = await caches.open(SHELL_CACHE);
+  try {
+    const response = await fetch(request);
+    if (response.ok && new URL(request.url).pathname === "/") {
+      cache.put("/", response.clone());
+    }
+    return response;
+  } catch {
+    const cached = (await cache.match(request, { ignoreSearch: true })) || (await cache.match("/"));
+    if (cached) return cached;
+    return new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } });
+  }
+}
+
