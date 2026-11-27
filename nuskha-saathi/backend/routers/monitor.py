@@ -15,6 +15,7 @@ ASSETS = Path(__file__).resolve().parents[1] / 'admin_assets'
 COOKIE = 'nuskha_admin'
 # The password lives only in the ADMIN_MONITOR_PASSWORD environment variable.
 MIN_PASSWORD_LENGTH = 12
+PUBLIC_ASSETS = frozenset({'panel.js', 'panel.css', 'gulzar-urdu.woff2'})
 
 
 def install_monitor(app, health):
@@ -53,7 +54,7 @@ def install_monitor(app, health):
 
     @app.get('/admin/assets/{name}', include_in_schema=False)
     def asset(name: str):
-        if name not in {'panel.js', 'panel.css'}:
+        if name not in PUBLIC_ASSETS:
             return secure(JSONResponse({'error': 'Not found'}, status_code=404))
         return secure(FileResponse(ASSETS / name))
 
