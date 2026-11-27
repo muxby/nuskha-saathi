@@ -76,3 +76,27 @@
   flex: 1;
 }
 
+.source-detail[open] {
+  padding: 4px 16px 14px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--red) 18%, var(--border));
+}
+
+.source-detail[open] > p:first-of-type {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--ink);
+  text-align: start;
+}
+
+.source-detail .evidence-source {
+  display: block;
+  margin-block: 8px 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  text-align: left;
+}
+
