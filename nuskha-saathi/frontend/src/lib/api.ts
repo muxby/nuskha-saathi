@@ -8,10 +8,23 @@ export type HealthStatus = {
   interaction_pairs: number;
   capabilities?: {
     vision_configured: boolean;
+    vision_provider?: string | null;
+    vision_model?: string;
+    openrouter_configured?: boolean;
+    gemini_configured?: boolean;
+    freeapi_imgchat_enabled?: boolean;
+    freeapi_transcribe_enabled?: boolean;
+    medster_live?: boolean;
     tts_configured: boolean;
+    tts_provider?: string | null;
     tts_voice?: string;
+    stt_configured?: boolean;
+    stt_provider?: string | null;
     openfda_live: boolean;
+    openfda_key_configured?: boolean;
     whatsapp_configured: boolean;
+    whatsapp_provider?: string | null;
+    admin_monitor_configured?: boolean;
     ephemeral_storage?: boolean;
   };
 };
@@ -41,13 +54,56 @@ export type WhatsAppReminderResult = {
   provider: string | null;
   reminder_id: string;
   day3_checkin_due_at: string;
+  preferred_time?: string;
+  language?: string;
   urdu_message: string;
   detail: string | null;
 };
 
+export type SavedReminderItem = {
+  id: string;
+  patient_id: string;
+  scan_id: string | null;
+  brand_name: string;
+  phone_e164: string;
+  channel: string;
+  status: string;
+  day3_checkin_due_at: string;
+  preferred_time?: string;
+  language?: string;
+  adherence_reply: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export class ApiRequestError extends Error {
+  code: "NETWORK" | "TIMEOUT" | "TOO_LARGE" | "RATE_LIMITED" | "UPLOAD" | "SERVER";
+  status?: number;
+
+  constructor(
+    code: "NETWORK" | "TIMEOUT" | "TOO_LARGE" | "RATE_LIMITED" | "UPLOAD" | "SERVER",
+    message: string,
+    status?: number,
+  ) {
+    super(message);
+    this.name = "ApiRequestError";
+    this.code = code;
+    this.status = status;
+  }
+}
+
+export function formatApiError(err: unknown, fallback: string): string {
+  if (err instanceof ApiRequestError) return err.message;
+  if (err instanceof Error && err.message && !["NETWORK", "UPLOAD"].includes(err.message)) {
+    return err.message;
+  }
+  return fallback;
+}
+
 export type WhatsAppWebhookResult = {
   status: string;
   classification: string;
+  transcript?: string;
   urdu_reply: string;
 };
 
@@ -110,6 +166,8 @@ export type Medication = {
   drap_shortage_alert: string | null;
   strip_verified: boolean | null;
   strip_thumbnail_url: string | null;
+  medster_id?: string | null;
+  medster_price?: string | null;
   raw_text: string | null;
   cropped_handwriting_b64: string | null;
   refusal_reason_urdu: string | null;
@@ -187,45 +245,149 @@ export async function urduSpeechUrl(text: string): Promise<string | null> {
 }
 
 export const UPLOAD_TIMEOUT_MS = 90_000;
+async function readErrorDetail(response: Response): Promise<string> {
+  try {
+    const raw = await response.text();
+    if (!raw) return response.statusText || `HTTP ${response.status}`;
+    try {
+      const parsed = JSON.parse(raw) as { detail?: unknown; error?: unknown };
+      if (typeof parsed.detail === "string" && parsed.detail.trim()) return parsed.detail;
+      if (Array.isArray(parsed.detail) && parsed.detail.length > 0) return JSON.stringify(parsed.detail);
+      if (typeof parsed.error === "string" && parsed.error.trim()) return parsed.error;
+    } catch {
+      return raw.slice(0, 180);
+    }
+    return raw.slice(0, 180);
+  } catch {
+    return response.statusText || `HTTP ${response.status}`;
+  }
+}
+
+async function fetchWithTimeout(
+  url: string,
+  init: RequestInit,
+  timeoutMs = UPLOAD_TIMEOUT_MS,
+): Promise<Response> {
+  const outer = init.signal;
+  const ctrl = new AbortController();
+  let timedOut = false;
+  const onOuterAbort = () => ctrl.abort(outer?.reason);
+  if (outer) {
+    if (outer.aborted) ctrl.abort(outer.reason);
+    else outer.addEventListener("abort", onOuterAbort, { once: true });
+  }
+  const timer = setTimeout(() => {
+    timedOut = true;
+    ctrl.abort(new Error("TIMEOUT"));
+  }, timeoutMs);
+  try {
+    return await fetch(url, { ...init, signal: ctrl.signal });
+  } catch (err) {
+    if (timedOut) {
+      throw new ApiRequestError(
+        "TIMEOUT",
+        `Request timed out after ${Math.round(timeoutMs / 1000)}s waiting for the server. Please try again.`,
+      );
+    }
+    throw err;
+  } finally {
+    clearTimeout(timer);
+    outer?.removeEventListener("abort", onOuterAbort);
+  }
+}
 
 export async function postForm<T>(
   path: string,
   form: FormData,
   signal?: AbortSignal,
 ): Promise<T> {
-  let response: Response;
-  // A scan waits on vision, interaction lookups and speech. Past this the
-  // host has almost certainly dropped the request, so stop and say so.
-  const deadline = new AbortController();
-  const timer = setTimeout(() => deadline.abort(), UPLOAD_TIMEOUT_MS);
-  const onAbort = () => deadline.abort();
-  signal?.addEventListener("abort", onAbort, { once: true });
-  try {
-    response = await fetch(`${API_BASE}${path}`, {
-      method: "POST",
-      body: form,
-      signal: deadline.signal,
-    });
-  } catch (error) {
-    if (signal?.aborted) throw error;
-    if (deadline.signal.aborted) throw new Error("TIMEOUT");
-    throw new Error("NETWORK");
-  } finally {
-    clearTimeout(timer);
-    signal?.removeEventListener("abort", onAbort);
+  let response: Response | null = null;
+  let lastFetchError: unknown = null;
+  const candidates = [API_BASE];
+  if (API_BASE === "http://localhost:8000") {
+    candidates.push("http://127.0.0.1:8000");
   }
+
+  for (let idx = 0; idx < candidates.length; idx++) {
+    const base = candidates[idx];
+    try {
+      response = await fetchWithTimeout(`${base}${path}`, {
+        method: "POST",
+        body: form,
+        signal,
+      });
+      break;
+    } catch (error) {
+      if (signal?.aborted) throw error;
+      if (error instanceof ApiRequestError) throw error;
+      lastFetchError = error;
+      // Only try 127.0.0.1 fallback if localhost failed directly and 127.0.0.1 /health is reachable.
+      if (idx === 0 && candidates.length > 1) {
+        try {
+          const probe = await fetchWithTimeout("http://127.0.0.1:8000/health", { method: "GET", signal }, 2500);
+          if (probe.ok) continue;
+        } catch {
+          // 127.0.0.1 also unreachable
+        }
+      }
+    }
+  }
+
+  if (!response) {
+    const detail = lastFetchError instanceof Error ? lastFetchError.message : "Failed to fetch";
+    if (typeof navigator !== "undefined" && navigator.onLine === false) {
+      throw new ApiRequestError(
+        "NETWORK",
+        "Your device appears offline. Check your internet connection and try again.",
+      );
+    }
+    try {
+      const probe = await fetchWithTimeout(`${API_BASE}/health`, { method: "GET" }, 3000);
+      if (probe.ok) {
+        throw new ApiRequestError(
+          "NETWORK",
+          `Backend server at ${API_BASE} is online, but the upload connection was interrupted (${detail}). Please retry.`,
+        );
+      }
+    } catch (probeErr) {
+      if (probeErr instanceof ApiRequestError && probeErr.code === "NETWORK" && probeErr.message.includes("is online")) {
+        throw probeErr;
+      }
+    }
+    throw new ApiRequestError(
+      "NETWORK",
+      `Could not reach backend server at ${API_BASE} (${detail}). Ensure the backend on port 8000 is running.`,
+    );
+  }
+
   if (!response.ok) {
-    if (response.status === 413) throw new Error("TOO_LARGE");
-    if (response.status === 429) throw new Error("RATE_LIMITED");
-    if (response.status === 504 || response.status === 408) throw new Error("TIMEOUT");
-    throw new Error("UPLOAD");
+    const detail = await readErrorDetail(response);
+    if (response.status === 413) {
+      throw new ApiRequestError("TOO_LARGE", detail, 413);
+    }
+    if (response.status === 429) {
+      throw new ApiRequestError("RATE_LIMITED", detail, 429);
+    }
+    if (response.status === 504 || response.status === 408) {
+      throw new ApiRequestError("TIMEOUT", detail, response.status);
+    }
+    throw new ApiRequestError(
+      "SERVER",
+      `Server returned HTTP ${response.status}: ${detail}`,
+      response.status,
+    );
   }
+
   const data: unknown = await response.json();
   if (
     (path === "/api/v1/scan-parchi" && !isScanResult(data)) ||
     (path === "/api/v1/verify-strip" && !isStripResult(data))
-  )
-    throw new Error("UPLOAD");
+  ) {
+    throw new ApiRequestError(
+      "UPLOAD",
+      "The photo could not be checked — the backend returned an unexpected response format.",
+    );
+  }
   return data as T;
 }
 
@@ -413,6 +575,9 @@ export async function sendWhatsAppReminder(payload: {
   brand_name: string;
   phone_e164: string;
   reminder_type?: "day3_checkin" | "daily_dose";
+  send_voice_note?: boolean;
+  preferred_time?: string;
+  language?: string;
 }): Promise<WhatsAppReminderResult> {
   const res = await fetch(`${API_BASE}/api/v1/whatsapp/send-reminder`, {
     method: "POST",
@@ -420,10 +585,62 @@ export async function sendWhatsAppReminder(payload: {
     body: JSON.stringify(payload),
   });
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(typeof err.detail === "string" ? err.detail : "Request failed");
+    const detail = await readErrorDetail(res);
+    throw new ApiRequestError("SERVER", `HTTP ${res.status}: ${detail}`, res.status);
   }
   return (await res.json()) as WhatsAppReminderResult;
+}
+
+export async function fetchReminders(
+  patientId: string,
+  signal?: AbortSignal,
+): Promise<{ configured: boolean; provider: string | null; reminders: SavedReminderItem[] }> {
+  const res = await fetch(
+    `${API_BASE}/api/v1/whatsapp/reminders?patient_id=${encodeURIComponent(patientId)}`,
+    { signal },
+  );
+  if (!res.ok) {
+    const detail = await readErrorDetail(res);
+    throw new ApiRequestError("SERVER", `HTTP ${res.status}: ${detail}`, res.status);
+  }
+  return (await res.json()) as {
+    configured: boolean;
+    provider: string | null;
+    reminders: SavedReminderItem[];
+  };
+}
+
+export async function deleteReminder(
+  patientId: string,
+  reminderId: string,
+): Promise<boolean> {
+  const res = await fetch(
+    `${API_BASE}/api/v1/whatsapp/reminders/${encodeURIComponent(reminderId)}?patient_id=${encodeURIComponent(patientId)}`,
+    { method: "DELETE" },
+  );
+  return res.ok;
+}
+
+export async function updateReminderStatus(
+  patientId: string,
+  reminderId: string,
+  status: string,
+  adherenceReply?: string,
+): Promise<SavedReminderItem> {
+  const res = await fetch(
+    `${API_BASE}/api/v1/whatsapp/reminders/${encodeURIComponent(reminderId)}?patient_id=${encodeURIComponent(patientId)}`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status, adherence_reply: adherenceReply }),
+    },
+  );
+  if (!res.ok) {
+    const detail = await readErrorDetail(res);
+    throw new ApiRequestError("SERVER", `HTTP ${res.status}: ${detail}`, res.status);
+  }
+  const data = (await res.json()) as { reminder: SavedReminderItem };
+  return data.reminder;
 }
 
 export async function simulateWhatsAppReply(payload: {
@@ -502,4 +719,161 @@ export async function clearCabinet(patientId: string): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+export type LocalMedicineMatch = {
+  brand_name: string;
+  generic_salts: string[];
+  common_strengths_mg: number[];
+  max_single_dose_mg: number;
+  max_daily_dose_mg: number;
+  is_antibiotic: boolean;
+  who_aware_tier: string;
+  bioequivalent_pk_brands: string[];
+  source: string;
+};
+
+export type MedSterSearchMatch = {
+  id: string;
+  name: string;
+  price: string | null;
+  source: string;
+};
+
+export type MedicineSearchResponse = {
+  query: string;
+  local_matches: LocalMedicineMatch[];
+  medster_matches: MedSterSearchMatch[];
+};
+
+export type MedicineDetailsResponse = {
+  medster: {
+    id: string;
+    name: string;
+    price: string | null;
+    discount: string | null;
+    ingredients: string | null;
+    dosage_form: string | null;
+    drug_class: string | null;
+    drug_interactions: string | null;
+    dose: string | null;
+    over_dose: string | null;
+    side_effects: string | null;
+    precautions: string | null;
+    sections: Array<{ section: string; title: string; content: string }>;
+    source: string;
+  } | null;
+  formulary: (LocalMedicineMatch & {
+    drap_shortage_flagged: boolean;
+    urdu_category_note: string;
+  }) | null;
+};
+
+export async function searchMedicines(
+  query: string,
+  signal?: AbortSignal,
+): Promise<MedicineSearchResponse> {
+  const res = await fetch(
+    `${API_BASE}/api/v1/medicines/search?q=${encodeURIComponent(query)}`,
+    { signal },
+  );
+  if (!res.ok) throw new Error("Medicine search failed");
+  return (await res.json()) as MedicineSearchResponse;
+}
+
+export async function fetchMedicineDetails(
+  params: { id?: string; brand?: string },
+  signal?: AbortSignal,
+): Promise<MedicineDetailsResponse> {
+  const qs = new URLSearchParams();
+  if (params.id) qs.set("id", params.id);
+  if (params.brand) qs.set("brand", params.brand);
+  const res = await fetch(`${API_BASE}/api/v1/medicines/details?${qs.toString()}`, {
+    signal,
+  });
+  if (!res.ok) throw new Error("Medicine details unavailable");
+  return (await res.json()) as MedicineDetailsResponse;
+}
+
+export async function visionChat(payload: {
+  file: File;
+  userPrompt: string;
+  messages?: Array<{ type: "user" | "ai"; content: string }>;
+}): Promise<{ provider: string; model: string; response: string }> {
+  const form = new FormData();
+  form.append("file", payload.file);
+  form.append("user_prompt", payload.userPrompt);
+  form.append("messages", JSON.stringify(payload.messages || []));
+  const res = await fetch(`${API_BASE}/api/v1/vision/chat`, {
+    method: "POST",
+    body: form,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(typeof err.detail === "string" ? err.detail : "Vision chat unavailable");
+  }
+  return (await res.json()) as { provider: string; model: string; response: string };
+}
+
+export async function synthesizeUrduTts(
+  text: string,
+): Promise<{ configured: boolean; provider: string | null; audio_urdu_url: string | null }> {
+  const res = await fetch(`${API_BASE}/api/v1/tts/urdu`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text }),
+  });
+  if (!res.ok) throw new Error("TTS request failed");
+  return (await res.json()) as {
+    configured: boolean;
+    provider: string | null;
+    audio_urdu_url: string | null;
+  };
+}
+
+export async function transcribeUrduAudio(
+  file: Blob,
+  filename = "voice.webm",
+  language = "ur",
+): Promise<{ configured: boolean; provider: string | null; text: string | null }> {
+  const form = new FormData();
+  form.append("file", file, filename);
+  form.append("language", language);
+  const res = await fetch(`${API_BASE}/api/v1/stt/urdu`, {
+    method: "POST",
+    body: form,
+  });
+  if (!res.ok) throw new Error("Audio transcription failed");
+  return (await res.json()) as {
+    configured: boolean;
+    provider: string | null;
+    text: string | null;
+  };
+}
+
+export async function fetchPatientScans(
+  patientId: string,
+  signal?: AbortSignal,
+): Promise<Array<{ scan_id: string; patient_id: string; overall_status: string; audio_urdu_url: string | null; created_at: string }>> {
+  const res = await fetch(
+    `${API_BASE}/api/v1/patients/${encodeURIComponent(patientId)}/scans`,
+    { signal },
+  );
+  if (!res.ok) throw new Error("History fetch failed");
+  const data = (await res.json()) as {
+    scans?: Array<{ scan_id: string; patient_id: string; overall_status: string; audio_urdu_url: string | null; created_at: string }>;
+  };
+  return Array.isArray(data.scans) ? data.scans : [];
+}
+
+export async function fetchScanById(
+  scanId: string,
+  signal?: AbortSignal,
+): Promise<ScanResult | null> {
+  const res = await fetch(`${API_BASE}/api/v1/scans/${encodeURIComponent(scanId)}`, {
+    signal,
+  });
+  if (!res.ok) return null;
+  const data: unknown = await res.json();
+  return isScanResult(data) ? data : null;
 }

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useId, useRef, useState } from "react";
 import { Play, Pause, RotateCcw, Volume2 } from "lucide-react";
-import { assetUrl } from "@/lib/api";
+import { assetUrl, synthesizeUrduTts } from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
 import { WaveArt } from "./MedicalArt";
 import SpeakerButton, { announceAudio } from "./SpeakerButton";
@@ -19,11 +19,18 @@ export default function AudioPlayer({
   const { t } = useLanguage();
   const audio = useRef<HTMLAudioElement>(null);
   const id = useId();
+  const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
+  const [generating, setGenerating] = useState(false);
+  const [ttsNotice, setTtsNotice] = useState("");
+  const effectiveUrl = audioUrl || generatedUrl;
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [position, setPosition] = useState(0);
   const [error, setError] = useState(false);
   const [speed, setSpeed] = useState(1);
+  useEffect(() => {
+    setGeneratedUrl(null);
+  }, [audioUrl, text]);
   useEffect(() => {
     const stop = (e: Event) => {
       if ((e as CustomEvent).detail !== id) audio.current?.pause();
@@ -60,11 +67,11 @@ export default function AudioPlayer({
         <span>{t("voice")}</span>
       </div>
       <WaveArt active={playing} />
-      {audioUrl ? (
+      {effectiveUrl ? (
         <>
           <audio
             ref={audio}
-            src={assetUrl(audioUrl)}
+            src={assetUrl(effectiveUrl)}
             preload="metadata"
             onPlaying={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
@@ -149,7 +156,33 @@ export default function AudioPlayer({
       ) : (
         <div className="audio-fallback">
           <p>{t("audioUnavailable")}</p>
-          <SpeakerButton text={text} label={t("browserVoice")} />
+          <div className="wa-reply-buttons">
+            <SpeakerButton text={text} label={t("browserVoice")} />
+            <button
+              type="button"
+              className="secondary-button"
+              disabled={generating || !text.trim()}
+              onClick={() => {
+                setGenerating(true);
+                setTtsNotice("");
+                void synthesizeUrduTts(text)
+                  .then((res) => {
+                    if (res.audio_urdu_url) {
+                      setGeneratedUrl(res.audio_urdu_url);
+                    } else {
+                      setTtsNotice(t("ttsServerUnavailable"));
+                    }
+                  })
+                  .catch(() => {
+                    setTtsNotice(t("ttsServerUnavailable"));
+                  })
+                  .finally(() => setGenerating(false));
+              }}
+            >
+              {generating ? t("loading") : t("generateUrduAudio")}
+            </button>
+          </div>
+          {ttsNotice && <p className="audio-language-note">{ttsNotice}</p>}
         </div>
       )}
       <p className="audio-language-note">{t("voiceOnly")}</p>

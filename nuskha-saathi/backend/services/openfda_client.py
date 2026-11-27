@@ -105,7 +105,7 @@ class OpenFdaClient:
         live: bool = True,
     ):
         self.allowed_salts = {salt.casefold() for salt in allowed_salts}
-        self.api_key = api_key if api_key is not None else os.environ.get("OPENFDA_API_KEY") or None
+        self._explicit_api_key = api_key
         self.fetcher = fetcher
         self.live = live
         self.fallback: dict[tuple[str, str], InteractionHit] = {}
@@ -120,6 +120,16 @@ class OpenFdaClient:
                 urdu_warning=row["urdu_warning"],
             )
         self._label_cache: dict[str, dict | None] = {}
+
+    @property
+    def api_key(self) -> str | None:
+        if self._explicit_api_key is not None:
+            return self._explicit_api_key or None
+        return os.environ.get("OPENFDA_API_KEY") or None
+
+    @api_key.setter
+    def api_key(self, value: str | None) -> None:
+        self._explicit_api_key = value
 
     @classmethod
     def from_resolver(
@@ -138,7 +148,7 @@ class OpenFdaClient:
             raise ValueError(f"openFDA queries accept generic salts only, not {salt!r}")
         return key
 
-    async def fetch_label(self, salt: str) -> dict | None:
+    async def fetch_label(self, salt: str, *, client: httpx.AsyncClient | None = None, quick: bool = False) -> dict | None:
         key = self.assert_salt(salt)
         if key in self._label_cache:
             return self._label_cache[key]
@@ -146,8 +156,17 @@ class OpenFdaClient:
             self._label_cache[key] = None
             return None
         result = None
-        for search in (f'openfda.generic_name:"{key}"', f"openfda.generic_name:{key}*"):
-            payload = await self._get_json(build_label_url(key, self.api_key, search))
+        searches = (
+            (f'openfda.generic_name:"{key}"',)
+            if quick
+            else (f'openfda.generic_name:"{key}"', f"openfda.generic_name:{key}*")
+        )
+        for search in searches:
+            payload = await self._get_json(
+                build_label_url(key, self.api_key, search),
+                client=client,
+                max_attempts=1 if quick else 3,
+            )
             results = (payload or {}).get("results") or []
             if results and isinstance(results[0], dict):
                 result = results[0]
@@ -155,32 +174,42 @@ class OpenFdaClient:
         self._label_cache[key] = result
         return result
 
-    async def _get_json(self, url: str) -> dict | None:
+    async def _get_json(
+        self,
+        url: str,
+        *,
+        client: httpx.AsyncClient | None = None,
+        max_attempts: int = 3,
+    ) -> dict | None:
         delay = 0.4
-        for attempt in range(3):
+        attempts = max(1, max_attempts)
+        for attempt in range(attempts):
             try:
                 if self.fetcher is not None:
                     data = await self.fetcher(url)
                     return data if isinstance(data, dict) else None
-                async with httpx.AsyncClient(timeout=8.0) as client:
+                if client is not None:
                     response = await client.get(url, headers={"User-Agent": "nuskha-saathi"})
-                    if response.status_code in _NON_RETRYABLE_STATUSES:
-                        event("openfda_lookup", "no_labels" if response.status_code == 404 else "failed", error=f"HTTP_{response.status_code}")
-                        return None
-                    response.raise_for_status()
-                    data = response.json()
-                    return data if isinstance(data, dict) else None
+                else:
+                    async with httpx.AsyncClient(timeout=8.0) as local_client:
+                        response = await local_client.get(url, headers={"User-Agent": "nuskha-saathi"})
+                if response.status_code in _NON_RETRYABLE_STATUSES:
+                    event("openfda_lookup", "no_labels" if response.status_code == 404 else "failed", error=f"HTTP_{response.status_code}")
+                    return None
+                response.raise_for_status()
+                data = response.json()
+                return data if isinstance(data, dict) else None
             except httpx.HTTPStatusError as exc:
                 if exc.response is not None and exc.response.status_code in _NON_RETRYABLE_STATUSES:
                     event("openfda_lookup", "no_labels" if exc.response.status_code == 404 else "failed", error=error_category(exc))
                     return None
-                if attempt == 2:
+                if attempt == attempts - 1:
                     event("openfda_lookup", "failed", error=error_category(exc))
                     return None
                 await asyncio.sleep(delay)
                 delay *= 2
             except Exception as exc:
-                if attempt == 2:
+                if attempt == attempts - 1:
                     event("openfda_lookup", "failed", error=error_category(exc))
                     return None
                 await asyncio.sleep(delay)
@@ -232,16 +261,37 @@ class OpenFdaClient:
     async def _prefetch_salts(self, salts: set[str]) -> None:
         if not self.live or not salts:
             return
-        sem = asyncio.Semaphore(5)
+        if self.fetcher is not None:
+            sem = asyncio.Semaphore(5)
 
-        async def _load(salt: str) -> None:
-            async with sem:
-                try:
-                    await self.fetch_label(salt)
-                except ValueError:
-                    return
+            async def _load_custom(salt: str) -> None:
+                async with sem:
+                    try:
+                        await self.fetch_label(salt)
+                    except ValueError:
+                        return
 
-        await asyncio.gather(*(_load(salt) for salt in sorted(salts)), return_exceptions=True)
+            await asyncio.gather(*(_load_custom(salt) for salt in sorted(salts)), return_exceptions=True)
+            return
+
+        sem = asyncio.Semaphore(6)
+        async with httpx.AsyncClient(timeout=3.0) as shared_client:
+            async def _load(salt: str) -> None:
+                async with sem:
+                    try:
+                        await self.fetch_label(salt, client=shared_client, quick=True)
+                    except ValueError:
+                        return
+
+            try:
+                await asyncio.wait_for(
+                    asyncio.gather(*(_load(salt) for salt in sorted(salts)), return_exceptions=True),
+                    timeout=4.0,
+                )
+            except asyncio.TimeoutError:
+                pass
+            for salt in salts:
+                self._label_cache.setdefault(salt, None)
 
     async def check_medications(self, current: list[dict], cabinet: list[dict]) -> list[InteractionHit]:
         """Pair drugs on this parchi with each other and with the active cabinet.

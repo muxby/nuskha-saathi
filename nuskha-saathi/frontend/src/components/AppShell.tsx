@@ -7,6 +7,7 @@ import {
   SlidersHorizontal,
   ShieldCheck,
   Check,
+  BellRing,
 } from "lucide-react";
 import { LanguageSwitch, useLanguage } from "@/lib/i18n";
 import { BrandMark, FooterEngravingArt } from "@/components/MedicalArt";
@@ -27,6 +28,7 @@ const links = [
   { view: "scan", key: "scan", shortKey: "navScan", icon: ScanLine },
   { view: "verify", key: "verify", shortKey: "navScan", icon: ShieldCheck },
   { view: "medicines", key: "medicines", shortKey: "navMeds", icon: Pill },
+  { view: "reminders", key: "reminders", shortKey: "navReminders", icon: BellRing },
   { view: "history", key: "history", shortKey: "navHistory", icon: Clock3 },
 ] as const;
 

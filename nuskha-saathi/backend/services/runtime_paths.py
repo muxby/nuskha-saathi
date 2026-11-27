@@ -27,14 +27,15 @@ def writable_root() -> Path:
 
 
 def writable_static_root() -> Path:
-    root = writable_root() / "static"
+    override = os.environ.get("NUSKHA_STATIC_DIR", "").strip()
+    root = Path(override) if override else (writable_root() / "static")
     (root / "strips").mkdir(parents=True, exist_ok=True)
     (root / "audio").mkdir(parents=True, exist_ok=True)
     return root
 
 
 def writable_db_path() -> Path:
-    override = os.environ.get("NUSKHA_DB_PATH")
+    override = os.environ.get("NUSKHA_DB_PATH", "").strip()
     if override:
         return Path(override)
     if is_serverless_readonly():

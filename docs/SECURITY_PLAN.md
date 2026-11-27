@@ -153,9 +153,11 @@ Rules:
 | :--- | :--- | :--- |
 | Gemini API key | Backend env only | Never in the Next.js client, never in git |
 | openFDA API key | Backend env | Free tier is 240 requests/minute. Cache and the local matrix absorb throttling |
+| OpenRouter API key | Backend env | Optional second photo reader. Photos leave for a third party; off unless the key is set |
+| FreeAPI and MedSter (no key) | Backend env flags | Receive photos (`FREEAPI_IMGCHAT_ENABLED`), voice notes (`FREEAPI_TRANSCRIBE_ENABLED`), medicine names (`MEDSTER_LIVE`, `MEDICINE_WEB_LIVE`), or fixed Urdu script (`FREEAPI_TTS_ENABLED`). Set flags to `false` / `0` for strict patient-data isolation |
 | freeapi.pro text-to-speech | No credential | Called from the backend only; receives the fixed Urdu script, nothing that identifies a patient |
-| Azure Speech credentials | Backend env | Fallback path only |
-| Uplift AI bearer token | Backend env | Speech-to-text stays server-side |
+| Azure Speech credentials | Backend env | Fallback Urdu voice path only (speaks in the selected voice) |
+| Uplift AI bearer token | Backend env | Optional Urdu speech-to-text (`scribe`) stays server-side |
 | Supabase service role | Backend env | The browser uses the public anon key only for reads the product explicitly allows |
 | Twilio or Meta WhatsApp token | Backend env | Webhook verifies the provider signature before it trusts a reply |
 

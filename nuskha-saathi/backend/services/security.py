@@ -104,9 +104,9 @@ def client_key(forwarded_for: str | None, peer: str | None) -> str:
     return (peer or "unknown")[:64]
 
 
-# Speech is limited too: each call spends a request at the voice provider.
+# Speech and vision routes spend requests at third-party providers.
 RATE_LIMITED_PATHS: frozenset[str] = frozenset(
-    {"/api/v1/scan-parchi", "/api/v1/verify-strip", "/api/v1/speech"}
+    {"/api/v1/scan-parchi", "/api/v1/verify-strip", "/api/v1/vision/chat", "/api/v1/speech"}
 )
 # Each call to the self-test spends one provider request, so it is limited too.
 RATE_LIMITED_ANY_METHOD: frozenset[str] = frozenset({"/api/v1/diagnostics/vision"})

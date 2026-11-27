@@ -4,21 +4,35 @@
 
 ### Added
 
-- Server Urdu audio from freeapi.pro text-to-speech, with no API key. Four
-  voices only: Uzma (default), Asad, Gul and Salman.
-- Backend panel: choose the Urdu voice, play a sample of each, and a live
-  check that the voice provider answers.
-- `POST /api/v1/speech`: warnings, refusals and strip verdicts are read by
-  the same Urdu voice instead of depending on a voice installed on the phone.
-- `URDU_TTS_VOICE` and `FREEAPI_TTS_ENABLED` settings.
+- Extra photo readers behind Gemini: OpenRouter and FreeAPI ImgChat, ordered
+  by `VISION_PRIMARY`. A provider outage is still reported as a service
+  problem, never as an unreadable photo.
+- MedSter catalogue search, web medicine resolution with a SQLite cache, and
+  `GET /api/v1/medicines/search`, `GET /api/v1/medicines/details`.
+- `POST /api/v1/vision/chat`, `POST /api/v1/tts/urdu`, `POST /api/v1/stt/urdu`,
+  and `POST /api/v1/speech` (single-line Urdu neural voice synthesis).
+- Server Urdu audio from `freeapi.pro` text-to-speech, with no API key. Four
+  voices only: Uzma (default), Asad, Gul and Salman, selectable in `/admin`
+  with sample playback and live voice verification.
+- Reminders: whole-prescription scheduling, status updates
+  (`PATCH /api/v1/whatsapp/reminders/{id}`), in-app alerts and `.ics` export.
+- Formulary expanded to 332 brands; strip verification no longer needs a strength.
+- Local setup: `.env` loader, `start.sh` / `start.ps1`, fuller `.env.example`.
 
 ### Changed
 
-- The voice now receives Urdu script. Fixed engine lines and all 327 brand
-  and 196 salt names are rewritten from a fixed table before synthesis; Urdu
-  neural voices mispronounce Roman Urdu and skip unfamiliar Latin words.
-- Uplift and Google speech providers are removed. Azure Speech remains as an
-  optional fallback using the selected voice.
+- Voice synthesis receives Urdu script only: fixed engine lines and all
+  brand/salt names are rewritten from fixed tables (`urdu_speech.py`,
+  `urdu_names.py`) before synthesis, with Azure Speech as an optional fallback
+  using the selected voice. Uplift TTS and Google TTS were removed (Uplift
+  Scribe remains optional for STT alongside FreeAPI Transcribe, Gemini, and OpenRouter).
+
+### Hardening
+
+- Gemini voice transcription and web lookup send the key in a header.
+- `POST /api/v1/vision/chat` and `POST /api/v1/speech` share the per-client scan rate limit.
+- Third-party services can be switched off per deployment; see the
+  deployment guide for what each one receives.
 
 ## 0.4.0
 

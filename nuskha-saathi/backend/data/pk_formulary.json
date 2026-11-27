@@ -17,7 +17,8 @@
     "who_aware_tier": "NONE",
     "drap_shortage_flagged": false,
     "bioequivalent_pk_brands": [
-      "Rabecid"
+      "Rabecid",
+      "Razo"
     ],
     "urdu_category_note": "Yeh Aciphex hai. Doctor ki batayi hui miqdar se zyada na lein."
   },
@@ -176,6 +177,26 @@
     "drap_shortage_flagged": false,
     "bioequivalent_pk_brands": [],
     "urdu_category_note": "Yeh Amaryl M hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Ambulax",
+    "aliases": [
+      "Ambulax"
+    ],
+    "generic_salts": [
+      "alprazolam",
+      "propranolol"
+    ],
+    "common_strengths_mg": [
+      20
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 60,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [],
+    "urdu_category_note": "Yeh Ambulax hai. Doctor ki batayi hui miqdar se zyada na lein."
   },
   {
     "brand_name": "Amika",
@@ -2040,6 +2061,28 @@
       "Euglucon"
     ],
     "urdu_category_note": "Yeh Daonil hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Deanxit",
+    "aliases": [
+      "Deanxit"
+    ],
+    "generic_salts": [
+      "flupentixol",
+      "melitracen"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Placida"
+    ],
+    "urdu_category_note": "Yeh Deanxit hai. Doctor ki batayi hui miqdar se zyada na lein."
   },
   {
     "brand_name": "Deltacortril",
@@ -5239,6 +5282,28 @@
     "urdu_category_note": "Yeh Persantin hai. Doctor ki batayi hui miqdar se zyada na lein."
   },
   {
+    "brand_name": "Petril",
+    "aliases": [
+      "Petril"
+    ],
+    "generic_salts": [
+      "clonazepam"
+    ],
+    "common_strengths_mg": [
+      0.5,
+      2
+    ],
+    "max_single_dose_mg": 2,
+    "max_daily_dose_mg": 20,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Rivotril"
+    ],
+    "urdu_category_note": "Yeh Petril hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
     "brand_name": "Phenergan",
     "aliases": [
       "Phenergan",
@@ -5278,6 +5343,28 @@
     "drap_shortage_flagged": false,
     "bioequivalent_pk_brands": [],
     "urdu_category_note": "Yeh Piriton hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Placida",
+    "aliases": [
+      "Placida"
+    ],
+    "generic_salts": [
+      "flupentixol",
+      "melitracen"
+    ],
+    "common_strengths_mg": [
+      10
+    ],
+    "max_single_dose_mg": 10,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Deanxit"
+    ],
+    "urdu_category_note": "Yeh Placida hai. Doctor ki batayi hui miqdar se zyada na lein."
   },
   {
     "brand_name": "Plavix",
@@ -5516,9 +5603,32 @@
     "who_aware_tier": "NONE",
     "drap_shortage_flagged": false,
     "bioequivalent_pk_brands": [
-      "Aciphex"
+      "Aciphex",
+      "Razo"
     ],
     "urdu_category_note": "Yeh Rabecid hai. Doctor ki batayi hui miqdar se zyada na lein."
+  },
+  {
+    "brand_name": "Razo",
+    "aliases": [
+      "Razo"
+    ],
+    "generic_salts": [
+      "rabeprazole"
+    ],
+    "common_strengths_mg": [
+      20
+    ],
+    "max_single_dose_mg": 20,
+    "max_daily_dose_mg": 40,
+    "is_antibiotic": false,
+    "who_aware_tier": "NONE",
+    "drap_shortage_flagged": false,
+    "bioequivalent_pk_brands": [
+      "Aciphex",
+      "Rabecid"
+    ],
+    "urdu_category_note": "Yeh Razo hai. Doctor ki batayi hui miqdar se zyada na lein."
   },
   {
     "brand_name": "Renitec",
@@ -5681,7 +5791,9 @@
     "is_antibiotic": false,
     "who_aware_tier": "NONE",
     "drap_shortage_flagged": false,
-    "bioequivalent_pk_brands": [],
+    "bioequivalent_pk_brands": [
+      "Petril"
+    ],
     "urdu_category_note": "Yeh Rivotril hai. Doctor ki batayi hui miqdar se zyada na lein."
   },
   {
