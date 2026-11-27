@@ -64,3 +64,17 @@ def test_exact_match_can_append_the_schedule():
     assert exact_strip_urdu("Leflox", 500, "Subah leni hai.").endswith("Subah leni hai.")
 
 
+def test_generic_match_asks_for_pharmacist_confirmation():
+    line = generic_match_urdu("Cravit", "Leflox", 500)
+    assert "Pharmacist se brand ki tasdeeq" in line
+
+
+def test_shortage_line_never_tells_the_patient_to_switch():
+    line = shortage_urdu("Leflox", ["Cravit", "Tavanic"])
+    assert "Cravit, Tavanic" in line
+    assert "Khud se dawai na badlein." in line
+    assert "pharmacist ke pas maujood generic" in shortage_urdu("Leflox", [])
+
+
+def test_join_script_drops_blank_parts():
+    assert join_script(["  a ", "", "   ", "b"]) == "a b"
