@@ -1,0 +1,10 @@
+/* Engine-authored Urdu. Direction follows the script of the string itself. */
+.clinical-text[dir="ltr"] {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  text-align: left;
+  letter-spacing: 0;
+  max-inline-size: 62ch;
+}
+
