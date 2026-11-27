@@ -113,6 +113,7 @@ def create_app(
             "interaction_pairs": len(app.state.fda.fallback),
             "capabilities": {
                 "vision_configured": bool(os.getenv("GEMINI_API_KEY")),
+                "vision_model": getattr(app.state.extractor, "active_model", None),
                 "tts_configured": tts_configured(),
                 "openfda_live": bool(app.state.fda.live),
                 "whatsapp_configured": whatsapp_configured(),
