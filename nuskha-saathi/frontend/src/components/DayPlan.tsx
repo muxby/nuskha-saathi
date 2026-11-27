@@ -58,7 +58,6 @@ export default function DayPlan({ medications }: { medications: Medication[] }) 
           );
         })}
       </ol>
-      {/* @@ feat(results): list verified medicines whose timing is unknown */}
       {untimed.length > 0 && (
         <div className="day-plan-note day-plan-untimed">
           <TriangleAlert size={18} aria-hidden="true" />
@@ -68,7 +67,6 @@ export default function DayPlan({ medications }: { medications: Medication[] }) 
           </p>
         </div>
       )}
-      {/* @@ feat(results): disclose lines withheld from the day plan */}
       {hidden > 0 && (
         <p className="day-plan-note">
           <TriangleAlert size={18} aria-hidden="true" />

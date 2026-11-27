@@ -32,7 +32,6 @@ export default function ScanSummary({ scan }: { scan: ScanResult }) {
           <p>{copy[`${summary.tone}Body`]}</p>
         </div>
       </div>
-      {/* @@ feat(results): show line counts and warnings in the summary */}
       <dl className="scan-summary-stats">
         <div>
           <dt>{copy.linesRead}</dt>
@@ -51,7 +50,6 @@ export default function ScanSummary({ scan }: { scan: ScanResult }) {
           <dd><bdi>{warnings}</bdi></dd>
         </div>
       </dl>
-      {/* @@ feat(results): add matched versus unconfirmed proportion bar */}
       {summary.total > 0 && (
         <div
           className="scan-summary-bar"
