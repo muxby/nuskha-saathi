@@ -6,6 +6,7 @@
   <meta name="robots" content="noindex,nofollow">
   <title>Backend monitor · Sign in</title>
   <link rel="stylesheet" href="/admin/assets/panel.css">
+  <script src="/admin/assets/login.js" defer></script>
 </head>
 <body>
 <main class="login">
@@ -17,6 +18,7 @@
     <label for="password">Admin password</label>
     <input id="password" type="password" name="password" autocomplete="current-password" required maxlength="1024" autofocus>
     <button type="submit">Sign in</button>
+    <p id="login-error" class="bad" role="alert"></p>
   </form>
   <p class="muted">Access is enabled by setting ADMIN_MONITOR_PASSWORD on the server. Sessions expire after 8 hours or a restart. Five wrong attempts lock sign-in for five minutes.</p>
 </main>
