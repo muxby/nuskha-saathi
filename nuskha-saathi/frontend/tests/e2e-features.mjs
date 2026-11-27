@@ -81,6 +81,10 @@ check("results fit a 360px viewport in English and Urdu", async ({ browser }) =>
 
 check("results summary and day plan have no axe violations", async ({ page }) => {
   await openDemoCase(page, 0);
+  // Entry transitions fade text in; contrast is only meaningful once settled.
+  await page.evaluate(() =>
+    Promise.all(document.getAnimations().map((animation) => animation.finished.catch(() => null))),
+  );
   const results = await new AxeBuilder({ page })
     .include(".scan-summary")
     .include(".day-plan")
