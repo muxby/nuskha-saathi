@@ -40,6 +40,7 @@ export function MedicineLibrary({
   onScan,
   onAddCabinet,
   onRemoveCabinet,
+  onClearCabinet,
 }: {
   records: SavedPrescription[];
   cabinetItems?: CabinetItem[];
@@ -54,6 +55,7 @@ export function MedicineLibrary({
     source_label?: string;
   }) => Promise<void>;
   onRemoveCabinet?: (id: string) => Promise<void>;
+  onClearCabinet?: () => Promise<void>;
 }) {
   const { t, language } = useLanguage();
   const scans = records.map((r) => r.scan);
@@ -189,6 +191,7 @@ export function MedicineLibrary({
           items={cabinetItems}
           onAdd={onAddCabinet}
           onRemove={onRemoveCabinet}
+          onClear={onClearCabinet}
         />
       )}
     </section>
