@@ -10,3 +10,38 @@ export function pick<T>(copy: Bilingual<T>, language: Language): T {
   return copy[language];
 }
 
+export const summaryCopy = {
+  en: {
+    eyebrow: "Safety check result",
+    stop: "Stop. Speak to your doctor before taking these together.",
+    ask: "Ask a pharmacist before you start.",
+    clear: "Every line matched the medicine list.",
+    empty: "No medicine line could be read.",
+    stopBody: "A serious interaction was found. The warning below shows the source wording.",
+    askBody: "Parts of this prescription could not be confirmed. Nothing uncertain is shown as a dose.",
+    clearBody: "No interaction was found in the checked sources. Keep following your clinician's instructions.",
+    emptyBody: "Retake the photo in good light with the whole prescription in frame.",
+    linesRead: "Lines read",
+    matched: "Matched",
+    needConfirmation: "Need confirmation",
+    warnings: "Warnings",
+    proportion: "Matched and unconfirmed lines",
+  },
+  ur: {
+    eyebrow: "حفاظتی جانچ کا نتیجہ",
+    stop: "رکیے۔ یہ دوائیں ایک ساتھ لینے سے پہلے ڈاکٹر سے بات کریں۔",
+    ask: "دوا شروع کرنے سے پہلے فارماسسٹ سے پوچھیں۔",
+    clear: "ہر سطر دواؤں کی فہرست سے مل گئی۔",
+    empty: "کوئی دوا کی سطر پڑھی نہیں جا سکی۔",
+    stopBody: "ایک سنگین تعامل ملا ہے۔ نیچے دی گئی تنبیہ میں ماخذ کے الفاظ موجود ہیں۔",
+    askBody: "اس نسخے کے کچھ حصوں کی تصدیق نہیں ہو سکی۔ غیر یقینی چیز خوراک کے طور پر نہیں دکھائی گئی۔",
+    clearBody: "جانچے گئے ماخذ میں کوئی تعامل نہیں ملا۔ اپنے معالج کی ہدایات پر عمل جاری رکھیں۔",
+    emptyBody: "اچھی روشنی میں پورا نسخہ فریم میں رکھ کر دوبارہ تصویر لیں۔",
+    linesRead: "پڑھی گئی سطریں",
+    matched: "مل گئیں",
+    needConfirmation: "تصدیق درکار",
+    warnings: "تنبیہات",
+    proportion: "مل جانے والی اور غیر مصدقہ سطریں",
+  },
+} satisfies Bilingual<Record<string, string>>;
+
