@@ -36,3 +36,9 @@ export function formatDuration(days: number | null | undefined, lang: Lang): str
   return whole === 1 ? "1 day" : `${whole} days`;
 }
 
+/** `["amoxicillin","clavulanate"]` → "amoxicillin + clavulanate". */
+export function formatSalts(salts: string[] | null | undefined): string {
+  if (!salts?.length) return "";
+  return salts.filter(Boolean).join(" + ");
+}
+
