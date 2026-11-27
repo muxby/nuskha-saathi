@@ -40,3 +40,40 @@
   --tone-bg: var(--green-bg);
 }
 
+.scan-summary-lead {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.scan-summary-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  inline-size: 60px;
+  block-size: 60px;
+  border-radius: 18px;
+  background: var(--tone-bg);
+  color: var(--tone);
+}
+
+.scan-summary h2 {
+  margin-block: 4px 8px;
+  font-size: clamp(1.3rem, 1rem + 1.1vw, 1.75rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.scan-summary-lead p {
+  color: var(--ink-muted);
+  max-inline-size: 52ch;
+  line-height: 1.6;
+}
+
+html[lang="ur"] .scan-summary h2 {
+  letter-spacing: 0;
+  line-height: 1.9;
+}
+
