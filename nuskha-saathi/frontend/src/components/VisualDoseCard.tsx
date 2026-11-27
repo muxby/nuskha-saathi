@@ -21,6 +21,7 @@ import { useLanguage } from "@/lib/i18n";
 import SpeakerButton from "./SpeakerButton";
 import StripVerifierModal from "./StripVerifierModal";
 import ClinicalText from "./ClinicalText";
+import { doseLine } from "@/lib/urduDose";
 const slots = [
   { key: "morning", icon: Sunrise },
   { key: "afternoon", icon: Sun },
@@ -128,6 +129,9 @@ export default function VisualDoseCard({
           );
         })}
       </div>
+      {doseLine(schedule, language) && (
+        <p className="dose-sentence">{doseLine(schedule, language)}</p>
+      )}
       <div className="dose-details">
         <div>
           <Utensils size={24} />
