@@ -29,3 +29,19 @@ def test_health_response_has_security_headers(client):
     assert response.headers["referrer-policy"] == "no-referrer"
 
 
+def test_api_responses_are_no_store(client):
+    response = client.get("/api/v1/cabinet/patient-a")
+    assert response.headers["cache-control"] == "no-store"
+
+
+def test_health_is_not_forced_no_store():
+    assert "Cache-Control" not in headers_for("/health")
+    assert headers_for("/api/v1/scan-parchi")["Cache-Control"] == "no-store"
+
+
+def test_error_responses_also_carry_headers(client):
+    response = client.get("/api/v1/cabinet/%20")
+    assert response.status_code == 400
+    assert response.headers["x-content-type-options"] == "nosniff"
+
+
