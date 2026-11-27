@@ -45,3 +45,36 @@ def allowed_origins() -> list[str]:
     return [origin for origin in origins if origin] or ["*"]
 
 
+class RateLimiter:
+    """Sliding-window limiter keyed by client. Process-local by design.
+
+    A single instance bounds one process. It is a cost guard for the vision
+    endpoints, not an account system, and it resets on restart.
+    """
+
+    def __init__(self, limit: int, window_seconds: float = 60.0, clock=time.monotonic):
+        self.limit = max(0, int(limit))
+        self.window = float(window_seconds)
+        self._clock = clock
+        self._hits: dict[str, deque[float]] = defaultdict(deque)
+        self._lock = threading.Lock()
+
+    @property
+    def enabled(self) -> bool:
+        return self.limit > 0
+
+    def check(self, key: str) -> tuple[bool, int]:
+        """Record a hit. Returns ``(allowed, retry_after_seconds)``."""
+        if not self.enabled:
+            return True, 0
+        now = self._clock()
+        with self._lock:
+            hits = self._hits[key]
+            while hits and now - hits[0] >= self.window:
+                hits.popleft()
+            if len(hits) >= self.limit:
+                retry = max(1, int(self.window - (now - hits[0]) + 0.999))
+                return False, retry
+            hits.append(now)
+            return True, 0
+
