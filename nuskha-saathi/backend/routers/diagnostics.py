@@ -50,3 +50,13 @@ async def vision_selftest(request: Request):
     }
 
 
+_HINTS = {
+    "OK": "The reader answered. Scans will be analysed.",
+    "NOT_CONFIGURED": "Set GEMINI_API_KEY in the backend environment and redeploy.",
+    "UPSTREAM_REJECTED": (
+        "The provider refused the request. Check that GEMINI_API_KEY is valid, has quota, "
+        "and that GEMINI_MODEL names a model available to that key."
+    ),
+    "UPSTREAM_UNAVAILABLE": "The provider timed out or was unreachable. Check outbound network access and retry.",
+    "BAD_OUTPUT": "The reader answered outside the expected schema. Retry; if it persists, check GEMINI_MODEL.",
+}
