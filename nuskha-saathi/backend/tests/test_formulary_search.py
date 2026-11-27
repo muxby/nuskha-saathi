@@ -27,3 +27,13 @@ def test_search_is_case_and_whitespace_insensitive(entries):
     assert search_formulary(entries, "  AUGMEN ")[0]["brand_name"] == "Augmentin"
 
 
+def test_exact_match_ranks_first(entries):
+    results = search_formulary(entries, "brufen")
+    assert results[0]["brand_name"] == "Brufen"
+
+
+def test_salt_name_finds_its_brands(entries):
+    brands = {row["brand_name"] for row in search_formulary(entries, "warfarin", limit=20)}
+    assert brands, "warfarin should resolve to at least one listed brand"
+
+
