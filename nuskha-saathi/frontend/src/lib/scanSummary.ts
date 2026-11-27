@@ -28,3 +28,16 @@ function countInteractions(scan: SummaryInput) {
   return { highInteractions: high, moderateInteractions: scan.interactions.length - high };
 }
 
+/** Red beats amber beats green. An empty read is its own state, never "clear". */
+export function toneFor(counts: {
+  total: number;
+  needsConfirmation: number;
+  highInteractions: number;
+  moderateInteractions: number;
+}): ScanTone {
+  if (counts.highInteractions > 0) return "stop";
+  if (counts.total === 0) return "empty";
+  if (counts.needsConfirmation > 0 || counts.moderateInteractions > 0) return "ask";
+  return "clear";
+}
+
