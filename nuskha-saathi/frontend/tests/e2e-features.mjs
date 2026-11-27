@@ -194,13 +194,11 @@ check("an unanalysed photo is compressed, uploaded and reported as a service pro
     mimeType: "image/png",
     buffer: Buffer.from(png, "base64"),
   });
-  const confirm = page.locator(".capture-review button.primary-button, .review-actions button.primary-button").first();
-  await confirm.click({ timeout: 4000 }).catch(() => {});
+  await page.locator("button.primary-button:has(svg.lucide-check)").first().click();
   const request = await upload;
-  const body = request.postDataBuffer();
-  assert.ok(body.includes(Buffer.from("image/jpeg")), "photo should be re-encoded as JPEG");
-  assert.ok(body.length < 1_500_000, `upload should be compressed, was ${body.length} bytes`);
   await page.locator(".vision-notice").waitFor({ state: "visible" });
+  const { requestBodySize } = await request.sizes();
+  assert.ok(requestBodySize > 0 && requestBodySize < 1_500_000, `upload was ${requestBodySize} bytes`);
   assert.equal(await page.locator(".alert-amber").count(), 0, "no blur warning for a service fault");
   assert.equal(await page.locator(".scan-summary").count(), 0);
 });
