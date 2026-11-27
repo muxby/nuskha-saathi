@@ -52,3 +52,18 @@ export function urduDoseLine(schedule: Schedule | null | undefined): string {
   return parts.join(" — ");
 }
 
+/** "Morning 1, night 1 — after food — 5 days". Empty when timing is unknown. */
+export function englishDoseLine(schedule: Schedule | null | undefined): string {
+  if (!schedule) return "";
+  const slots = activeSlots(schedule);
+  if (!slots.length) return "";
+  const text = slots.map(([slot, qty]) => `${SLOT_EN[slot]} ${qtyLabel(qty)}`).join(", ");
+  const parts = [text.charAt(0).toUpperCase() + text.slice(1)];
+  if (MEAL_EN[schedule.meal_timing]) parts.push(MEAL_EN[schedule.meal_timing]);
+  if (schedule.duration_days && schedule.duration_days > 0) {
+    const days = Math.round(schedule.duration_days);
+    parts.push(days === 1 ? "1 day" : `${days} days`);
+  }
+  return parts.join(" — ");
+}
+
