@@ -42,3 +42,17 @@ export function formatSalts(salts: string[] | null | undefined): string {
   return salts.filter(Boolean).join(" + ");
 }
 
+/** "Today", "Yesterday", or a short calendar date for older records. */
+export function formatSavedDate(iso: string, lang: Lang, now: Date = new Date()): string {
+  const then = new Date(iso);
+  if (Number.isNaN(then.getTime())) return "";
+  const startOf = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  const days = Math.round((startOf(now) - startOf(then)) / 86_400_000);
+  if (days === 0) return lang === "ur" ? "آج" : "Today";
+  if (days === 1) return lang === "ur" ? "کل" : "Yesterday";
+  return then.toLocaleDateString(lang === "ur" ? "ur-PK" : "en-GB", {
+    day: "numeric",
+    month: "short",
+    year: then.getFullYear() === now.getFullYear() ? undefined : "numeric",
+  });
+}
