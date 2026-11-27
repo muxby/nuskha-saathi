@@ -393,8 +393,9 @@ export default function ParchiCamera({
           type="button"
           className="secondary-button"
           onClick={() => {
-            if (!speak(t("cameraGuide"), null, language))
-              setError(t("noVoice"));
+            void speak(t("cameraGuide"), null, language).then((spoken) => {
+              if (!spoken) setError(t("noVoice"));
+            });
           }}
         >
           <Volume2 size={20} />

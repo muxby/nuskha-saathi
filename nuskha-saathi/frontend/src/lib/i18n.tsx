@@ -234,7 +234,8 @@ const en = {
   replay: "Replay",
   speed: "Playback speed",
   audioUnavailable:
-    "No recorded audio is available. A matching Urdu browser voice may be available on your device.",
+    "No saved recording for this prescription. Tap below to hear the instructions read aloud in Urdu.",
+  voiceLoading: "Loading voice…",
   audioFailed:
     "Audio could not be played. Check your connection and try again.",
   noVoice: "A matching voice is not installed on this device.",
@@ -242,7 +243,7 @@ const en = {
   audioMissing:
     "This audio is unavailable. Please scan the prescription again.",
   audioTitle: "Your prescription audio",
-  browserVoice: "Use device Urdu voice",
+  browserVoice: "Listen in Urdu",
   audioLanguage: "Urdu · اردو",
   verifyHeading: "Check your medicine strip",
   verifyHint:
@@ -578,13 +579,14 @@ const ur: Record<Key, string> = {
   replay: "دوبارہ سنیں",
   speed: "آواز کی رفتار",
   audioUnavailable:
-    "سرور کی آواز دستیاب نہیں۔ اگر فون یا براؤزر میں اردو آواز ہو تو نیچے والے بٹن سے سن سکتے ہیں۔",
+    "اس نسخے کی محفوظ آواز موجود نہیں۔ ہدایات اردو میں سننے کے لیے نیچے والا بٹن دبائیں۔",
+  voiceLoading: "آواز آ رہی ہے…",
   audioFailed: "آواز نہیں چل سکی۔ انٹرنیٹ چیک کر کے دوبارہ کوشش کریں۔",
   noVoice: "اس آلے میں اردو بولنے والی آواز انسٹال نہیں ہے۔",
   audioLoading: "نسخے کی آواز لوڈ ہو رہی ہے…",
   audioMissing: "یہ آواز اب دستیاب نہیں۔ براہ کرم نسخہ دوبارہ اسکین کریں۔",
   audioTitle: "نسخے کی اردو آواز",
-  browserVoice: "آلے کی اردو آواز میں سنیں",
+  browserVoice: "اردو میں سنیں",
   audioLanguage: "اردو · Urdu",
   verifyHeading: "دوا کی پٹی چیک کریں",
   verifyHint: "پٹی کی تصویر یوں لیں کہ دوا کا نام اور طاقت صاف نظر آئے۔",
