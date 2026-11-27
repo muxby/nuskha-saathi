@@ -137,3 +137,10 @@ Open the Vercel URL on a phone using mobile data.
 | QR code opens the wrong site | `FRONTEND_BASE_URL` unset or stale. | Set it to the frontend origin. |
 | First scan after a quiet period is slow | Cold start. | Open `/health` a few minutes before a demo. |
 
+### Photo size
+
+The app downsizes every photo to 2000 px on the long edge and re-encodes it
+as JPEG in the browser before uploading, typically under 1 MB. This keeps
+scans fast on mobile data and well inside host request limits. The backend
+still accepts files up to 8 MB from other clients.
+
