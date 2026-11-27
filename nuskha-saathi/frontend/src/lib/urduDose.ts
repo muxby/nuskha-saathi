@@ -67,3 +67,6 @@ export function englishDoseLine(schedule: Schedule | null | undefined): string {
   return parts.join(" — ");
 }
 
+export function doseLine(schedule: Schedule | null | undefined, lang: "en" | "ur"): string {
+  return lang === "ur" ? urduDoseLine(schedule) : englishDoseLine(schedule);
+}
