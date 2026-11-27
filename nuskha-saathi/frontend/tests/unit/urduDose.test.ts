@@ -15,3 +15,9 @@ test("meal timing 'any' is omitted", () => {
   assert.equal(urduDoseLine(schedule({ meal_timing: "any", duration_days: null })), "صبح 1، رات 1");
 });
 
+test("missing or all-zero schedule returns an empty line", () => {
+  assert.equal(urduDoseLine(null), "");
+  assert.equal(urduDoseLine(schedule({ morning: 0, night: 0 })), "");
+  assert.equal(englishDoseLine(undefined), "");
+});
+
