@@ -54,3 +54,20 @@ def test_every_brand_has_a_salt_and_an_alias():
         assert row["aliases"], row["brand_name"]
 
 
+def test_dose_ceilings_are_positive():
+    for row in FORMULARY:
+        assert row["max_single_dose_mg"] > 0, row["brand_name"]
+        assert row["max_daily_dose_mg"] > 0, row["brand_name"]
+
+
+def test_daily_ceiling_is_not_below_single_ceiling():
+    for row in FORMULARY:
+        assert row["max_daily_dose_mg"] >= row["max_single_dose_mg"], row["brand_name"]
+
+
+def test_common_strengths_never_exceed_the_single_dose_ceiling():
+    for row in FORMULARY:
+        for strength in row["common_strengths_mg"]:
+            assert 0 < strength <= row["max_single_dose_mg"], (row["brand_name"], strength)
+
+
