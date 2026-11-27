@@ -13,6 +13,7 @@ import "../styles/day-plan.css";
 import "../styles/results-polish.css";
 import "../styles/connection.css";
 import "../styles/cabinet.css";
+import "../styles/backend-status.css";
 import { LanguageProvider } from "@/lib/i18n";
 import ServiceWorker from "@/components/ServiceWorker";
 import ConnectionStatus from "@/components/ConnectionStatus";
