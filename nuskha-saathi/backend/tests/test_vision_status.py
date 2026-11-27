@@ -40,3 +40,26 @@ def test_missing_key_reports_not_configured(tmp_path, monkeypatch):
     assert all(med["schedule"] is None for med in body["medications"])
 
 
+def _extractor_raising(status: int) -> GeminiVisionExtractor:
+    async def http_post(url, body):
+        request = httpx.Request("POST", url)
+        raise httpx.HTTPStatusError("rejected", request=request, response=httpx.Response(status, request=request))
+
+    return GeminiVisionExtractor(api_key="k", http_post=http_post, backoff_seconds=0)
+
+
+@pytest.mark.parametrize("status", [401, 403, 429, 500, 503])
+def test_provider_errors_report_service_unavailable(tmp_path, status):
+    body = _scan(_client(tmp_path, _extractor_raising(status)))
+    assert body["vision_status"] == "SERVICE_UNAVAILABLE"
+    assert body["overall_status"] == "REFUSED"
+
+
+def test_timeouts_report_service_unavailable(tmp_path):
+    async def http_post(url, body):
+        raise httpx.ReadTimeout("slow")
+
+    extractor = GeminiVisionExtractor(api_key="k", http_post=http_post, backoff_seconds=0)
+    assert _scan(_client(tmp_path, extractor))["vision_status"] == "SERVICE_UNAVAILABLE"
+
+
