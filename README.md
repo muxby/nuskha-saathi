@@ -67,3 +67,8 @@ Open `http://localhost:3000`. No key? Open `http://localhost:3000/?demo=offline`
 The two browser suites need the API on port 8000 and a production frontend
 build on port 3000.
 
+## Clinical boundary
+
+Nuskha Saathi helps a patient understand a prescription and raises safety
+flags. It does not diagnose, prescribe, or authorise changing a medicine.
+Follow the treating clinician and ask a pharmacist about anything unclear.
