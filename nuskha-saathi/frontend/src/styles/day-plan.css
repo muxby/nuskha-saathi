@@ -197,3 +197,15 @@ html[data-theme="dark"] .day-slot-afternoon {
   }
 }
 
+@media print {
+  .day-plan {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  .day-dose-qty {
+    background: transparent;
+    color: #000;
+    border: 1px solid #000;
+  }
+}
