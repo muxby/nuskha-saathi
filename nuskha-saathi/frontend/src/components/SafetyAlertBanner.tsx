@@ -85,9 +85,7 @@ export default function SafetyAlertBanner({
             {m.refusal_reason_urdu && (
               <>
                 <span className="backend-label">{t("backendUrdu")}</span>
-                <p className="backend-urdu" lang="ur" dir="rtl">
-                  {m.refusal_reason_urdu}
-                </p>
+                <ClinicalText text={m.refusal_reason_urdu} />
                 <SpeakerButton text={m.refusal_reason_urdu} />
               </>
             )}
