@@ -84,3 +84,20 @@ export const dayPlanCopy = {
   },
 };
 
+export const statusCopy = {
+  en: {
+    offline: "You are offline. Saved prescriptions and demo cases still work.",
+    backOnline: "Back online.",
+    install: "Install app",
+    installHint: "Add Nuskha Saathi to your home screen for one-tap scanning.",
+    notNow: "Not now",
+  },
+  ur: {
+    offline: "آپ آف لائن ہیں۔ محفوظ نسخے اور ڈیمو کیس اب بھی کام کرتے ہیں۔",
+    backOnline: "انٹرنیٹ بحال ہو گیا۔",
+    install: "ایپ انسٹال کریں",
+    installHint: "ایک ٹیپ میں اسکین کے لیے نسخہ ساتھی کو ہوم اسکرین پر شامل کریں۔",
+    notNow: "ابھی نہیں",
+  },
+} satisfies Bilingual<Record<string, string>>;
+
