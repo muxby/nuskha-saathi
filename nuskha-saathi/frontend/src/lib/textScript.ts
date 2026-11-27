@@ -30,3 +30,10 @@ export function textDirection(text: string | null | undefined): "rtl" | "ltr" {
   return detectScript(text) === "arabic" ? "rtl" : "ltr";
 }
 
+/**
+ * Language tag for screen readers. Roman Urdu is still Urdu, written in Latin
+ * letters, so it is tagged `ur-Latn` rather than English.
+ */
+export function urduLangTag(text: string | null | undefined): "ur" | "ur-Latn" {
+  return detectScript(text) === "arabic" ? "ur" : "ur-Latn";
+}
