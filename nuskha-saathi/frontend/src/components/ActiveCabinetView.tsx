@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Plus, Trash2, Pill, PlusCircle } from "lucide-react";
-import type { CabinetItem } from "@/lib/api";
+import type { CabinetItem, FormularyMatch } from "@/lib/api";
+import BrandSuggest from "./BrandSuggest";
 import { useLanguage } from "@/lib/i18n";
 
 export default function ActiveCabinetView({
@@ -23,6 +24,7 @@ export default function ActiveCabinetView({
   const [source, setSource] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [strengths, setStrengths] = useState<number[]>([]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -45,6 +47,7 @@ export default function ActiveCabinetView({
         source_label: source.trim() || "Prior Doctor",
       });
       setBrand("");
+      setStrengths([]);
       setStrength("");
       setSource("");
     } catch {
@@ -92,13 +95,20 @@ export default function ActiveCabinetView({
       </div>
 
       <form className="cabinet-add-form" onSubmit={(e) => void handleSubmit(e)}>
-        <input
-          type="text"
+        <BrandSuggest
           value={brand}
-          onChange={(e) => setBrand(e.target.value)}
           placeholder={t("cabinetBrandPlaceholder")}
-          aria-label={t("cabinetBrandPlaceholder")}
-          required
+          onChange={(next) => {
+            setBrand(next);
+            setStrengths([]);
+          }}
+          onPick={(match: FormularyMatch) => {
+            setBrand(match.brand_name);
+            setStrengths(match.common_strengths_mg);
+            if (match.common_strengths_mg.length === 1) {
+              setStrength(String(match.common_strengths_mg[0]));
+            }
+          }}
         />
         <input
           type="number"
