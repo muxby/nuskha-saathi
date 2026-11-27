@@ -40,3 +40,9 @@ export function isDay3Window(progress: CourseProgress | null): boolean {
   return Boolean(progress && !progress.finished && progress.day >= 3);
 }
 
+export function courseLabel(progress: CourseProgress, lang: "en" | "ur"): string {
+  if (progress.finished) return lang === "ur" ? "کورس کی مدت مکمل" : "Course length reached";
+  return lang === "ur"
+    ? `دن ${progress.day} / ${progress.total}`
+    : `Day ${progress.day} of ${progress.total}`;
+}
