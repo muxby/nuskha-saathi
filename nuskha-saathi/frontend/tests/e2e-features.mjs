@@ -37,3 +37,11 @@ check("results summary leads with stop for a high interaction", async ({ page })
   assert.deepEqual(stats.map((s) => s.trim()), ["3", "2", "1", "1"]);
 });
 
+check("roman urdu warning is laid out left to right", async ({ page }) => {
+  await openDemoCase(page, 0);
+  const warning = page.locator(".alert-red .clinical-text").first();
+  assert.equal(await warning.getAttribute("dir"), "ltr");
+  assert.equal(await warning.getAttribute("lang"), "ur-Latn");
+  assert.match(await warning.innerText(), /^Khabardar!/);
+});
+
