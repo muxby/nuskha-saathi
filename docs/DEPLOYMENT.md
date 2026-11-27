@@ -98,3 +98,17 @@ Do not continue until this returns `"ok": true`.
 > points at `http://localhost:8000` and cannot scan; the app shows
 > "This app is not connected to a server" when that happens.
 
+## Step 3 — Connect the two
+
+Back in Render → your service → **Environment**:
+
+| Variable | Value |
+| --- | --- |
+| `FRONTEND_BASE_URL` | `https://YOUR-APP.vercel.app` |
+| `ALLOWED_ORIGINS` | `https://YOUR-APP.vercel.app` |
+
+Save. Render redeploys the backend.
+
+If you use Vercel preview deployments, add their origins to
+`ALLOWED_ORIGINS` too, separated by commas, or leave it unset while testing.
+
