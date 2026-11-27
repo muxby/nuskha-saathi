@@ -54,3 +54,16 @@ make web
 
 Open `http://localhost:3000`. No key? Open `http://localhost:3000/?demo=offline`.
 
+## Tests
+
+| Command | Covers |
+| --- | --- |
+| `make test-backend` | 129 backend tests: safety gate, routes, data integrity, hardening |
+| `make eval` | 30-case deterministic safety benchmark |
+| `make test-frontend` | Type check and 60 unit tests |
+| `make test-ui` | 19 browser and accessibility checks with mocked API states |
+| `make test-e2e` | 12 browser checks against the real backend |
+
+The two browser suites need the API on port 8000 and a production frontend
+build on port 3000.
+
