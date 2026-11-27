@@ -125,3 +125,13 @@ check("clear all empties the regular medicines list on device and server", async
   }
 });
 
+check("security headers are present on the app and the API", async ({ page }) => {
+  const app = await page.request.get(BASE);
+  assert.equal(app.headers()["x-content-type-options"], "nosniff");
+  assert.equal(app.headers()["x-frame-options"], "DENY");
+  assert.match(app.headers()["permissions-policy"], /camera=\(self\)/);
+  const api = await page.request.get(`${API}/api/v1/formulary/search?q=risek`);
+  assert.equal(api.headers()["cache-control"], "no-store");
+  assert.equal(api.headers()["x-content-type-options"], "nosniff");
+});
+
