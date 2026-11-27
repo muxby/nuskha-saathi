@@ -77,3 +77,34 @@ html[lang="ur"] .scan-summary h2 {
   line-height: 1.9;
 }
 
+.scan-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.scan-summary-stats > div {
+  padding: 12px 12px 10px;
+  border-radius: 14px;
+  background: var(--surface-soft);
+  border: 1px solid transparent;
+}
+
+.scan-summary-stats dt {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  line-height: 1.35;
+  min-block-size: 2.7em;
+}
+
+.scan-summary-stats dd {
+  margin: 4px 0 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
