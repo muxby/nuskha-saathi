@@ -28,6 +28,7 @@ import { LanguageSwitch, useLanguage } from "@/lib/i18n";
 import { IconMedallion } from "@/components/MedicalArt";
 import ActiveCabinetView from "@/components/ActiveCabinetView";
 import CourseProgressBar from "@/components/CourseProgressBar";
+import BackendStatus from "@/components/BackendStatus";
 import WhatsAppPreviewModal from "@/components/WhatsAppPreviewModal";
 
 export function MedicineLibrary({
@@ -320,6 +321,9 @@ export function SettingsExperience({
 
   return (
     <section className="settings-grid">
+      <div className="settings-connection">
+        <BackendStatus />
+      </div>
       <div className="panel setting-card">
         <div className="setting-card-head">
           <IconMedallion icon={Palette} tone="blue" size={20} />
