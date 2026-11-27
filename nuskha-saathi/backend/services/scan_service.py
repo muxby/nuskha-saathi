@@ -24,7 +24,7 @@ from services.openfda_client import OpenFdaClient
 from services.safety_gate import evaluate_line
 from services.strip_verifier import compare_strip
 from services.urdu_formatter import BLURRY_URDU, dose_phrase, join_script, shortage_urdu
-from services.vision_extractor import VisionExtractError
+from services.vision_extractor import SERVICE_ERROR_CODES, VisionExtractError
 
 USD_TO_PKR = 280
 GEMINI_USD_PER_SCAN = 0.0035
@@ -60,15 +60,25 @@ async def scan_parchi(
     vision_started = perf_counter()
     extraction: VisionExtraction | None = None
     vision_error = False
+    vision_status = "OK"
     if not image_bytes or not validate_image_bytes(image_bytes):
         vision_error = True
+        vision_status = "INVALID_IMAGE"
         event('image_validation', 'refused', error='InvalidImage')
     else:
         try:
             with stage("gemini_extraction"):
                 extraction = await extractor.extract(image_bytes, mime, "parchi")
-        except VisionExtractError:
+        except VisionExtractError as exc:
             vision_error = True
+            code = getattr(exc, "code", "BAD_OUTPUT")
+            if code == "NOT_CONFIGURED":
+                vision_status = "NOT_CONFIGURED"
+            elif code in SERVICE_ERROR_CODES:
+                vision_status = "SERVICE_UNAVAILABLE"
+            else:
+                vision_status = "UNREADABLE"
+            event("vision_result", vision_status.lower())
     vision_ms = int(round((perf_counter() - vision_started) * 1000))
 
     medications: list[MedicationOut] = []
@@ -212,6 +222,7 @@ async def scan_parchi(
         audio_qr_payload=None,
         urdu_script=join_script(script_parts),
         whatsapp_scheduled=False,
+        vision_status=vision_status,  # type: ignore[arg-type]
         telemetry=TelemetryOut(
             vision_ms=vision_ms,
             resolver_ms=resolver_ms,
