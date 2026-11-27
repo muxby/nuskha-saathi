@@ -121,3 +121,38 @@ export const cabinetCopy = {
     cleared: "آپ کی باقاعدہ دواؤں کی فہرست صاف کر دی گئی۔",
   },
 } satisfies Bilingual<Record<string, string>>;
+export const connectionCopy = {
+  en: {
+    checking: "Checking the safety engine…",
+    ready: "Connected to the safety engine.",
+    noApiUrl: "This app is not connected to a server.",
+    noApiUrlBody:
+      "The site was built without a server address. Live scanning cannot work until it is set. Demo cases still work.",
+    unreachable: "The server is not answering.",
+    unreachableBody:
+      "It may be waking up, or your internet may be down. Wait a few seconds and check again. Demo cases still work.",
+    readerOff: "Live reading is switched off on the server.",
+    readerOffBody:
+      "The server is running but has no reading key, so photos cannot be analysed yet. Demo cases still work.",
+    retry: "Check again",
+    tryDemo: "Open demo cases",
+    server: "Server",
+  },
+  ur: {
+    checking: "حفاظتی نظام سے رابطہ جانچا جا رہا ہے…",
+    ready: "حفاظتی نظام سے رابطہ قائم ہے۔",
+    noApiUrl: "یہ ایپ کسی سرور سے منسلک نہیں ہے۔",
+    noApiUrlBody:
+      "ویب سائٹ سرور کے پتے کے بغیر بنائی گئی ہے۔ جب تک پتہ درج نہ ہو، براہِ راست اسکین کام نہیں کرے گا۔ ڈیمو کیس اب بھی چلتے ہیں۔",
+    unreachable: "سرور جواب نہیں دے رہا۔",
+    unreachableBody:
+      "ممکن ہے سرور ابھی شروع ہو رہا ہو یا آپ کا انٹرنیٹ بند ہو۔ چند سیکنڈ انتظار کر کے دوبارہ جانچیں۔ ڈیمو کیس اب بھی چلتے ہیں۔",
+    readerOff: "سرور پر نسخہ پڑھنے کی سہولت بند ہے۔",
+    readerOffBody:
+      "سرور چل رہا ہے مگر پڑھنے کی کلید موجود نہیں، اس لیے تصویر کا تجزیہ ابھی ممکن نہیں۔ ڈیمو کیس اب بھی چلتے ہیں۔",
+    retry: "دوبارہ جانچیں",
+    tryDemo: "ڈیمو کیس کھولیں",
+    server: "سرور",
+  },
+} satisfies Bilingual<Record<string, string>>;
+
