@@ -144,3 +144,20 @@ as JPEG in the browser before uploading, typically under 1 MB. This keeps
 scans fast on mobile data and well inside host request limits. The backend
 still accepts files up to 8 MB from other clients.
 
+## Alternative — backend on Vercel
+
+The backend also runs as a Vercel project (root directory
+`nuskha-saathi/backend`, same environment variables). Know the limits first:
+
+- **Request body limit.** Vercel Functions reject request bodies over 4.5 MB.
+  The app's own uploads are compressed below that; other clients must do the same.
+- **Execution time.** A scan waits on Gemini, openFDA and optional speech.
+  If scans end in a timeout, raise the function's maximum duration in the
+  Vercel project settings.
+- **Storage is temporary.** SQLite, generated audio and strip thumbnails live
+  in `/tmp` and disappear between invocations. Saved prescriptions stay on
+  the patient's device; the server cabinet does not persist.
+
+Render with Docker is the recommended backend host because it keeps one
+long-lived process and includes `ffmpeg`.
+
