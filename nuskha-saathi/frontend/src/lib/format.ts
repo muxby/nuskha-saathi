@@ -9,3 +9,20 @@ export function formatStrength(mg: number | null | undefined): string {
   return `${Number.isInteger(rounded) ? rounded : rounded.toString()} mg`;
 }
 
+const FRACTIONS: Record<string, string> = {
+  "0.25": "¼",
+  "0.5": "½",
+  "0.75": "¾",
+};
+
+/** `1.5` → "1½", `0.5` → "½", `2` → "2". Invalid quantities return "?". */
+export function formatQuantity(qty: number | null | undefined): string {
+  if (qty == null || !Number.isFinite(qty) || qty < 0) return "?";
+  const whole = Math.floor(qty);
+  const rest = Math.round((qty - whole) * 100) / 100;
+  if (rest === 0) return String(whole);
+  const glyph = FRACTIONS[String(rest)];
+  if (!glyph) return String(Math.round(qty * 100) / 100);
+  return whole === 0 ? glyph : `${whole}${glyph}`;
+}
+
