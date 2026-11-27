@@ -116,3 +116,15 @@ def test_all_models_retired_raises_rejected():
     assert excinfo.value.code == "UPSTREAM_REJECTED"
 
 
+def test_key_is_not_placed_in_the_url():
+    urls: list[str] = []
+
+    async def http_post(url, body):
+        urls.append(url)
+        return {"candidates": [{"content": {"parts": [{"text": '{"extracted_lines":[],"image_quality_warning":false}'}]}}]}
+
+    extractor = GeminiVisionExtractor(api_key="super-secret-key", http_post=http_post, backoff_seconds=0)
+    asyncio.run(extractor.extract(_jpeg(), "image/jpeg"))
+    assert urls and all("super-secret-key" not in url and "key=" not in url for url in urls)
+
+
