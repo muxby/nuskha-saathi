@@ -90,6 +90,10 @@ npm run dev
 
 Open `http://localhost:3000`; FastAPI runs at `http://localhost:8000`. Camera capture requires localhost or HTTPS. On Windows, use `.venv\Scripts\` instead of `.venv/bin/`.
 
+## Deployment guide
+
+Step-by-step hosting, environment variables, connection checks and troubleshooting are in [`docs/DEPLOYMENT.md`](../docs/DEPLOYMENT.md).
+
 ## Verification
 
 ```bash
