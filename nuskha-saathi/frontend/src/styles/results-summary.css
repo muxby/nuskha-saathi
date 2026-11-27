@@ -72,7 +72,7 @@
   line-height: 1.6;
 }
 
-html[lang="ur"] .scan-summary h2 {
+html:lang(ur) .scan-summary h2 {
   letter-spacing: 0;
   line-height: 1.9;
 }
