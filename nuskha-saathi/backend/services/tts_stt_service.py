@@ -206,7 +206,7 @@ async def _transcribe_gemini(audio: bytes, mime_type: str) -> str | None:
     if not key:
         return None
     model = os.getenv("GEMINI_MODEL") or "gemini-2.5-flash"
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     body = {
         "contents": [
             {
@@ -229,7 +229,8 @@ async def _transcribe_gemini(audio: bytes, mime_type: str) -> str | None:
         "generationConfig": {"temperature": 0.0},
     }
     async with httpx.AsyncClient(timeout=60) as client:
-        response = await client.post(url, json=body)
+        # The key travels in a header so it can never appear in a logged URL.
+        response = await client.post(url, json=body, headers={"x-goog-api-key": key})
         response.raise_for_status()
         payload = response.json()
     candidates = payload.get("candidates") or []

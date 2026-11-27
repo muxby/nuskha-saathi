@@ -327,14 +327,15 @@ class WebMedicineResolver:
         if not key:
             raise RuntimeError("GEMINI_API_KEY is not set")
         model = os.environ.get("GEMINI_MODEL", "").strip() or DEFAULT_MODEL
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
         body = {
             "contents": [{"parts": [{"text": prompt}]}],
             "tools": [{"google_search": {}}],
             "generationConfig": {"temperature": 0.0, "thinkingConfig": {"thinkingBudget": 0}},
         }
         async with httpx.AsyncClient(timeout=self.timeout) as client:
-            resp = await client.post(url, json=body)
+            # The key travels in a header so it can never appear in a logged URL.
+            resp = await client.post(url, json=body, headers={"x-goog-api-key": key})
             resp.raise_for_status()
             payload = resp.json()
         candidates = payload.get("candidates") or []
