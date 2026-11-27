@@ -112,3 +112,14 @@ Save. Render redeploys the backend.
 If you use Vercel preview deployments, add their origins to
 `ALLOWED_ORIGINS` too, separated by commas, or leave it unset while testing.
 
+## Step 4 — Confirm it works end to end
+
+Open the Vercel URL on a phone using mobile data.
+
+1. **Settings** shows a green *Connected to the safety engine* with your API host.
+2. **Scan prescription** shows no warning banner above the camera.
+3. Photograph a prescription. Within about 10–20 seconds you see the result
+   summary, the day plan and the dose cards.
+4. **My medicines** → type `aug` → *Augmentin* is suggested.
+5. Add `?demo=offline` to the URL: the five demo cases open with no network.
+
