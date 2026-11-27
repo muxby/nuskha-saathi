@@ -82,3 +82,15 @@ def test_non_antibiotics_have_no_aware_tier():
             assert row["who_aware_tier"] == "NONE", row["brand_name"]
 
 
+@pytest.mark.parametrize(
+    "brand",
+    ["Augmentin", "Risek", "Panadol", "Glucophage", "Concor", "Leflox", "Flagyl", "Brufen", "Disprin", "Arinac"],
+)
+def test_pitch_brands_are_listed(brand):
+    assert any(row["brand_name"] == brand for row in FORMULARY)
+
+
+def test_warfarin_is_resolvable():
+    assert any("warfarin" in row["generic_salts"] for row in FORMULARY)
+
+
