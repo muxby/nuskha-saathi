@@ -21,3 +21,13 @@ test("a course is finished after its last day", () => {
   assert.equal(progress?.fraction, 1);
 });
 
+test("unknown duration has no progress", () => {
+  assert.equal(courseProgress(started, null, on(25)), null);
+  assert.equal(courseProgress(started, 0, on(25)), null);
+});
+
+test("invalid or future start dates have no progress", () => {
+  assert.equal(courseProgress("nope", 5, on(25)), null);
+  assert.equal(courseProgress(started, 5, on(20)), null);
+});
+
