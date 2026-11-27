@@ -94,3 +94,20 @@ def test_warfarin_is_resolvable():
     assert any("warfarin" in row["generic_salts"] for row in FORMULARY)
 
 
+def test_interaction_rows_are_complete():
+    for row in INTERACTIONS:
+        for field in ("salt_a", "salt_b", "severity", "source", "fda_verbatim_excerpt", "urdu_warning"):
+            assert str(row.get(field, "")).strip(), (row.get("salt_a"), row.get("salt_b"), field)
+        assert row["severity"] in {"HIGH", "MODERATE"}
+        assert row["salt_a"] != row["salt_b"]
+
+
+def test_interaction_file_meets_the_planned_size():
+    assert len(INTERACTIONS) >= 60
+
+
+def test_interaction_pairs_are_unique():
+    pairs = [frozenset((row["salt_a"], row["salt_b"])) for row in INTERACTIONS]
+    assert len(pairs) == len(set(pairs))
+
+
