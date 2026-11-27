@@ -29,3 +29,11 @@ async function useUrdu(page) {
   await page.waitForFunction(() => document.documentElement.lang === "ur");
 }
 
+check("results summary leads with stop for a high interaction", async ({ page }) => {
+  await openDemoCase(page, 0);
+  const summary = page.locator(".scan-summary");
+  assert.match(await summary.getAttribute("class"), /tone-stop/);
+  const stats = await summary.locator("dd").allInnerTexts();
+  assert.deepEqual(stats.map((s) => s.trim()), ["3", "2", "1", "1"]);
+});
+
