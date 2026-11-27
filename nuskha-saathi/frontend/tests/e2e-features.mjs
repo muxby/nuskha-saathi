@@ -197,8 +197,8 @@ check("an unanalysed photo is compressed, uploaded and reported as a service pro
   await page.locator("button.primary-button:has(svg.lucide-check)").first().click();
   const request = await upload;
   await page.locator(".vision-notice").waitFor({ state: "visible" });
-  const { requestBodySize } = await request.sizes();
-  assert.ok(requestBodySize > 0 && requestBodySize < 1_500_000, `upload was ${requestBodySize} bytes`);
+  const uploadBytes = Number((await request.allHeaders())["content-length"]);
+  assert.ok(uploadBytes > 0 && uploadBytes < 1_500_000, `upload was ${uploadBytes} bytes`);
   assert.equal(await page.locator(".alert-amber").count(), 0, "no blur warning for a service fault");
   assert.equal(await page.locator(".scan-summary").count(), 0);
 });
