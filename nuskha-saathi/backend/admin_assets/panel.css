@@ -1,1 +1,199 @@
-:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0c131b;color:#edf2f7}*{box-sizing:border-box}body{margin:0}main{max-width:1250px;margin:auto;padding:48px 26px}header,.toolbar,.section-title{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}h1{font-size:36px;letter-spacing:-1px;margin:12px 0}h2{font-size:20px;margin:0 0 14px}p{color:#a8b7c7;line-height:1.6}.eyebrow{color:#6cddbd;font-size:12px;letter-spacing:2px;font-weight:700}.toolbar{justify-content:flex-start;padding:18px 0;border-bottom:1px solid #283644;margin:20px 0 28px;font-size:13px}a{color:#6cddbd}button{border:1px solid #6cddbd;background:#6cddbd;color:#0c131b;font:inherit;font-weight:600;border-radius:8px;padding:10px 16px;cursor:pointer}.secondary{background:#16212e;color:#dce8f4;border-color:#354758}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #8abaff;outline-offset:3px}button:disabled{opacity:.5;cursor:wait}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.card,section:not(.toolbar){background:#121d29;border:1px solid #283644;border-radius:12px;padding:24px}.card .value{font-size:24px;margin:12px 0;overflow-wrap:anywhere}.label,.muted,footer,#counts,#checked{color:#a8b7c7;font-size:13px}section:not(.toolbar){margin-top:22px}.badges{display:flex;flex-wrap:wrap;gap:12px}.badge{background:#1b2a38;border:1px solid #354758;padding:9px 12px;border-radius:7px;font-size:13px}.good{color:#6cddbd}.bad{color:#ffaaaa}.warn{color:#f0cf82}details{border-top:1px solid #283644;padding:15px 0}summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:12px;align-items:center}code{font-size:12px;overflow-wrap:anywhere}table{width:100%;border-collapse:collapse;text-align:left;font-size:13px}td,th{padding:10px;border-bottom:1px solid #283644}footer{line-height:1.8;margin:26px 0}.login{max-width:470px;padding-top:15vh}.login form{display:grid;gap:14px;margin:30px 0}input{background:#16212e;color:#edf2f7;border:1px solid #496176;padding:14px;border-radius:8px;font:inherit}.trace{margin:16px 0;color:#a8b7c7}.empty{padding:20px 0;color:#a8b7c7}@media(max-width:600px){main{padding:28px 16px}h1{font-size:29px}.card,section:not(.toolbar){padding:17px}table{font-size:12px}td,th{padding:8px 4px}}
+/* Nuskha Saathi backend panel. Served under a strict CSP: no inline styles. */
+
+@font-face {
+  font-family: "Gulzar";
+  src: url("/admin/assets/gulzar-urdu.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF, U+200C-200F;
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #0a1018;
+  --panel: #111a25;
+  --panel-2: #17222f;
+  --line: #263444;
+  --line-strong: #3a4e63;
+  --ink: #eef3f8;
+  --muted: #a3b3c4;
+  --accent: #6cddbd;
+  --good: #6cddbd;
+  --bad: #ff9d9d;
+  --warn: #f2cf7c;
+  --focus: #8abaff;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1100px 520px at 12% -10%, rgba(108, 221, 189, 0.09), transparent 60%),
+    radial-gradient(900px 480px at 100% 0%, rgba(96, 140, 255, 0.08), transparent 60%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+main { max-width: 1240px; margin: auto; padding: 48px 26px; }
+
+header, .toolbar, .section-title, .header-actions, .actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+header, .section-title { justify-content: space-between; }
+
+h1 { font-size: clamp(30px, 4vw, 42px); letter-spacing: -0.02em; line-height: 1.1; margin: 12px 0 8px; }
+h2 { font-size: 20px; margin: 0; }
+p { color: var(--muted); line-height: 1.65; margin: 8px 0 0; }
+
+.eyebrow { color: var(--accent); font-size: 12px; letter-spacing: 0.18em; font-weight: 700; }
+
+.toolbar {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  margin: 22px 0 28px;
+  font-size: 13px;
+}
+
+a { color: var(--accent); }
+
+button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #08110f;
+  font: inherit;
+  font-weight: 650;
+  border-radius: 10px;
+  padding: 11px 18px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+button:hover:not(:disabled) { transform: translateY(-1px); }
+button:disabled { opacity: 0.5; cursor: wait; }
+
+.secondary { background: var(--panel-2); color: #dce8f4; border-color: var(--line-strong); }
+.secondary[aria-pressed="true"] { background: var(--accent); color: #08110f; border-color: var(--accent); }
+
+button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.lang { display: flex; gap: 6px; }
+.lang button { padding: 8px 14px; min-height: 40px; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+
+.card, section:not(.toolbar) {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+section:not(.toolbar) { margin-top: 22px; }
+section .cards { margin-top: 18px; }
+section .card { background: var(--panel-2); }
+
+.card .value { font-size: 24px; margin: 10px 0 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.label, .muted, footer, #counts, #checked, #test-summary, #wake-state { color: var(--muted); font-size: 13px; }
+
+.actions { margin-top: 18px; }
+
+.badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.badge { background: var(--panel-2); border: 1px solid var(--line-strong); padding: 9px 13px; border-radius: 999px; font-size: 13px; }
+.badge.on { border-color: color-mix(in srgb, var(--good) 60%, transparent); color: var(--good); }
+.badge.off { color: var(--muted); }
+
+.good { color: var(--good); }
+.bad { color: var(--bad); }
+.warn { color: var(--warn); }
+
+/* Self-test results */
+.checks { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 8px; }
+
+.check {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+}
+
+.check.pass { border-inline-start: 4px solid var(--good); }
+.check.fail { border-inline-start: 4px solid var(--bad); }
+.check .mark { font-size: 18px; line-height: 1.3; font-weight: 700; }
+.check .name { font-weight: 650; }
+.check .detail { color: var(--muted); font-size: 13px; margin-top: 3px; overflow-wrap: anywhere; }
+.check .ms { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+details { border-top: 1px solid var(--line); padding: 15px 0; }
+summary { cursor: pointer; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+code { font-size: 12px; overflow-wrap: anywhere; }
+table { width: 100%; border-collapse: collapse; text-align: start; font-size: 13px; }
+td, th { padding: 10px; border-bottom: 1px solid var(--line); text-align: start; }
+
+footer { line-height: 1.8; margin: 26px 0; }
+
+.trace { margin: 16px 0; color: var(--muted); }
+.empty { padding: 20px 0; color: var(--muted); }
+
+/* Sign-in */
+.login { max-width: 480px; padding-top: 14vh; }
+.login form { display: grid; gap: 14px; margin: 30px 0; }
+input {
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  padding: 14px;
+  border-radius: 10px;
+  font: inherit;
+  min-height: 48px;
+}
+
+/* Urdu: Gulzar is a Nastaliq cut drawn for screens, with open counters and
+   generous spacing, so it stays readable at interface sizes. */
+.urdu, html[lang="ur"] body {
+  font-family: "Gulzar", "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif;
+}
+
+.urdu { font-size: 22px; line-height: 2.2; color: var(--ink); margin: 6px 0 4px; }
+
+html[lang="ur"] body { font-size: 18px; line-height: 2.1; }
+html[lang="ur"] h1 { letter-spacing: 0; line-height: 1.9; font-weight: 400; }
+html[lang="ur"] h2 { font-size: 24px; line-height: 1.9; font-weight: 400; }
+html[lang="ur"] p, html[lang="ur"] footer { line-height: 2.3; font-size: 17px; }
+html[lang="ur"] button { font-weight: 400; line-height: 1.9; padding-block: 6px; }
+html[lang="ur"] .label, html[lang="ur"] .muted, html[lang="ur"] .badge,
+html[lang="ur"] .check .detail, html[lang="ur"] #checked, html[lang="ur"] #counts { font-size: 15px; }
+html[lang="ur"] .eyebrow, html[lang="ur"] code, html[lang="ur"] .ms, html[lang="ur"] .ltr {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+@media (max-width: 600px) {
+  main { padding: 28px 16px; }
+  .card, section:not(.toolbar) { padding: 17px; }
+  table { font-size: 12px; }
+  td, th { padding: 8px 4px; }
+  .check { grid-template-columns: 24px minmax(0, 1fr); }
+  .check .ms { grid-column: 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button { transition: none; }
+}
