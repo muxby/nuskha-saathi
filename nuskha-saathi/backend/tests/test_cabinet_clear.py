@@ -29,3 +29,17 @@ def test_clear_removes_all_active_medicines(client):
     assert client.get("/api/v1/cabinet/patient-a").json()["medications"] == []
 
 
+def test_clear_is_scoped_to_one_patient(client):
+    _add(client, "patient-a", "Marevan")
+    _add(client, "patient-b", "Concor")
+    client.delete("/api/v1/cabinet/patient-a")
+    remaining = client.get("/api/v1/cabinet/patient-b").json()["medications"]
+    assert [item["brand_name"] for item in remaining] == ["Concor"]
+
+
+def test_clearing_an_empty_cabinet_is_safe(client):
+    response = client.delete("/api/v1/cabinet/nobody")
+    assert response.status_code == 200
+    assert response.json()["cleared"] == 0
+
+
