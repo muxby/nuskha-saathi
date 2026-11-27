@@ -13,6 +13,7 @@ import SafetyAlertBanner from "./SafetyAlertBanner";
 import VisualDoseCard from "./VisualDoseCard";
 import AudioPlayer from "./AudioPlayer";
 import ScanSummary from "./ScanSummary";
+import VisionNotice from "./VisionNotice";
 import DayPlan from "./DayPlan";
 
 export default function PrescriptionResults({
@@ -27,6 +28,20 @@ export default function PrescriptionResults({
   const { t } = useLanguage();
   const [clarity, setClarity] = useState(false);
   const confirmed = scan.medications.filter((m) => m.status === "VERIFIED");
+  const notAnalysed =
+    scan.vision_status === "NOT_CONFIGURED" ||
+    scan.vision_status === "SERVICE_UNAVAILABLE" ||
+    scan.vision_status === "INVALID_IMAGE";
+
+  // The reader never saw the photo: show that, and nothing that could be
+  // mistaken for a finding about the prescription.
+  if (notAnalysed) {
+    return (
+      <section className="prescription-results">
+        <VisionNotice scan={scan} onRetake={onRetake} />
+      </section>
+    );
+  }
 
   return (
     <section className="prescription-results">
