@@ -53,3 +53,22 @@ def test_selftest_rejects_cross_origin_requests(monkeypatch, tmp_path):
     assert response.status_code == 403
 
 
+def test_quick_selftest_passes(monkeypatch, tmp_path):
+    client = _client(monkeypatch, tmp_path)
+    _signin(client)
+    body = client.post("/admin/api/selftest").json()
+    assert body["ok"] is True
+    assert body["live"] is False
+    assert body["passed"] == body["total"] == len(QUICK)
+    assert [check["name"] for check in body["checks"]] == [name for name, _, _ in QUICK]
+    assert all(check["ms"] >= 0 and check["detail"] for check in body["checks"])
+
+
+def test_selftest_leaves_no_rows_behind(monkeypatch, tmp_path):
+    client = _client(monkeypatch, tmp_path)
+    _signin(client)
+    before = client.get("/health").json()["store"]["active_cabinet_items"]
+    client.post("/admin/api/selftest")
+    assert client.get("/health").json()["store"]["active_cabinet_items"] == before
+
+
