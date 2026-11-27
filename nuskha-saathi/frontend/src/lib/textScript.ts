@@ -25,3 +25,8 @@ export function detectScript(text: string | null | undefined): TextScript {
   return arabic >= latin ? "arabic" : "latin";
 }
 
+/** Direction a string must be laid out in, independent of the page. */
+export function textDirection(text: string | null | undefined): "rtl" | "ltr" {
+  return detectScript(text) === "arabic" ? "rtl" : "ltr";
+}
+
