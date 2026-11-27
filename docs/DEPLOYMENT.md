@@ -53,7 +53,7 @@ Backend environment variables:
 | `SCAN_RATE_LIMIT_PER_MINUTE` | no | Scans per client per minute. Default `30`, `0` disables. |
 | `OPENFDA_API_KEY` | no | Raises the openFDA rate limit. |
 | `UPLIFT_API_KEY`, `UPLIFT_VOICE_ID`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`, `GOOGLE_TTS_API_KEY` | no | Server Urdu audio. |
-| `ADMIN_MONITOR_PASSWORD` | no | Enables the private `/admin` diagnostics panel (16+ characters). |
+| `ADMIN_MONITOR_PASSWORD` | no | Enables the private `/admin` panel (12+ characters). See [ADMIN_PANEL.md](ADMIN_PANEL.md). |
 
 ### Check the backend before going further
 
