@@ -111,3 +111,27 @@ def test_interaction_pairs_are_unique():
     assert len(pairs) == len(set(pairs))
 
 
+def _has_pair(a: str, b: str) -> bool:
+    return any(
+        (a in row["salt_a"] and b in row["salt_b"]) or (a in row["salt_b"] and b in row["salt_a"])
+        for row in INTERACTIONS
+    )
+
+
+@pytest.mark.parametrize(
+    ("salt_a", "salt_b"),
+    [
+        ("ibuprofen", "warfarin"),
+        ("ciprofloxacin", "tizanidine"),
+        ("metronidazole", "warfarin"),
+        ("sildenafil", "nitr"),
+        ("clarithromycin", "simvastatin"),
+    ],
+)
+def test_eval_pairs_are_cached_offline(salt_a, salt_b):
+    assert _has_pair(salt_a, salt_b)
+
+
+def test_eval_pairs_are_high_severity():
+    row = next(r for r in INTERACTIONS if {r["salt_a"], r["salt_b"]} == {"ibuprofen", "warfarin"})
+    assert row["severity"] == "HIGH"
