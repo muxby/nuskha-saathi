@@ -1,1 +1,24 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Backend monitor · Sign in</title><link rel="stylesheet" href="/admin/assets/panel.css"></head><body><main class="login"><div class="eyebrow">NUSKHA SAATHI / OPERATIONS</div><h1>Backend monitor</h1><p>Private diagnostics for the Render backend.</p><form method="post" action="/admin/login"><label for="password">Admin password</label><input id="password" type="password" name="password" autocomplete="current-password" required maxlength="1024"><button type="submit">Sign in</button></form><p class="muted">Access must be enabled with ADMIN_MONITOR_PASSWORD in Render. Sessions expire after 8 hours or an instance restart.</p></main></body></html>
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Backend monitor · Sign in</title>
+  <link rel="stylesheet" href="/admin/assets/panel.css">
+</head>
+<body>
+<main class="login">
+  <div class="eyebrow">NUSKHA SAATHI / OPERATIONS</div>
+  <h1>Backend monitor</h1>
+  <p class="urdu" lang="ur" dir="rtl">بیک اینڈ کی نگرانی — صرف منتظم کے لیے</p>
+  <p>Private diagnostics, self-tests and keep-awake for the backend.</p>
+  <form method="post" action="/admin/login">
+    <label for="password">Admin password</label>
+    <input id="password" type="password" name="password" autocomplete="current-password" required maxlength="1024" autofocus>
+    <button type="submit">Sign in</button>
+  </form>
+  <p class="muted">Access is enabled by setting ADMIN_MONITOR_PASSWORD on the server. Sessions expire after 8 hours or a restart. Five wrong attempts lock sign-in for five minutes.</p>
+</main>
+</body>
+</html>
