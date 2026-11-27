@@ -444,3 +444,16 @@ export async function searchFormulary(
   }
 }
 
+
+/** Clears every active cabinet medicine on the server. False when unreachable. */
+export async function clearCabinet(patientId: string): Promise<boolean> {
+  try {
+    const res = await fetch(
+      `${API_BASE}/api/v1/cabinet/${encodeURIComponent(patientId)}`,
+      { method: "DELETE" },
+    );
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
