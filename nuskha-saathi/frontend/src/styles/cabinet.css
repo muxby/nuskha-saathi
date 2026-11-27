@@ -123,3 +123,46 @@
   color: #fff;
 }
 
+.course-progress {
+  display: grid;
+  gap: 6px;
+  margin-block-start: 10px;
+}
+
+.course-progress-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.course-progress-track {
+  block-size: 6px;
+  border-radius: 999px;
+  background: var(--surface-tinted);
+  overflow: hidden;
+}
+
+.course-progress-track span {
+  display: block;
+  block-size: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
+
+.course-progress.is-finished .course-progress-track span {
+  background: var(--green);
+}
+
+.course-day3 {
+  margin-block-start: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--amber-bg);
+  color: var(--amber);
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
