@@ -7,6 +7,7 @@ import {
   Plus_Jakarta_Sans,
 } from "next/font/google";
 import "./globals.css";
+import "../styles/clinical-text.css";
 import { LanguageProvider } from "@/lib/i18n";
 
 const jakarta = Plus_Jakarta_Sans({
