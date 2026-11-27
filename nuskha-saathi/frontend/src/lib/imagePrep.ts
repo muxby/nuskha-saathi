@@ -27,3 +27,10 @@ export function fitWithin(size: Size, maxEdge: number = MAX_EDGE): Size {
   };
 }
 
+/** True when the file must be redrawn: too many pixels, too many bytes, or not a JPEG. */
+export function needsReencode(file: { type: string; size: number }, size: Size): boolean {
+  if (file.type !== "image/jpeg") return true;
+  if (file.size > SMALL_ENOUGH_BYTES) return true;
+  return Math.max(size.width, size.height) > MAX_EDGE;
+}
+
