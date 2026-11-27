@@ -102,6 +102,14 @@ async def add_cabinet_medicine(request: Request, patient_id: str, body: CabinetM
     return {"patient_id": pid, "item": item, "medications": meds}
 
 
+@router.delete("/api/v1/cabinet/{patient_id}")
+async def clear_cabinet(request: Request, patient_id: str):
+    """One-tap clear: deactivate every active medicine on file for this patient."""
+    pid = _clean_patient_id(patient_id)
+    cleared = request.app.state.store.clear_cabinet(pid)
+    return {"patient_id": pid, "cleared": cleared, "medications": []}
+
+
 @router.delete("/api/v1/cabinet/{patient_id}/{item_id}")
 async def remove_cabinet_medicine(request: Request, patient_id: str, item_id: str):
     pid = _clean_patient_id(patient_id)
