@@ -1,0 +1,41 @@
+.backend-status {
+  --tone: var(--accent);
+  --tone-bg: var(--surface-soft);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 14px;
+  margin-block-end: 18px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: var(--tone-bg);
+  border: 1px solid color-mix(in srgb, var(--tone) 32%, transparent);
+  color: var(--ink);
+}
+
+.backend-status > svg {
+  flex: none;
+  color: var(--tone);
+  margin-block-start: 2px;
+}
+
+.backend-status-text {
+  flex: 1 1 260px;
+  min-inline-size: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.backend-status-text p {
+  margin: 0;
+  color: var(--ink-muted);
+  line-height: 1.6;
+  font-size: 0.92rem;
+}
+
+.backend-status-host {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+}
+
