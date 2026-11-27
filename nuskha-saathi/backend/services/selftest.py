@@ -30,3 +30,25 @@ async def _run(name: str, label: str, check: Check) -> dict:
     return {"name": name, "label": label, "ok": ok, "detail": detail, "ms": round((perf_counter() - started) * 1000, 1)}
 
 
+def _formulary(app) -> str:
+    hit = app.state.resolver.resolve("Augmntin")
+    assert hit is not None and hit.brand_name == "Augmentin", "Misspelt brand did not resolve"
+    return f"Augmntin → {hit.brand_name} ({' + '.join(hit.generic_salts)})"
+
+
+def _locks(app) -> str:
+    from schemas.vision import ExtractedLine
+    from services.safety_gate import evaluate_line
+
+    resolver = app.state.resolver
+    blurry = evaluate_line(ExtractedLine(brand_or_salt_guess="Panadol", strength_mg=500, ocr_confidence=0.84), resolver)
+    assert blurry.status == "REFUSED_BLURRY", "Low-confidence line was not refused"
+    unknown = evaluate_line(ExtractedLine(brand_or_salt_guess="Zzqxvyn", strength_mg=5, ocr_confidence=0.99), resolver)
+    assert unknown.status == "REFUSED_UNKNOWN_DRUG", "Unknown brand was not refused"
+    overdose = evaluate_line(
+        ExtractedLine(brand_or_salt_guess="Leflox", strength_mg=5000, morning_qty=1, ocr_confidence=0.99), resolver
+    )
+    assert overdose.status == "REFUSED_DOSAGE_ANOMALY", "5000 mg Leflox was not refused"
+    return "Blur, unknown-drug and dose-ceiling locks all refuse"
+
+
