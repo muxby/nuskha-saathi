@@ -34,6 +34,10 @@
     {
       "name": "Verify medicine",
       "url": "/#verify"
+    },
+    {
+      "name": "My medicines",
+      "url": "/#medicines"
     }
   ]
 }
