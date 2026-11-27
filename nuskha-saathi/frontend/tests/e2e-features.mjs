@@ -45,3 +45,13 @@ check("roman urdu warning is laid out left to right", async ({ page }) => {
   assert.match(await warning.innerText(), /^Khabardar!/);
 });
 
+check("day plan schedules verified medicines and withholds refused lines", async ({ page }) => {
+  await openDemoCase(page, 0);
+  const morning = await page.locator(".day-slot-morning .day-dose-name").allInnerTexts();
+  assert.ok(morning.some((text) => text.includes("Brufen 400 mg")));
+  assert.ok(morning.some((text) => text.includes("Augmentin 625 mg")));
+  assert.equal(await page.locator(".day-slot-afternoon.is-empty").count(), 1);
+  assert.equal(await page.locator(".day-plan-note").count(), 1);
+  assert.equal(await page.locator(".day-plan").getByText("???").count(), 0);
+});
+
