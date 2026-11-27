@@ -40,6 +40,7 @@ FastAPI endpoints in `main.py`:
 | --- | --- |
 | `POST /api/v1/scan-parchi` | Prescription extraction (Gemini Vision), deterministic medicine resolution, overdose/interaction checks, Urdu script/audio, telemetry |
 | `POST /api/v1/verify-strip` | Compare photographed blister strip against selected prescription medicine & strength |
+| `POST /api/v1/speech` | Speak one engine line or Urdu-script text in the selected Urdu voice (`audio/mpeg`); `503` when the voice is unavailable so the app falls back to the device voice |
 | `GET /api/v1/audio/{scan_id}` | Retrieve saved Urdu script and audio location for QR replay (supports cold-lambda recovery for demo scans) |
 | `GET /api/v1/cabinet/{patient_id}` | Retrieve saved cross-doctor Active Cabinet medicines |
 | `POST /api/v1/cabinet/{patient_id}` | Add medicine to Active Cabinet with automatic generic salt resolution |
@@ -59,7 +60,8 @@ FastAPI endpoints in `main.py`:
 - **Vision extraction (perception only):** Google Gemini (`GEMINI_API_KEY`) extracts line text, confidence, and bounding coordinates; it never makes clinical safety decisions.
 - **Deterministic safety gate & datasets:** RapidFuzz brand normalization (`cutoff=82`), compiled Pakistani DRAP brand/salt formulary (`327` entries) with WHO AWaRe classifications and daily max dose ceilings, openFDA Drug Label API (`fda.gov`) plus cached verified label excerpts (`73` interaction pairs). Neither FDA nor WHO endorses this application.
 - **Frameworks & infrastructure:** FastAPI, Pydantic, Pillow, httpx, Next.js 16, React, Lucide Icons, custom WebGL GLSL shader Hero (`THREE`-free lightweight procedural WebGL canvas), SQLite runtime persistence + Postgres schema in [`backend/sql/supabase_schema.sql`](backend/sql/supabase_schema.sql), Playwright, `@axe-core/playwright`.
-- **Voice & messaging order:** Server Urdu audio order is Uplift Orator → Azure Speech → Google TTS (falls back to browser Urdu speech synthesis when TTS keys are unset; never substitutes English voice for Urdu clinical guidance). WhatsApp reminders stay explicitly disabled (`whatsapp_scheduled: false`) until real Twilio/Meta credentials are connected.
+- **Voice:** Server Urdu audio comes from [freeapi.pro](https://freeapi.pro/speech) text-to-speech (no key), which serves Microsoft's Urdu neural voices. Only four voices are used: Uzma (default), Asad, Gul and Salman; the voice is chosen in the backend panel. Azure Speech is an optional fallback with the same voice, then the device's own Urdu voice. An English voice is never substituted for Urdu guidance. The engine's fixed Roman Urdu lines and every medicine name are rewritten to Urdu script before synthesis (`services/urdu_speech.py`, `services/urdu_names.py`), because these voices skip Latin words they do not know; a line with no exact Urdu-script form is not spoken at all.
+- **Messaging:** WhatsApp reminders stay explicitly disabled (`whatsapp_scheduled: false`) until real Twilio/Meta credentials are connected.
 
 ### Scan outcome versus service outcome
 
@@ -77,7 +79,7 @@ python3 -m venv .venv
 .venv/bin/python -m uvicorn main:app --reload
 ```
 
-Set `GEMINI_API_KEY` in `.env`. Configure `UPLIFT_API_KEY` and `UPLIFT_VOICE_ID` for Pakistani Urdu MP3. Azure and Google keys are optional fallbacks. Never put these credentials in frontend variables. The backend loads this directory's `.env` or `backend/.env`.
+Set `GEMINI_API_KEY` in `.env`. Urdu audio needs no key; `URDU_TTS_VOICE` sets the starting voice and `FREEAPI_TTS_ENABLED=0` switches server audio off. Azure Speech keys are an optional fallback. Never put credentials in frontend variables. The backend loads this directory's `.env` or `backend/.env`.
 
 In another terminal:
 
@@ -149,6 +151,6 @@ Sessions expire after 8 hours, restart, or a password change. Five failed logins
 - **Backend tests (`pytest`):** `30 passed` covering formulary matching, confidence lock (`<0.75` refusal), overdose ceiling blocking (`5000mg` Leflox), openFDA salt-only queries, cabinet CRUD + auto-merge, WhatsApp honest unconfigured/webhook checks, serverless `/tmp` storage, and demo QR cold recovery.
 - **Deterministic 30-Case Safety Benchmark (`python -m tests.run_eval_30`):** `30/30 passed` (`p50=0.068ms` deterministic engine latency across 15 Pakistani brand extractions, 5 illegible/low-confidence refusals, 5 high-risk interactions, and 5 strip swaps/overdose ceilings). *Note: This harness measures the deterministic clinical engine offline (non-VLM latency); real-world prescription photos add Gemini Vision inference latency and still require pharmacist/clinician validation.*
 - **Frontend checks:** `tsc --noEmit` clean, `next build` clean, `19/19` Playwright + axe-core WCAG 2.0/2.1/2.2 AA checks passing locally and against `https://nuskha-saathi-rose.vercel.app`.
-- **Honest Limits:** Outbound WhatsApp reminder scheduling remains explicitly disabled (`Enable reminders` disabled; `whatsapp_scheduled: false`) until real Twilio/Meta credentials are supplied. On Vercel serverless, `/tmp` SQLite storage is ephemeral per instance, while browser `localStorage` persists saved scans (`<= 20`) and cabinet items locally on device. Live handwriting accuracy across diverse clinicians, Uplift/Azure/Google audio quality when credentials are supplied, physical smartphone cameras/torch, and regional languages need device/credential-backed acceptance testing.
+- **Honest Limits:** Outbound WhatsApp reminder scheduling remains explicitly disabled (`Enable reminders` disabled; `whatsapp_scheduled: false`) until real Twilio/Meta credentials are supplied. On Vercel serverless, `/tmp` SQLite storage is ephemeral per instance, while browser `localStorage` persists saved scans (`<= 20`) and cabinet items locally on device. Live handwriting accuracy across diverse clinicians, the Urdu spellings of less common brand names as heard by a native listener, the availability of the free voice provider (no uptime guarantee; its terms cover personal and non-commercial use), physical smartphone cameras/torch, and regional languages need device/credential-backed acceptance testing.
 
 Follow the treating clinician's instructions. Ask a pharmacist to confirm unclear wording before taking medicine. The app does not diagnose, prescribe, or authorize changing medicines.

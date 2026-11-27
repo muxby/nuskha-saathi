@@ -1,7 +1,7 @@
 # Backend panel
 
 A private page for checking that the backend is alive, running its
-self-tests, and waking it before a demo.
+self-tests, choosing the Urdu voice, and waking it before a demo.
 
 ## Opening it
 
@@ -42,15 +42,41 @@ wrong attempts lock sign-in from that device for five minutes.
 | Offline interaction cache | ibuprofen + warfarin is present and HIGH with no network. |
 | Database write and read | A row can be written, read back and cleared. |
 
-**Run live checks** adds two that reach outside the server:
+**Run live checks** adds three that reach outside the server:
 
 | Check | Proves |
 | --- | --- |
 | Gemini vision reader | The key and model really work: one generated test image is read. Uses one Gemini request. |
 | openFDA live label | The live drug-label API answers. If it does not, the offline cache is used. |
+| Urdu voice | The voice provider returns audio in the selected voice. Uses one voice request. |
 
 A failed check names the cause and the fix. Results never include patient
 data, keys or a provider's raw error text.
+
+## Urdu voice
+
+The app reads instructions aloud in one of four Urdu voices:
+
+| Voice | |
+| --- | --- |
+| Uzma | Female · Pakistan (default) |
+| Asad | Male · Pakistan |
+| Gul | Female · India |
+| Salman | Male · India |
+
+Select a voice in the **Urdu voice** section. It applies to new audio straight
+away. **Play sample** speaks one test sentence in that voice without changing
+the selection. Audio already saved for an earlier scan keeps the voice it was
+made with.
+
+The choice is saved in the backend database. Free hosting clears that
+database whenever the server restarts or sleeps, and the voice then returns
+to the default. To change the default itself, set `URDU_TTS_VOICE` on the
+server to `uzma`, `asad`, `gul` or `salman`.
+
+Speech comes from freeapi.pro, which needs no key. If it does not answer, the
+app falls back to the phone's own Urdu voice, and the section shows a notice
+when server voice is switched off (`FREEAPI_TTS_ENABLED=0`).
 
 ## Waking the backend
 

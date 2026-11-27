@@ -32,7 +32,7 @@ Every screen that shows a result carries the companion framing in Urdu: verify w
 | Map brand to salt | `formulary_resolver.py` + `pk_formulary.json` | A curated formulary row, or refusal |
 | Interaction severity | `openFDA` label fields, else `pk_interactions_fallback.json` | Verbatim FDA excerpt plus a fixed Urdu template |
 | Strip match | Deterministic compare of detected brand/salt/strength vs the verified *parchi* line | `EXACT_MATCH`, `GENERIC_EQUIVALENT_MATCH`, `STRENGTH_MISMATCH`, `WRONG_MEDICINE`, `UNREADABLE_STRIP` |
-| Spoken Urdu | `urdu_formatter.py` templates, then TTS | Audio of the already-decided text |
+| Spoken Urdu | `urdu_formatter.py` templates, a fixed Urdu-script table (`urdu_speech.py`), then TTS | Audio of the already-decided text |
 
 No prompt, tool call, or model score may override a refusal, raise a dose, clear an interaction, or mark a strip as matched.
 
@@ -48,7 +48,9 @@ No prompt, tool call, or model score may override a refusal, raise a dose, clear
 | Early antibiotic stop | Patient feels better on Day 3 | WHO AWaRe tag on the formulary row. Watch/Reserve antibiotics schedule a two-way Day-3 WhatsApp voice check-in. Reply text is transcribed, then answered from a fixed adherence script. |
 | Model outage or bad JSON | Gemini returns prose or times out | `response_mime_type=application/json`, strict schema, one retry, then fail closed to `REFUSED_BLURRY`. The parser never guesses. |
 | `openFDA` empty or down | Brand name queried directly, or the API throttles | Local `pk_interactions_fallback.json` (top 60 verified pairs with verbatim FDA quotes) returns in under 5 ms. |
-| TTS vendor down | Uplift Orator fails | Azure `ur-PK-UzmaNeural`, then Google `ur-PK-Standard-A`, then browser TTS. Clinical text is already fixed before any voice vendor runs. |
+| TTS vendor down | freeapi.pro fails or times out | Azure Speech with the same voice when its key is set, then the device's Urdu voice. Clinical text is already fixed before any voice vendor runs. |
+| Voice drops a medicine name | Urdu neural voices skip Latin words they do not know, so "Leflox 500 mg" was spoken with no name | Every medicine name is spelt in Urdu script before synthesis. Text that still contains Latin letters, or a sentence with no exact Urdu-script form, is not synthesised. |
+| Wrong voice or language played | The provider answers with a different voice | Only Uzma, Asad, Gul and Salman can be selected. The reply names the voice that spoke; a mismatch is discarded. |
 | Venue Wi-Fi dies on stage | Live APIs unreachable | Hidden 5-case Offline Demo Mode (`?demo=offline` or three taps on the header logo). Cached audio and FDA payloads only. |
 | Patient data retained without consent | Cabinet or phone number stored on a one-off scan | Cabinet and WhatsApp are opt-in. A one-off scan persists nothing. One tap clears the cabinet. No CNIC and no free-text medical history. |
 | Unverified regional medical audio | Pashto or Sindhi TTS shipped because the model exists | Urdu is the only production voice. `pus` / `snd` audio ships only after the Day-3 10-phrase clinical listen-test passes. Otherwise it stays documented as queued. |
@@ -117,8 +119,10 @@ A refused *parchi* line cannot be strip-verified into a pass. Verification reads
 
 ## 7. Voice and message safety
 
-- Urdu scripts are built in `urdu_formatter.py` from templates. English brand names stay ASCII (`Leflox`, `Warfarin`). Numbers stay Western digits (`500 mg`, `3 din`) so Uplift Orator pronounces them cleanly.
-- TTS vendors receive that string only. They do not receive a prompt that asks them to invent advice.
+- Urdu scripts are built in `urdu_formatter.py` from templates, in Roman Urdu with brand names as printed on the strip. That is what the screen shows.
+- For the voice, `urdu_speech.py` rewrites each template into Urdu script from a fixed table and `urdu_names.py` spells each medicine name in Urdu letters. Numbers stay Western digits. It is a table, not a translator: an unrecognised sentence stops synthesis.
+- The voice provider (freeapi.pro) receives that Urdu-script string and a voice name only: medicine names, doses and fixed warnings. It never receives a patient id, phone number or image, and no prompt that asks it to invent advice.
+- `POST /api/v1/speech` speaks single lines on request. It accepts known engine lines or Urdu-script text only, and shares the per-client rate limit with the scan routes.
 - WhatsApp inbound voice is transcribed (Uplift Scribe, `language=ur`, else Gemini audio). The reply is selected from grounded adherence templates (course completion, talk to the doctor, do not stop a Watch antibiotic early). The transcript is stored on the reminder row as `user_reply_transcript` and is not sent to a free-form clinical model.
 - Mixed Urdu, Roman Urdu, and English in one reply is in scope for transcription. It is out of scope for changing the safety decision.
 - Outgoing WhatsApp audio is Opus OGG at 32 kbps: `ffmpeg -i in.mp3 -c:a libopus -b:a 32k out.ogg`.
@@ -149,8 +153,9 @@ Rules:
 | :--- | :--- | :--- |
 | Gemini API key | Backend env only | Never in the Next.js client, never in git |
 | openFDA API key | Backend env | Free tier is 240 requests/minute. Cache and the local matrix absorb throttling |
-| Uplift AI bearer token | Backend env | TTS and STT calls stay server-side |
-| Azure / Google TTS credentials | Backend env | Fallback path only |
+| freeapi.pro text-to-speech | No credential | Called from the backend only; receives the fixed Urdu script, nothing that identifies a patient |
+| Azure Speech credentials | Backend env | Fallback path only |
+| Uplift AI bearer token | Backend env | Speech-to-text stays server-side |
 | Supabase service role | Backend env | The browser uses the public anon key only for reads the product explicitly allows |
 | Twilio or Meta WhatsApp token | Backend env | Webhook verifies the provider signature before it trusts a reply |
 

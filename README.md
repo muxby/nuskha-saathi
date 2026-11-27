@@ -17,7 +17,7 @@ refused, never guessed.
   when the network is down, including medicines from earlier doctors.
 - **Shows the day.** A morning / afternoon / night plan built only from
   verified lines, plus per-medicine dose cards that can be printed.
-- **Speaks Urdu.** Fixed Urdu sentences, replayable from a QR code.
+- **Speaks Urdu.** Fixed Urdu sentences in a natural Urdu voice, replayable from a QR code.
 - **Checks the strip.** Compares the medicine in hand with the prescription.
 - **Works offline.** Five demo cases and saved prescriptions open with no network.
 
@@ -59,10 +59,10 @@ Open `http://localhost:3000`. No key? Open `http://localhost:3000/?demo=offline`
 
 | Command | Covers |
 | --- | --- |
-| `make test-backend` | 129 backend tests: safety gate, routes, data integrity, hardening |
+| `make test-backend` | 161 backend tests: safety gate, routes, data integrity, hardening, Urdu voice |
 | `make eval` | 30-case deterministic safety benchmark |
 | `make test-frontend` | Type check and 60 unit tests |
-| `make test-ui` | 19 browser and accessibility checks with mocked API states |
+| `make test-ui` | 20 browser and accessibility checks with mocked API states |
 | `make test-e2e` | 12 browser checks against the real backend |
 
 The two browser suites need the API on port 8000 and a production frontend

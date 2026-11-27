@@ -18,9 +18,10 @@ time, so the backend goes first.
 | Render account | render.com | backend hosting |
 | Vercel account | vercel.com | frontend hosting |
 
-Optional: an openFDA key (higher rate limit) and Uplift / Azure / Google
-speech keys for server-generated Urdu audio. Without a speech key the app
-uses the phone's own Urdu voice.
+Optional: an openFDA key (higher rate limit). Urdu audio needs no key: it
+comes from freeapi.pro, a free service with no uptime guarantee whose terms
+cover personal and non-commercial use. If it does not answer, the app uses
+the phone's own Urdu voice.
 
 ## Step 1 — Backend on Render
 
@@ -52,7 +53,9 @@ Backend environment variables:
 | `ALLOWED_ORIGINS` | recommended | Comma-separated origins allowed to call the API. Unset means any origin. |
 | `SCAN_RATE_LIMIT_PER_MINUTE` | no | Scans per client per minute. Default `30`, `0` disables. |
 | `OPENFDA_API_KEY` | no | Raises the openFDA rate limit. |
-| `UPLIFT_API_KEY`, `UPLIFT_VOICE_ID`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`, `GOOGLE_TTS_API_KEY` | no | Server Urdu audio. |
+| `URDU_TTS_VOICE` | no | Starting Urdu voice: `uzma` (default), `asad`, `gul` or `salman`. The backend panel can change it while the server runs. |
+| `FREEAPI_TTS_ENABLED` | no | `0` switches server Urdu audio off. Default on. |
+| `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION` | no | Fallback Urdu audio in the same voice. |
 | `ADMIN_MONITOR_PASSWORD` | no | Enables the private `/admin` panel (12+ characters). See [ADMIN_PANEL.md](ADMIN_PANEL.md). |
 
 ### Check the backend before going further
