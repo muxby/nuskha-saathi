@@ -34,3 +34,43 @@ export function needsReencode(file: { type: string; size: number }, size: Size):
   return Math.max(size.width, size.height) > MAX_EDGE;
 }
 
+function toBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
+  return new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", JPEG_QUALITY));
+}
+
+/**
+ * Returns an upload-ready JPEG. If the browser cannot decode the file, the
+ * original is returned and the server makes the decision, so this step can
+ * only ever help.
+ */
+export async function prepareImage(file: File): Promise<File> {
+  if (typeof createImageBitmap !== "function" || typeof document === "undefined") return file;
+  let bitmap: ImageBitmap;
+  try {
+    bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+  } catch {
+    return file;
+  }
+  try {
+    const source = { width: bitmap.width, height: bitmap.height };
+    if (!needsReencode(file, source)) return file;
+    const target = fitWithin(source);
+    const canvas = document.createElement("canvas");
+    canvas.width = target.width;
+    canvas.height = target.height;
+    const context = canvas.getContext("2d");
+    if (!context) return file;
+    // White underlay so transparent PNG scans do not turn black as JPEG.
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, target.width, target.height);
+    context.imageSmoothingQuality = "high";
+    context.drawImage(bitmap, 0, 0, target.width, target.height);
+    const blob = await toBlob(canvas);
+    if (!blob || blob.size === 0) return file;
+    if (file.type === "image/jpeg" && blob.size >= file.size && target.width === source.width) return file;
+    const name = file.name.replace(/\.[^.]+$/, "") || "photo";
+    return new File([blob], `${name}.jpg`, { type: "image/jpeg", lastModified: Date.now() });
+  } finally {
+    bitmap.close();
+  }
+}
