@@ -91,3 +91,16 @@ class RateLimiter:
             return len(self._hits)
 
 
+def client_key(forwarded_for: str | None, peer: str | None) -> str:
+    """Rate-limit key for a request.
+
+    Render and Vercel put the caller's address first in ``X-Forwarded-For``.
+    The value is used only as a bucket key and is never stored or logged.
+    """
+    if forwarded_for:
+        first = forwarded_for.split(",", 1)[0].strip()
+        if first:
+            return first[:64]
+    return (peer or "unknown")[:64]
+
+
