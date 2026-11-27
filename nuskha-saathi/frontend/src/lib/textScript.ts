@@ -16,3 +16,12 @@ function count(text: string, pattern: RegExp): number {
   return text.match(pattern)?.length ?? 0;
 }
 
+/** Dominant script of a string. Digits and punctuation alone are neutral. */
+export function detectScript(text: string | null | undefined): TextScript {
+  if (!text) return "neutral";
+  const arabic = count(text, ARABIC_SCRIPT);
+  const latin = count(text, LATIN_LETTER);
+  if (arabic === 0 && latin === 0) return "neutral";
+  return arabic >= latin ? "arabic" : "latin";
+}
+
