@@ -37,12 +37,12 @@ export default function PrescriptionResults({
         onRetake={onRetake}
       />
       <DayPlan medications={scan.medications} />
-      <div className="comparison-layout">
-        <aside className="source-panel">
-          <div className="source-title">
-            <FileText size={19} />
-            <h2>{t("original")}</h2>
-            {original && (
+      <div className={`comparison-layout ${original ? "" : "no-source"}`}>
+        {original && (
+          <aside className="source-panel">
+            <div className="source-title">
+              <FileText size={19} />
+              <h2>{t("original")}</h2>
               <button
                 type="button"
                 className={`clarity-toggle ${clarity ? "is-on" : ""}`}
@@ -50,27 +50,33 @@ export default function PrescriptionResults({
                 onClick={() => setClarity((v) => !v)}
               >
                 <Eye size={15} />
-                <span>
-                  {t(clarity ? "clarityLensActive" : "clarityLens")}
-                </span>
+                <span>{t(clarity ? "clarityLensActive" : "clarityLens")}</span>
               </button>
-            )}
-          </div>
-          {original ? (
+            </div>
             <img
               src={original}
               alt={t("original")}
               className={`original-prescription ${clarity ? "has-clarity" : ""}`}
             />
-          ) : (
-            <p className="original-empty">{t("originalUnavailable")}</p>
-          )}
-          <button type="button" className="secondary-button" onClick={onRetake}>
-            <ScanLine size={18} />
-            {t("newScan")}
-          </button>
-        </aside>
+            <button type="button" className="secondary-button" onClick={onRetake}>
+              <ScanLine size={18} />
+              {t("newScan")}
+            </button>
+          </aside>
+        )}
         <div className="extracted-panel">
+          {!original && (
+            <div className="source-unavailable">
+              <p>
+                <FileText size={18} aria-hidden="true" />
+                {t("originalUnavailable")}
+              </p>
+              <button type="button" className="secondary-button" onClick={onRetake}>
+                <ScanLine size={18} />
+                {t("newScan")}
+              </button>
+            </div>
+          )}
           <div className="source-title">
             <h2>{t("extracted")}</h2>
             <span className="record-id" dir="ltr">
