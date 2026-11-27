@@ -34,3 +34,22 @@ test("a refused line with a leaked schedule is still excluded", () => {
   assert.ok(isPlanEmpty(buildDayPlan([leaked])));
 });
 
+test("verified medicine without a schedule is unscheduled", () => {
+  const med = verified("Panadol", { schedule: null });
+  assert.ok(isPlanEmpty(buildDayPlan([med])));
+  assert.deepEqual(unscheduled([med]).map((m) => m.brand_matched), ["Panadol"]);
+});
+
+test("all-zero schedule is unscheduled", () => {
+  const med = verified("Panadol", { schedule: schedule({ morning: 0, afternoon: 0, night: 0 }) });
+  assert.equal(unscheduled([med]).length, 1);
+});
+
+test("non-finite quantities are ignored", () => {
+  const med = verified("Panadol", { schedule: schedule({ morning: Number.NaN, night: -1 }) });
+  assert.ok(isPlanEmpty(buildDayPlan([med])));
+});
+
+test("scheduled medicines are not reported as unscheduled", () => {
+  assert.deepEqual(unscheduled([verified("Brufen"), refused()]), []);
+});
