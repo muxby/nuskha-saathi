@@ -24,6 +24,9 @@ import HomeExperience from "@/components/HomeExperience";
 import { useLanguage } from "@/lib/i18n";
 import DevProofDrawer from "@/components/DevProofDrawer";
 import DemoModeDrawer from "@/components/DemoModeDrawer";
+import BackendStatus from "@/components/BackendStatus";
+import { prepareImage } from "@/lib/imagePrep";
+import { pick, visionCopy } from "@/lib/copy";
 import {
   addCabinetMed,
   clearCabinet,
@@ -233,8 +236,9 @@ export default function Home() {
     setError("");
     setScan(null);
     setOriginal(URL.createObjectURL(file));
+    const upload = await prepareImage(file);
     const form = new FormData();
-    form.append("file", file);
+    form.append("file", upload);
     form.append("patient_id", patientId);
     if (useCabinet && cabinetMeds.length > 0) {
       form.append("active_cabinet", JSON.stringify(cabinetMeds));
