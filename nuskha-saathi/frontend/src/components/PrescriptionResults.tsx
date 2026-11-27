@@ -36,6 +36,7 @@ export default function PrescriptionResults({
         medications={scan.medications}
         onRetake={onRetake}
       />
+      <DayPlan medications={scan.medications} />
       <div className="comparison-layout">
         <aside className="source-panel">
           <div className="source-title">
@@ -127,7 +128,6 @@ export default function PrescriptionResults({
           </div>
         </div>
       </div>
-      <DayPlan medications={scan.medications} />
       {confirmed.length > 0 && (
         <section className="dosage-section">
           <div className="section-heading">
