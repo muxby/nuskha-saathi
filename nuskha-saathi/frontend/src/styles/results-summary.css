@@ -108,3 +108,25 @@ html[lang="ur"] .scan-summary h2 {
   color: var(--ink);
 }
 
+.scan-summary-stats .stat-matched dd {
+  color: var(--green);
+}
+
+.scan-summary-stats .stat-ask {
+  background: var(--amber-bg);
+  border-color: color-mix(in srgb, var(--amber) 30%, transparent);
+}
+
+.scan-summary-stats .stat-ask dd {
+  color: var(--amber);
+}
+
+.scan-summary-stats .stat-stop {
+  background: var(--red-bg);
+  border-color: color-mix(in srgb, var(--red) 30%, transparent);
+}
+
+.scan-summary-stats .stat-stop dd {
+  color: var(--red);
+}
+
