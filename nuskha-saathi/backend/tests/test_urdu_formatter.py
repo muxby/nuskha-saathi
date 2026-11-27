@@ -30,3 +30,21 @@ def test_dose_phrase_handles_unknown_strength():
     assert dose_phrase("Risek", None, 1, None, None, "before_food") == "Risek subah khane se pehle leni hai."
 
 
+def test_format_mg_uses_western_digits():
+    assert format_mg(500) == "500 mg"
+    assert format_mg(500.0) == "500 mg"
+    assert format_mg(2.5) == "2.5 mg"
+    assert format_mg(None) == ""
+
+
+def test_fixed_lines_are_ascii_safe_for_tts():
+    for line in (BLURRY_URDU, UNKNOWN_URDU, DOSAGE_URDU):
+        assert line.replace("—", "-").isascii()
+
+
+def test_refusals_never_contain_a_dose():
+    for line in (BLURRY_URDU, UNKNOWN_URDU, DOSAGE_URDU):
+        assert " mg" not in line
+        assert "pharmacist" in line
+
+
