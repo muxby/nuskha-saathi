@@ -43,3 +43,13 @@ def test_clearing_an_empty_cabinet_is_safe(client):
     assert response.json()["cleared"] == 0
 
 
+def test_single_delete_still_works(client):
+    item = _add(client, "patient-a", "Marevan")
+    keep = _add(client, "patient-a", "Concor")
+    response = client.delete(f"/api/v1/cabinet/patient-a/{item['id']}")
+    assert response.status_code == 200
+    assert [m["id"] for m in response.json()["medications"]] == [keep["id"]]
+
+
+def test_clear_rejects_invalid_patient_id(client):
+    assert client.delete("/api/v1/cabinet/%20").status_code == 400
