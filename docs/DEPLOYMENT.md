@@ -55,3 +55,29 @@ Backend environment variables:
 | `UPLIFT_API_KEY`, `UPLIFT_VOICE_ID`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`, `GOOGLE_TTS_API_KEY` | no | Server Urdu audio. |
 | `ADMIN_MONITOR_PASSWORD` | no | Enables the private `/admin` diagnostics panel (16+ characters). |
 
+### Check the backend before going further
+
+Replace the host with your Render URL.
+
+```bash
+curl https://YOUR-API.onrender.com/health
+```
+
+Expect `"status":"ok"` and `"vision_configured":true`.
+
+`vision_configured` only says a key is present. This proves the key and model
+actually work by sending one generated test image through the reader:
+
+```bash
+curl https://YOUR-API.onrender.com/api/v1/diagnostics/vision
+```
+
+| `status` | Meaning | Fix |
+| --- | --- | --- |
+| `OK` | The reader answered. | Nothing. |
+| `NOT_CONFIGURED` | No key on the server. | Add `GEMINI_API_KEY`, redeploy. |
+| `UPSTREAM_REJECTED` | Google refused the request. | Key invalid, out of quota, or `GEMINI_MODEL` not available to it. |
+| `UPSTREAM_UNAVAILABLE` | Timeout or network failure. | Retry; check the host allows outbound HTTPS. |
+
+Do not continue until this returns `"ok": true`.
+
