@@ -23,3 +23,8 @@ function countLines(scan: SummaryInput) {
   return { total: scan.medications.length, verified, needsConfirmation: scan.medications.length - verified };
 }
 
+function countInteractions(scan: SummaryInput) {
+  const high = scan.interactions.filter((i) => i.severity === "HIGH").length;
+  return { highInteractions: high, moderateInteractions: scan.interactions.length - high };
+}
+
