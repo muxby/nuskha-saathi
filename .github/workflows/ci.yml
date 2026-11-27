@@ -52,3 +52,40 @@ jobs:
         env:
           NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
 
+  browser:
+    name: Browser checks
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: nuskha-saathi/frontend/package-lock.json
+      - name: Start the safety engine
+        working-directory: nuskha-saathi/backend
+        run: |
+          pip install -r requirements.txt
+          python -m uvicorn main:app --port 8000 &
+      - name: Build and start the app
+        working-directory: nuskha-saathi/frontend
+        env:
+          NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npm run build
+          npm run start &
+          npx --yes wait-on@8 http://localhost:3000 http://localhost:8000/health
+      - name: Mocked UI and accessibility suite
+        working-directory: nuskha-saathi/frontend
+        env:
+          UI_TEST_BROWSER: chromium
+        run: npm run test:ui
+      - name: Unmocked end-to-end suite
+        working-directory: nuskha-saathi/frontend
+        run: npm run test:e2e
