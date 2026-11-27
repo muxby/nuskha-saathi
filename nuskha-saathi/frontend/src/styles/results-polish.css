@@ -64,3 +64,15 @@
   color: var(--ink-muted);
 }
 
+.alert-card .alert-title {
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.alert-card .alert-body {
+  min-inline-size: 0;
+  flex: 1;
+}
+
