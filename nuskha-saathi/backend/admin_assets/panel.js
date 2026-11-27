@@ -20,12 +20,25 @@ const TEXT = {
     resume: 'Resume updates',
     logs: 'Render logs ↗',
     testsTitle: 'Backend tests',
-    testsBody: 'Quick checks run inside the server with no network calls and no cost. Live checks also send one test image to Gemini and one request to openFDA.',
+    testsBody: 'Quick checks run inside the server with no network calls and no cost. Live checks also send one test image to Gemini, one request to openFDA and one sentence to the Urdu voice.',
     runQuick: 'Run quick checks',
     runLive: 'Run live checks',
     running: 'Running…',
     testsPassed: (p, t, ms) => `${p} of ${t} passed · ${ms} ms`,
     testsFailed: 'The test run could not be completed.',
+    voiceTitle: 'Urdu voice',
+    voiceBody: 'The voice that reads instructions aloud in the app. Choosing one applies to new audio straight away; audio already saved for an earlier scan keeps the voice it was made with.',
+    voiceNote: 'The choice is saved in the backend database. Free hosting clears that database when the server restarts, and the voice then returns to the default. To change the default itself, set URDU_TTS_VOICE on the server to uzma, asad, gul or salman.',
+    voiceInUse: (name) => `In use: ${name}`,
+    voiceSaved: (name) => `Saved · ${name} now reads new audio`,
+    voiceSaveFailed: 'The voice could not be saved.',
+    voiceOff: 'Server voice is switched off. The app uses the device voice.',
+    voiceSample: 'Play sample',
+    voiceLoading: 'Loading sample…',
+    voiceSampleFailed: 'The voice provider did not answer. Try again.',
+    voiceDefault: 'default',
+    gender: { Female: 'Female', Male: 'Male' },
+    country: { Pakistan: 'Pakistan', India: 'India' },
     wakeTitle: 'Wake and keep awake',
     wakeBody: 'Free hosting puts the backend to sleep when idle, so the first scan after a quiet period is slow. Ping it before a demo, or keep it awake while this tab stays open.',
     pingNow: 'Ping backend now',
@@ -86,12 +99,26 @@ const TEXT = {
     resume: 'تازہ کاری جاری کریں',
     logs: 'رینڈر لاگز ↗',
     testsTitle: 'بیک اینڈ کے ٹیسٹ',
-    testsBody: 'فوری جانچ سرور کے اندر چلتی ہے، نہ انٹرنیٹ استعمال ہوتا ہے نہ کوئی خرچ آتا ہے۔ براہِ راست جانچ میں ایک آزمائشی تصویر جیمنائی کو اور ایک درخواست اوپن ایف ڈی اے کو بھی جاتی ہے۔',
+    testsBody: 'فوری جانچ سرور کے اندر چلتی ہے، نہ انٹرنیٹ استعمال ہوتا ہے نہ کوئی خرچ آتا ہے۔ براہِ راست جانچ میں ایک آزمائشی تصویر جیمنائی کو، ایک درخواست اوپن ایف ڈی اے کو اور ایک جملہ اردو آواز کو بھی جاتا ہے۔',
     runQuick: 'فوری جانچ چلائیں',
     runLive: 'براہِ راست جانچ چلائیں',
     running: 'جانچ جاری ہے…',
     testsPassed: (p, t, ms) => `${t} میں سے ${p} کامیاب · ${ms} ms`,
     testsFailed: 'جانچ مکمل نہیں ہو سکی۔',
+    voiceTitle: 'اردو آواز',
+    voiceBody: 'وہ آواز جو ایپ میں ہدایات پڑھ کر سناتی ہے۔ نئی آواز چنتے ہی نئی آڈیو اسی میں بنتی ہے؛ پہلے کے اسکین کی محفوظ آڈیو اپنی پرانی آواز میں رہتی ہے۔',
+    voiceNote: 'یہ انتخاب بیک اینڈ کے ڈیٹا بیس میں محفوظ ہوتا ہے۔ مفت ہوسٹنگ پر سرور دوبارہ چلنے سے یہ ڈیٹا بیس صاف ہو جاتا ہے اور آواز پہلے سے طے شدہ پر واپس آ جاتی ہے۔ طے شدہ آواز بدلنے کے لیے سرور پر URDU_TTS_VOICE کو uzma، asad، gul یا salman پر رکھیں۔',
+    voiceInUse: (name) => `زیرِ استعمال: ${name}`,
+    voiceSaved: (name) => `محفوظ ہو گیا · نئی آڈیو اب ${name} کی آواز میں بنے گی`,
+    voiceSaveFailed: 'آواز محفوظ نہیں ہو سکی۔',
+    voiceOff: 'سرور کی آواز بند ہے۔ ایپ آلے کی آواز استعمال کرتی ہے۔',
+    voiceSample: 'نمونہ سنیں',
+    voiceLoading: 'نمونہ آ رہا ہے…',
+    voiceSampleFailed: 'آواز فراہم کرنے والے نے جواب نہیں دیا۔ دوبارہ کوشش کریں۔',
+    voiceDefault: 'طے شدہ',
+    gender: { Female: 'خاتون', Male: 'مرد' },
+    country: { Pakistan: 'پاکستان', India: 'بھارت' },
+    voiceNames: { uzma: 'عظمیٰ', asad: 'اسد', gul: 'گل', salman: 'سلمان' },
     wakeTitle: 'سرور کو جگائیں اور جگائے رکھیں',
     wakeBody: 'مفت ہوسٹنگ پر سرور فارغ رہنے پر سو جاتا ہے، اس لیے وقفے کے بعد پہلا اسکین سست ہوتا ہے۔ ڈیمو سے پہلے اسے جگا لیں، یا جب تک یہ ٹیب کھلا ہے اسے جگائے رکھیں۔',
     pingNow: 'سرور کو ابھی جگائیں',
@@ -149,6 +176,7 @@ const TEXT = {
       storage: 'ڈیٹا بیس میں لکھنا اور پڑھنا',
       vision: 'جیمنائی سے تصویر پڑھنا (1 درخواست)',
       openfda: 'اوپن ایف ڈی اے براہِ راست',
+      voice: 'اردو آواز (1 درخواست)',
     },
   },
 };
@@ -172,6 +200,7 @@ function applyLanguage() {
   $('keep-awake').textContent = keepAwake ? t().keepAwakeOn : t().keepAwakeOff;
   if (lastStatus) render(lastStatus.data, lastStatus.latency);
   if (lastTests) renderTests(lastTests);
+  renderVoices();
   renderWake();
   renderConnection();
 }
@@ -281,6 +310,7 @@ async function refresh() {
     if (!response.ok) throw new Error('Status unavailable');
     const data = await response.json();
     lastStatus = { data, latency: performance.now() - start };
+    if (!savingVoice) { voice = data.voice || null; renderVoices(); }
     render(lastStatus.data, lastStatus.latency);
     lastSuccess = new Date();
     connection = 'connected';
@@ -339,6 +369,98 @@ async function runTests(live) {
     for (const button of buttons) button.disabled = false;
     refresh();
   }
+}
+
+/* ---------- Urdu voice ---------- */
+
+let voice = null;          // { selected, default, available, options } from the server
+let voiceNotice = null;    // { key, cls, name } shown beside the heading
+let savingVoice = false;
+let samplePlayer = null;
+let sampleKey = null;
+
+const voiceName = (option) => (t().voiceNames && t().voiceNames[option.key]) || option.name;
+
+function renderVoices() {
+  const state = $('voice-state');
+  if (!voice) { state.textContent = ''; return; }
+  const current = voice.options.find((o) => o.key === voice.selected);
+  if (!voice.available) {
+    state.textContent = t().voiceOff;
+    state.className = 'warn';
+  } else if (voiceNotice) {
+    const text = t()[voiceNotice.key];
+    state.textContent = typeof text === 'function' ? text(voiceName(current)) : text;
+    state.className = voiceNotice.cls;
+  } else {
+    state.textContent = t().voiceInUse(voiceName(current));
+    state.className = 'good';
+  }
+  $('voices').replaceChildren();
+  for (const option of voice.options) {
+    const chosen = option.key === voice.selected;
+    const row = node('div', null, `voice ${chosen ? 'chosen' : ''}`);
+    const pick = node('button', null, 'voice-pick secondary');
+    pick.type = 'button';
+    pick.setAttribute('role', 'radio');
+    pick.setAttribute('aria-checked', String(chosen));
+    pick.disabled = savingVoice;
+    const meta = `${t().gender[option.gender]} · ${t().country[option.country]}`
+      + (option.key === voice.default ? ` · ${t().voiceDefault}` : '');
+    pick.append(node('span', chosen ? '●' : '○', 'voice-mark'), node('span', voiceName(option), 'voice-name'), node('span', meta, 'voice-meta'));
+    pick.addEventListener('click', () => chooseVoice(option.key));
+    const sample = node('button', sampleKey === option.key ? t().voiceLoading : t().voiceSample, 'secondary voice-sample');
+    sample.type = 'button';
+    sample.disabled = !voice.available || sampleKey !== null;
+    sample.addEventListener('click', () => playSample(option.key));
+    row.append(pick, sample);
+    $('voices').append(row);
+  }
+}
+
+async function chooseVoice(key) {
+  if (savingVoice || !voice || key === voice.selected) return;
+  savingVoice = true;
+  renderVoices();
+  try {
+    const response = await fetch('/admin/api/voice', {
+      method: 'POST',
+      cache: 'no-store',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ voice: key }),
+      signal: AbortSignal.timeout(15000),
+    });
+    if (response.status === 401) { location.replace('/admin'); return; }
+    if (!response.ok) throw new Error('Voice not saved');
+    voice = await response.json();
+    voiceNotice = { key: 'voiceSaved', cls: 'good' };
+  } catch {
+    voiceNotice = { key: 'voiceSaveFailed', cls: 'bad' };
+  } finally {
+    savingVoice = false;
+    renderVoices();
+  }
+}
+
+function playSample(key) {
+  if (samplePlayer) samplePlayer.pause();
+  sampleKey = key;
+  renderVoices();
+  // Same-origin audio, so the panel's strict content policy allows it.
+  const player = new Audio(`/admin/api/voice/sample?voice=${encodeURIComponent(key)}&t=${Date.now()}`);
+  samplePlayer = player;
+  const done = (failed) => {
+    if (samplePlayer !== player) return;
+    sampleKey = null;
+    if (failed) voiceNotice = { key: 'voiceSampleFailed', cls: 'bad' };
+    else if (voiceNotice && voiceNotice.key === 'voiceSampleFailed') voiceNotice = null;
+    renderVoices();
+  };
+  player.addEventListener('playing', () => done(false), { once: true });
+  player.addEventListener('error', () => done(true), { once: true });
+  player.play().catch(() => done(true));
+  // A stalled request must not leave the sample buttons disabled.
+  setTimeout(() => { if (sampleKey === key) done(true); }, 45000);
 }
 
 /* ---------- Wake and keep awake ---------- */

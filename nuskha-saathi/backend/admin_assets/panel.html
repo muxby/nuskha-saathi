@@ -42,12 +42,22 @@
       <h2 data-i18n="testsTitle">Backend tests</h2>
       <span id="test-summary" role="status"></span>
     </div>
-    <p class="muted" data-i18n="testsBody">Quick checks run inside the server with no network calls and no cost. Live checks also send one test image to Gemini and one request to openFDA.</p>
+    <p class="muted" data-i18n="testsBody">Quick checks run inside the server with no network calls and no cost. Live checks also send one test image to Gemini, one request to openFDA and one sentence to the Urdu voice.</p>
     <div class="actions">
       <button id="run-quick" data-i18n="runQuick">Run quick checks</button>
       <button id="run-live" class="secondary" data-i18n="runLive">Run live checks</button>
     </div>
     <div id="test-results"></div>
+  </section>
+
+  <section id="voice">
+    <div class="section-title">
+      <h2 id="voice-heading" data-i18n="voiceTitle">Urdu voice</h2>
+      <span id="voice-state" role="status"></span>
+    </div>
+    <p class="muted" data-i18n="voiceBody">The voice that reads instructions aloud in the app. Choosing one applies to new audio straight away; audio already saved for an earlier scan keeps the voice it was made with.</p>
+    <div id="voices" class="voices" role="radiogroup" aria-labelledby="voice-heading"></div>
+    <p class="muted" data-i18n="voiceNote">The choice is saved in the backend database. Free hosting clears that database when the server restarts, and the voice then returns to the default. To change the default itself, set URDU_TTS_VOICE on the server to uzma, asad, gul or salman.</p>
   </section>
 
   <section id="wake">

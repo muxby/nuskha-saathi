@@ -1,15 +1,20 @@
 """Password-protected operational panel; no external monitoring credentials."""
 import hashlib
 import hmac
+import json
 import os
 from pathlib import Path
 import secrets
 from time import monotonic, perf_counter
 
 from fastapi import Request
-from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, Response
 
 from services.monitoring import Monitor, MonitoringMiddleware
+from services.tts_stt_service import (
+    SAMPLE_TEXT, VOICE_SETTING, VOICES, default_voice, select_voice, selected_voice,
+    synthesize_urdu, tts_configured, voice_options,
+)
 
 ASSETS = Path(__file__).resolve().parents[1] / 'admin_assets'
 COOKIE = 'nuskha_admin'
@@ -116,6 +121,44 @@ def install_monitor(app, health):
         live = request.query_params.get('live') == '1'
         return secure(JSONResponse(await run_selftest(app, live=live)))
 
+    def voice_state():
+        return {'selected': selected_voice().key, 'default': default_voice().key,
+                'available': tts_configured(), 'options': voice_options()}
+
+    @app.post('/admin/api/voice', include_in_schema=False)
+    async def set_voice(request: Request):
+        if not valid(request):
+            return secure(JSONResponse({'error': 'Login required'}, status_code=401))
+        if not same_origin(request):
+            return secure(JSONResponse({'error': 'Invalid origin'}, status_code=403))
+        body = b''
+        async for chunk in request.stream():
+            body += chunk
+            if len(body) > 1024:
+                return secure(JSONResponse({'error': 'Invalid voice'}, status_code=400))
+        try:
+            key = str(json.loads(body or b'{}').get('voice', '')).strip().lower()
+        except (ValueError, AttributeError):
+            key = ''
+        # Only the four listed Urdu voices can ever be selected.
+        if key not in VOICES:
+            return secure(JSONResponse({'error': 'Unknown voice'}, status_code=400))
+        app.state.store.set_setting(VOICE_SETTING, key)
+        select_voice(key)
+        return secure(JSONResponse(voice_state()))
+
+    @app.get('/admin/api/voice/sample', include_in_schema=False)
+    async def voice_sample(request: Request):
+        if not valid(request):
+            return secure(JSONResponse({'error': 'Login required'}, status_code=401))
+        key = request.query_params.get('voice', '').strip().lower()
+        if key not in VOICES:
+            return secure(JSONResponse({'error': 'Unknown voice'}, status_code=400))
+        audio = await synthesize_urdu(SAMPLE_TEXT, voice=key)
+        if not audio:
+            return secure(JSONResponse({'error': 'Voice provider did not answer'}, status_code=503))
+        return secure(Response(content=audio, media_type='audio/mpeg'))
+
     @app.get('/admin/api/status', include_in_schema=False)
     async def status(request: Request):
         if not valid(request):
@@ -131,4 +174,5 @@ def install_monitor(app, health):
             'requests': monitor.total, 'http_failures': monitor.http_failures,
             'active': list(monitor.active.values()), 'recent': list(reversed(monitor.recent)),
             'vision_model': getattr(app.state.extractor, 'active_model', None),
+            'voice': voice_state(),
             'render_logs': 'https://dashboard.render.com/web/srv-dc386ss0916s73824470/logs'}))

@@ -3,7 +3,7 @@
 Each check exercises one real part of the engine and reports pass or fail
 with a duration. Results carry no patient data, keys or provider error text.
 The quick set makes no network calls and costs nothing; the live set spends
-one vision request and one openFDA request.
+one vision request, one openFDA request and one Urdu voice request.
 """
 
 from __future__ import annotations
@@ -95,6 +95,16 @@ async def _openfda(app) -> str:
     return "openFDA returned the ibuprofen label"
 
 
+async def _voice(app) -> str:
+    from services.tts_stt_service import SAMPLE_TEXT, selected_voice, synthesize_urdu, tts_configured
+
+    assert tts_configured(), "Server Urdu voice is switched off (FREEAPI_TTS_ENABLED=0)"
+    voice = selected_voice()
+    audio = await synthesize_urdu(SAMPLE_TEXT)
+    assert audio, f"The voice provider returned no audio for {voice.name}; the app falls back to the device voice"
+    return f"{voice.name} spoke a test sentence ({len(audio) // 1024} KB of audio)"
+
+
 QUICK: tuple[tuple[str, str, Callable], ...] = (
     ("datasets", "Clinical datasets", _datasets),
     ("formulary", "Brand-to-salt resolver", _formulary),
@@ -105,6 +115,7 @@ QUICK: tuple[tuple[str, str, Callable], ...] = (
 LIVE: tuple[tuple[str, str, Callable], ...] = (
     ("vision", "Gemini vision reader (1 request)", _vision),
     ("openfda", "openFDA live label", _openfda),
+    ("voice", "Urdu voice (1 request)", _voice),
 )
 
 

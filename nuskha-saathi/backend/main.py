@@ -16,13 +16,14 @@ from routers.cabinet import router as cabinet_router
 from routers.diagnostics import router as diagnostics_router
 from routers.formulary import router as formulary_router
 from routers.scan import router as scan_router
+from routers.speech import router as speech_router
 from routers.whatsapp import router as whatsapp_router, whatsapp_configured
 from services.formulary_resolver import FormularyResolver
 from services.local_store import LocalStore
 from services.openfda_client import OpenFdaClient
 from services.security import HardeningMiddleware, allowed_origins
 from services.runtime_paths import BACKEND_ROOT, is_serverless_readonly, writable_static_root
-from services.tts_stt_service import tts_configured
+from services.tts_stt_service import VOICE_SETTING, select_voice, selected_voice, tts_configured
 from services.vision_extractor import GeminiVisionExtractor
 
 STATIC_ROOT = writable_static_root()
@@ -61,6 +62,8 @@ def create_app(
     app.state.fda = fda or OpenFdaClient.from_resolver(app.state.resolver)
     app.state.extractor = extractor or GeminiVisionExtractor()
     app.state.store = store or LocalStore()
+    # The panel's voice choice lives in the store; unset falls back to the default.
+    select_voice(app.state.store.get_setting(VOICE_SETTING))
     app.state.strip_dir = strip_dir or (STATIC_ROOT / "strips")
     app.state.audio_dir = STATIC_ROOT / "audio"
     app.state.strip_dir.mkdir(parents=True, exist_ok=True)
@@ -101,6 +104,7 @@ def create_app(
         )
 
     app.include_router(scan_router)
+    app.include_router(speech_router)
     app.include_router(cabinet_router)
     app.include_router(formulary_router)
     app.include_router(diagnostics_router)
@@ -117,6 +121,7 @@ def create_app(
                 "vision_configured": bool(os.getenv("GEMINI_API_KEY")),
                 "vision_model": getattr(app.state.extractor, "active_model", None),
                 "tts_configured": tts_configured(),
+                "tts_voice": selected_voice().name,
                 "openfda_live": bool(app.state.fda.live),
                 "whatsapp_configured": whatsapp_configured(),
                 "ephemeral_storage": is_serverless_readonly(),
