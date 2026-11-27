@@ -88,7 +88,6 @@ export default function PrescriptionResults({
       <SafetyAlertBanner
         interactions={scan.interactions}
         medications={scan.medications}
-        onRetake={onRetake}
       />
       <DayPlan medications={scan.medications} />
       <div className={`comparison-layout ${original ? "" : "no-source"}`}>
