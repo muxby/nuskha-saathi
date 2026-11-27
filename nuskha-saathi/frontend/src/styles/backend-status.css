@@ -39,3 +39,19 @@
   overflow-wrap: anywhere;
 }
 
+.backend-status.is-ready {
+  --tone: var(--green);
+  --tone-bg: var(--green-bg);
+}
+
+.backend-status.is-unreachable,
+.backend-status.is-reader-not-configured {
+  --tone: var(--amber);
+  --tone-bg: var(--amber-bg);
+}
+
+.backend-status.is-no-api-url {
+  --tone: var(--red);
+  --tone-bg: var(--red-bg);
+}
+
