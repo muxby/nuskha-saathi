@@ -25,3 +25,22 @@ function validQuantity(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value) && value > 0;
 }
 
+export function buildDayPlan(medications: Medication[]): DayPlan {
+  const plan: DayPlan = { morning: [], afternoon: [], night: [] };
+  for (const med of medications) {
+    if (med.status !== "VERIFIED" || !med.schedule || !med.brand_matched) continue;
+    for (const slot of DAY_SLOTS) {
+      const quantity = med.schedule[slot];
+      if (!validQuantity(quantity)) continue;
+      plan[slot].push({
+        lineId: med.line_id,
+        brand: med.brand_matched,
+        strengthMg: med.strength_mg,
+        quantity,
+        mealTiming: med.schedule.meal_timing,
+      });
+    }
+  }
+  return plan;
+}
+
