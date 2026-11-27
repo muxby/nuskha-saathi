@@ -8,3 +8,10 @@
   max-inline-size: 62ch;
 }
 
+.clinical-text[dir="rtl"] {
+  font-family: var(--font-urdu), var(--font-urdu-ui), serif;
+  font-size: 1.125rem;
+  line-height: 2.3;
+  text-align: right;
+}
+
