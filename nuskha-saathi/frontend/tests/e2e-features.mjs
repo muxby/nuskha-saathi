@@ -151,7 +151,10 @@ check("app shell and offline demo case load with no network", async ({ browser }
   await context.close();
 });
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({
+  executablePath: process.env.E2E_CHROMIUM_PATH || undefined,
+  args: process.env.E2E_CHROMIUM_PATH ? ["--no-sandbox"] : [],
+});
 let failed = 0;
 for (const { name, fn } of checks) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
