@@ -45,3 +45,10 @@ html[lang="ur"] .dose-sentence {
   font-size: 1.05rem;
   line-height: 2;
 }
+
+/* Latin-letter content keeps the interface face even inside the Urdu UI. */
+.clinical-text[dir="ltr"],
+html[lang="ur"] .alert-title[dir="ltr"],
+html[lang="ur"] .day-dose-name bdi[dir="ltr"] {
+  font-family: var(--font-display), var(--font-inter), system-ui, sans-serif;
+}
