@@ -72,3 +72,30 @@ def test_selftest_leaves_no_rows_behind(monkeypatch, tmp_path):
     assert client.get("/health").json()["store"]["active_cabinet_items"] == before
 
 
+def test_live_selftest_reports_missing_key(monkeypatch, tmp_path):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    client = _client(monkeypatch, tmp_path, extractor=GeminiVisionExtractor(api_key=""))
+    _signin(client)
+    body = client.post("/admin/api/selftest?live=1").json()
+    assert body["live"] is True
+    assert body["total"] == len(QUICK) + len(LIVE)
+    vision = next(check for check in body["checks"] if check["name"] == "vision")
+    assert vision["ok"] is False
+    assert vision["detail"].startswith("NOT_CONFIGURED")
+    assert body["ok"] is False
+
+
+def test_live_selftest_passes_with_a_working_reader(monkeypatch, tmp_path):
+    async def http_post(url, body):
+        text = '{"extracted_lines":[{"raw_text":"Tab Panadol 500mg","brand_or_salt_guess":"Panadol","ocr_confidence":0.97}],"image_quality_warning":false}'
+        return {"candidates": [{"content": {"parts": [{"text": text}]}}]}
+
+    extractor = GeminiVisionExtractor(api_key="reader-secret", http_post=http_post, backoff_seconds=0)
+    client = _client(monkeypatch, tmp_path, extractor=extractor)
+    _signin(client)
+    response = client.post("/admin/api/selftest?live=1")
+    vision = next(check for check in response.json()["checks"] if check["name"] == "vision")
+    assert vision["ok"] is True
+    assert "reader-secret" not in response.text
+
+
