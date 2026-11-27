@@ -29,3 +29,19 @@
   border-inline-start-color: color-mix(in srgb, var(--amber) 55%, transparent);
 }
 
+.dose-sentence {
+  margin-block: 14px 0;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--surface-soft);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+html[lang="ur"] .dose-sentence {
+  font-family: var(--font-urdu-ui), sans-serif;
+  font-size: 1.05rem;
+  line-height: 2;
+}
