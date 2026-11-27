@@ -21,7 +21,7 @@
   letter-spacing: -0.015em;
 }
 
-html[lang="ur"] .day-plan-head h2 {
+html:lang(ur) .day-plan-head h2 {
   letter-spacing: 0;
 }
 
