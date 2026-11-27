@@ -130,4 +130,5 @@ def install_monitor(app, health):
             'started_at': monitor.started_at, 'uptime_seconds': round(perf_counter() - monitor.started),
             'requests': monitor.total, 'http_failures': monitor.http_failures,
             'active': list(monitor.active.values()), 'recent': list(reversed(monitor.recent)),
+            'vision_model': getattr(app.state.extractor, 'active_model', None),
             'render_logs': 'https://dashboard.render.com/web/srv-dc386ss0916s73824470/logs'}))
