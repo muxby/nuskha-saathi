@@ -144,7 +144,7 @@ class GeminiVisionExtractor:
         }
         url = (
             "https://generativelanguage.googleapis.com/v1beta/models/"
-            f"{self.model}:generateContent?key={self.api_key or ''}"
+            f"{self.model}:generateContent"
         )
         last_error: Exception | None = None
         last_code = "BAD_OUTPUT"
@@ -182,7 +182,9 @@ class GeminiVisionExtractor:
     async def _post(self, url: str, body: dict) -> dict:
         if self.http_post is not None:
             return await self.http_post(url, body)
-        async with httpx.AsyncClient(timeout=40.0) as client:
-            response = await client.post(url, json=body)
+        # The key travels in a header so it can never appear in a logged URL.
+        headers = {"x-goog-api-key": self.api_key or ""}
+        async with httpx.AsyncClient(timeout=httpx.Timeout(45.0, connect=10.0)) as client:
+            response = await client.post(url, json=body, headers=headers)
             response.raise_for_status()
             return response.json()
