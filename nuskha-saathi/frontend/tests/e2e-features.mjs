@@ -26,7 +26,7 @@ async function openDemoCase(page, index = 0) {
 async function useUrdu(page) {
   await page.goto(BASE, { waitUntil: "networkidle" });
   await page.getByRole("button", { name: /اردو/ }).first().click();
-  await page.waitForFunction(() => document.documentElement.lang === "ur");
+  await page.waitForFunction(() => document.documentElement.lang.startsWith("ur"));
 }
 
 check("results summary leads with stop for a high interaction", async ({ page }) => {
