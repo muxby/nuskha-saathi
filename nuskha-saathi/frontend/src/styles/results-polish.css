@@ -14,3 +14,29 @@
   block-size: 100%;
 }
 
+.source-unavailable {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-block-end: 16px;
+  padding: 12px 18px;
+  border-radius: 16px;
+  border: 1px dashed var(--border-strong);
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+}
+
+.source-unavailable p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.source-unavailable .secondary-button {
+  inline-size: auto;
+  margin: 0;
+}
+
