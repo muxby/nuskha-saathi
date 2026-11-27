@@ -75,3 +75,23 @@ def _datasets(app) -> str:
     return f"{brands} formulary brands loaded"
 
 
+async def _vision(app) -> str:
+    from routers.diagnostics import _HINTS, _test_image
+    from services.vision_extractor import VisionExtractError
+
+    try:
+        extraction = await app.state.extractor.extract(_test_image(), "image/jpeg", "parchi")
+    except VisionExtractError as exc:
+        code = getattr(exc, "code", "BAD_OUTPUT")
+        raise AssertionError(f"{code}: {_HINTS.get(code, '')}") from exc
+    model = getattr(app.state.extractor, "active_model", "reader")
+    return f"{model} read {len(extraction.extracted_lines)} line(s)"
+
+
+async def _openfda(app) -> str:
+    assert app.state.fda.live, "Live openFDA lookups are disabled; the offline cache is used"
+    label = await app.state.fda.fetch_label("ibuprofen")
+    assert label, "openFDA did not return a label; the offline cache is used"
+    return "openFDA returned the ibuprofen label"
+
+
