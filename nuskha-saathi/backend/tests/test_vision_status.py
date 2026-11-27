@@ -63,3 +63,28 @@ def test_timeouts_report_service_unavailable(tmp_path):
     assert _scan(_client(tmp_path, extractor))["vision_status"] == "SERVICE_UNAVAILABLE"
 
 
+def test_malformed_model_output_is_unreadable(tmp_path):
+    async def http_post(url, body):
+        return {"candidates": [{"content": {"parts": [{"text": "not json"}]}}]}
+
+    extractor = GeminiVisionExtractor(api_key="k", http_post=http_post, backoff_seconds=0)
+    assert _scan(_client(tmp_path, extractor))["vision_status"] == "UNREADABLE"
+
+
+def test_corrupt_upload_is_invalid_image(tmp_path):
+    client = _client(tmp_path, GeminiVisionExtractor(api_key="k"))
+    response = client.post("/api/v1/scan-parchi", files={"file": ("p.jpg", b"not an image", "image/jpeg")})
+    assert response.json()["vision_status"] == "INVALID_IMAGE"
+
+
+def test_successful_read_reports_ok(tmp_path):
+    async def http_post(url, body):
+        text = '{"extracted_lines":[{"raw_text":"Tab Panadol 500mg","brand_or_salt_guess":"Panadol","strength_mg":500,"morning_qty":1,"ocr_confidence":0.95}],"image_quality_warning":false}'
+        return {"candidates": [{"content": {"parts": [{"text": text}]}}]}
+
+    extractor = GeminiVisionExtractor(api_key="k", http_post=http_post, backoff_seconds=0)
+    body = _scan(_client(tmp_path, extractor))
+    assert body["vision_status"] == "OK"
+    assert body["medications"][0]["status"] == "VERIFIED"
+
+
