@@ -40,3 +40,27 @@
   margin: 0;
 }
 
+.crop-wrap {
+  display: grid;
+  gap: 8px;
+  margin-block: 14px;
+  max-inline-size: 460px;
+}
+
+.crop-wrap .crop-image {
+  inline-size: 100%;
+  min-block-size: 72px;
+  max-block-size: 180px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--amber) 35%, var(--border));
+  border-radius: 12px;
+  padding: 8px;
+  image-rendering: auto;
+}
+
+.crop-wrap figcaption {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
