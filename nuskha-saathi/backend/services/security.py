@@ -115,3 +115,40 @@ def scan_rate_limit() -> int:
         return 30
 
 
+class HardeningMiddleware:
+    """Pure ASGI middleware: one pass, no body buffering, upload streams intact."""
+
+    def __init__(self, app, limiter: RateLimiter | None = None):
+        self.app = app
+        self.limiter = limiter if limiter is not None else RateLimiter(scan_rate_limit())
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+        path = scope.get("path", "")
+        extra = headers_for(path)
+
+        if scope.get("method") == "POST" and path in RATE_LIMITED_PATHS and self.limiter.enabled:
+            headers = {k.decode("latin-1").lower(): v.decode("latin-1") for k, v in scope.get("headers", [])}
+            peer = scope.get("client")
+            key = client_key(headers.get("x-forwarded-for"), peer[0] if peer else None)
+            allowed, retry_after = self.limiter.check(key)
+            if not allowed:
+                await _send_rate_limited(send, retry_after, extra)
+                return
+
+        async def send_with_headers(message):
+            if message["type"] == "http.response.start":
+                present = {name.lower() for name, _ in message.get("headers", [])}
+                added = [
+                    (name.encode("latin-1"), value.encode("latin-1"))
+                    for name, value in extra.items()
+                    if name.lower().encode("latin-1") not in present
+                ]
+                message = {**message, "headers": [*message.get("headers", []), *added]}
+            await send(message)
+
+        await self.app(scope, receive, send_with_headers)
+
+
