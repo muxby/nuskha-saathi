@@ -60,7 +60,23 @@ _RESPONSE_SCHEMA = {
 
 
 class VisionExtractError(Exception):
-    """The photo could not be turned into the extraction schema."""
+    """The photo could not be turned into the extraction schema.
+
+    ``code`` separates a photo problem from a service problem so the patient
+    is never told their handwriting is unclear when the reader is simply down:
+
+    - ``BAD_OUTPUT``: the model answered but not in the schema (photo-level).
+    - ``NOT_CONFIGURED``: no API key on the server.
+    - ``UPSTREAM_REJECTED``: the provider refused the request (key, model, quota).
+    - ``UPSTREAM_UNAVAILABLE``: timeout, network failure or provider 5xx.
+    """
+
+    def __init__(self, message: str = "", code: str = "BAD_OUTPUT"):
+        super().__init__(message)
+        self.code = code
+
+
+SERVICE_ERROR_CODES = frozenset({"NOT_CONFIGURED", "UPSTREAM_REJECTED", "UPSTREAM_UNAVAILABLE"})
 
 
 def _strip_fence(text: str) -> str:
