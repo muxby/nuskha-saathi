@@ -19,3 +19,13 @@ const FIXED: Record<string, string> = {
 FIXED["Yeh strip saaf nahi hai. Meharbani kar ke pharmacist ko strip dikhayein."] =
   "یہ پٹی صاف نہیں ہے۔ مہربانی کر کے فارماسسٹ کو پٹی دکھائیں۔";
 
+function normalise(text: string): string {
+  return text.replace(/\s+/g, " ").trim();
+}
+
+/** Urdu-script form of a known engine line, or null when it is not a fixed line. */
+export function urduScriptFor(roman: string | null | undefined): string | null {
+  if (!roman) return null;
+  return FIXED[normalise(roman)] ?? null;
+}
+
