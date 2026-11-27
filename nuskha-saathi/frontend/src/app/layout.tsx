@@ -13,6 +13,7 @@ import "../styles/day-plan.css";
 import "../styles/results-polish.css";
 import "../styles/connection.css";
 import { LanguageProvider } from "@/lib/i18n";
+import ServiceWorker from "@/components/ServiceWorker";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -76,6 +77,7 @@ export default function RootLayout({
     >
       <body>
         <LanguageProvider>{children}</LanguageProvider>
+        <ServiceWorker />
       </body>
     </html>
   );
