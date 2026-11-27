@@ -28,3 +28,10 @@
   `DELETE /api/v1/cabinet/{patient_id}`.
 - Model fallback when the configured Gemini model id is retired.
 
+### Hardening and tooling
+
+- Security headers on API and frontend responses; clinical API responses are `no-store`.
+- Per-client rate limit on the vision routes; `ALLOWED_ORIGINS` for CORS.
+- Dataset integrity tests for the formulary and interaction files.
+- Frontend unit tests, an unmocked end-to-end browser suite, CI workflow,
+  Makefile, Render blueprint and deployment guide.
