@@ -41,3 +41,15 @@ def test_wrong_password_is_rejected(monkeypatch, tmp_path):
     assert _signin(client, "not-the-password").status_code == 401
 
 
+def test_selftest_requires_login(monkeypatch, tmp_path):
+    client = _client(monkeypatch, tmp_path)
+    assert client.post("/admin/api/selftest").status_code == 401
+
+
+def test_selftest_rejects_cross_origin_requests(monkeypatch, tmp_path):
+    client = _client(monkeypatch, tmp_path)
+    _signin(client)
+    response = client.post("/admin/api/selftest", headers={"Origin": "https://evil.example"})
+    assert response.status_code == 403
+
+
