@@ -3,12 +3,14 @@ import { useState } from "react";
 import { Plus, Trash2, Pill, PlusCircle } from "lucide-react";
 import type { CabinetItem, FormularyMatch } from "@/lib/api";
 import BrandSuggest from "./BrandSuggest";
+import { cabinetCopy, pick } from "@/lib/copy";
 import { useLanguage } from "@/lib/i18n";
 
 export default function ActiveCabinetView({
   items,
   onAdd,
   onRemove,
+  onClear,
 }: {
   items: CabinetItem[];
   onAdd: (payload: {
@@ -17,8 +19,11 @@ export default function ActiveCabinetView({
     source_label?: string;
   }) => Promise<void>;
   onRemove: (id: string) => Promise<void>;
+  onClear?: () => Promise<void>;
 }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const copy = pick(cabinetCopy, language);
+  const [confirmClear, setConfirmClear] = useState(false);
   const [brand, setBrand] = useState("");
   const [strength, setStrength] = useState("");
   const [source, setSource] = useState("");
@@ -183,6 +188,34 @@ export default function ActiveCabinetView({
             </li>
           ))}
         </ul>
+      )}
+
+      {onClear && items.length > 0 && (
+        <div className="cabinet-clear">
+          {confirmClear ? (
+            <>
+              <span role="alert">{copy.clearConfirm}</span>
+              <button type="button" onClick={() => setConfirmClear(false)}>
+                {t("cancel")}
+              </button>
+              <button
+                type="button"
+                className="is-danger"
+                disabled={busy}
+                onClick={() => {
+                  setConfirmClear(false);
+                  void onClear();
+                }}
+              >
+                {copy.clearAll}
+              </button>
+            </>
+          ) : (
+            <button type="button" onClick={() => setConfirmClear(true)}>
+              <Trash2 size={16} aria-hidden="true" /> {copy.clearAll}
+            </button>
+          )}
+        </div>
       )}
     </section>
   );
