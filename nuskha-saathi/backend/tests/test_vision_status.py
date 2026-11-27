@@ -88,3 +88,31 @@ def test_successful_read_reports_ok(tmp_path):
     assert body["medications"][0]["status"] == "VERIFIED"
 
 
+def test_retired_model_falls_back(tmp_path):
+    seen: list[str] = []
+
+    async def http_post(url, body):
+        seen.append(url)
+        if "retired-model" in url:
+            request = httpx.Request("POST", url)
+            raise httpx.HTTPStatusError("gone", request=request, response=httpx.Response(404, request=request))
+        return {"candidates": [{"content": {"parts": [{"text": '{"extracted_lines":[],"image_quality_warning":false}'}]}}]}
+
+    extractor = GeminiVisionExtractor(api_key="k", model="retired-model", http_post=http_post, backoff_seconds=0)
+    result = asyncio.run(extractor.extract(_jpeg(), "image/jpeg"))
+    assert isinstance(result, VisionExtraction)
+    assert extractor.active_model == FALLBACK_MODELS[0]
+    assert len(seen) == 2
+
+
+def test_all_models_retired_raises_rejected():
+    async def http_post(url, body):
+        request = httpx.Request("POST", url)
+        raise httpx.HTTPStatusError("gone", request=request, response=httpx.Response(404, request=request))
+
+    extractor = GeminiVisionExtractor(api_key="k", http_post=http_post, backoff_seconds=0)
+    with pytest.raises(VisionExtractError) as excinfo:
+        asyncio.run(extractor.extract(_jpeg(), "image/jpeg"))
+    assert excinfo.value.code == "UPSTREAM_REJECTED"
+
+
