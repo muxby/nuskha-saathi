@@ -42,3 +42,14 @@ test("stop outranks ask", () => {
   );
 });
 
+test("only verified antibiotics are counted for day-3 follow-up", () => {
+  const summary = summarizeScan({
+    medications: [
+      verified("Augmentin", { requires_day3_checkin: true }),
+      verified("Panadol"),
+      { ...refused(), requires_day3_checkin: true },
+    ],
+    interactions: [],
+  });
+  assert.equal(summary.antibiotics, 1);
+});
