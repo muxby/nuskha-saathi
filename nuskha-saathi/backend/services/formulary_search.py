@@ -39,3 +39,15 @@ def _rank(entry: FormularyEntry, needle: str) -> int | None:
     return None
 
 
+def search_formulary(entries: list[FormularyEntry], query: str, limit: int = 8) -> list[dict]:
+    needle = " ".join(query.split()).casefold()
+    if len(needle) < MIN_QUERY_LENGTH:
+        return []
+    limit = max(1, min(int(limit), MAX_LIMIT))
+    ranked: list[tuple[int, str, FormularyEntry]] = []
+    for entry in entries:
+        rank = _rank(entry, needle)
+        if rank is not None:
+            ranked.append((rank, entry.brand_name.casefold(), entry))
+    ranked.sort(key=lambda item: (item[0], item[1]))
+    return [to_result(entry) for _, _, entry in ranked[:limit]]
