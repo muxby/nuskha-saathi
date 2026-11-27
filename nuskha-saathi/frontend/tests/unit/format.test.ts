@@ -29,3 +29,19 @@ test("invalid quantities are shown as unknown", () => {
   assert.equal(formatQuantity(Number.POSITIVE_INFINITY), "?");
 });
 
+test("duration is labelled in both languages", () => {
+  assert.equal(formatDuration(5, "en"), "5 days");
+  assert.equal(formatDuration(1, "en"), "1 day");
+  assert.equal(formatDuration(5, "ur"), "5 دن");
+});
+
+test("unknown duration stays unknown", () => {
+  assert.equal(formatDuration(null, "en"), "Duration not stated");
+  assert.equal(formatDuration(0, "ur"), "مدت معلوم نہیں");
+});
+
+test("salts are joined with a plus", () => {
+  assert.equal(formatSalts(["amoxicillin", "clavulanate"]), "amoxicillin + clavulanate");
+  assert.equal(formatSalts(null), "");
+});
+
