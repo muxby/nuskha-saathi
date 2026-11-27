@@ -69,3 +69,11 @@ request then waits for it to start, which can take most of a minute.
 
 Keeping an instance awake uses the host's free monthly hours.
 
+## Urdu
+
+**اردو** in the panel header switches the interface to Urdu, set in Gulzar: a
+Nastaliq typeface drawn for screens, with the calligraphic character of film
+titles and open letterforms that stay readable at small sizes. The font file
+is bundled with the backend (SIL Open Font License, included), so the panel
+makes no request to a font service. Technical values such as commit ids,
+timings and request ids stay in Latin letters.
