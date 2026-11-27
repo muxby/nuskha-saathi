@@ -32,3 +32,29 @@ export function verified(brand: string, overrides: Partial<Medication> = {}): Me
   };
 }
 
+export function refused(status = "REFUSED_BLURRY"): Medication {
+  return {
+    ...verified("unknown"),
+    line_id: `line-${status.toLowerCase()}`,
+    status,
+    brand_matched: null,
+    fuzzy_score: null,
+    generic_salts: null,
+    strength_mg: null,
+    schedule: null,
+    raw_text: "Syp ???",
+    refusal_reason_urdu: "Yeh lafz saaf nahi hai",
+  };
+}
+
+export function interaction(severity: "HIGH" | "MODERATE" = "HIGH"): Interaction {
+  return {
+    severity,
+    drug_a: "ibuprofen",
+    drug_b: "warfarin",
+    source: "openFDA Drug Label (Cached Verified Excerpt)",
+    fda_verbatim_excerpt: "The effects of warfarin and NSAIDs on GI bleeding are synergistic.",
+    urdu_warning: "Khabardar!",
+    raw_fda_json: null,
+  };
+}
