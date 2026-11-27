@@ -25,3 +25,17 @@ const MEAL_EN: Record<Schedule["meal_timing"], string> = {
 type Slot = keyof typeof SLOT_UR;
 const SLOTS: Slot[] = ["morning", "afternoon", "night"];
 
+function activeSlots(schedule: Schedule): Array<[Slot, number]> {
+  return SLOTS.flatMap((slot) => {
+    const qty = schedule[slot];
+    return typeof qty === "number" && Number.isFinite(qty) && qty > 0
+      ? [[slot, qty] as [Slot, number]]
+      : [];
+  });
+}
+
+function qtyLabel(qty: number): string {
+  if (qty === 0.5) return "½";
+  return String(Math.round(qty * 100) / 100);
+}
+
