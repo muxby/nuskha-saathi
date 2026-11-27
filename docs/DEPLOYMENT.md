@@ -81,3 +81,20 @@ curl https://YOUR-API.onrender.com/api/v1/diagnostics/vision
 
 Do not continue until this returns `"ok": true`.
 
+## Step 2 — Frontend on Vercel
+
+1. Vercel dashboard → **Add New** → **Project** → import this repository.
+2. **Root Directory**: `nuskha-saathi/frontend`. Framework preset: Next.js.
+3. **Environment Variables** → add:
+
+   | Name | Value |
+   | --- | --- |
+   | `NEXT_PUBLIC_API_BASE_URL` | `https://YOUR-API.onrender.com` (no trailing slash) |
+
+4. **Deploy**.
+
+> `NEXT_PUBLIC_API_BASE_URL` is compiled into the JavaScript bundle. Changing
+> it later has no effect until you **redeploy**. A site built without it
+> points at `http://localhost:8000` and cannot scan; the app shows
+> "This app is not connected to a server" when that happens.
+
