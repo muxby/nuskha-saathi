@@ -78,3 +78,16 @@ class RateLimiter:
             hits.append(now)
             return True, 0
 
+    def prune(self) -> int:
+        """Drop clients with no hits inside the window. Returns clients kept."""
+        now = self._clock()
+        with self._lock:
+            for key in list(self._hits):
+                hits = self._hits[key]
+                while hits and now - hits[0] >= self.window:
+                    hits.popleft()
+                if not hits:
+                    del self._hits[key]
+            return len(self._hits)
+
+
