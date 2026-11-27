@@ -31,3 +31,17 @@ def headers_for(path: str) -> dict[str, str]:
     return headers
 
 
+def allowed_origins() -> list[str]:
+    """Origins allowed by CORS.
+
+    ``ALLOWED_ORIGINS`` is a comma-separated list. Unset keeps the API open,
+    which the public demo relies on; a deployment that stores patient data
+    should set it to the frontend origin.
+    """
+    raw = os.getenv("ALLOWED_ORIGINS", "").strip()
+    if not raw:
+        return ["*"]
+    origins = [origin.strip().rstrip("/") for origin in raw.split(",")]
+    return [origin for origin in origins if origin] or ["*"]
+
+
