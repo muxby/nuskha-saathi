@@ -147,6 +147,7 @@ class GeminiVisionExtractor:
             f"{self.model}:generateContent?key={self.api_key or ''}"
         )
         last_error: Exception | None = None
+        last_code = "BAD_OUTPUT"
         for attempt in range(2):
             try:
                 payload = await self._post(url, body)
@@ -159,15 +160,24 @@ class GeminiVisionExtractor:
             except httpx.HTTPStatusError as exc:
                 status = exc.response.status_code if exc.response is not None else 0
                 if status in _NON_RETRYABLE_STATUSES:
-                    raise VisionExtractError(f"Gemini API rejected request with HTTP {status}") from exc
+                    raise VisionExtractError(
+                        f"Gemini API rejected request with HTTP {status}", code="UPSTREAM_REJECTED"
+                    ) from exc
                 last_error = exc
+                last_code = "UPSTREAM_REJECTED" if status == 429 else "UPSTREAM_UNAVAILABLE"
+                if attempt == 0:
+                    await asyncio.sleep(self.backoff_seconds)
+            except (httpx.TimeoutException, httpx.TransportError) as exc:
+                last_error = exc
+                last_code = "UPSTREAM_UNAVAILABLE"
                 if attempt == 0:
                     await asyncio.sleep(self.backoff_seconds)
             except Exception as exc:  # noqa: BLE001 — fail closed after the single retry
                 last_error = exc
+                last_code = "BAD_OUTPUT"
                 if attempt == 0:
                     await asyncio.sleep(self.backoff_seconds)
-        raise VisionExtractError(str(last_error or "vision extraction failed")) from last_error
+        raise VisionExtractError(str(last_error or "vision extraction failed"), code=last_code) from last_error
 
     async def _post(self, url: str, body: dict) -> dict:
         if self.http_post is not None:
