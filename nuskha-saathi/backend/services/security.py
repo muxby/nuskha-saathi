@@ -105,6 +105,8 @@ def client_key(forwarded_for: str | None, peer: str | None) -> str:
 
 
 RATE_LIMITED_PATHS: frozenset[str] = frozenset({"/api/v1/scan-parchi", "/api/v1/verify-strip"})
+# Each call to the self-test spends one provider request, so it is limited too.
+RATE_LIMITED_ANY_METHOD: frozenset[str] = frozenset({"/api/v1/diagnostics/vision"})
 
 
 def scan_rate_limit() -> int:
@@ -129,7 +131,8 @@ class HardeningMiddleware:
         path = scope.get("path", "")
         extra = headers_for(path)
 
-        if scope.get("method") == "POST" and path in RATE_LIMITED_PATHS and self.limiter.enabled:
+        limited = (scope.get("method") == "POST" and path in RATE_LIMITED_PATHS) or path in RATE_LIMITED_ANY_METHOD
+        if limited and self.limiter.enabled:
             headers = {k.decode("latin-1").lower(): v.decode("latin-1") for k, v in scope.get("headers", [])}
             peer = scope.get("client")
             key = client_key(headers.get("x-forwarded-for"), peer[0] if peer else None)
