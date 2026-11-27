@@ -21,3 +21,14 @@ refused, never guessed.
 - **Checks the strip.** Compares the medicine in hand with the prescription.
 - **Works offline.** Five demo cases and saved prescriptions open with no network.
 
+## Repository
+
+| Path | Contents |
+| --- | --- |
+| [`nuskha-saathi/backend`](nuskha-saathi/backend) | FastAPI safety engine, formulary and interaction data, tests |
+| [`nuskha-saathi/frontend`](nuskha-saathi/frontend) | Next.js PWA in English and Urdu |
+| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Put the backend and frontend online and connect them |
+| [`docs/SECURITY_PLAN.md`](docs/SECURITY_PLAN.md) | Clinical safety boundary and privacy rules |
+| [`docs/phases`](docs/phases) | Sprint plan |
+| [`nuskha-saathi/README.md`](nuskha-saathi/README.md) | API contracts, disclosed models and datasets, limits |
+
