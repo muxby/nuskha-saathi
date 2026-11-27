@@ -15,3 +15,16 @@
 - The Gemini key is sent in a header and no longer appears in request URLs.
 - Uploads time out after 90 seconds with a clear message instead of hanging.
 
+### Added
+
+- Results summary with one stop / ask / clear headline and line counts.
+- Day plan: morning, afternoon and night, built only from verified lines.
+- Urdu-script dose sentence on each card, and Urdu script for fixed refusals.
+- Backend connection status in Settings and above the camera.
+- Cabinet: brand suggestions from the formulary, strength chips, clear all,
+  and a course calendar on saved medicines.
+- Offline app shell (service worker) and an offline / back-online notice.
+- `GET /api/v1/diagnostics/vision`, `GET /api/v1/formulary/search`,
+  `DELETE /api/v1/cabinet/{patient_id}`.
+- Model fallback when the configured Gemini model id is retired.
+
