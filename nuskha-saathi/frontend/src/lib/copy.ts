@@ -156,3 +156,31 @@ export const connectionCopy = {
   },
 } satisfies Bilingual<Record<string, string>>;
 
+export const visionCopy = {
+  en: {
+    serviceTitle: "Your photo was not read. This is not a problem with your photo.",
+    serviceBody:
+      "The reading service did not answer, so nothing below describes your prescription. Try again in a moment.",
+    notConfiguredTitle: "Live reading is not set up on the server.",
+    notConfiguredBody:
+      "Your photo was not analysed. Nothing below describes your prescription. You can still open the demo cases.",
+    invalidTitle: "This file could not be opened as a photo.",
+    invalidBody: "Take a new photo with the camera, or choose a JPEG or PNG image.",
+    retry: "Try again",
+    rateLimited: "Too many scans in a short time. Wait one minute, then try again.",
+    timeout: "The server took too long to answer. Check your connection and try again.",
+  },
+  ur: {
+    serviceTitle: "آپ کی تصویر پڑھی نہیں گئی۔ یہ آپ کی تصویر کی خرابی نہیں ہے۔",
+    serviceBody:
+      "پڑھنے والی سروس نے جواب نہیں دیا، اس لیے نیچے دی گئی کوئی چیز آپ کے نسخے کے بارے میں نہیں ہے۔ تھوڑی دیر بعد دوبارہ کوشش کریں۔",
+    notConfiguredTitle: "سرور پر نسخہ پڑھنے کی سہولت ترتیب نہیں دی گئی۔",
+    notConfiguredBody:
+      "آپ کی تصویر کا تجزیہ نہیں ہوا۔ نیچے دی گئی کوئی چیز آپ کے نسخے کے بارے میں نہیں ہے۔ آپ ڈیمو کیس کھول سکتے ہیں۔",
+    invalidTitle: "یہ فائل تصویر کے طور پر نہیں کھل سکی۔",
+    invalidBody: "کیمرے سے نئی تصویر لیں، یا JPEG یا PNG تصویر منتخب کریں۔",
+    retry: "دوبارہ کوشش کریں",
+    rateLimited: "کم وقت میں بہت زیادہ اسکین ہو گئے۔ ایک منٹ انتظار کر کے دوبارہ کوشش کریں۔",
+    timeout: "سرور نے جواب دینے میں بہت دیر کی۔ اپنا انٹرنیٹ دیکھ کر دوبارہ کوشش کریں۔",
+  },
+} satisfies Bilingual<Record<string, string>>;
