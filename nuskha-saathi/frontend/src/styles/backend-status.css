@@ -142,3 +142,11 @@ html:lang(ur) .vision-notice h2 {
     display: none;
   }
 }
+
+.settings-connection {
+  grid-column: 1 / -1;
+}
+
+.settings-connection .backend-status {
+  margin-block-end: 0;
+}
