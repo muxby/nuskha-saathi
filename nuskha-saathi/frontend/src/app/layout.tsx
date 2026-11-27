@@ -14,6 +14,7 @@ import "../styles/results-polish.css";
 import "../styles/connection.css";
 import { LanguageProvider } from "@/lib/i18n";
 import ServiceWorker from "@/components/ServiceWorker";
+import ConnectionStatus from "@/components/ConnectionStatus";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -76,7 +77,10 @@ export default function RootLayout({
       className={`${jakarta.variable} ${inter.variable} ${newsreader.variable} ${naskhUrdu.variable} ${nastaliq.variable}`}
     >
       <body>
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <ConnectionStatus />
+          {children}
+        </LanguageProvider>
         <ServiceWorker />
       </body>
     </html>
