@@ -23,3 +23,19 @@ def to_result(entry: FormularyEntry) -> dict:
     }
 
 
+def _rank(entry: FormularyEntry, needle: str) -> int | None:
+    """Lower is better. ``None`` means no match."""
+    brand = entry.brand_name.casefold()
+    if brand == needle:
+        return 0
+    if brand.startswith(needle):
+        return 1
+    if any(alias.casefold().startswith(needle) for alias in entry.aliases):
+        return 2
+    if needle in brand:
+        return 3
+    if any(salt.casefold().startswith(needle) for salt in entry.generic_salts):
+        return 4
+    return None
+
+
