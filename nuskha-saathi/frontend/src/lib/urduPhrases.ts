@@ -16,3 +16,6 @@ const FIXED: Record<string, string> = {
     "یہ مقدار غلط لگ رہی ہے۔ مہربانی کر کے فارماسسٹ یا ڈاکٹر سے تصدیق کریں۔ یہ دوائی ابھی نہ لیں۔",
 };
 
+FIXED["Yeh strip saaf nahi hai. Meharbani kar ke pharmacist ko strip dikhayein."] =
+  "یہ پٹی صاف نہیں ہے۔ مہربانی کر کے فارماسسٹ کو پٹی دکھائیں۔";
+
