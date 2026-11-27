@@ -31,3 +31,16 @@ test("invalid or future start dates have no progress", () => {
   assert.equal(courseProgress(started, 5, on(20)), null);
 });
 
+test("day-3 window opens on day 3 and closes when finished", () => {
+  assert.equal(isDay3Window(courseProgress(started, 5, on(25))), false);
+  assert.equal(isDay3Window(courseProgress(started, 5, on(26))), true);
+  assert.equal(isDay3Window(courseProgress(started, 5, on(30))), false);
+  assert.equal(isDay3Window(null), false);
+});
+
+test("labels are bilingual", () => {
+  const progress = courseProgress(started, 5, on(26))!;
+  assert.equal(courseLabel(progress, "en"), "Day 3 of 5");
+  assert.equal(courseLabel(progress, "ur"), "دن 3 / 5");
+  assert.equal(courseLabel(courseProgress(started, 5, on(30))!, "en"), "Course length reached");
+});
