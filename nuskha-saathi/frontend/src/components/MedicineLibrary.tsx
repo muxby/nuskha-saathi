@@ -27,6 +27,7 @@ import type { SavedPrescription } from "@/lib/records";
 import { LanguageSwitch, useLanguage } from "@/lib/i18n";
 import { IconMedallion } from "@/components/MedicalArt";
 import ActiveCabinetView from "@/components/ActiveCabinetView";
+import CourseProgressBar from "@/components/CourseProgressBar";
 import WhatsAppPreviewModal from "@/components/WhatsAppPreviewModal";
 
 export function MedicineLibrary({
@@ -63,6 +64,7 @@ export function MedicineLibrary({
       .filter((m) => m.status === "VERIFIED")
       .map((m) => ({ scan, med: m })),
   );
+  const savedAt = new Map(records.map((r) => [r.scan.scan_id, r.savedAt]));
   const empty = history ? !records.length : !meds.length;
   return (
     <section className="library">
@@ -147,6 +149,12 @@ export function MedicineLibrary({
                     <p dir="ltr">{med.strength_mg} mg</p>
                   )}
                   <span className="cabinet-status">{t("identityMatched")}</span>
+                  {savedAt.has(scan.scan_id) && (
+                    <CourseProgressBar
+                      startedIso={savedAt.get(scan.scan_id)!}
+                      medication={med}
+                    />
+                  )}
                 </div>
                 <div className="cabinet-schedule">
                   {(["morning", "afternoon", "night"] as const).map((slot) => (
