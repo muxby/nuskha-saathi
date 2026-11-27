@@ -48,6 +48,7 @@ def create_app(
 ) -> FastAPI:
     load_env_file()
     app = FastAPI(title="Nuskha Saathi Dawa-Guard", version="0.3.0")
+    app.add_middleware(HardeningMiddleware)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=allowed_origins(),
