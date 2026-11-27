@@ -39,3 +39,16 @@ function qtyLabel(qty: number): string {
   return String(Math.round(qty * 100) / 100);
 }
 
+/** "صبح 1، رات 1 — کھانے کے بعد — 5 دن". Empty when timing is unknown. */
+export function urduDoseLine(schedule: Schedule | null | undefined): string {
+  if (!schedule) return "";
+  const slots = activeSlots(schedule);
+  if (!slots.length) return "";
+  const parts = [slots.map(([slot, qty]) => `${SLOT_UR[slot]} ${qtyLabel(qty)}`).join("، ")];
+  if (MEAL_UR[schedule.meal_timing]) parts.push(MEAL_UR[schedule.meal_timing]);
+  if (schedule.duration_days && schedule.duration_days > 0) {
+    parts.push(`${Math.round(schedule.duration_days)} دن`);
+  }
+  return parts.join(" — ");
+}
+
