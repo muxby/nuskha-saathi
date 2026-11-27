@@ -104,3 +104,14 @@ def client_key(forwarded_for: str | None, peer: str | None) -> str:
     return (peer or "unknown")[:64]
 
 
+RATE_LIMITED_PATHS: frozenset[str] = frozenset({"/api/v1/scan-parchi", "/api/v1/verify-strip"})
+
+
+def scan_rate_limit() -> int:
+    """Requests per minute per client for vision routes. ``0`` disables."""
+    try:
+        return max(0, int(os.getenv("SCAN_RATE_LIMIT_PER_MINUTE", "30")))
+    except ValueError:
+        return 30
+
+
