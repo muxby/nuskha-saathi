@@ -60,3 +60,27 @@ def test_blank_allowed_origins_falls_back_to_open(monkeypatch):
     assert allowed_origins() == ["*"]
 
 
+class FakeClock:
+    def __init__(self):
+        self.now = 1000.0
+
+    def __call__(self):
+        return self.now
+
+
+def test_limiter_blocks_after_the_limit():
+    clock = FakeClock()
+    limiter = RateLimiter(3, 60, clock=clock)
+    assert [limiter.check("a")[0] for _ in range(3)] == [True, True, True]
+    allowed, retry_after = limiter.check("a")
+    assert allowed is False
+    assert 1 <= retry_after <= 60
+
+
+def test_limiter_keys_are_independent():
+    limiter = RateLimiter(1, 60, clock=FakeClock())
+    assert limiter.check("a")[0] is True
+    assert limiter.check("b")[0] is True
+    assert limiter.check("a")[0] is False
+
+
