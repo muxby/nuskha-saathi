@@ -152,3 +152,22 @@ class HardeningMiddleware:
         await self.app(scope, receive, send_with_headers)
 
 
+async def _send_rate_limited(send, retry_after: int, extra: dict[str, str]) -> None:
+    import json
+
+    body = json.dumps(
+        {
+            "error": "HTTP_429",
+            "detail": "Too many scans from this device. Wait a moment and try again.",
+            "urdu_message": "Bohat zyada darkhwastein aa gayi hain. Thori der baad dobara koshish karein.",
+        }
+    ).encode("utf-8")
+    headers = [
+        (b"content-type", b"application/json"),
+        (b"content-length", str(len(body)).encode("ascii")),
+        (b"retry-after", str(retry_after).encode("ascii")),
+        (b"access-control-allow-origin", b"*"),
+        *[(k.encode("latin-1"), v.encode("latin-1")) for k, v in extra.items()],
+    ]
+    await send({"type": "http.response.start", "status": 429, "headers": headers})
+    await send({"type": "http.response.body", "body": body})
