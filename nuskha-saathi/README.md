@@ -61,6 +61,10 @@ FastAPI endpoints in `main.py`:
 - **Frameworks & infrastructure:** FastAPI, Pydantic, Pillow, httpx, Next.js 16, React, Lucide Icons, custom WebGL GLSL shader Hero (`THREE`-free lightweight procedural WebGL canvas), SQLite runtime persistence + Postgres schema in [`backend/sql/supabase_schema.sql`](backend/sql/supabase_schema.sql), Playwright, `@axe-core/playwright`.
 - **Voice & messaging order:** Server Urdu audio order is Uplift Orator → Azure Speech → Google TTS (falls back to browser Urdu speech synthesis when TTS keys are unset; never substitutes English voice for Urdu clinical guidance). WhatsApp reminders stay explicitly disabled (`whatsapp_scheduled: false`) until real Twilio/Meta credentials are connected.
 
+### Scan outcome versus service outcome
+
+`POST /api/v1/scan-parchi` always fails closed, and now says why. `vision_status` is `OK` when the photo was analysed, `UNREADABLE` when the reader answered with nothing usable, `INVALID_IMAGE` for a file that is not an image, and `NOT_CONFIGURED` or `SERVICE_UNAVAILABLE` when the reader never analysed the photo. The app shows the last two as a service problem instead of asking the patient to retake a photo that was never the issue.
+
 ## Run locally
 
 From this directory:
