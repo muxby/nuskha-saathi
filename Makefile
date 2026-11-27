@@ -18,3 +18,15 @@ api:
 web:
 	cd $(APP)/frontend && npm run dev
 
+.PHONY: test test-backend test-frontend eval
+test: test-backend test-frontend
+
+test-backend:
+	cd $(APP)/backend && .venv/bin/python -m pytest -q
+
+test-frontend:
+	cd $(APP)/frontend && npm run typecheck && npm run test:unit
+
+eval:
+	cd $(APP)/backend && .venv/bin/python -m tests.run_eval_30
+
