@@ -45,3 +45,13 @@ test("salts are joined with a plus", () => {
   assert.equal(formatSalts(null), "");
 });
 
+test("saved dates are relative for today and yesterday", () => {
+  const now = new Date(2026, 10, 27, 15, 0);
+  assert.equal(formatSavedDate(new Date(2026, 10, 27, 9, 0).toISOString(), "en", now), "Today");
+  assert.equal(formatSavedDate(new Date(2026, 10, 26, 23, 0).toISOString(), "en", now), "Yesterday");
+  assert.equal(formatSavedDate(new Date(2026, 10, 27, 9, 0).toISOString(), "ur", now), "آج");
+});
+
+test("invalid saved dates return an empty label", () => {
+  assert.equal(formatSavedDate("not-a-date", "en"), "");
+});
