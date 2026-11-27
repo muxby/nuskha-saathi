@@ -102,3 +102,26 @@ check("cabinet suggests listed brands and offers strength chips", async ({ page 
   assert.ok(chips.includes("500 mg"));
 });
 
+check("clear all empties the regular medicines list on device and server", async ({ page }) => {
+  await page.goto(`${BASE}/#medicines`, { waitUntil: "networkidle" });
+  const input = page.locator(".brand-suggest input");
+  await input.fill("Marevan");
+  await page.locator(".cabinet-add-form button[type=submit]").click();
+  await page.locator(".cabinet-active-list li").first().waitFor({ state: "visible" });
+  const patientId = await page.evaluate(() => {
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const value = localStorage.getItem(localStorage.key(i));
+      if (value && /^pk-[a-z0-9]+$/.test(value)) return value;
+    }
+    return null;
+  });
+  await page.locator(".cabinet-clear button").click();
+  assert.equal(await page.locator(".cabinet-active-list li").count(), 1, "first tap only asks");
+  await page.locator(".cabinet-clear button.is-danger").click();
+  await page.locator(".cabinet-active-list").waitFor({ state: "detached" });
+  if (patientId) {
+    const response = await page.request.get(`${API}/api/v1/cabinet/${patientId}`);
+    assert.deepEqual((await response.json()).medications, []);
+  }
+});
+
