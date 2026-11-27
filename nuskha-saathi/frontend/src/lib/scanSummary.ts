@@ -41,3 +41,16 @@ export function toneFor(counts: {
   return "clear";
 }
 
+export function summarizeScan(scan: SummaryInput): ScanSummary {
+  const lines = countLines(scan);
+  const interactions = countInteractions(scan);
+  const antibiotics = scan.medications.filter(
+    (m) => m.status === "VERIFIED" && Boolean(m.requires_day3_checkin),
+  ).length;
+  return {
+    ...lines,
+    ...interactions,
+    antibiotics,
+    tone: toneFor({ ...lines, ...interactions }),
+  };
+}
