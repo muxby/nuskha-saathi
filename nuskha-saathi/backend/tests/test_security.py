@@ -45,3 +45,18 @@ def test_error_responses_also_carry_headers(client):
     assert response.headers["x-content-type-options"] == "nosniff"
 
 
+def test_allowed_origins_default_is_open(monkeypatch):
+    monkeypatch.delenv("ALLOWED_ORIGINS", raising=False)
+    assert allowed_origins() == ["*"]
+
+
+def test_allowed_origins_parses_a_comma_list(monkeypatch):
+    monkeypatch.setenv("ALLOWED_ORIGINS", " https://a.example/ , https://b.example ,, ")
+    assert allowed_origins() == ["https://a.example", "https://b.example"]
+
+
+def test_blank_allowed_origins_falls_back_to_open(monkeypatch):
+    monkeypatch.setenv("ALLOWED_ORIGINS", " , ")
+    assert allowed_origins() == ["*"]
+
+
