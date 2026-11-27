@@ -80,6 +80,10 @@ class ScanResponse(BaseModel):
     audio_qr_payload: str | None = None
     urdu_script: str
     whatsapp_scheduled: bool = False
+    # OK: the photo was analysed. INVALID_IMAGE: the upload is not a readable image.
+    # UNREADABLE: the reader answered but produced nothing usable.
+    # NOT_CONFIGURED / SERVICE_UNAVAILABLE: the reader never analysed the photo.
+    vision_status: Literal["OK", "INVALID_IMAGE", "UNREADABLE", "NOT_CONFIGURED", "SERVICE_UNAVAILABLE"] = "OK"
     telemetry: TelemetryOut
 
 
