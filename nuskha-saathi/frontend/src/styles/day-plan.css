@@ -138,3 +138,19 @@ html[data-theme="dark"] .day-slot-afternoon {
   color: var(--ink-muted);
 }
 
+.day-slot.is-empty {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--border);
+}
+
+.day-slot.is-empty .day-slot-label {
+  color: var(--ink-muted);
+  margin-block-end: 6px;
+}
+
+.day-slot-none {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
