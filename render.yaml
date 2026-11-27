@@ -15,3 +15,12 @@ services:
         sync: false
       - key: ADMIN_MONITOR_PASSWORD
         sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      # Set both to your frontend origin after the frontend is deployed.
+      - key: FRONTEND_BASE_URL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: SCAN_RATE_LIMIT_PER_MINUTE
+        value: "30"
