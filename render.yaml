@@ -17,6 +17,19 @@ services:
         sync: false
       - key: GEMINI_MODEL
         value: gemini-2.5-flash
+      # Optional second reader. Leave blank to use Gemini only.
+      - key: OPENROUTER_API_KEY
+        sync: false
+      # Free third-party services (no key). Set to "false" to keep prescription
+      # photos, voice notes and medicine names on Gemini and openFDA only.
+      - key: FREEAPI_IMGCHAT_ENABLED
+        value: "true"
+      - key: FREEAPI_TRANSCRIBE_ENABLED
+        value: "true"
+      - key: MEDSTER_LIVE
+        value: "true"
+      - key: MEDICINE_WEB_LIVE
+        value: "true"
       # Set both to your frontend origin after the frontend is deployed.
       - key: FRONTEND_BASE_URL
         sync: false
