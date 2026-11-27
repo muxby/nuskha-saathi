@@ -48,3 +48,19 @@ def test_refusals_never_contain_a_dose():
         assert "pharmacist" in line
 
 
+def test_strength_mismatch_names_both_strengths():
+    line = strength_mismatch_urdu("Leflox", 500, 250)
+    assert line.startswith("RUK JAIYE!")
+    assert "Leflox 500 mg" in line and "250 mg strip" in line
+
+
+def test_wrong_medicine_handles_unreadable_detected_brand():
+    assert "koi aur dawai" in wrong_medicine_urdu("Leflox", "")
+    assert "Cravit" in wrong_medicine_urdu("Leflox", "Cravit")
+
+
+def test_exact_match_can_append_the_schedule():
+    assert exact_strip_urdu("Leflox", 500) == "Bilkul theek dawai hai — yeh Leflox 500 mg hai."
+    assert exact_strip_urdu("Leflox", 500, "Subah leni hai.").endswith("Subah leni hai.")
+
+
