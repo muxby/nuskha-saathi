@@ -26,6 +26,7 @@ import DevProofDrawer from "@/components/DevProofDrawer";
 import DemoModeDrawer from "@/components/DemoModeDrawer";
 import {
   addCabinetMed,
+  clearCabinet,
   fetchCabinet,
   postForm,
   removeCabinetMed,
@@ -138,6 +139,12 @@ export default function Home() {
         writeLocalCabinet(remote);
       }
     }
+  }
+
+  async function handleClearCabinet() {
+    setCabinetItems([]);
+    writeLocalCabinet([]);
+    await clearCabinet(patientId);
   }
 
   function saveCurrent() {
@@ -365,6 +372,7 @@ export default function Home() {
               onScan={() => navigate("scan")}
               onAddCabinet={handleAddCabinet}
               onRemoveCabinet={handleRemoveCabinet}
+              onClearCabinet={handleClearCabinet}
             />
           )}
           {view === "reminders" && <ReminderExperience scan={scan} />}
