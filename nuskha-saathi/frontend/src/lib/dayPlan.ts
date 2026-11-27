@@ -44,3 +44,7 @@ export function buildDayPlan(medications: Medication[]): DayPlan {
   return plan;
 }
 
+export function isPlanEmpty(plan: DayPlan): boolean {
+  return DAY_SLOTS.every((slot) => plan[slot].length === 0);
+}
+
