@@ -135,3 +135,19 @@ check("security headers are present on the app and the API", async ({ page }) =>
   assert.equal(api.headers()["x-content-type-options"], "nosniff");
 });
 
+check("app shell and offline demo case load with no network", async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  await page.goto(BASE, { waitUntil: "networkidle" });
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await page.reload({ waitUntil: "networkidle" });
+  await context.setOffline(true);
+  await page.goto(`${BASE}/?demo=offline`, { waitUntil: "domcontentloaded" });
+  const run = page.locator("dialog[open] button").nth(1);
+  await run.waitFor({ state: "visible" });
+  await run.click();
+  await page.locator(".scan-summary").waitFor({ state: "visible" });
+  assert.equal(await page.locator(".connection-status.is-offline").count(), 1);
+  await context.close();
+});
+
