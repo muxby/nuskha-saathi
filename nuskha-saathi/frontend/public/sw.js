@@ -35,3 +35,12 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+async function cacheFirst(request) {
+  const cache = await caches.open(ASSET_CACHE);
+  const cached = await cache.match(request);
+  if (cached) return cached;
+  const response = await fetch(request);
+  if (response.ok) cache.put(request, response.clone());
+  return response;
+}
+
