@@ -117,6 +117,7 @@ class GeminiVisionExtractor:
         self.model = model or os.environ.get("GEMINI_MODEL") or DEFAULT_MODEL
         self.http_post = http_post
         self.backoff_seconds = backoff_seconds
+        self.active_model = self.model
 
     async def extract(self, image_bytes: bytes, mime: str, mode: str = "parchi") -> VisionExtraction:
         if not image_bytes:
@@ -144,10 +145,21 @@ class GeminiVisionExtractor:
                 "responseSchema": _RESPONSE_SCHEMA,
             },
         }
-        url = (
-            "https://generativelanguage.googleapis.com/v1beta/models/"
-            f"{self.model}:generateContent"
-        )
+        models = [self.model, *[m for m in FALLBACK_MODELS if m != self.model]]
+        for index, model in enumerate(models):
+            try:
+                extraction = await self._extract_with_model(model, body)
+            except VisionExtractError as exc:
+                retired = getattr(exc, "http_status", None) == 404
+                if retired and index < len(models) - 1 and self.http_post is None:
+                    continue
+                raise
+            self.active_model = model
+            return extraction
+        raise VisionExtractError("vision extraction failed", code="UPSTREAM_REJECTED")
+
+    async def _extract_with_model(self, model: str, body: dict) -> VisionExtraction:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
         last_error: Exception | None = None
         last_code = "BAD_OUTPUT"
         for attempt in range(2):
@@ -162,9 +174,11 @@ class GeminiVisionExtractor:
             except httpx.HTTPStatusError as exc:
                 status = exc.response.status_code if exc.response is not None else 0
                 if status in _NON_RETRYABLE_STATUSES:
-                    raise VisionExtractError(
+                    error = VisionExtractError(
                         f"Gemini API rejected request with HTTP {status}", code="UPSTREAM_REJECTED"
-                    ) from exc
+                    )
+                    error.http_status = status
+                    raise error from exc
                 last_error = exc
                 last_code = "UPSTREAM_REJECTED" if status == 429 else "UPSTREAM_UNAVAILABLE"
                 if attempt == 0:
