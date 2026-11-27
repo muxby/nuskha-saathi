@@ -88,3 +88,53 @@ html[data-theme="dark"] .day-slot-afternoon {
   --slot-bg: color-mix(in srgb, #fbbf24 9%, var(--surface));
 }
 
+.day-slot ul {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.day-slot ul li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.day-dose-qty {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-inline-size: 34px;
+  block-size: 34px;
+  padding-inline: 6px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--surface);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.day-dose-name {
+  display: grid;
+  min-inline-size: 0;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.day-dose-name bdi {
+  overflow-wrap: anywhere;
+}
+
+.day-dose-name small {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+}
+
