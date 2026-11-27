@@ -28,3 +28,9 @@ export function isMixedContent(apiBase: string, pageProtocol: string): boolean {
   return pageProtocol === "https:" && apiBase.startsWith("http://");
 }
 
+export function stateFromHealth(health: HealthStatus | null): BackendState {
+  if (!health) return "unreachable";
+  if (health.capabilities && !health.capabilities.vision_configured) return "reader-not-configured";
+  return "ready";
+}
+
