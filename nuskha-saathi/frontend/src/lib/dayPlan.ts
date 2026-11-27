@@ -48,3 +48,7 @@ export function isPlanEmpty(plan: DayPlan): boolean {
   return DAY_SLOTS.every((slot) => plan[slot].length === 0);
 }
 
+export function dosesPerDay(plan: DayPlan): number {
+  return DAY_SLOTS.reduce((sum, slot) => sum + plan[slot].length, 0);
+}
+
