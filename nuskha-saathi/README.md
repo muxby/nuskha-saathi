@@ -105,7 +105,9 @@ With the frontend running, execute in `frontend/`:
 
 ```bash
 npm run typecheck
+npm run test:unit
 npm run test:ui
+npm run test:e2e
 npm run build
 npm audit --omit=dev
 ```
