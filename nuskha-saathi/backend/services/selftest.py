@@ -95,3 +95,29 @@ async def _openfda(app) -> str:
     return "openFDA returned the ibuprofen label"
 
 
+QUICK: tuple[tuple[str, str, Callable], ...] = (
+    ("datasets", "Clinical datasets", _datasets),
+    ("formulary", "Brand-to-salt resolver", _formulary),
+    ("locks", "Safety refusal locks", _locks),
+    ("interactions", "Offline interaction cache", _interactions),
+    ("storage", "Database write and read", _storage),
+)
+LIVE: tuple[tuple[str, str, Callable], ...] = (
+    ("vision", "Gemini vision reader (1 request)", _vision),
+    ("openfda", "openFDA live label", _openfda),
+)
+
+
+async def run_selftest(app, live: bool = False) -> dict:
+    suites = QUICK + (LIVE if live else ())
+    started = perf_counter()
+    checks = [await _run(name, label, lambda fn=fn: fn(app)) for name, label, fn in suites]
+    passed = sum(1 for check in checks if check["ok"])
+    return {
+        "ok": passed == len(checks),
+        "passed": passed,
+        "total": len(checks),
+        "live": live,
+        "ms": round((perf_counter() - started) * 1000, 1),
+        "checks": checks,
+    }
