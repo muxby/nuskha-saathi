@@ -67,7 +67,7 @@ export default function PrescriptionResults({
         <div className="extracted-panel">
           {!original && (
             <div className="source-unavailable">
-              <p>
+              <p className="original-empty">
                 <FileText size={18} aria-hidden="true" />
                 {t("originalUnavailable")}
               </p>
