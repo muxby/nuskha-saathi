@@ -110,3 +110,25 @@ def test_prune_drops_idle_clients():
     assert limiter.prune() == 1
 
 
+def test_client_key_uses_first_forwarded_address():
+    assert client_key("203.0.113.9, 10.0.0.1", "10.0.0.2") == "203.0.113.9"
+
+
+def test_client_key_falls_back_to_peer():
+    assert client_key(None, "198.51.100.4") == "198.51.100.4"
+    assert client_key("  ", None) == "unknown"
+
+
+def test_client_key_is_length_bounded():
+    assert len(client_key("x" * 500, None)) == 64
+
+
+def test_scan_rate_limit_reads_env(monkeypatch):
+    monkeypatch.setenv("SCAN_RATE_LIMIT_PER_MINUTE", "5")
+    assert scan_rate_limit() == 5
+    monkeypatch.setenv("SCAN_RATE_LIMIT_PER_MINUTE", "not-a-number")
+    assert scan_rate_limit() == 30
+    monkeypatch.setenv("SCAN_RATE_LIMIT_PER_MINUTE", "-4")
+    assert scan_rate_limit() == 0
+
+
