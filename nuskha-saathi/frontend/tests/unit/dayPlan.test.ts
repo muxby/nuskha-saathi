@@ -24,3 +24,13 @@ test("entries carry strength, quantity and meal timing", () => {
   });
 });
 
+test("refused lines are excluded from the plan", () => {
+  const plan = buildDayPlan([refused("REFUSED_BLURRY"), refused("REFUSED_DOSAGE_ANOMALY")]);
+  assert.ok(isPlanEmpty(plan));
+});
+
+test("a refused line with a leaked schedule is still excluded", () => {
+  const leaked = { ...refused(), brand_matched: "Leflox", schedule: schedule() };
+  assert.ok(isPlanEmpty(buildDayPlan([leaked])));
+});
+
