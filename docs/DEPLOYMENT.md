@@ -6,7 +6,7 @@ time, so the backend goes first.
 
 ```text
  Phone / browser ──► Frontend (Next.js on Vercel) ──► Backend (FastAPI on Render) ──► Gemini, openFDA
-                         NEXT_PUBLIC_API_BASE_URL          GEMINI_API_KEY
+                         NEXT_PUBLIC_API_BASE_URL          GEMINI_API_KEY          └─► optional: OpenRouter, FreeAPI, MedSter
 ```
 
 ## What you need
@@ -46,14 +46,30 @@ Backend environment variables:
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `GEMINI_API_KEY` | yes | Reads the prescription photo. Without it every scan is refused. |
+| `GEMINI_API_KEY` | yes, unless another reader is on | Reads the prescription photo. With no reader at all every scan is refused. |
 | `GEMINI_MODEL` | no | Defaults to `gemini-2.5-flash`. If that id is retired the server falls back to a current Flash model. |
+| `OPENROUTER_API_KEY` | no | Second photo reader, tried after Gemini. `OPENROUTER_MODEL` and `OPENROUTER_FALLBACK_MODELS` choose the models. |
+| `VISION_PRIMARY` | no | `auto` (default: Gemini → OpenRouter → FreeAPI ImgChat), or `gemini`, `openrouter`, `imgchat` to try that reader first. |
+| `FREEAPI_IMGCHAT_ENABLED` | no | Default `true`. Last-resort photo reader at `FREEAPI_BASE_URL`, no key. |
+| `FREEAPI_TRANSCRIBE_ENABLED` | no | Default `true`. Transcribes WhatsApp voice replies, no key. |
+| `MEDSTER_LIVE` | no | Default `true`. Medicine catalogue search and prices. |
+| `MEDICINE_WEB_LIVE` | no | Default `true`. Looks up brands missing from the formulary and caches them in SQLite. |
 | `FRONTEND_BASE_URL` | yes, after Step 2 | Origin printed into the audio QR code. |
-| `ALLOWED_ORIGINS` | recommended | Comma-separated origins allowed to call the API. Unset means any origin. |
+| `ALLOWED_ORIGINS` | recommended | Comma-separated origins allowed to call the API. Unset falls back to `CORS_ORIGINS`, then to any origin. |
 | `SCAN_RATE_LIMIT_PER_MINUTE` | no | Scans per client per minute. Default `30`, `0` disables. |
 | `OPENFDA_API_KEY` | no | Raises the openFDA rate limit. |
 | `UPLIFT_API_KEY`, `UPLIFT_VOICE_ID`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`, `GOOGLE_TTS_API_KEY` | no | Server Urdu audio. |
 | `ADMIN_MONITOR_PASSWORD` | no | Enables the private `/admin` panel (12+ characters). See [ADMIN_PANEL.md](ADMIN_PANEL.md). |
+
+> **Third-party services and patient data.** OpenRouter, FreeAPI (ImgChat,
+> Transcribe) and MedSter are outside services. When they are on, prescription
+> photos, voice notes or medicine names are sent to them, and the free tiers
+> publish no data-handling guarantee. For a deployment that handles real
+> patients, set `FREEAPI_IMGCHAT_ENABLED`, `FREEAPI_TRANSCRIBE_ENABLED`,
+> `MEDSTER_LIVE` and `MEDICINE_WEB_LIVE` to `false` and leave
+> `OPENROUTER_API_KEY` blank unless you have agreed terms with the provider.
+> None of them makes a safety decision: thresholds, dose ceilings and
+> interaction checks stay in the deterministic engine.
 
 ### Check the backend before going further
 
@@ -63,7 +79,9 @@ Replace the host with your Render URL.
 curl https://YOUR-API.onrender.com/health
 ```
 
-Expect `"status":"ok"` and `"vision_configured":true`.
+Expect `"status":"ok"` and `"vision_configured":true`. `vision_provider`
+names the reader tried first, and the other capability flags show which
+optional services are on.
 
 `vision_configured` only says a key is present. This proves the key and model
 actually work by sending one generated test image through the reader:
@@ -75,8 +93,8 @@ curl https://YOUR-API.onrender.com/api/v1/diagnostics/vision
 | `status` | Meaning | Fix |
 | --- | --- | --- |
 | `OK` | The reader answered. | Nothing. |
-| `NOT_CONFIGURED` | No key on the server. | Add `GEMINI_API_KEY`, redeploy. |
-| `UPSTREAM_REJECTED` | Google refused the request. | Key invalid, out of quota, or `GEMINI_MODEL` not available to it. |
+| `NOT_CONFIGURED` | No reader on the server. | Add `GEMINI_API_KEY` (or another reader), redeploy. |
+| `UPSTREAM_REJECTED` | A provider refused the request. | Key invalid, out of quota, or the model is not available to it. |
 | `UPSTREAM_UNAVAILABLE` | Timeout or network failure. | Retry; check the host allows outbound HTTPS. |
 
 Do not continue until this returns `"ok": true`.
@@ -171,8 +189,10 @@ make setup
 cp nuskha-saathi/.env.example nuskha-saathi/.env
 ```
 
-Put `GEMINI_API_KEY` in `nuskha-saathi/.env`, then start each server in its
-own terminal:
+The backend reads `nuskha-saathi/.env`, then `nuskha-saathi/backend/.env`,
+then `backend/.env.local`. Variables already set in the shell win. Put
+`GEMINI_API_KEY` or `OPENROUTER_API_KEY` in the file; every other setting in
+`.env.example` is optional. Then start each server in its own terminal:
 
 ```bash
 make api
@@ -183,3 +203,12 @@ make web
 ```
 
 Open `http://localhost:3000`. Camera capture needs `localhost` or HTTPS.
+
+To start both servers with one command, creating the virtualenv and
+installing packages on first run:
+
+```bash
+./nuskha-saathi/start.sh
+```
+
+On Windows PowerShell use `.\nuskha-saathi\start.ps1`.

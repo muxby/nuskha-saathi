@@ -1,5 +1,27 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Extra photo readers behind Gemini: OpenRouter and FreeAPI ImgChat, ordered
+  by `VISION_PRIMARY`. A provider outage is still reported as a service
+  problem, never as an unreadable photo.
+- MedSter catalogue search, web medicine resolution with a SQLite cache, and
+  `GET /api/v1/medicines/search`, `GET /api/v1/medicines/details`.
+- `POST /api/v1/vision/chat`, `POST /api/v1/tts/urdu`, `POST /api/v1/stt/urdu`.
+- Reminders: whole-prescription scheduling, status updates
+  (`PATCH /api/v1/whatsapp/reminders/{id}`), in-app alerts and `.ics` export.
+- Formulary expanded to 332 brands; strip verification no longer needs a strength.
+- Local setup: `.env` loader, `start.sh` / `start.ps1`, fuller `.env.example`.
+
+### Hardening
+
+- Gemini voice transcription and web lookup send the key in a header.
+- `POST /api/v1/vision/chat` shares the per-client scan rate limit.
+- Third-party services can be switched off per deployment; see the
+  deployment guide for what each one receives.
+
 ## 0.4.0
 
 ### Fixed

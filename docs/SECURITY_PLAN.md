@@ -149,6 +149,8 @@ Rules:
 | :--- | :--- | :--- |
 | Gemini API key | Backend env only | Never in the Next.js client, never in git |
 | openFDA API key | Backend env | Free tier is 240 requests/minute. Cache and the local matrix absorb throttling |
+| OpenRouter API key | Backend env | Optional second photo reader. Photos leave for a third party; off unless the key is set |
+| FreeAPI and MedSter (no key) | Backend env flags | Receive photos, voice notes or medicine names when enabled. Set the `FREEAPI_*`, `MEDSTER_LIVE` and `MEDICINE_WEB_LIVE` flags to `false` for real patient data |
 | Uplift AI bearer token | Backend env | TTS and STT calls stay server-side |
 | Azure / Google TTS credentials | Backend env | Fallback path only |
 | Supabase service role | Backend env | The browser uses the public anon key only for reads the product explicitly allows |

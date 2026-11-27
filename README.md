@@ -43,7 +43,7 @@ make setup
 cp nuskha-saathi/.env.example nuskha-saathi/.env
 ```
 
-Add `GEMINI_API_KEY` to that file, then in two terminals:
+Add `GEMINI_API_KEY` or `OPENROUTER_API_KEY` to that file, then in two terminals:
 
 ```bash
 make api
@@ -55,11 +55,15 @@ make web
 
 Open `http://localhost:3000`. No key? Open `http://localhost:3000/?demo=offline`.
 
+`./nuskha-saathi/start.sh` (or `start.ps1` on Windows) starts both servers in
+one step. The optional third-party services and what they receive are listed
+in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+
 ## Tests
 
 | Command | Covers |
 | --- | --- |
-| `make test-backend` | 129 backend tests: safety gate, routes, data integrity, hardening |
+| `make test-backend` | 154 backend tests: safety gate, routes, data integrity, hardening, providers, reminders |
 | `make eval` | 30-case deterministic safety benchmark |
 | `make test-frontend` | Type check and 60 unit tests |
 | `make test-ui` | 19 browser and accessibility checks with mocked API states |

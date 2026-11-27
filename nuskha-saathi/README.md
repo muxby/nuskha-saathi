@@ -55,15 +55,16 @@ FastAPI endpoints in `backend/main.py`:
 | `GET /api/v1/formulary/search?q=` | Look up listed brands by name or salt for the cabinet form |
 | `GET /api/v1/diagnostics/vision` | Live reader self-test: sends one generated image through Gemini and reports `OK` or the failure class |
 | `GET /api/v1/benchmark` | Return results from the 30-case deterministic safety harness (`tests/eval_results.json`) |
-| `GET /health` | Service readiness, `.env` capability flags, formulary size (`327` brands, `73` interaction pairs), and SQLite counts |
-| `GET /admin` | Optional password-protected operational diagnostics panel (enabled when `ADMIN_MONITOR_PASSWORD` >= 16 chars in `.env`) |
+| `GET /health` | Service readiness, `.env` capability flags, formulary size (`332` brands, `73` interaction pairs), and SQLite counts |
+| `GET /admin` | Optional password-protected operational diagnostics panel (enabled when `ADMIN_MONITOR_PASSWORD` has 12 or more characters) |
 
 ### Disclosed models, datasets & libraries
 
-- **Vision extraction (perception only):** Google Gemini (`GEMINI_API_KEY`) extracts line text, confidence, and bounding coordinates; it never makes clinical safety decisions.
-- **Deterministic safety gate & datasets:** RapidFuzz brand normalization (`cutoff=82`), compiled Pakistani DRAP brand/salt formulary (`327` entries) with WHO AWaRe classifications and daily max dose ceilings, openFDA Drug Label API (`fda.gov`) plus cached verified label excerpts (`73` interaction pairs). Neither FDA nor WHO endorses this application.
+- **Vision extraction (perception only):** Google Gemini (`GEMINI_API_KEY`) extracts line text, confidence, and bounding coordinates; it never makes clinical safety decisions. Optional further readers, tried in order after Gemini: OpenRouter multimodal models (`OPENROUTER_API_KEY`) and FreeAPI ImgChat (`FREEAPI_IMGCHAT_ENABLED`).
+- **Third-party lookups:** MedSter catalogue search (`MEDSTER_LIVE`), web medicine resolution for brands missing from the formulary (`MEDICINE_WEB_LIVE`, cached in SQLite), and FreeAPI Transcribe for voice notes (`FREEAPI_TRANSCRIBE_ENABLED`). These receive photos, audio or medicine names; turn them off for real patient data. See [`docs/DEPLOYMENT.md`](../docs/DEPLOYMENT.md).
+- **Deterministic safety gate & datasets:** RapidFuzz brand normalization (`cutoff=82`), compiled Pakistani DRAP brand/salt formulary (`332` entries) with WHO AWaRe classifications and daily max dose ceilings, openFDA Drug Label API (`fda.gov`) plus cached verified label excerpts (`73` interaction pairs). Neither FDA nor WHO endorses this application.
 - **Frameworks & infrastructure:** FastAPI, Pydantic, Pillow, httpx, Next.js 16, React, Lucide Icons, custom WebGL GLSL shader Hero (`THREE`-free lightweight procedural WebGL canvas), local SQLite runtime persistence (`backend/data/nuskha_local.db`, plus optional Postgres reference schema in [`backend/sql/supabase_schema.sql`](backend/sql/supabase_schema.sql)), Playwright, `@axe-core/playwright`.
-- **Voice & messaging order:** Server Urdu audio order is Uplift Orator → Azure Speech → Google TTS (falls back to browser Urdu speech synthesis when TTS keys are unset; never substitutes English voice for Urdu clinical guidance). Urdu voice transcription tries Uplift Scribe → Gemini Audio. WhatsApp reminders stay explicitly disabled (`whatsapp_scheduled: false`) until real Twilio/Meta credentials are connected in `.env`.
+- **Voice & messaging order:** Server Urdu audio order is Uplift Orator → Azure Speech → Google TTS (falls back to browser Urdu speech synthesis when TTS keys are unset; never substitutes English voice for Urdu clinical guidance). Urdu voice transcription tries Uplift Scribe → FreeAPI Transcribe → Gemini Audio → OpenRouter. WhatsApp reminders stay explicitly disabled (`whatsapp_scheduled: false`) until real Twilio/Meta credentials are connected in `.env`.
 
 ### Scan outcome versus service outcome
 
@@ -79,7 +80,7 @@ All backend configuration and API keys live in **`backend/.env`** (or `.env` in 
    - `OPENFDA_API_KEY` *(optional)*: raises live openFDA rate limits to 240 req/min (`OPENFDA_LIVE=true`).
    - `UPLIFT_API_KEY` & `UPLIFT_VOICE_ID` *(optional)*: Pakistani Urdu MP3 voice synthesis & Scribe STT, with optional fallbacks `AZURE_SPEECH_KEY`/`AZURE_SPEECH_REGION` and `GOOGLE_TTS_API_KEY`.
    - `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_WHATSAPP_FROM` **or** `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_VERIFY_TOKEN` *(optional)*: enables live WhatsApp reminders and webhook replies.
-   - `ADMIN_MONITOR_PASSWORD` *(optional, >=16 chars)*: unlocks `/admin` diagnostics.
+   - `ADMIN_MONITOR_PASSWORD` *(optional, 12+ characters)*: unlocks `/admin` diagnostics.
 
 2. Start the FastAPI backend:
 
