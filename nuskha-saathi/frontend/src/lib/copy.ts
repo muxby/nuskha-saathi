@@ -101,3 +101,23 @@ export const statusCopy = {
   },
 } satisfies Bilingual<Record<string, string>>;
 
+export const cabinetCopy = {
+  en: {
+    suggestions: "Matching medicines",
+    noMatch: "No medicine with this name is in the list. Check the spelling on the strip.",
+    courseProgress: "Course calendar",
+    day3: "Day 3 or later: keep taking the antibiotic for the full course your doctor wrote.",
+    clearAll: "Clear all",
+    clearConfirm: "Remove every medicine from this list?",
+    cleared: "Your regular medicines list was cleared.",
+  },
+  ur: {
+    suggestions: "ملتی جلتی دوائیں",
+    noMatch: "اس نام کی کوئی دوا فہرست میں نہیں۔ پٹی پر لکھے ہجے دیکھیں۔",
+    courseProgress: "کورس کا کیلنڈر",
+    day3: "تیسرا دن یا اس کے بعد: اینٹی بایوٹک اتنے ہی دن جاری رکھیں جتنے ڈاکٹر نے لکھے ہیں۔",
+    clearAll: "سب ہٹائیں",
+    clearConfirm: "کیا اس فہرست سے تمام دوائیں ہٹا دیں؟",
+    cleared: "آپ کی باقاعدہ دواؤں کی فہرست صاف کر دی گئی۔",
+  },
+} satisfies Bilingual<Record<string, string>>;
