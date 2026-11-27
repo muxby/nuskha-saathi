@@ -11,3 +11,12 @@ const SHELL_CACHE = `nuskha-shell-${VERSION}`;
 const ASSET_CACHE = `nuskha-assets-${VERSION}`;
 const SHELL_URLS = ["/", "/manifest.json", "/icon.svg", "/icon-192.png", "/icon-512.png"];
 
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches
+      .open(SHELL_CACHE)
+      .then((cache) => cache.addAll(SHELL_URLS))
+      .then(() => self.skipWaiting()),
+  );
+});
+
