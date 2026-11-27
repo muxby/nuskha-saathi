@@ -79,3 +79,13 @@ check("results fit a 360px viewport in English and Urdu", async ({ browser }) =>
   }
 });
 
+check("results summary and day plan have no axe violations", async ({ page }) => {
+  await openDemoCase(page, 0);
+  const results = await new AxeBuilder({ page })
+    .include(".scan-summary")
+    .include(".day-plan")
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+    .analyze();
+  assert.deepEqual(results.violations.map((v) => v.id), []);
+});
+
