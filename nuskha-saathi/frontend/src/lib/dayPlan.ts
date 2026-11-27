@@ -21,3 +21,7 @@ export type PlanEntry = {
 
 export type DayPlan = Record<DaySlot, PlanEntry[]>;
 
+function validQuantity(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value) && value > 0;
+}
+
