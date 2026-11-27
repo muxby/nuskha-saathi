@@ -23,3 +23,8 @@ export function isApiUrlMissing(apiBase: string, pageHost: string): boolean {
   return LOCAL_HOSTS.has(apiHost) && !LOCAL_HOSTS.has(pageHost);
 }
 
+/** An https page cannot call an http API: browsers block it as mixed content. */
+export function isMixedContent(apiBase: string, pageProtocol: string): boolean {
+  return pageProtocol === "https:" && apiBase.startsWith("http://");
+}
+
