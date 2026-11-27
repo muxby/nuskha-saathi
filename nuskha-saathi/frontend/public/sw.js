@@ -59,3 +59,17 @@ async function networkFirstPage(request) {
   }
 }
 
+self.addEventListener("fetch", (event) => {
+  const { request } = event;
+  if (request.method !== "GET") return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  if (request.mode === "navigate") {
+    event.respondWith(networkFirstPage(request));
+    return;
+  }
+  if (url.pathname.startsWith("/_next/static/") || SHELL_URLS.includes(url.pathname)) {
+    event.respondWith(cacheFirst(request));
+  }
+});
