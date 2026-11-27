@@ -100,3 +100,14 @@
   text-align: left;
 }
 
+@media (max-width: 640px) {
+  .alert-card {
+    padding: 18px 16px;
+    gap: 12px;
+  }
+
+  .alert-card .alert-icon svg {
+    inline-size: 24px;
+    block-size: 24px;
+  }
+}
