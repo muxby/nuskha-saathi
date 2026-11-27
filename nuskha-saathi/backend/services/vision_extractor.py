@@ -13,6 +13,8 @@ import httpx
 from schemas.vision import VisionExtraction
 
 DEFAULT_MODEL = "gemini-2.5-flash"
+# Tried in order when the configured model id is retired or unknown (HTTP 404).
+FALLBACK_MODELS: tuple[str, ...] = ("gemini-flash-latest", "gemini-2.5-flash-lite")
 
 _PARCHI_PROMPT = (
     "You extract handwritten or printed prescription lines from this photo. "
