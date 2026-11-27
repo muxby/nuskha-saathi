@@ -13,6 +13,7 @@ from fastapi.staticfiles import StaticFiles
 
 from routers.monitor import install_monitor
 from routers.cabinet import router as cabinet_router
+from routers.diagnostics import router as diagnostics_router
 from routers.formulary import router as formulary_router
 from routers.scan import router as scan_router
 from routers.whatsapp import router as whatsapp_router, whatsapp_configured
@@ -102,6 +103,7 @@ def create_app(
     app.include_router(scan_router)
     app.include_router(cabinet_router)
     app.include_router(formulary_router)
+    app.include_router(diagnostics_router)
     app.include_router(whatsapp_router)
     app.mount("/static", StaticFiles(directory=STATIC_ROOT), name="static")
 
