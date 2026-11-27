@@ -21,3 +21,16 @@ test("missing or all-zero schedule returns an empty line", () => {
   assert.equal(englishDoseLine(undefined), "");
 });
 
+test("english line mirrors the urdu line", () => {
+  assert.equal(englishDoseLine(schedule()), "Morning 1, night 1 — after food — 5 days");
+  assert.equal(englishDoseLine(schedule({ duration_days: 1 })), "Morning 1, night 1 — after food — 1 day");
+});
+
+test("half tablets use the fraction glyph", () => {
+  assert.equal(englishDoseLine(schedule({ morning: 0.5, night: 0, duration_days: null })), "Morning ½ — after food");
+});
+
+test("doseLine switches on language", () => {
+  assert.equal(doseLine(schedule(), "ur"), urduDoseLine(schedule()));
+  assert.equal(doseLine(schedule(), "en"), englishDoseLine(schedule()));
+});
