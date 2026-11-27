@@ -52,3 +52,26 @@ def _locks(app) -> str:
     return "Blur, unknown-drug and dose-ceiling locks all refuse"
 
 
+def _interactions(app) -> str:
+    from services.openfda_client import _pair_key
+
+    hit = app.state.fda.fallback.get(_pair_key("ibuprofen", "warfarin"))
+    assert hit is not None and hit.severity == "HIGH", "ibuprofen + warfarin is missing from the offline cache"
+    return f"{len(app.state.fda.fallback)} cached pairs; ibuprofen + warfarin is HIGH"
+
+
+def _storage(app) -> str:
+    store = app.state.store
+    patient = f"selftest-{secrets.token_hex(6)}"
+    store.add_cabinet_item(patient, brand_name="Marevan", generic_salts=["warfarin"], strength_mg=5)
+    assert len(store.list_cabinet(patient)) == 1, "Written row could not be read back"
+    assert store.clear_cabinet(patient) == 1, "Written row could not be cleared"
+    return "Write, read and clear succeeded"
+
+
+def _datasets(app) -> str:
+    brands = len(app.state.resolver.entries)
+    assert brands >= 200, f"Only {brands} formulary brands loaded"
+    return f"{brands} formulary brands loaded"
+
+
