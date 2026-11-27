@@ -12,6 +12,7 @@ import { useLanguage } from "@/lib/i18n";
 import SafetyAlertBanner from "./SafetyAlertBanner";
 import VisualDoseCard from "./VisualDoseCard";
 import AudioPlayer from "./AudioPlayer";
+import ScanSummary from "./ScanSummary";
 
 export default function PrescriptionResults({
   scan,
@@ -28,6 +29,7 @@ export default function PrescriptionResults({
 
   return (
     <section className="prescription-results">
+      <ScanSummary scan={scan} />
       <SafetyAlertBanner
         interactions={scan.interactions}
         medications={scan.medications}
