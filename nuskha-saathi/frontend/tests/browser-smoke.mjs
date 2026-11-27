@@ -175,6 +175,15 @@ wav.writeUInt32LE(wav.length - 44, 40);
 await context.route("**/test-audio.wav", (route) =>
   route.fulfill({ contentType: "audio/wav", body: wav }),
 );
+// The server's Urdu voice. Off by default, as when the provider is down.
+let serverVoice = false;
+const spokenLines = [];
+await context.route("**/api/v1/speech", (route) => {
+  spokenLines.push(route.request().postDataJSON()?.text);
+  return serverVoice
+    ? route.fulfill({ contentType: "audio/wav", body: wav })
+    : route.fulfill({ status: 503, json: { error: "HTTP_503" } });
+});
 let navigation = 0;
 const nav = async (view) => {
   await page.goto(`${BASE}/?test=${++navigation}#${view}`);
@@ -553,12 +562,12 @@ try {
     assert.equal(await page.locator(".slot.unknown-dose").count(), 3);
     assert.equal(await page.locator(".slot.no-dose").count(), 0);
     assert.equal(await page.locator(".alert-red").count(), 1);
-    assert.equal(await page.locator(".alert-amber").count(), 2);
+    assert.equal(await page.locator(".alert-amber").count(), 1);
     assert.equal(await page.locator(".med-issue-dropdown").count(), 1);
-    const bodyText = await page.locator("body").innerText();
-    // The pharmacist warning stays visible next to the per-medicine dropdown.
-    assert.equal(bodyText.includes("The medicine name or dose needs confirmation."), true);
-    assert.equal(bodyText.includes("Ask a pharmacist to read this part before taking medicine."), true);
+    assert.match(
+      await page.locator(".med-issue-dropdown summary").innerText(),
+      /Issue: Medicine could not be verified/,
+    );
     await audit("safety");
     await page.screenshot({ path: `${OUT}/safety-states.png`, fullPage: true });
   });
@@ -570,13 +579,32 @@ try {
       speechSynthesis.getVoices = () => [{ lang: "en-US" }];
     });
     await page
-      .getByRole("button", { name: "Use device Urdu voice", exact: true })
+      .getByRole("button", { name: "Listen in Urdu", exact: true })
       .click();
     await page.locator(".audio-fallback .audio-error").waitFor();
     assert.match(
       await page.locator(".audio-fallback .audio-error").innerText(),
       /matching voice is not installed/,
     );
+    response = result;
+  });
+  await test("a line with no recording is read by the server Urdu voice", async () => {
+    response = { ...result, audio_urdu_url: null };
+    serverVoice = true;
+    spokenLines.length = 0;
+    await nav("scan");
+    await upload();
+    await page.evaluate(() => {
+      speechSynthesis.getVoices = () => [];
+    });
+    const listen = page.locator(".audio-fallback .speaker");
+    await listen.click();
+    await page.locator('.audio-fallback .speaker[aria-pressed="true"]').waitFor();
+    assert.deepEqual(spokenLines, [result.urdu_script]);
+    assert.equal(await page.locator(".audio-fallback .audio-error").count(), 0);
+    await listen.click();
+    await page.locator('.audio-fallback .speaker[aria-pressed="false"]').waitFor();
+    serverVoice = false;
     response = result;
   });
   await test("malformed success responses fail closed", async () => {

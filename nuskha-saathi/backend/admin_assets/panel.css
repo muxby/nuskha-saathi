@@ -84,6 +84,10 @@ button:disabled { opacity: 0.5; cursor: wait; }
 .secondary { background: var(--panel-2); color: #dce8f4; border-color: var(--line-strong); }
 .secondary[aria-pressed="true"] { background: var(--accent); color: #08110f; border-color: var(--accent); }
 
+#voice-state.good { color: var(--good); }
+#voice-state.bad { color: var(--bad); }
+#voice-state.warn { color: var(--warn); }
+
 button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 3px;
@@ -106,7 +110,7 @@ section .cards { margin-top: 18px; }
 section .card { background: var(--panel-2); }
 
 .card .value { font-size: 24px; margin: 10px 0 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
-.label, .muted, footer, #counts, #checked, #test-summary, #wake-state { color: var(--muted); font-size: 13px; }
+.label, .muted, footer, #counts, #checked, #test-summary, #wake-state, #voice-state { color: var(--muted); font-size: 13px; }
 
 .actions { margin-top: 18px; }
 
@@ -139,6 +143,25 @@ section .card { background: var(--panel-2); }
 .check .name { font-weight: 650; }
 .check .detail { color: var(--muted); font-size: 13px; margin-top: 3px; overflow-wrap: anywhere; }
 .check .ms { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Urdu voice picker */
+.voices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 12px; margin: 18px 0 6px; }
+.voice { display: flex; gap: 8px; align-items: stretch; }
+.voice-pick {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  column-gap: 10px;
+  text-align: start;
+  padding: 12px 14px;
+}
+.voice-pick:disabled { cursor: wait; }
+.voice-mark { grid-row: span 2; align-self: center; font-size: 16px; color: var(--muted); }
+.voice-name { font-weight: 650; }
+.voice-meta { color: var(--muted); font-size: 12px; font-weight: 400; }
+.voice.chosen .voice-pick { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--panel-2)); }
+.voice.chosen .voice-mark { color: var(--accent); }
+.voice-sample { padding: 11px 14px; white-space: nowrap; }
 
 details { border-top: 1px solid var(--line); padding: 15px 0; }
 summary { cursor: pointer; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
@@ -179,7 +202,9 @@ html[lang="ur"] p, html[lang="ur"] footer { line-height: 2.4; font-size: 20px; }
 html[lang="ur"] button { font-weight: 400; line-height: 1.9; padding-block: 6px; }
 html[lang="ur"] .label, html[lang="ur"] .muted, html[lang="ur"] .badge,
 html[lang="ur"] .check .detail, html[lang="ur"] #checked, html[lang="ur"] #counts,
-html[lang="ur"] #test-summary, html[lang="ur"] #wake-state { font-size: 18px; }
+html[lang="ur"] #test-summary, html[lang="ur"] #wake-state, html[lang="ur"] #voice-state { font-size: 18px; }
+html[lang="ur"] .voice-name { font-size: 21px; font-weight: 400; }
+html[lang="ur"] .voice-meta { font-size: 15px; }
 html[lang="ur"] .check .name { font-size: 21px; }
 html[lang="ur"] .check .detail.ltr { font-size: 14px; }
 html[lang="ur"] .eyebrow, html[lang="ur"] code, html[lang="ur"] .ms, html[lang="ur"] .ltr {

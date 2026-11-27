@@ -17,6 +17,7 @@ export type HealthStatus = {
     medster_live?: boolean;
     tts_configured: boolean;
     tts_provider?: string | null;
+    tts_voice?: string;
     stt_configured?: boolean;
     stt_provider?: string | null;
     openfda_live: boolean;
@@ -212,6 +213,35 @@ export type StripResult = {
 export function assetUrl(path: string | null): string | undefined {
   if (!path) return undefined;
   return path.startsWith("http") ? path : `${API_BASE}${path}`;
+}
+
+const speechUrls = new Map<string, string>();
+
+/**
+ * Object URL of the server's Urdu voice reading `text`, or null when the
+ * voice is unavailable so the caller can fall back to a device voice.
+ */
+export async function urduSpeechUrl(text: string): Promise<string | null> {
+  const line = text.trim();
+  if (!line) return null;
+  const known = speechUrls.get(line);
+  if (known) return known;
+  try {
+    const response = await fetch(`${API_BASE}/api/v1/speech`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: line }),
+      signal: AbortSignal.timeout(45_000),
+    });
+    if (!response.ok) return null;
+    const blob = await response.blob();
+    if (!blob.size || !blob.type.startsWith("audio/")) return null;
+    const url = URL.createObjectURL(blob);
+    speechUrls.set(line, url);
+    return url;
+  } catch {
+    return null;
+  }
 }
 
 export const UPLOAD_TIMEOUT_MS = 90_000;

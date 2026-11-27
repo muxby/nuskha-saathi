@@ -30,6 +30,9 @@ services:
         value: "true"
       - key: MEDICINE_WEB_LIVE
         value: "true"
+      # Starting Urdu voice: uzma, asad, gul or salman. The panel can change it.
+      - key: URDU_TTS_VOICE
+        value: uzma
       # Set both to your frontend origin after the frontend is deployed.
       - key: FRONTEND_BASE_URL
         sync: false

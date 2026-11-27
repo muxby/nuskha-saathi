@@ -27,18 +27,22 @@ from routers.formulary import router as formulary_router
 from routers.medicines import router as medicines_router
 from routers.monitor import MIN_PASSWORD_LENGTH, install_monitor
 from routers.scan import router as scan_router
+from routers.speech import router as speech_router
 from routers.whatsapp import configured_whatsapp_provider, router as whatsapp_router, whatsapp_configured
 from services.formulary_resolver import FormularyResolver
 from services.local_store import LocalStore
 from services.medster_client import MedSterClient
 from services.openfda_client import OpenFdaClient
 from services.security import HardeningMiddleware, allowed_origins
-from services.runtime_paths import is_serverless_readonly, writable_static_root
+from services.runtime_paths import BACKEND_ROOT, is_serverless_readonly, writable_static_root
 from services.web_medicine_resolver import WebMedicineResolver
 from services.tts_stt_service import (
+    VOICE_SETTING,
     configured_stt_provider,
     configured_tts_provider,
     freeapi_transcribe_enabled,
+    select_voice,
+    selected_voice,
     stt_configured,
     tts_configured,
 )
@@ -87,6 +91,8 @@ def create_app(
     app.state.store = store or LocalStore()
     app.state.web_resolver = web_resolver or WebMedicineResolver(store=app.state.store)
     app.state.extractor = extractor or GeminiVisionExtractor()
+    # The panel's voice choice lives in the store; unset falls back to the default.
+    select_voice(app.state.store.get_setting(VOICE_SETTING))
     app.state.strip_dir = strip_dir or (static_root / "strips")
     app.state.audio_dir = static_root / "audio"
     app.state.strip_dir.mkdir(parents=True, exist_ok=True)
@@ -129,6 +135,7 @@ def create_app(
         )
 
     app.include_router(scan_router)
+    app.include_router(speech_router)
     app.include_router(cabinet_router)
     app.include_router(formulary_router)
     app.include_router(diagnostics_router)
@@ -166,6 +173,7 @@ def create_app(
                 "medicine_web_live": bool(app.state.web_resolver.live),
                 "tts_configured": tts_configured(),
                 "tts_provider": configured_tts_provider(),
+                "tts_voice": selected_voice().name,
                 "stt_configured": stt_configured(),
                 "stt_provider": configured_stt_provider(),
                 "openfda_live": bool(app.state.fda.live),

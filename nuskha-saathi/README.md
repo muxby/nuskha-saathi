@@ -37,8 +37,9 @@ FastAPI endpoints in `backend/main.py`:
 | `POST /api/v1/vision/chat` | Multi-turn image Q&A / OCR via OpenRouter Vision or FreeAPI ImgChat |
 | `GET /api/v1/medicines/search` | Search Pakistani brands & generic salts across local formulary + FreeAPI MedSter (`Rs.` prices) |
 | `GET /api/v1/medicines/details` | Fetch full FreeAPI MedSter monograph + local formulary safety caps |
+| `POST /api/v1/speech` | Speak one engine line or Urdu-script text in the selected neural Urdu voice (`audio/mpeg`); `503` when unavailable so the app falls back to the device voice |
 | `GET /api/v1/audio/{scan_id}` | Retrieve saved Urdu script and audio location for QR replay (supports cold-instance recovery for demo scans) |
-| `POST /api/v1/tts/urdu` | Synthesize Pakistani Urdu MP3 on demand via Uplift Orator → Azure → Google TTS |
+| `POST /api/v1/tts/urdu` | Synthesize full prescription Urdu MP3 via selected neural Urdu voice (FreeAPI.pro → Azure Speech) |
 | `POST /api/v1/stt/urdu` | Transcribe Urdu/Roman-Urdu voice audio via Uplift Scribe → FreeAPI Transcribe → Gemini → OpenRouter |
 | `GET /api/v1/scans/{scan_id}` | Retrieve a full persisted scan result by ID |
 | `GET /api/v1/patients/{patient_id}/scans` | List saved scan summaries for a patient |
@@ -64,7 +65,7 @@ FastAPI endpoints in `backend/main.py`:
 - **Third-party lookups:** MedSter catalogue search (`MEDSTER_LIVE`), web medicine resolution for brands missing from the formulary (`MEDICINE_WEB_LIVE`, cached in SQLite), and FreeAPI Transcribe for voice notes (`FREEAPI_TRANSCRIBE_ENABLED`). These receive photos, audio or medicine names; turn them off for real patient data. See [`docs/DEPLOYMENT.md`](../docs/DEPLOYMENT.md).
 - **Deterministic safety gate & datasets:** RapidFuzz brand normalization (`cutoff=82`), compiled Pakistani DRAP brand/salt formulary (`332` entries) with WHO AWaRe classifications and daily max dose ceilings, openFDA Drug Label API (`fda.gov`) plus cached verified label excerpts (`73` interaction pairs). Neither FDA nor WHO endorses this application.
 - **Frameworks & infrastructure:** FastAPI, Pydantic, Pillow, httpx, Next.js 16, React, Lucide Icons, custom WebGL GLSL shader Hero (`THREE`-free lightweight procedural WebGL canvas), local SQLite runtime persistence (`backend/data/nuskha_local.db`, plus optional Postgres reference schema in [`backend/sql/supabase_schema.sql`](backend/sql/supabase_schema.sql)), Playwright, `@axe-core/playwright`.
-- **Voice & messaging order:** Server Urdu audio order is Uplift Orator → Azure Speech → Google TTS (falls back to browser Urdu speech synthesis when TTS keys are unset; never substitutes English voice for Urdu clinical guidance). Urdu voice transcription tries Uplift Scribe → FreeAPI Transcribe → Gemini Audio → OpenRouter. WhatsApp reminders stay explicitly disabled (`whatsapp_scheduled: false`) until real Twilio/Meta credentials are connected in `.env`.
+- **Voice & messaging:** Server Urdu audio comes from [freeapi.pro](https://freeapi.pro/speech) text-to-speech (no key), serving Microsoft's Urdu neural voices (`Uzma` default, `Asad`, `Gul`, `Salman`; selectable in `/admin`, with optional Azure Speech fallback using the selected voice, then device Urdu speech; never substitutes an English voice for Urdu guidance). Fixed engine lines and medicine names are rewritten to Urdu script before synthesis (`services/urdu_speech.py`, `services/urdu_names.py`). Urdu speech-to-text tries Uplift Scribe → FreeAPI Transcribe → Gemini Audio → OpenRouter. WhatsApp reminders stay explicitly disabled (`whatsapp_scheduled: false`) until real Twilio/Meta credentials are connected in `.env`.
 
 ### Scan outcome versus service outcome
 
@@ -91,7 +92,7 @@ python3 -m venv .venv
 .venv/bin/python main.py
 ```
 
-On Windows PowerShell (or run both backend + frontend together with `.\start.ps1` / `./start.sh`):
+On Windows PowerShell (or run both backend + frontend together with `.\start.ps1` / `./start.sh`): server Urdu audio uses `freeapi.pro` with no key (`URDU_TTS_VOICE=uzma` by default; set `FREEAPI_TTS_ENABLED=0` to disable, or configure `AZURE_SPEECH_KEY`/`AZURE_SPEECH_REGION` as fallback). Never put credentials in frontend variables.
 
 ```powershell
 .\start.ps1
@@ -173,9 +174,9 @@ Sessions expire after 8 hours, restart, or a password change. Five failed logins
 
 ## Verified Test Coverage & Honest Limits
 
-- **Backend tests (`pytest`):** Covers formulary matching, confidence lock (`<0.85` refusal), overdose ceiling blocking (`5000mg` Leflox), openFDA salt-only queries, cabinet CRUD + auto-merge, `.env` configuration & runtime path overrides, TTS/STT endpoints, WhatsApp honest unconfigured/webhook checks, serverless `/tmp` storage, and demo QR cold recovery.
-- **Deterministic 30-Case Safety Benchmark (`python -m tests.run_eval_30`):** `30/30 passed` across 15 Pakistani brand extractions, 5 illegible/low-confidence refusals, 5 high-risk interactions, and 5 strip swaps/overdose ceilings. *Note: This harness measures the deterministic clinical engine offline (non-VLM latency); real-world prescription photos add Gemini Vision inference latency and still require pharmacist/clinician validation.*
-- **Frontend checks:** `tsc --noEmit` clean, `next build` clean, `19/19` Playwright + axe-core WCAG 2.0/2.1/2.2 AA checks.
-- **Honest Limits:** Outbound WhatsApp reminders require Twilio or Meta credentials in `.env`. Live handwriting accuracy across diverse clinicians, Uplift/Azure/Google audio quality when credentials are supplied, physical smartphone cameras/torch, and regional languages need device/credential-backed acceptance testing.
+- **Backend tests (`pytest`):** Covers formulary matching, confidence lock (`<0.85` refusal), overdose ceiling blocking (`5000mg` Leflox), openFDA salt-only queries, cabinet CRUD + auto-merge, `.env` configuration & runtime path overrides, FreeAPI/Azure neural Urdu voice & STT endpoints, reminders CRUD, web medicine resolver, serverless `/tmp` storage, and demo QR cold recovery.
+- **Deterministic 30-Case Safety Benchmark (`python -m tests.run_eval_30`):** `30/30 passed` across 15 Pakistani brand extractions, 5 illegible/low-confidence refusals, 5 high-risk interactions, and 5 strip swaps/overdose ceilings. *Note: This harness measures the deterministic clinical engine offline (non-VLM latency); real-world prescription photos add Vision inference latency and still require pharmacist/clinician validation.*
+- **Frontend checks:** `tsc --noEmit` clean, `npm run test:unit` clean, `next build` clean, Playwright + axe-core WCAG 2.0/2.1/2.2 AA checks.
+- **Honest Limits:** Outbound WhatsApp reminders require Twilio or Meta credentials in `.env`. Live handwriting accuracy across diverse clinicians, the Urdu spellings of less common brand names as heard by a native listener, the availability of the keyless voice provider (no uptime guarantee; its terms cover personal and non-commercial use), physical smartphone cameras/torch, and regional languages need device/credential-backed acceptance testing.
 
 Follow the treating clinician's instructions. Ask a pharmacist to confirm unclear wording before taking medicine. The app does not diagnose, prescribe, or authorize changing medicines.

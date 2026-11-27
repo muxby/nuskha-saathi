@@ -18,6 +18,7 @@ import AudioPlayer from "./AudioPlayer";
 import ScanSummary from "./ScanSummary";
 import VisionNotice from "./VisionNotice";
 import DayPlan from "./DayPlan";
+import ClinicalText from "./ClinicalText";
 
 export default function PrescriptionResults({
   scan,
@@ -282,6 +283,9 @@ export default function PrescriptionResults({
                       <summary>{t(issueSummaryKey)}</summary>
                       <div className="med-issue-body">
                         <p>{t(issueDetailKey)}</p>
+                        {m.refusal_reason_urdu && (
+                          <ClinicalText text={m.refusal_reason_urdu} />
+                        )}
                         {m.cropped_handwriting_b64 && (
                           <img
                             src={

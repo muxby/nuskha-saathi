@@ -58,7 +58,9 @@ check("day plan schedules verified medicines and withholds refused lines", async
 check("urdu interface shows the refusal line in urdu script", async ({ page }) => {
   await useUrdu(page);
   await openDemoCase(page, 0);
-  const refusal = page.locator(".alert-amber .clinical-text").first();
+  const dropdown = page.locator(".med-issue-dropdown").first();
+  await dropdown.locator("summary").click();
+  const refusal = dropdown.locator(".clinical-text").first();
   assert.equal(await refusal.getAttribute("dir"), "rtl");
   assert.equal(await refusal.getAttribute("lang"), "ur");
   assert.match(await refusal.innerText(), /فارماسسٹ/);
@@ -204,7 +206,11 @@ check("an unanalysed photo is compressed, uploaded and reported as a service pro
 });
 
 const browser = await chromium.launch({
-  executablePath: process.env.E2E_CHROMIUM_PATH || undefined,
+  ...(process.env.E2E_CHROMIUM_PATH
+    ? { executablePath: process.env.E2E_CHROMIUM_PATH }
+    : process.env.E2E_BROWSER || process.platform === "win32"
+      ? { channel: process.env.E2E_BROWSER || "chrome" }
+      : {}),
   args: process.env.E2E_CHROMIUM_PATH ? ["--no-sandbox"] : [],
 });
 let failed = 0;

@@ -9,16 +9,28 @@
   problem, never as an unreadable photo.
 - MedSter catalogue search, web medicine resolution with a SQLite cache, and
   `GET /api/v1/medicines/search`, `GET /api/v1/medicines/details`.
-- `POST /api/v1/vision/chat`, `POST /api/v1/tts/urdu`, `POST /api/v1/stt/urdu`.
+- `POST /api/v1/vision/chat`, `POST /api/v1/tts/urdu`, `POST /api/v1/stt/urdu`,
+  and `POST /api/v1/speech` (single-line Urdu neural voice synthesis).
+- Server Urdu audio from `freeapi.pro` text-to-speech, with no API key. Four
+  voices only: Uzma (default), Asad, Gul and Salman, selectable in `/admin`
+  with sample playback and live voice verification.
 - Reminders: whole-prescription scheduling, status updates
   (`PATCH /api/v1/whatsapp/reminders/{id}`), in-app alerts and `.ics` export.
 - Formulary expanded to 332 brands; strip verification no longer needs a strength.
 - Local setup: `.env` loader, `start.sh` / `start.ps1`, fuller `.env.example`.
 
+### Changed
+
+- Voice synthesis receives Urdu script only: fixed engine lines and all
+  brand/salt names are rewritten from fixed tables (`urdu_speech.py`,
+  `urdu_names.py`) before synthesis, with Azure Speech as an optional fallback
+  using the selected voice. Uplift TTS and Google TTS were removed (Uplift
+  Scribe remains optional for STT alongside FreeAPI Transcribe, Gemini, and OpenRouter).
+
 ### Hardening
 
 - Gemini voice transcription and web lookup send the key in a header.
-- `POST /api/v1/vision/chat` shares the per-client scan rate limit.
+- `POST /api/v1/vision/chat` and `POST /api/v1/speech` share the per-client scan rate limit.
 - Third-party services can be switched off per deployment; see the
   deployment guide for what each one receives.
 

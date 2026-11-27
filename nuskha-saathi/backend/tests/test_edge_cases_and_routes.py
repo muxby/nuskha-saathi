@@ -359,7 +359,8 @@ def test_openfda_synonyms_concurrency_and_vision_failfast(monkeypatch, tmp_path)
     assert raised and fail_calls["n"] == 1
 
     # TTS & ffmpeg guards
-    for var in ("UPLIFT_API_KEY", "UPLIFT_VOICE_ID", "AZURE_SPEECH_KEY", "AZURE_SPEECH_REGION", "GOOGLE_TTS_API_KEY"):
+    monkeypatch.setenv("FREEAPI_TTS_ENABLED", "0")
+    for var in ("AZURE_SPEECH_KEY", "AZURE_SPEECH_REGION"):
         monkeypatch.delenv(var, raising=False)
     assert tts_configured() is False
     assert asyncio.run(synthesize_urdu("Assalam o Alaikum")) is None
