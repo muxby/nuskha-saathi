@@ -130,3 +130,19 @@ html[lang="ur"] .scan-summary h2 {
   color: var(--red);
 }
 
+.scan-summary-bar {
+  grid-column: 1 / -1;
+  block-size: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--amber) 38%, var(--surface-soft));
+  overflow: hidden;
+}
+
+.scan-summary-bar span {
+  display: block;
+  block-size: 100%;
+  border-radius: inherit;
+  background: var(--green);
+  transition: inline-size 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
