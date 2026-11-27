@@ -161,3 +161,25 @@ The backend also runs as a Vercel project (root directory
 Render with Docker is the recommended backend host because it keeps one
 long-lived process and includes `ffmpeg`.
 
+## Run everything locally
+
+```bash
+make setup
+```
+
+```bash
+cp nuskha-saathi/.env.example nuskha-saathi/.env
+```
+
+Put `GEMINI_API_KEY` in `nuskha-saathi/.env`, then start each server in its
+own terminal:
+
+```bash
+make api
+```
+
+```bash
+make web
+```
+
+Open `http://localhost:3000`. Camera capture needs `localhost` or HTTPS.
