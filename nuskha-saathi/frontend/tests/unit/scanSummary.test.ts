@@ -26,3 +26,19 @@ test("a moderate interaction sets the ask tone", () => {
   assert.equal(summary.moderateInteractions, 1);
 });
 
+test("no extracted lines is its own tone", () => {
+  assert.equal(summarizeScan({ medications: [], interactions: [] }).tone, "empty");
+});
+
+test("all verified with no interactions is clear", () => {
+  const summary = summarizeScan({ medications: [verified("Panadol")], interactions: [] });
+  assert.equal(summary.tone, "clear");
+});
+
+test("stop outranks ask", () => {
+  assert.equal(
+    toneFor({ total: 2, needsConfirmation: 1, highInteractions: 1, moderateInteractions: 1 }),
+    "stop",
+  );
+});
+
