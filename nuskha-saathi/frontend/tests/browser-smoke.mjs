@@ -76,13 +76,16 @@ let response = result;
 let uploadFailure = false;
 let holdScan = false;
 let releaseScan;
+let scanRequestStarted = Promise.resolve();
+let markScanStarted;
 let stripStatus = "EXACT_MATCH";
 await context.route("**/api/v1/scan-parchi", async (route) => {
-  if (holdScan)
+  if (holdScan) {
+    markScanStarted?.();
     await new Promise((resolve) => {
       releaseScan = resolve;
     });
-  else await new Promise((r) => setTimeout(r, 250));
+  } else await new Promise((r) => setTimeout(r, 250));
   if (uploadFailure) {
     await route.abort("failed");
     return;
@@ -362,6 +365,9 @@ try {
   });
   await test("scan processing, source text, confirmed dose and explicit zero", async () => {
     holdScan = true;
+    scanRequestStarted = new Promise((resolve) => {
+      markScanStarted = resolve;
+    });
     await page
       .getByRole("button", { name: "Use this photo", exact: true })
       .click();
@@ -374,6 +380,7 @@ try {
       await page.locator(".processing-layout").innerText(),
       /\d+%/,
     );
+    await scanRequestStarted;
     releaseScan();
     holdScan = false;
     await page

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useId, useRef, useState } from "react";
 import { Play, Pause, RotateCcw, Volume2 } from "lucide-react";
-import { assetUrl, synthesizeUrduTts } from "@/lib/api";
+import { assetUrl, synthesizeUrduTts, urduSpeechUrl } from "@/lib/api";
 import { useLanguage } from "@/lib/i18n";
 import { WaveArt } from "./MedicalArt";
 import SpeakerButton, { announceAudio } from "./SpeakerButton";
@@ -22,7 +22,7 @@ export default function AudioPlayer({
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
   const [ttsNotice, setTtsNotice] = useState("");
-  const effectiveUrl = audioUrl || generatedUrl;
+  const effectiveUrl = generatedUrl || audioUrl;
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [position, setPosition] = useState(0);
@@ -30,6 +30,7 @@ export default function AudioPlayer({
   const [speed, setSpeed] = useState(1);
   useEffect(() => {
     setGeneratedUrl(null);
+    setError(false);
   }, [audioUrl, text]);
   useEffect(() => {
     const stop = (e: Event) => {
@@ -80,8 +81,19 @@ export default function AudioPlayer({
             onDurationChange={(e) => setDuration(e.currentTarget.duration)}
             onTimeUpdate={(e) => setPosition(e.currentTarget.currentTime)}
             onError={() => {
-              setError(true);
               setPlaying(false);
+              if (!generatedUrl && text.trim()) {
+                void urduSpeechUrl(text).then((blobUrl) => {
+                  if (blobUrl) {
+                    setError(false);
+                    setGeneratedUrl(blobUrl);
+                  } else {
+                    setError(true);
+                  }
+                });
+              } else {
+                setError(true);
+              }
             }}
           />
           <div className="audio-timeline">
@@ -148,9 +160,12 @@ export default function AudioPlayer({
             </select>
           </div>
           {error && (
-            <p role="alert" className="audio-error">
-              {t("audioFailed")}
-            </p>
+            <div className="audio-fallback">
+              <p role="alert" className="audio-error">
+                {t("audioFailed")}
+              </p>
+              <SpeakerButton text={text} label={t("browserVoice")} />
+            </div>
           )}
         </>
       ) : (

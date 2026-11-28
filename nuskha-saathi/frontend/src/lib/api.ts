@@ -212,7 +212,7 @@ export type StripResult = {
 
 export function assetUrl(path: string | null): string | undefined {
   if (!path) return undefined;
-  return path.startsWith("http") ? path : `${API_BASE}${path}`;
+  return /^(https?:|blob:|data:)/.test(path) ? path : `${API_BASE}${path}`;
 }
 
 const speechUrls = new Map<string, string>();
