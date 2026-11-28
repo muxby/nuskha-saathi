@@ -308,6 +308,8 @@ async def verify_strip(
     expected_hit = resolver.resolve(expected_brand)
     if expected_hit is None and web_resolver is not None:
         cached_exp = web_resolver.get_cached(expected_brand)
+        if cached_exp is None and getattr(web_resolver, "live", False):
+            cached_exp = await web_resolver.search_single(expected_brand)
         if cached_exp is not None:
             expected_hit = ResolveHit(entry=cached_exp, fuzzy_score=92.0)
 

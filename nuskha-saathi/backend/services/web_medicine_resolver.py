@@ -415,7 +415,7 @@ class WebMedicineResolver:
                 if provider == "openrouter" and os.environ.get("OPENROUTER_API_KEY", "").strip():
                     return await self._fetch_openrouter_web(prompt)
             except Exception as exc:  # noqa: BLE001 — fall through to secondary web provider
-                event("medicine_web_lookup", "failed", provider=provider, error=error_category(exc))
+                event(f"medicine_web_{provider}", "failed", error=error_category(exc))
                 continue
         return []
 

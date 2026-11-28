@@ -3,7 +3,7 @@
   "note": "Measures deterministic clinical engine across 30 curated test vectors (non-VLM latency); real-world handwriting photos also require Gemini Vision calls.",
   "total_cases": 30,
   "total_passed": 30,
-  "p50_engine_ms": 0.033,
+  "p50_engine_ms": 0.058,
   "subsets": [
     {
       "name": "Standard Pakistani Brands",

@@ -816,3 +816,32 @@ def test_web_medicine_sqlite_cache_and_reminder_crud(monkeypatch, tmp_path: Path
     assert deleted.status_code == 200
     assert deleted.json()["deleted"] is True
     assert client.get("/api/v1/whatsapp/reminders", params={"patient_id": "p-rem-9"}).json()["reminders"] == []
+
+
+def test_web_resolver_provider_fallback_logs_cleanly_without_typeerror(monkeypatch):
+    monkeypatch.setenv("VISION_PRIMARY", "openrouter")
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-or")
+    monkeypatch.setenv("GEMINI_API_KEY", "test-gem")
+
+    resolver = WebMedicineResolver(live=True)
+
+    async def fail_openrouter(_prompt: str):
+        raise RuntimeError("OpenRouter web search response was not a JSON array")
+
+    async def ok_gemini(_prompt: str):
+        return [
+            {
+                "query": "Hexigel",
+                "is_known_medicine": True,
+                "canonical_brand": "Hexigel",
+                "generic_salts": ["chlorhexidine gluconate"],
+                "dosage_form": "Gum Paint",
+                "is_topical": True,
+            }
+        ]
+
+    monkeypatch.setattr(resolver, "_fetch_openrouter_web", fail_openrouter)
+    monkeypatch.setattr(resolver, "_fetch_gemini_web", ok_gemini)
+    items = asyncio.run(resolver._query_providers(["Hexigel"]))
+    assert len(items) == 1
+    assert items[0]["canonical_brand"] == "Hexigel"

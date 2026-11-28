@@ -63,7 +63,7 @@ in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
 | Command | Covers |
 | --- | --- |
-| `make test-backend` | 174 backend tests: safety gate, routes, data integrity, hardening, providers, reminders, Urdu voice |
+| `make test-backend` | 175 backend tests: safety gate, routes, data integrity, hardening, providers, reminders, Urdu voice |
 | `make eval` | 30-case deterministic safety benchmark |
 | `make test-frontend` | Type check and 60 unit tests |
 | `make test-ui` | 20 browser and accessibility checks with mocked API states |
